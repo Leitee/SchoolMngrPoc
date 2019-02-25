@@ -1,0 +1,7 @@
+/.vs
+/NetCore.Api/bin
+/NetCore.Api/obj
+/NetCore.Model/bin
+/NetCore.Model/obj
+/NetCore.ServiceData/bin
+/NetCore.ServiceData/obj
