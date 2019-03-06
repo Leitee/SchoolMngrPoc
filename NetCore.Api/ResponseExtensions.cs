@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using NetCore.Model.Interfaces;
+using NetCore.Core.Interfaces;
 using System.Net;
 
 namespace NetCore.Api

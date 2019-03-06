@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NetCore.Core.Interfaces;
 using NetCore.Model.Entities;
-using System;
 
-namespace NetCore.ServiceData
+namespace NetCore.ServiceData.Data
 {
-    public class SchoolContext : DbContext
+    public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         public DbSet<Grade> Grades { get; set; }
         public DbSet<Class> Classes { get; set; }

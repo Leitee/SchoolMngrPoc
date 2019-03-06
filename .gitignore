@@ -1,7 +1,13 @@
 /.vs
+/.vscode
+*.user
 /NetCore.Api/bin
 /NetCore.Api/obj
 /NetCore.Model/bin
 /NetCore.Model/obj
 /NetCore.ServiceData/bin
 /NetCore.ServiceData/obj
+/NetCore.Core\bin
+/NetCore.Core\obj
+/NetCore.Core/obj
+/NetCore.Core/bin

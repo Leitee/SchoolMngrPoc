@@ -1,7 +1,7 @@
-﻿using NetCore.Model.Interfaces;
+﻿using NetCore.Core.Interfaces;
 using System.Collections.Generic;
 
-namespace NetCore.Model.Concrets
+namespace NetCore.Api
 {
     public class Response : IResponse
     {

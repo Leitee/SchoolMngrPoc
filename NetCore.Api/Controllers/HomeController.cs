@@ -5,7 +5,7 @@ namespace NetCore.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class HomeController : ControllerBase
     {
         // GET api/values
         [HttpGet]
@@ -18,7 +18,7 @@ namespace NetCore.Api.Controllers
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
-            return "value";
+            return "value" + id;
         }
 
         // POST api/values
