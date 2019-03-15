@@ -12,12 +12,14 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.0.2105168" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\NetCore.Core\NetCore.Core.csproj" />
     <ProjectReference Include="..\NetCore.Model\NetCore.Model.csproj" />
+    <ProjectReference Include="..\NetCore.ServiceData\NetCore.ServiceData.csproj" />
   </ItemGroup>
 
 </Project>

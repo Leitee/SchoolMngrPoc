@@ -1,21 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 
 namespace NetCore.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HomeController : ControllerBase
+    public class HomeController : BaseController
     {
+        public HomeController(ILogger<HomeController> logger) : base(logger)
+        {
+        }
+
         // GET api/values
         [HttpGet]
+        [ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
         public ActionResult<IEnumerable<string>> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "getPais")]
         public ActionResult<string> Get(int id)
         {
             return "value" + id;
@@ -23,8 +29,15 @@ namespace NetCore.Api.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] object obj)
         {
+            if (ModelState.IsValid)
+            {
+                //save data
+                return new CreatedAtRouteResult("getPais", new { id = obj }, obj);//return 201 created and its data entity 
+            }
+
+            return BadRequest(ModelState);
         }
 
         // PUT api/values/5
