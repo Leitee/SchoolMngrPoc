@@ -1,25 +1,35 @@
 ﻿using NetCore.Core.Bases;
 using NetCore.Core.Interfaces;
+using NetCore.Core.Mapper;
 using System;
 
 namespace NetCore.ServiceData.Services
 {
-    public abstract class BaseService
+    public abstract class BaseService<TEntity, TDto>
     {
-        protected IApplicationUow Uow { get; set; }
+        public BLResponse<TDto> Response { get; set; }
+        protected readonly IApplicationUow _uow;
+        protected readonly IMapperCore<TEntity, TDto> _mapper;
 
-        protected void HandleSVCException<T>(ref BLResponse<T> pResponse, Exception pEx)
+        public BaseService(IApplicationUow applicationUow, IMapperCore<TEntity, TDto> mapperCore)
         {
-            pResponse.Errors.Add("Error at Business Service");
-            pResponse.Errors.Add(pEx.Message);
-            if (pEx.InnerException != null)
-                pResponse.Errors.Add(pEx.InnerException.Message);
+            _uow = applicationUow;
+            _mapper = mapperCore;
+            Response = new BLResponse<TDto>();
         }
 
-        protected void HandleSVCException<T>(ref BLResponse<T> pResponse, params string[] pErrors)
+        protected void HandleSVCException(Exception pEx)
         {
-            pResponse.Errors.Add("Error at Business Service");
-            pResponse.Errors.AddRange(pErrors);
+            Response.Errors.Add("Internal Error at Service Layer");
+            Response.Errors.Add(pEx.Message);
+            if (pEx.InnerException != null)
+                Response.Errors.Add(pEx.InnerException.Message);
+        }
+
+        protected void HandleSVCException(params string[] pErrors)
+        {
+            Response.Errors.Add("Internal Error at Service Layer");
+            Response.Errors.AddRange(pErrors);
         }
     }
 }

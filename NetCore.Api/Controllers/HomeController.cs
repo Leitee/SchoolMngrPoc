@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace NetCore.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
-    public class HomeController : BaseController
+    public class HomeController : ApiController
     {
         public HomeController(ILogger<HomeController> logger) : base(logger)
         {

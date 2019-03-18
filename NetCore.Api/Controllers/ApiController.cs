@@ -9,11 +9,11 @@ using Microsoft.Extensions.Logging;
 namespace NetCore.Api.Controllers
 {
     [ApiController]
-    public abstract class BaseController : ControllerBase
+    public abstract class ApiController : ControllerBase
     {
         protected readonly ILogger _logger;
 
-        public BaseController(ILogger logger)
+        public ApiController(ILogger logger)
         {
             logger.LogInformation("Application Starting");
             _logger = logger;
