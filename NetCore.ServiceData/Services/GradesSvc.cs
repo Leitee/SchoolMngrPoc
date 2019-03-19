@@ -52,7 +52,7 @@ namespace NetCore.ServiceData.Services
 
             try
             {
-                var entity = await _uow.Grades.GetByIdAsync(pId);
+                var entity = await _uow.Grades.FindAsync(g => g.GradeId == pId, g => g.Classes);
                 response.Data = _mapper.MapEntity(entity);
             }
             catch (Exception ex)

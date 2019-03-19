@@ -9,11 +9,11 @@ namespace NetCore.Api.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class HomeController : ApiController
+    public class GradeController : ApiController
     {
         private readonly IGradeSvc _gradeSvc;
 
-        public HomeController(ILogger<HomeController> logger, 
+        public GradeController(ILogger<GradeController> logger, 
             IGradeSvc gradeSvc) : base(logger)
         {
             _gradeSvc = gradeSvc;
