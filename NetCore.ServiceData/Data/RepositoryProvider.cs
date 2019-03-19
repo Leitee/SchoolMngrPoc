@@ -22,6 +22,11 @@ namespace NetCore.ServiceData.Data
         /// </remarks>
         protected Dictionary<Type, object> Repositories { get; private set; }
 
+        public RepositoryProvider()
+        {
+            Repositories = new Dictionary<Type, object>();
+        }
+
         public T GetRepository<T>(Func<IApplicationDbContext, object> factory = null) where T : class
         {
             // Look for T dictionary cache under typeof(T).

@@ -6,49 +6,64 @@ using NetCore.ServiceData.Services.Dtos;
 using NetCore.ServiceData.Services.Mappers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace NetCore.ServiceData.Services
 {
     public class GradesSvc : BaseService<Grade, GradeDto>, IGradeSvc
     {
-        private readonly GradeToDtoMapper _gradeToDtoMapper;
 
         public GradesSvc(IApplicationUow applicationUow) : base(applicationUow, new GradeToDtoMapper())
         {
 
         }
 
-        public Task<BLResponse<GradeDto>> CreateAsync(GradeDto pDto)
+        public Task<BLSingleResponse<GradeDto>> CreateAsync(GradeDto pDto)
         {
             throw new NotImplementedException();
         }
 
-        public Task<BLResponse<bool>> DeleteAsync(GradeDto pDto)
+        public Task<BLSingleResponse<bool>> DeleteAsync(GradeDto pDto)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<BLResponse<List<GradeDto>>> GetAllAsync()
-        {            
+        public async Task<BLListResponse<GradeDto>> GetAllAsync()
+        {
+            var response = new BLListResponse<GradeDto>();
+
             try
             {
-                //Response.Data = _gradeToDtoMapper.MapEntity(await _uow.Grades.AllAsync(null, null, null));
+                var entity = await _uow.Grades.AllAsync(null, o => o.OrderBy(g => g.GradeId), null);
+                response.Data = _mapper.MapEntity(entity);
             }
             catch (Exception ex)
             {
-                HandleSVCException(ex);
+                HandleSVCException(response, ex);
             }
 
-            return null;
+            return response;
         }
 
-        public Task<BLResponse<GradeDto>> GetByIdAsync(int pId)
+        public async Task<BLSingleResponse<GradeDto>> GetByIdAsync(int pId)
         {
-            throw new NotImplementedException();
+            var response = new BLSingleResponse<GradeDto>();
+
+            try
+            {
+                var entity = await _uow.Grades.GetByIdAsync(pId);
+                response.Data = _mapper.MapEntity(entity);
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
+
+            return response;
         }
 
-        public Task<BLResponse<bool>> UpdateAsync(GradeDto pDto)
+        public Task<BLSingleResponse<bool>> UpdateAsync(GradeDto pDto)
         {
             throw new NotImplementedException();
         }

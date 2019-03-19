@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using NetCore.Core.Interfaces;
-using NetCore.Core.Security.Identity;
 using NetCore.ServiceData.Data;
+using NetCore.ServiceData.Services;
+using NetCore.ServiceData.Services.Contracts;
 
 namespace NetCore.Api
 {
@@ -23,6 +23,7 @@ namespace NetCore.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -32,8 +33,10 @@ namespace NetCore.Api
                     options.Audience = "{yourAudience}";
                 });
 
-            services.AddIdentity<ApplicationUser, ApplicationRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddScoped<IRepositoryProvider, RepositoryProvider>();
+            services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+            services.AddScoped<IApplicationUow, ApplicationUow>();
+            services.AddScoped<IGradeSvc, GradesSvc>();
         }
 
         //MIDDLEWARE This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

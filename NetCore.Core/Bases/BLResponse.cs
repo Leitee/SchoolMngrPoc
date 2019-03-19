@@ -3,21 +3,41 @@ using System.Linq;
 
 namespace NetCore.Core.Bases
 {
-    public class BLResponse<TDto>
+    public abstract class BLResponse
     {
-        public TDto Data { get; set; }
-
-        public int Count { get { return Errors.Count; } }
+        public List<string> Errors { get; set; }
 
         public bool HasErrors { get { return Errors.Any(); } }
 
-        public string ErrorCode { get; set; }
+        public int ErrorsCount { get { return Errors.Count; } }
 
-        public List<string> Errors { get; set; }
+        public string ErrorCode { get; set; }
 
         public BLResponse()
         {
             Errors = new List<string>();
         }
     }
+
+    public class BLSingleResponse<TDto> : BLResponse
+    {
+        public TDto Data { get; set; }
+    }
+
+    public class BLListResponse<TDto> : BLResponse
+    {
+        public IEnumerable<TDto> Data { get; set; }
+    }
+
+    public class BLPagedResponse<TDto> : BLListResponse<TDto>
+    {
+        public int CurrentPage { get; set; }
+
+        public int RowsPerPage { get; set; }
+
+        public int CollectionLength { get; set; }
+
+        public double TotalPages { get; set; }
+    }
+
 }

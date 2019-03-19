@@ -11,7 +11,8 @@ namespace NetCore.ServiceData.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source = schoolDB.db");
+            optionsBuilder.UseSqlite("Filename = ./schoolDB.db");
+            base.OnConfiguring(optionsBuilder);
         }
     }
 }

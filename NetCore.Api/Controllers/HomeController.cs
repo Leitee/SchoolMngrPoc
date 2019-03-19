@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
+using NetCore.Core.Bases;
+using NetCore.ServiceData.Services.Contracts;
+using NetCore.ServiceData.Services.Dtos;
+using System.Threading.Tasks;
 
 namespace NetCore.Api.Controllers
 {
@@ -8,23 +11,27 @@ namespace NetCore.Api.Controllers
     [ApiController]
     public class HomeController : ApiController
     {
-        public HomeController(ILogger<HomeController> logger) : base(logger)
+        private readonly IGradeSvc _gradeSvc;
+
+        public HomeController(ILogger<HomeController> logger, 
+            IGradeSvc gradeSvc) : base(logger)
         {
+            _gradeSvc = gradeSvc;
         }
 
         // GET api/values
         [HttpGet]
         [ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<ActionResult<BLListResponse<GradeDto>>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return await _gradeSvc.GetAllAsync();
         }
 
         // GET api/values/5
         [HttpGet("{id}", Name = "getPais")]
-        public ActionResult<string> Get(int id)
+        public async Task<ActionResult<BLSingleResponse<GradeDto>>> Get(int id)
         {
-            return "value" + id;
+            return await _gradeSvc.GetByIdAsync(id);
         }
 
         // POST api/values

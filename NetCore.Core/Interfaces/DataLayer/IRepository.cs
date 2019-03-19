@@ -9,7 +9,7 @@ namespace NetCore.Core.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        Task<PagedResult<TEntity>> AllPagedAsync(int skip, int take, int pageSize, int currentPage,
+        Task<BLPagedResponse<TEntity>> AllPagedAsync(int skip, int take, int pageSize, int currentPage,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy,
             Expression<Func<TEntity, bool>> predicate,
             params Expression<Func<TEntity, object>>[] includes);

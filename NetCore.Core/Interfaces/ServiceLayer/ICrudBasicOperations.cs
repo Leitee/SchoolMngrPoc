@@ -6,10 +6,10 @@ namespace NetCore.Core.Interfaces
 {
     public interface ICrudBasicOperations<TDto>
     {
-        Task<BLResponse<List<TDto>>> GetAllAsync();
-        Task<BLResponse<TDto>> GetByIdAsync(int pId);
-        Task<BLResponse<TDto>> CreateAsync(TDto pDto);
-        Task<BLResponse<bool>> UpdateAsync(TDto pDto);
-        Task<BLResponse<bool>> DeleteAsync(TDto pDto);
+        Task<BLListResponse<TDto>> GetAllAsync();
+        Task<BLSingleResponse<TDto>> GetByIdAsync(int pId);
+        Task<BLSingleResponse<TDto>> CreateAsync(TDto pDto);
+        Task<BLSingleResponse<bool>> UpdateAsync(TDto pDto);
+        Task<BLSingleResponse<bool>> DeleteAsync(TDto pDto);
     }
 }

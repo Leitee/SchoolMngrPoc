@@ -7,7 +7,6 @@ namespace NetCore.ServiceData.Services
 {
     public abstract class BaseService<TEntity, TDto>
     {
-        public BLResponse<TDto> Response { get; set; }
         protected readonly IApplicationUow _uow;
         protected readonly IMapperCore<TEntity, TDto> _mapper;
 
@@ -15,21 +14,20 @@ namespace NetCore.ServiceData.Services
         {
             _uow = applicationUow;
             _mapper = mapperCore;
-            Response = new BLResponse<TDto>();
         }
 
-        protected void HandleSVCException(Exception pEx)
+        protected void HandleSVCException(BLResponse pResponse, Exception pEx)
         {
-            Response.Errors.Add("Internal Error at Service Layer");
-            Response.Errors.Add(pEx.Message);
+            pResponse.Errors.Add("Internal Error at Service Layer");
+            pResponse.Errors.Add(pEx.Message);
             if (pEx.InnerException != null)
-                Response.Errors.Add(pEx.InnerException.Message);
+                pResponse.Errors.Add(pEx.InnerException.Message);
         }
 
-        protected void HandleSVCException(params string[] pErrors)
+        protected void HandleSVCException(BLResponse pResponse, params string[] pErrors)
         {
-            Response.Errors.Add("Internal Error at Service Layer");
-            Response.Errors.AddRange(pErrors);
+            pResponse.Errors.Add("Internal Error at Service Layer");
+            pResponse.Errors.AddRange(pErrors);
         }
     }
 }
