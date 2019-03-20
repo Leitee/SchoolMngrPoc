@@ -11,7 +11,7 @@ namespace Pandora.NetStandard.Model.Entities
         [Key]
         public int GradeId { get; set; }
 
-        [Required, MaxLength(50)]
+        [Required, MaxLength(50), Display(Name = "Año", Order = 1)]
         public string Name { get; set; }
 
         public virtual ICollection<Class> Classes { get; set; }

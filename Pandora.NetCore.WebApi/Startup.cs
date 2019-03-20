@@ -40,6 +40,9 @@ namespace Pandora.NetCore.WebApi
             services.Configure<AppSettings>(appSettingsSection);
             var appSettings = appSettingsSection.Get<AppSettings>();
 
+            //Seed the db
+            services.AddTransient<SeedDb>();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.

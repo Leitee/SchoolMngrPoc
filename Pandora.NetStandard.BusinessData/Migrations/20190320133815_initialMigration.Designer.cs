@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pandora.NetStandard.BusinessData.Data;
@@ -9,19 +10,22 @@ using Pandora.NetStandard.BusinessData.Data;
 namespace Pandora.NetStandard.BusinessData.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190319170105_IdentityTables")]
-    partial class IdentityTables
+    [Migration("20190320133815_initialMigration")]
+    partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854");
+                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType");
 
@@ -39,7 +43,8 @@ namespace Pandora.NetStandard.BusinessData.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType");
 
@@ -101,10 +106,11 @@ namespace Pandora.NetStandard.BusinessData.Migrations
                     b.ToTable("UserTokens");
                 });
 
-            modelBuilder.Entity("NetCore.Core.Security.Identity.ApplicationRole", b =>
+            modelBuilder.Entity("Pandora.NetStandard.Core.Security.Identity.ApplicationRole", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -121,15 +127,17 @@ namespace Pandora.NetStandard.BusinessData.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex");
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("NetCore.Core.Security.Identity.ApplicationUser", b =>
+            modelBuilder.Entity("Pandora.NetStandard.Core.Security.Identity.ApplicationUser", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AccessFailedCount");
 
@@ -181,19 +189,23 @@ namespace Pandora.NetStandard.BusinessData.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex");
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("NetCore.Model.Entities.Class", b =>
+            modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Class", b =>
                 {
                     b.Property<int>("ClassId")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("GradeId");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<int>("Shift");
 
@@ -204,12 +216,15 @@ namespace Pandora.NetStandard.BusinessData.Migrations
                     b.ToTable("Classes");
                 });
 
-            modelBuilder.Entity("NetCore.Model.Entities.Grade", b =>
+            modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Grade", b =>
                 {
                     b.Property<int>("GradeId")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.HasKey("GradeId");
 
@@ -218,7 +233,7 @@ namespace Pandora.NetStandard.BusinessData.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("NetCore.Core.Security.Identity.ApplicationRole")
+                    b.HasOne("Pandora.NetStandard.Core.Security.Identity.ApplicationRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -226,7 +241,7 @@ namespace Pandora.NetStandard.BusinessData.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("NetCore.Core.Security.Identity.ApplicationUser")
+                    b.HasOne("Pandora.NetStandard.Core.Security.Identity.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -234,7 +249,7 @@ namespace Pandora.NetStandard.BusinessData.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("NetCore.Core.Security.Identity.ApplicationUser")
+                    b.HasOne("Pandora.NetStandard.Core.Security.Identity.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -242,12 +257,12 @@ namespace Pandora.NetStandard.BusinessData.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("NetCore.Core.Security.Identity.ApplicationRole")
+                    b.HasOne("Pandora.NetStandard.Core.Security.Identity.ApplicationRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("NetCore.Core.Security.Identity.ApplicationUser")
+                    b.HasOne("Pandora.NetStandard.Core.Security.Identity.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -255,15 +270,15 @@ namespace Pandora.NetStandard.BusinessData.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("NetCore.Core.Security.Identity.ApplicationUser")
+                    b.HasOne("Pandora.NetStandard.Core.Security.Identity.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("NetCore.Model.Entities.Class", b =>
+            modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Class", b =>
                 {
-                    b.HasOne("NetCore.Model.Entities.Grade", "Grade")
+                    b.HasOne("Pandora.NetStandard.Model.Entities.Grade", "Grade")
                         .WithMany("Classes")
                         .HasForeignKey("GradeId")
                         .OnDelete(DeleteBehavior.Cascade);
