@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NetCore.Core.Security.Identity
 {
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser : IdentityUser<int>
     {
         [Required]
         [MaxLength(100)]

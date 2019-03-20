@@ -12,7 +12,7 @@ namespace NetCore.ServiceData.Data
 
         public ApplicationUow(IRepositoryProvider repositoryProvider)
         {
-            _dbContext = new ApplicationDbContext();
+            _dbContext = ApplicationDbContext.Create();
 
             repositoryProvider.DbContext = _dbContext;
             _repositoryProvider = repositoryProvider;

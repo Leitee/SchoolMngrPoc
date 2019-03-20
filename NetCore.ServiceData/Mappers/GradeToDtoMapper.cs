@@ -1,8 +1,8 @@
 ﻿using NetCore.Core.Mapper;
 using NetCore.Model.Entities;
-using NetCore.ServiceData.Services.Dtos;
+using NetCore.ServiceData.Dtos;
 
-namespace NetCore.ServiceData.Services.Mappers
+namespace NetCore.ServiceData.Mappers
 {
     public class GradeToDtoMapper : GenericMapperCore<Grade, GradeDto>
     {

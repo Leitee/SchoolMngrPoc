@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using NetCore.Core.Interfaces;
+using NetCore.Core.Security.Identity;
 using NetCore.ServiceData.Data;
 using NetCore.ServiceData.Services;
 using NetCore.ServiceData.Services.Contracts;
@@ -12,6 +14,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using System.Reflection;
+using System.Text;
 
 namespace NetCore.Api
 {
@@ -30,13 +33,25 @@ namespace NetCore.Api
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //    .AddJwtBearer(options =>
-            //    {
-            //        options.Authority = "{yourAuthorizationServerAddress}";
-            //        options.Audience = "{yourAudience}";
-            //    });
+            // Register authentication schema
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidateLifetime = true,
+                        ValidIssuer = "netcorebackend.com",
+                        ValidAudience = "netcorebackend.com",
+                        //IssuerSigningKey = new SymmetricSecurityKey(
+                        //    Encoding.UTF8.GetBytes(Configuration))
+                    });
 
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            // configure DI for application services
             services.AddScoped<IRepositoryProvider, RepositoryProvider>();
             services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
             services.AddScoped<IApplicationUow, ApplicationUow>();
@@ -73,6 +88,12 @@ namespace NetCore.Api
             {
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "NetCoreBackend API V1");
             });
+
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseAuthentication();
             app.UseMvc();

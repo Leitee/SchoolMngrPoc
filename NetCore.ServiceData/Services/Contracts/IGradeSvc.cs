@@ -1,5 +1,5 @@
 ﻿using NetCore.Core.Interfaces;
-using NetCore.ServiceData.Services.Dtos;
+using NetCore.ServiceData.Dtos;
 
 namespace NetCore.ServiceData.Services.Contracts
 {

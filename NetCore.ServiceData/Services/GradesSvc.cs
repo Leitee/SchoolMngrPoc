@@ -1,11 +1,10 @@
 ﻿using NetCore.Core.Bases;
 using NetCore.Core.Interfaces;
 using NetCore.Model.Entities;
+using NetCore.ServiceData.Dtos;
+using NetCore.ServiceData.Mappers;
 using NetCore.ServiceData.Services.Contracts;
-using NetCore.ServiceData.Services.Dtos;
-using NetCore.ServiceData.Services.Mappers;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 

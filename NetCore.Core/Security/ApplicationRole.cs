@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace NetCore.Core.Security.Identity
 {
-    public class ApplicationRole : IdentityRole
+    public class ApplicationRole : IdentityRole<int>
     {
         public ApplicationRole() { }
 
         public ApplicationRole(string name, string description) : base(name)
         {
-            _description = description;
+            Description = description;
         }
 
-        private string _description;
-        public string Description { get;}
+        public string Description { get; set; }
     }
 }

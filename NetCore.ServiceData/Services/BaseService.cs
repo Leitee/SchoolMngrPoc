@@ -1,18 +1,19 @@
 ﻿using NetCore.Core.Bases;
 using NetCore.Core.Interfaces;
 using NetCore.Core.Mapper;
+using NetCore.ServiceData.Data;
 using System;
 
 namespace NetCore.ServiceData.Services
 {
     public abstract class BaseService<TEntity, TDto>
     {
-        protected readonly IApplicationUow _uow;
+        protected readonly ApplicationUow _uow;
         protected readonly IMapperCore<TEntity, TDto> _mapper;
 
         public BaseService(IApplicationUow applicationUow, IMapperCore<TEntity, TDto> mapperCore)
         {
-            _uow = applicationUow;
+            _uow = applicationUow as ApplicationUow;
             _mapper = mapperCore;
         }
 

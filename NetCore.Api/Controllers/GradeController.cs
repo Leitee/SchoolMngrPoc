@@ -2,13 +2,16 @@
 using Microsoft.Extensions.Logging;
 using NetCore.Core.Bases;
 using NetCore.ServiceData.Services.Contracts;
-using NetCore.ServiceData.Services.Dtos;
+using NetCore.ServiceData.Dtos;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace NetCore.Api.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class GradeController : ApiController
     {
         private readonly IGradeSvc _gradeSvc;
