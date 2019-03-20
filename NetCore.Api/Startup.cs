@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using NetCore.Api.Config;
 using NetCore.Core.Interfaces;
 using NetCore.Core.Security.Identity;
 using NetCore.ServiceData.Data;
@@ -33,19 +35,29 @@ namespace NetCore.Api
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            // configure strongly typed settings objects
+            IConfigurationSection appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
             // Register authentication schema
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            services.AddAuthentication(auth =>
+            {
+                auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(options =>
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
                         ValidateAudience = true,
                         ValidateIssuerSigningKey = true,
                         ValidateLifetime = true,
-                        ValidIssuer = "netcorebackend.com",
-                        ValidAudience = "netcorebackend.com",
-                        //IssuerSigningKey = new SymmetricSecurityKey(
-                        //    Encoding.UTF8.GetBytes(Configuration))
+                        ValidIssuer = appSettings.JwtValidIssuer,
+                        ValidAudience = appSettings.JwtValidAudience,
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(appSettings.JwtSecretKey)),
+                        ClockSkew = TimeSpan.Zero
                     });
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
