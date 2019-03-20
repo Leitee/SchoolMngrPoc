@@ -14,6 +14,7 @@ using NetCore.ServiceData.Services;
 using NetCore.ServiceData.Services.Contracts;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -41,12 +42,11 @@ namespace NetCore.Api
 
             // Register authentication schema
             var appSettings = appSettingsSection.Get<AppSettings>();
-            services.AddAuthentication(auth =>
-            {
-                auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
-            }).AddJwtBearer(options =>
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.SaveToken = true;
+                    options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
@@ -55,10 +55,11 @@ namespace NetCore.Api
                         ValidateLifetime = true,
                         ValidIssuer = appSettings.JwtValidIssuer,
                         ValidAudience = appSettings.JwtValidAudience,
+                        ClockSkew = TimeSpan.Zero,
                         IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(appSettings.JwtSecretKey)),
-                        ClockSkew = TimeSpan.Zero
-                    });
+                            Encoding.UTF8.GetBytes(appSettings.JwtSecretKey))
+                    };
+                });
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();

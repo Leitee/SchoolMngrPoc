@@ -11,7 +11,7 @@ namespace NetCore.Api.Controllers
 
         public ApiController(ILogger logger)
         {
-            logger.LogInformation("Application Starting");
+            logger.LogInformation("Application Starting...");
             _logger = logger;
         }
     }

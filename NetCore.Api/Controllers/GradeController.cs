@@ -1,17 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NetCore.Core.Bases;
-using NetCore.ServiceData.Services.Contracts;
 using NetCore.ServiceData.Dtos;
+using NetCore.ServiceData.Services.Contracts;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace NetCore.Api.Controllers
 {
     [Route("api/v1/[controller]")]
-    [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+   // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class GradeController : ApiController
     {
         private readonly IGradeSvc _gradeSvc;
@@ -25,16 +22,18 @@ namespace NetCore.Api.Controllers
         // GET api/values
         [HttpGet]
         [ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
-        public async Task<ActionResult<BLListResponse<GradeDto>>> Get()
+        public async Task<IActionResult> Get()
         {
-            return await _gradeSvc.GetAllAsync();
+            var response = await _gradeSvc.GetAllAsync();
+            return response.ToHttpResponse();
         }
 
         // GET api/values/5
         [HttpGet("{id}", Name = "getPais")]
-        public async Task<ActionResult<BLSingleResponse<GradeDto>>> Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return await _gradeSvc.GetByIdAsync(id);
+            var response = await _gradeSvc.GetByIdAsync(id);
+            return response.ToHttpResponse();
         }
 
         // POST api/values
