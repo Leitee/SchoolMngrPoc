@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pandora.NetStandard.BusinessData.Dtos;
 using Pandora.NetStandard.BusinessData.Services.Contracts;
+using Pandora.NetStandard.Core.Bases;
 
 namespace Pandora.Api.Controllers
 {
@@ -23,11 +24,7 @@ namespace Pandora.Api.Controllers
             if(ModelState.IsValid)
             {
                 var response = await _accountSvc.LoginAsync(model);
-                if (response.HasToken)
-                {
-                    return Ok(response);
-                }
-                return BadRequest("Username or Password is incorrect");
+                return response.ToHttpResponse();
             }
             return BadRequest();
         }
@@ -38,11 +35,7 @@ namespace Pandora.Api.Controllers
             if (ModelState.IsValid)
             {
                 var response = await _accountSvc.RegisterAsync(model);
-                if (response.HasToken)
-                {
-                    return Ok(response);
-                }
-                return BadRequest("There was an error, user was not created");
+                return response.ToHttpResponse();
             }
             return BadRequest();
         }

@@ -11,7 +11,7 @@ namespace Pandora.NetStandard.Core.Bases
 
         public int ErrorsCount { get { return Errors.Count; } }
 
-        public string ErrorCode { get; set; }
+        public int ErrorCode { get; set; }
 
         public BLResponse()
         {

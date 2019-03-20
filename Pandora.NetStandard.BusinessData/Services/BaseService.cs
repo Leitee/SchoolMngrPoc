@@ -6,15 +6,13 @@ using Pandora.NetStandard.Core.Mapper;
 
 namespace Pandora.NetStandard.BusinessData.Services
 {
-    public abstract class BaseService<TEntity, TDto>
+    public abstract class BaseService
     {
         protected readonly ApplicationUow _uow;
-        protected readonly IMapperCore<TEntity, TDto> _mapper;
 
-        public BaseService(IApplicationUow applicationUow, IMapperCore<TEntity, TDto> mapperCore)
+        public BaseService(IApplicationUow applicationUow)
         {
             _uow = applicationUow as ApplicationUow;
-            _mapper = mapperCore;
         }
 
         protected void HandleSVCException(BLResponse pResponse, Exception pEx)
@@ -29,6 +27,16 @@ namespace Pandora.NetStandard.BusinessData.Services
         {
             pResponse.Errors.Add("Internal Error at Service Layer");
             pResponse.Errors.AddRange(pErrors);
+        }
+    }
+
+    public abstract class BaseService<TEntity, TDto> : BaseService
+    {
+        protected readonly IMapperCore<TEntity, TDto> _mapper;
+
+        public BaseService(IApplicationUow applicationUow, IMapperCore<TEntity, TDto> mapperCore) : base(applicationUow as ApplicationUow)
+        {
+            _mapper = mapperCore;
         }
     }
 }
