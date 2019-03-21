@@ -1,19 +1,19 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Pandora.NetStandard.BusinessData.Dtos;
+﻿using Pandora.NetStandard.BusinessData.Dtos;
 using Pandora.NetStandard.BusinessData.Mappers;
+using Pandora.NetStandard.BusinessData.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Model.Entities;
-using Pandora.ServiceData.Services.Contracts;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.BusinessData.Services
 {
-    public class GradesSvc : BaseService<Grade, GradeDto>, IGradeSvc
+    public class GradeSvc : BaseService<Grade, GradeDto>, IGradeSvc
     {
 
-        public GradesSvc(IApplicationUow applicationUow) : base(applicationUow, new GradeToDtoMapper())
+        public GradeSvc(IApplicationUow applicationUow) : base(applicationUow, new GradeToDtoMapper())
         {
 
         }

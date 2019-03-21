@@ -1,29 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Pandora.NetStandard.BusinessData.Data;
+using Pandora.NetStandard.BusinessData.Services.Contracts;
 using Pandora.NetStandard.Model.Entities;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pandora.NetCore.WebApi.Controllers
 {
     public class ClassesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IClassSvc _classSvc;
 
-        public ClassesController(ApplicationDbContext context)
+        public ClassesController(ApplicationDbContext context, IClassSvc classSvc)
         {
             _context = context;
+            _classSvc = classSvc;
         }
 
         // GET: Classes
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Classes.Include(c => c.Grade);
-            return View(await applicationDbContext.ToListAsync());
+            var response = await _classSvc.GetAllAsync();
+            return View(response.Data);
         }
 
         // GET: Classes/Details/5

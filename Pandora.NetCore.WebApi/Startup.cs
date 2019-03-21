@@ -1,25 +1,25 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Swashbuckle.AspNetCore.Swagger;
 using Pandora.Api.Config;
+using Pandora.NetCore.WebApi.Controllers;
 using Pandora.NetStandard.BusinessData.Data;
 using Pandora.NetStandard.BusinessData.Services;
+using Pandora.NetStandard.BusinessData.Services.Contracts;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Security.Identity;
-using Pandora.ServiceData.Services.Contracts;
-using Microsoft.Extensions.Logging;
-using Pandora.Api.Controllers;
-using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.IO;
+using System.Reflection;
+using System.Text;
 
 namespace Pandora.NetCore.WebApi
 {
@@ -87,9 +87,9 @@ namespace Pandora.NetCore.WebApi
             // Set up dependency injection for controller's logger
             services.AddScoped<ILogger, Logger<ApiBaseController>>();
             services.AddScoped<IRepositoryProvider, RepositoryProvider>();
-            //services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
             services.AddScoped<IApplicationUow, ApplicationUow>();
-            services.AddScoped<IGradeSvc, GradesSvc>();
+            services.AddScoped<IGradeSvc, GradeSvc>();
+            services.AddScoped<IClassSvc, ClassSvc>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(options =>
@@ -140,7 +140,7 @@ namespace Pandora.NetCore.WebApi
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute(
+                routes.MapRoute(                    
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });

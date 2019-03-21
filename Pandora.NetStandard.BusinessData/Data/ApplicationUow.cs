@@ -39,9 +39,9 @@ namespace Pandora.NetStandard.BusinessData.Data
         /// <summary>
         /// Save pending changes to the database asyncly and return the amount of affected rows
         /// </summary>
-        public Task<int> CommitAsync()
+        public async Task<bool> CommitAsync()
         {
-            return _dbContext.SaveChangesAsync();
+            return await _dbContext.SaveChangesAsync() > 0;
         }
 
         #region IDisposable

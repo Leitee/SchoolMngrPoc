@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pandora.NetStandard.BusinessData.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
-using Pandora.ServiceData.Services.Contracts;
+using System.Threading.Tasks;
 
-namespace Pandora.Api.Controllers
+namespace Pandora.NetCore.WebApi.Controllers
 {
     [Route("api/v1/[controller]")]
    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -18,7 +18,7 @@ namespace Pandora.Api.Controllers
             _gradeSvc = gradeSvc;
         }
 
-        // GET api/values
+        // GET api/v1/grades
         [HttpGet]
         [ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
         public async Task<IActionResult> Get()
@@ -27,7 +27,7 @@ namespace Pandora.Api.Controllers
             return response.ToHttpResponse();
         }
 
-        // GET api/values/5
+        // GET api/v1/grades/5
         [HttpGet("{id}", Name = "getPais")]
         public async Task<IActionResult> Get(int id)
         {
@@ -35,7 +35,7 @@ namespace Pandora.Api.Controllers
             return response.ToHttpResponse();
         }
 
-        // POST api/values
+        // POST api/v1/grades
         [HttpPost]
         public IActionResult Post([FromBody] object obj)
         {
@@ -48,13 +48,13 @@ namespace Pandora.Api.Controllers
             return BadRequest(ModelState);
         }
 
-        // PUT api/values/5
+        // PUT api/v1/grades/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/values/5
+        // DELETE api/v1/grades/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
