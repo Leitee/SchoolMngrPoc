@@ -216,9 +216,7 @@ namespace Pandora.NetStandard.BusinessData.Migrations
 
             modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Grade", b =>
                 {
-                    b.Property<int>("GradeId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("GradeId");
 
                     b.Property<string>("Name")
                         .IsRequired()

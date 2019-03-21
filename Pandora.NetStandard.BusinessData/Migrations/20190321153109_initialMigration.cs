@@ -12,8 +12,7 @@ namespace Pandora.NetStandard.BusinessData.Migrations
                 name: "Grades",
                 columns: table => new
                 {
-                    GradeId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    GradeId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false)
                 },
                 constraints: table =>

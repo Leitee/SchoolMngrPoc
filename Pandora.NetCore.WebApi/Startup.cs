@@ -90,6 +90,7 @@ namespace Pandora.NetCore.WebApi
             services.AddScoped<IApplicationUow, ApplicationUow>();
             services.AddScoped<IGradeSvc, GradeSvc>();
             services.AddScoped<IClassSvc, ClassSvc>();
+            services.AddScoped<IAccountSvc, AccountSvc>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(options =>

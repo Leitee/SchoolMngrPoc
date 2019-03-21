@@ -35,21 +35,15 @@ namespace Pandora.NetCore.WebApi.Controllers
                 return NotFound();
             }
 
-            var @class = await _context.Classes
-                .Include(c => c.Grade)
-                .FirstOrDefaultAsync(m => m.ClassId == id);
-            if (@class == null)
-            {
-                return NotFound();
-            }
-
-            return View(@class);
+            var response = await _classSvc.GetByIdAsync(id.Value);
+            return View(response.Data);
         }
 
         // GET: Classes/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["GradeId"] = new SelectList(_context.Grades, "GradeId", "Name");
+            var grades = await _classSvc.GetAllAsync();
+            ViewData["GradeId"] = new SelectList(grades.Data, "GradeId", "Name");
             return View();
         }
 
@@ -58,16 +52,16 @@ namespace Pandora.NetCore.WebApi.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ClassId,Name,Shift,GradeId")] Class @class)
+        public async Task<IActionResult> Create([Bind("ClassId,Name,Shift,GradeId")] Class pClass)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(@class);
-                await _context.SaveChangesAsync();
+                var response = await _classSvc.CreateAsync(pClass);
+                pClass = response.Data;
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GradeId"] = new SelectList(_context.Grades, "GradeId", "Name", @class.GradeId);
-            return View(@class);
+            ViewData["GradeId"] = new SelectList((await _classSvc.GetAllAsync()).Data, "GradeId", "Name", pClass.GradeId);
+            return View(pClass);
         }
 
         // GET: Classes/Edit/5
@@ -78,13 +72,10 @@ namespace Pandora.NetCore.WebApi.Controllers
                 return NotFound();
             }
 
-            var @class = await _context.Classes.FindAsync(id);
-            if (@class == null)
-            {
-                return NotFound();
-            }
-            ViewData["GradeId"] = new SelectList(_context.Grades, "GradeId", "Name", @class.GradeId);
-            return View(@class);
+            var response = await _classSvc.GetByIdAsync(id.Value);
+
+            ViewData["GradeId"] = new SelectList((await _classSvc.GetAllAsync()).Data, "GradeId", "Name", response.Data.GradeId);
+            return View(response.Data);
         }
 
         // POST: Classes/Edit/5

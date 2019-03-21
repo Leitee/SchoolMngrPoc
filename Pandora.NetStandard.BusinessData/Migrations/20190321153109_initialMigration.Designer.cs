@@ -10,7 +10,7 @@ using Pandora.NetStandard.BusinessData.Data;
 namespace Pandora.NetStandard.BusinessData.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190320133815_initialMigration")]
+    [Migration("20190321153109_initialMigration")]
     partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -218,9 +218,7 @@ namespace Pandora.NetStandard.BusinessData.Migrations
 
             modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Grade", b =>
                 {
-                    b.Property<int>("GradeId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("GradeId");
 
                     b.Property<string>("Name")
                         .IsRequired()

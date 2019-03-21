@@ -8,7 +8,7 @@ namespace Pandora.NetStandard.Model.Entities
     [Table("Grades")]
     public class Grade
     {
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int GradeId { get; set; }
 
         [Required, MaxLength(50), Display(Name = "Año", Order = 1)]
