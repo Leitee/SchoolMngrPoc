@@ -1,44 +1,86 @@
-﻿using Pandora.NetStandard.BusinessData.Dtos;
+﻿using Microsoft.AspNetCore.Identity;
+using Pandora.NetStandard.BusinessData.Dtos;
 using Pandora.NetStandard.BusinessData.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Security.Identity;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.BusinessData.Services
 {
     public class AccountSvc : BaseService, IAccountSvc
     {
-        public AccountSvc(IApplicationUow applicationUow) : base(applicationUow)
+        private readonly SignInManager<ApplicationUser> _signInManager;
+
+        public AccountSvc(IApplicationUow applicationUow,
+            SignInManager<ApplicationUser> signInManager) : base(applicationUow)
         {
+            _signInManager = signInManager;
         }
 
-        public async Task<BLSingleResponse<TokenRespDto>> LoginAsync(LoginDto model)
+        public Task<BLSingleResponse<ApplicationRole>> CreateRoleAsync(ApplicationRole pDto)
         {
-            var response = new BLSingleResponse<TokenRespDto>();
-
-            //implement
-
-            if (response.HasErrors)
-            {
-                HandleSVCException(response, "Username or Password is invalid");
-            }
-
-            return response;
+            throw new NotImplementedException();
         }
 
-        public async Task<BLSingleResponse<TokenRespDto>> RegisterAsync(RegisterDto model)
+        public Task<BLSingleResponse<ApplicationUser>> CreateUserAsync(ApplicationUser pDto)
         {
-            var response = new BLSingleResponse<TokenRespDto>();
+            throw new NotImplementedException();
+        }
 
-            //implement
+        public Task<BLSingleResponse<bool>> DeleteRoleAsync(ApplicationRole pDto)
+        {
+            throw new NotImplementedException();
+        }
 
-            if (response.HasErrors)
-            {
-                HandleSVCException(response, "There was an error, user was not created");
-            }   
+        public Task<BLSingleResponse<bool>> DeleteUserAsync(ApplicationUser pDto)
+        {
+            throw new NotImplementedException();
+        }
 
-            return response;
+        public Task<BLListResponse<ApplicationRole>> GetAllRolesAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<BLListResponse<ApplicationUser>> GetAllUsersAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<BLSingleResponse<ApplicationRole>> GetRoleByIdAsync(string pId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<BLSingleResponse<ApplicationRole>> GetRoleByNameAsync(string pRolName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<BLSingleResponse<ApplicationUser>> GetUserByIdAsync(string pId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<BLSingleResponse<ApplicationUser>> GetUserByNameAsync(string pUserName)
+        {
+            throw new NotImplementedException();
+        }
+
+        
+
+        public Task<BLSingleResponse<bool>> UpdateRoleAsync(ApplicationRole pDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<BLSingleResponse<bool>> UpdateUserAsync(ApplicationUser pDto)
+        {
+            throw new NotImplementedException();
         }
     }
 }

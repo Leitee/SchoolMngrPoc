@@ -66,7 +66,7 @@ namespace Pandora.NetStandard.BusinessData.Data
 
         protected virtual Func<DbContext, object> GetRepositoryForEntityType<T>() where T : class
         {
-            return dbContext => new SQLiteRepository<T>(DbContext);
+            return dbContext => new SQLRepository<T>(DbContext);
         }
     }
 }

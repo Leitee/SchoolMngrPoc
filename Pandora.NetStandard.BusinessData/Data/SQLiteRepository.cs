@@ -1,20 +1,20 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Pandora.NetStandard.Core.Bases;
+using Pandora.NetStandard.Core.Interfaces;
+using Pandora.NetStandard.Core.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Pandora.NetStandard.Core.Bases;
-using Pandora.NetStandard.Core.Interfaces;
-using Pandora.NetStandard.Core.Utils;
 
 namespace Pandora.NetStandard.BusinessData.Data
 {
-    public class SQLiteRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class SQLRepository<TEntity> : ISQLRepository<TEntity> where TEntity : class
     {
         protected readonly ApplicationDbContext _dbContext;
 
-        public SQLiteRepository(ApplicationDbContext context)
+        public SQLRepository(ApplicationDbContext context)
         {
             _dbContext = context;
         }
@@ -35,7 +35,9 @@ namespace Pandora.NetStandard.BusinessData.Data
             });
         }
 
-        public async Task<BLPagedResponse<TEntity>> AllPagedAsync(int skip, int take, int pageSize, int currentPage, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
+        public async Task<BLPagedResponse<TEntity>> AllPagedAsync(int skip, int take, int pageSize, int currentPage, 
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, Expression<Func<TEntity, 
+                bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
         {
             IQueryable<TEntity> entities;
 

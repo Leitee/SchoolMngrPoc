@@ -3,7 +3,7 @@ using Pandora.NetStandard.Model.Entities;
 
 namespace Pandora.NetStandard.BusinessData.Services.Contracts
 {
-    public interface IClassSvc : ICrudBasicOperations<Class>
+    public interface IClassSvc : IBasicCrudOperations<Class>
     {
     }
 }
