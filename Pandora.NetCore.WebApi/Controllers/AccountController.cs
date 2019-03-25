@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pandora.NetCore.WebApi.Controllers;
-using Pandora.NetStandard.BusinessData.Services.Contracts;
+using Pandora.NetStandard.Business.Services.Contracts;
 
 namespace Pandora.Api.Controllers
 {

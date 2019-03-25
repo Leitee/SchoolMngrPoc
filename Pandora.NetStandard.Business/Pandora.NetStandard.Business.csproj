@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pandora.NetStandard.Data\Pandora.NetStandard.Data.csproj" />
+    <ProjectReference Include="..\Pandora.NetStandard.Core\Pandora.NetStandard.Core.csproj" />
+    <ProjectReference Include="..\Pandora.NetStandard.Model\Pandora.NetStandard.Model.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Pandora.NetStandard.BusinessData.Data;
-using Pandora.NetStandard.BusinessData.Services.Contracts;
+using Pandora.NetStandard.Business.Services.Contracts;
+using Pandora.NetStandard.Data;
+using Pandora.NetStandard.Data.Data;
 using Pandora.NetStandard.Model.Entities;
 using System.Linq;
 using System.Threading.Tasks;

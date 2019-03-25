@@ -5,8 +5,10 @@
 /Pandora.NetCore.WebApi/obj
 /Pandora.NetStandard.Model/bin
 /Pandora.NetStandard.Model/obj
-/Pandora.NetStandard.BusinessData/bin
-/Pandora.NetStandard.BusinessData/obj
+/Pandora.NetStandard.Data/bin
+/Pandora.NetStandard.Data/obj
+/Pandora.NetStandard.Business/bin
+/Pandora.NetStandard.Business/obj
 /Pandora.NetStandard.Core/obj
 /Pandora.NetStandard.Core/bin
 /Pandora.NetCore.UnitTest/obj

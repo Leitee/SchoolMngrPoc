@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pandora.NetStandard.BusinessData.Dtos;
-using Pandora.NetStandard.BusinessData.Services.Contracts;
+using Pandora.NetStandard.Business.Dtos;
+using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
 using System.Threading.Tasks;
 
