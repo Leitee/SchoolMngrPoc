@@ -46,6 +46,8 @@ namespace Pandora.NetStandard.BusinessData.Data
 
         #region IDisposable
 
+        private bool disposed = false;
+
         public void Dispose()
         {
             Dispose(true);
@@ -58,6 +60,7 @@ namespace Pandora.NetStandard.BusinessData.Data
             {
                 _dbContext?.Dispose();
             }
+            this.disposed = true;
         }
 
         #endregion

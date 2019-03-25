@@ -34,7 +34,7 @@ namespace Pandora.NetStandard.BusinessData.Services
     {
         protected readonly IMapperCore<TEntity, TDto> _mapper;
 
-        public BaseService(IApplicationUow applicationUow, IMapperCore<TEntity, TDto> mapperCore) : base(applicationUow as ApplicationUow)
+        public BaseService(IApplicationUow applicationUow, IMapperCore<TEntity, TDto> mapperCore) : base(applicationUow)
         {
             _mapper = mapperCore;
         }

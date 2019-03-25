@@ -9,3 +9,5 @@
 /Pandora.NetStandard.BusinessData/obj
 /Pandora.NetStandard.Core/obj
 /Pandora.NetStandard.Core/bin
+/Pandora.NetCore.UnitTest/obj
+/Pandora.NetCore.UnitTest/bin

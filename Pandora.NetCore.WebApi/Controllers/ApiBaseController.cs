@@ -11,8 +11,8 @@ namespace Pandora.NetCore.WebApi.Controllers
 
         public ApiBaseController(ILogger logger)
         {
-            logger.LogInformation("Application Starting...");
             _logger = logger;
+            _logger?.LogInformation("Application Starting...");
         }
     }
 }

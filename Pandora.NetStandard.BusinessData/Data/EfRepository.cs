@@ -10,13 +10,15 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.BusinessData.Data
 {
-    public class SQLRepository<TEntity> : ISQLRepository<TEntity> where TEntity : class
+    public class EfRepository<TEntity> : IEfRepository<TEntity> where TEntity : class
     {
         protected readonly ApplicationDbContext _dbContext;
+        protected readonly DbSet<TEntity> _dbSet;
 
-        public SQLRepository(ApplicationDbContext context)
+        public EfRepository(ApplicationDbContext context)
         {
             _dbContext = context;
+            _dbSet = _dbContext.Set<TEntity>();
         }
 
         public async Task<IQueryable<TEntity>> AllAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, 
@@ -24,7 +26,7 @@ namespace Pandora.NetStandard.BusinessData.Data
         {
             return await Task.Run(() =>
             {
-                IQueryable<TEntity> entities = _dbContext.Set<TEntity>().IncludeMultiple(includes);
+                IQueryable<TEntity> entities = _dbSet.IncludeMultiple(includes);
 
                 if (predicate != null)
                 {
@@ -43,12 +45,12 @@ namespace Pandora.NetStandard.BusinessData.Data
 
             if (predicate == null)
             {
-                entities = _dbContext.Set<TEntity>()
+                entities = _dbSet
                    .IncludeMultiple(includes);
             }
             else
             {
-                entities = _dbContext.Set<TEntity>()
+                entities = _dbSet
                     .IncludeMultiple(includes).Where(predicate);
             }
 
@@ -74,13 +76,13 @@ namespace Pandora.NetStandard.BusinessData.Data
         {
             return await Task.Run(() =>
             {
-                return _dbContext.Set<TEntity>().Find(id);
+                return _dbSet.Find(id);
             });
         }
 
         public async Task<TEntity> GetByExpressionAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return await _dbContext.Set<TEntity>()
+            return await _dbSet
                 .AsNoTracking<TEntity>()
                 .FirstOrDefaultAsync(predicate);
         }
@@ -89,22 +91,22 @@ namespace Pandora.NetStandard.BusinessData.Data
         {
             await Task.Run(() =>
             {
-                _dbContext.Set<TEntity>().Add(entity);
+                _dbSet.Add(entity);
             });
             return entity;
         }
 
         public async Task DeleteAsync(object id)
         {
-            await this.DeleteAsync(_dbContext.Set<TEntity>().Find(id));
+            await this.DeleteAsync(_dbSet.Find(id));
         }
 
         public async Task DeleteAsync(TEntity entityToDelete)
         {
             await Task.Run(() =>
             {
-                _dbContext.Set<TEntity>().Attach(entityToDelete);
-                _dbContext.Set<TEntity>().Remove(entityToDelete);
+                _dbSet.Attach(entityToDelete);
+                _dbSet.Remove(entityToDelete);
             });
         }
 
@@ -120,7 +122,7 @@ namespace Pandora.NetStandard.BusinessData.Data
         {
             return await Task.Run(() =>
             {
-                return _dbContext.Set<TEntity>().Count();
+                return _dbSet.Count();
             });
         }
 
@@ -128,7 +130,7 @@ namespace Pandora.NetStandard.BusinessData.Data
         {
             return await Task.Run(() =>
             {
-                return _dbContext.Set<TEntity>().Count(predicate);
+                return _dbSet.Count(predicate);
             });
         }
 
@@ -146,13 +148,13 @@ namespace Pandora.NetStandard.BusinessData.Data
             {
                 if (predicate == null)
                 {
-                    return _dbContext.Set<TEntity>()
+                    return _dbSet
                         .IncludeMultiple(includes)
                         .FirstOrDefault();
                 }
                 else
                 {
-                    return _dbContext.Set<TEntity>()
+                    return _dbSet
                         .IncludeMultiple(includes)
                         .Where(predicate)
                         .FirstOrDefault();
@@ -163,7 +165,7 @@ namespace Pandora.NetStandard.BusinessData.Data
         public async Task<List<TEntity>> ExecSp(string spName, params object[] parameters)
         {
             var tEntity = new List<TEntity>();
-            var spResult = await Task.Run(() => _dbContext.Set<TEntity>().FromSql(spName, parameters));
+            var spResult = await Task.Run(() => _dbSet.FromSql(spName, parameters));
             foreach (var item in spResult)
             {
                 tEntity.Add(item);

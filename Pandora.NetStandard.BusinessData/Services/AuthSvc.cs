@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Pandora.NetStandard.BusinessData.Dtos;
+using Pandora.NetStandard.BusinessData.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Interfaces.Identity;
 using Pandora.NetStandard.Core.Security.Identity;
 using System.Threading.Tasks;
 
-namespace Pandora.NetStandard.BusinessData.Services.Contracts
+namespace Pandora.NetStandard.BusinessData.Services
 {
     public class AuthSvc : BaseService, IAuthSvc
     {
