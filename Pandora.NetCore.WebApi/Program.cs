@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Pandora.NetStandard.Data.Data;
+using Pandora.NetStandard.Data.Dals;
 
 namespace Pandora.NetCore.WebApi
 {

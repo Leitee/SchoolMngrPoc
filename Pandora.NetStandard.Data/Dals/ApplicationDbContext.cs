@@ -5,7 +5,7 @@ using System;
 using Pandora.NetStandard.Core.Security.Identity;
 using Pandora.NetStandard.Model.Entities;
 
-namespace Pandora.NetStandard.Data.Data
+namespace Pandora.NetStandard.Data.Dals
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>, IDisposable
     {

@@ -1,7 +1,7 @@
 ﻿using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Mapper;
-using Pandora.NetStandard.Data.Data;
+using Pandora.NetStandard.Data.Dals;
 using System;
 
 namespace Pandora.NetStandard.Business.Services

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Pandora.NetStandard.Model.Entities;
 using Pandora.NetStandard.Model.Enums;
 
-namespace Pandora.NetStandard.Data.Data
+namespace Pandora.NetStandard.Data.Dals
 {
     public class SeedDb
     {

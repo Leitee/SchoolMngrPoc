@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Model.Entities;
 
-namespace Pandora.NetStandard.Data.Data
+namespace Pandora.NetStandard.Data.Dals
 {
     public class ApplicationUow : IApplicationUow
     {

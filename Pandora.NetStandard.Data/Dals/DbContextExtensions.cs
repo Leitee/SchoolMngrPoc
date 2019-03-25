@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pandora.NetStandard.Data.Data
+namespace Pandora.NetStandard.Data.Dals
 {
     public static class DbContextExtensions
     {

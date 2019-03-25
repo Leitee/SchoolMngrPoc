@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Pandora.NetStandard.Core.Interfaces;
 
-namespace Pandora.NetStandard.Data.Data
+namespace Pandora.NetStandard.Data.Dals
 {
     public class RepositoryProvider : IRepositoryProvider
     {

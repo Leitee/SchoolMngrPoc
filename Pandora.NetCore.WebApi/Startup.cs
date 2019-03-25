@@ -12,7 +12,7 @@ using Pandora.Api.Config;
 using Pandora.NetCore.WebApi.Controllers;
 using Pandora.NetStandard.Business.Services;
 using Pandora.NetStandard.Business.Services.Contracts;
-using Pandora.NetStandard.Data.Data;
+using Pandora.NetStandard.Data.Dals;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Security.Identity;
 using Swashbuckle.AspNetCore.Swagger;
