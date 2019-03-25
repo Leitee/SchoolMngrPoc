@@ -1,153 +1,106 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Pandora.NetStandard.Business.Services.Contracts;
-using Pandora.NetStandard.Data;
-using Pandora.NetStandard.Data.Dals;
-using Pandora.NetStandard.Model.Entities;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Pandora.NetStandard.Data.Dals;
+using Pandora.NetStandard.Model.Entities;
 
 namespace Pandora.NetCore.WebApi.Controllers
 {
-    public class ClassesController : Controller
+    [Route("api/v1/[controller]")]
+    [ApiController]
+    public class ClassesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly IClassSvc _classSvc;
 
-        public ClassesController(ApplicationDbContext context, IClassSvc classSvc)
+        public ClassesController(ApplicationDbContext context)
         {
             _context = context;
-            _classSvc = classSvc;
         }
 
-        // GET: Classes
-        public async Task<IActionResult> Index()
+        // GET: api/Classes
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Class>>> GetClasses()
         {
-            var response = await _classSvc.GetAllAsync();
-            return View(response.Data);
+            return await _context.Classes.ToListAsync();
         }
 
-        // GET: Classes/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: api/Classes/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Class>> GetClass(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var @class = await _context.Classes.FindAsync(id);
 
-            var response = await _classSvc.GetByIdAsync(id.Value);
-            return View(response.Data);
-        }
-
-        // GET: Classes/Create
-        public async Task<IActionResult> Create()
-        {
-            var grades = await _classSvc.GetAllAsync();
-            ViewData["GradeId"] = new SelectList(grades.Data, "GradeId", "Name");
-            return View();
-        }
-
-        // POST: Classes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ClassId,Name,Shift,GradeId")] Class pClass)
-        {
-            if (ModelState.IsValid)
-            {
-                var response = await _classSvc.CreateAsync(pClass);
-                pClass = response.Data;
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["GradeId"] = new SelectList((await _classSvc.GetAllAsync()).Data, "GradeId", "Name", pClass.GradeId);
-            return View(pClass);
-        }
-
-        // GET: Classes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var response = await _classSvc.GetByIdAsync(id.Value);
-
-            ViewData["GradeId"] = new SelectList((await _classSvc.GetAllAsync()).Data, "GradeId", "Name", response.Data.GradeId);
-            return View(response.Data);
-        }
-
-        // POST: Classes/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ClassId,Name,Shift,GradeId")] Class @class)
-        {
-            if (id != @class.ClassId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(@class);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ClassExists(@class.ClassId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["GradeId"] = new SelectList(_context.Grades, "GradeId", "Name", @class.GradeId);
-            return View(@class);
-        }
-
-        // GET: Classes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var @class = await _context.Classes
-                .Include(c => c.Grade)
-                .FirstOrDefaultAsync(m => m.ClassId == id);
             if (@class == null)
             {
                 return NotFound();
             }
 
-            return View(@class);
+            return @class;
         }
 
-        // POST: Classes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        // PUT: api/Classes/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutClass(int id, Class @class)
+        {
+            if (id != @class.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(@class).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ClassExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // POST: api/Classes
+        [HttpPost]
+        public async Task<ActionResult<Class>> PostClass(Class @class)
+        {
+            _context.Classes.Add(@class);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetClass", new { id = @class.Id }, @class);
+        }
+
+        // DELETE: api/Classes/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Class>> DeleteClass(int id)
         {
             var @class = await _context.Classes.FindAsync(id);
+            if (@class == null)
+            {
+                return NotFound();
+            }
+
             _context.Classes.Remove(@class);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return @class;
         }
 
         private bool ClassExists(int id)
         {
-            return _context.Classes.Any(e => e.ClassId == id);
+            return _context.Classes.Any(e => e.Id == id);
         }
     }
 }

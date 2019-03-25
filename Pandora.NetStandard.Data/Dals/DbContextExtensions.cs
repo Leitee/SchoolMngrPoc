@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Pandora.NetStandard.Core.Identity;
-using Pandora.NetStandard.Core.Security.Identity;
+﻿using Pandora.NetStandard.Core.Identity;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Pandora.NetStandard.Data.Dals
 {

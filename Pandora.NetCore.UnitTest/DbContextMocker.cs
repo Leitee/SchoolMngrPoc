@@ -13,7 +13,7 @@ namespace Pandora.NetCore.UnitTest
                 .Options;
 
             // Create instance of DbContext
-            var dbContext = new ApplicationDbContext(options);
+            var dbContext = new ApplicationDbContext(null, options);
 
             // Add entities in memory
             dbContext.Seed();

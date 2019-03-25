@@ -8,11 +8,11 @@ namespace Pandora.NetCore.WebApi.Controllers
 {
     [Route("api/v1/[controller]")]
    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class GradeController : ApiBaseController
+    public class GradesController : ApiBaseController
     {
         private readonly IGradeSvc _gradeSvc;
 
-        public GradeController(ILogger<GradeController> logger, 
+        public GradesController(ILogger<GradesController> logger, 
             IGradeSvc gradeSvc) : base(logger)
         {
             _gradeSvc = gradeSvc;

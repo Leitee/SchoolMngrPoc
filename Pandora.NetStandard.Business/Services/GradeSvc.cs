@@ -34,7 +34,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entity = await _uow.Grades.AllAsync(null, o => o.OrderBy(g => g.GradeId), null);
+                var entity = await _uow.Grades.AllAsync(null, o => o.OrderBy(g => g.Id), null);
                 response.Data = _mapper.MapEntity(entity);
             }
             catch (Exception ex)
@@ -51,7 +51,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entity = await _uow.Grades.FindAsync(g => g.GradeId == pId, g => g.Classes);
+                var entity = await _uow.Grades.FindAsync(g => g.Id == pId, g => g.Classes);
                 response.Data = _mapper.MapEntity(entity);
             }
             catch (Exception ex)

@@ -2,19 +2,20 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Pandora.Api.Config;
 using Pandora.NetCore.WebApi.Controllers;
 using Pandora.NetStandard.Business.Services;
 using Pandora.NetStandard.Business.Services.Contracts;
-using Pandora.NetStandard.Data.Dals;
+using Pandora.NetStandard.Core.Config;
+using Pandora.NetStandard.Core.Identity;
 using Pandora.NetStandard.Core.Interfaces;
-using Pandora.NetStandard.Core.Security.Identity;
+using Pandora.NetStandard.Data.Dals;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
@@ -55,10 +56,15 @@ namespace Pandora.NetCore.WebApi
 
             // Add configuration for DbContext
             // Use connection string from appsettings.json file
-            services.AddDbContext<ApplicationDbContext>(builder =>
-            {
-                builder.UseSqlServer(appSettings.ConnectionString);
-            });
+            services.AddDbContext<ApplicationDbContext>();
+            //services.AddDbContext<ApplicationDbContext>(builder =>
+            //{
+            //    builder.UseSqlServer(appSettings.ConnectionString);
+            //});
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddDefaultUI(UIFramework.Bootstrap4)
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             // Register authentication schema
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -78,10 +84,7 @@ namespace Pandora.NetCore.WebApi
                         IssuerSigningKey = new SymmetricSecurityKey(
                             Encoding.UTF8.GetBytes(appSettings.JwtSecretKey))
                     };
-                });            
-
-            services.AddIdentity<ApplicationUser, ApplicationRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                });
 
             // configure DI for application services
             // Set up dependency injection for controller's logger
@@ -112,6 +115,7 @@ namespace Pandora.NetCore.WebApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -138,6 +142,8 @@ namespace Pandora.NetCore.WebApi
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

@@ -9,9 +9,9 @@ namespace Pandora.NetCore.UnitTest
 {
     public class GradeControllerUnitTest : IDisposable
     {
-        private readonly GradeController _controller;
+        private readonly GradesController _controller;
 
-        public GradeControllerUnitTest(GradeController controller)
+        public GradeControllerUnitTest(GradesController controller)
         {
             _controller = controller;
         }

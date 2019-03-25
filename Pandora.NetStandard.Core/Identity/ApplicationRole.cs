@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Pandora.NetStandard.Core.Security.Identity
+namespace Pandora.NetStandard.Core.Identity
 {
     public class ApplicationRole : IdentityRole<int>
     {

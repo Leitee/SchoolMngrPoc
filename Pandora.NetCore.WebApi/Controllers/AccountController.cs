@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using Pandora.NetCore.WebApi.Controllers;
 using Pandora.NetStandard.Business.Services.Contracts;
 
-namespace Pandora.Api.Controllers
+namespace Pandora.NetCore.WebApi.Controllers
 {
     [Route("api/v1/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

@@ -2,7 +2,7 @@
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Interfaces;
-using Pandora.NetStandard.Core.Security.Identity;
+using Pandora.NetStandard.Core.Identity;
 using System;
 using System.Threading.Tasks;
 

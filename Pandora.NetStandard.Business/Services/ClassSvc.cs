@@ -34,7 +34,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entity = await _uow.Classes.AllAsync(null, o => o.OrderBy(g => g.ClassId), g => g.Grade);
+                var entity = await _uow.Classes.AllAsync(null, o => o.OrderBy(g => g.Id), g => g.Grade);
                 response.Data = entity;
             }
             catch (Exception ex)

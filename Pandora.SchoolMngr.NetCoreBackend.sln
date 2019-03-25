@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pandora.NetCore.WebApi", "P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pandora.NetCore.UnitTest", "Pandora.NetCore.UnitTest\Pandora.NetCore.UnitTest.csproj", "{E0D95756-EA99-4D16-8AAC-35DB4654BD45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pandora.NetStandard.Business", "Pandora.NetStandard.Business\Pandora.NetStandard.Business.csproj", "{136DFF0A-6E48-49AA-921F-92DA48462633}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pandora.NetStandard.Business", "Pandora.NetStandard.Business\Pandora.NetStandard.Business.csproj", "{136DFF0A-6E48-49AA-921F-92DA48462633}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

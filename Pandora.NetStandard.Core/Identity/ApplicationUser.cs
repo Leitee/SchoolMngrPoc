@@ -2,8 +2,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Pandora.NetStandard.Core.Security.Identity
-{
+namespace Pandora.NetStandard.Core.Identity
+{ 
     public class ApplicationUser : IdentityUser<int>
     {
         public ApplicationUser() { }

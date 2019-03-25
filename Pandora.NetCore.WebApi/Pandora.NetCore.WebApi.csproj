@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pandora.NetStandard.Business\Pandora.NetStandard.Business.csproj" />
+    <ProjectReference Include="..\Pandora.NetStandard.Core\Pandora.NetStandard.Core.csproj" />
     <ProjectReference Include="..\Pandora.NetStandard.Data\Pandora.NetStandard.Data.csproj" />
   </ItemGroup>
 

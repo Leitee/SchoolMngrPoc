@@ -1,4 +1,4 @@
-﻿namespace Pandora.Api.Config
+﻿namespace Pandora.NetStandard.Core.Config
 {
     public class AppSettings
     {

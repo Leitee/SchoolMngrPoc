@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Pandora.NetStandard.Core.Interfaces.Identity;
-using Pandora.NetStandard.Core.Security.Identity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

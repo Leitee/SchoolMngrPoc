@@ -1,5 +1,5 @@
 ﻿using Pandora.NetStandard.Core.Bases;
-using Pandora.NetStandard.Core.Security.Identity;
+using Pandora.NetStandard.Core.Identity;
 using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Business.Services.Contracts

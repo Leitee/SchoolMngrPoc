@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Pandora.NetStandard.Core.Security.Identity;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Core.Identity
 {
