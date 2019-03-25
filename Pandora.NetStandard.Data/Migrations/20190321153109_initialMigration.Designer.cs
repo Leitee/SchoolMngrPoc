@@ -8,7 +8,7 @@ using System;
 
 namespace Pandora.NetStandard.Data.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(SchoolDbContext))]
     [Migration("20190321153109_initialMigration")]
     partial class initialMigration
     {

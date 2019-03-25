@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pandora.NetStandard.Data.Dals;
 using Pandora.NetStandard.Model.Entities;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Pandora.NetCore.WebApi.Controllers
 {
@@ -14,9 +12,9 @@ namespace Pandora.NetCore.WebApi.Controllers
     [ApiController]
     public class ClassesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly SchoolDbContext _context;
 
-        public ClassesController(ApplicationDbContext context)
+        public ClassesController(SchoolDbContext context)
         {
             _context = context;
         }

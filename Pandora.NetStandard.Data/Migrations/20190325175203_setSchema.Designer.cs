@@ -9,7 +9,7 @@ using Pandora.NetStandard.Data.Dals;
 
 namespace Pandora.NetStandard.Data.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(SchoolDbContext))]
     [Migration("20190325175203_setSchema")]
     partial class setSchema
     {

@@ -11,10 +11,10 @@ namespace Pandora.NetCore.WebApi.Controllers.Mvc
 {
     public class ClassesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly SchoolDbContext _context;
         private readonly IClassSvc _classSvc;
 
-        public ClassesController(ApplicationDbContext context, IClassSvc classSvc)
+        public ClassesController(SchoolDbContext context, IClassSvc classSvc)
         {
             _context = context;
             _classSvc = classSvc;

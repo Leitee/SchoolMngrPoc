@@ -15,6 +15,7 @@ using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Config;
 using Pandora.NetStandard.Core.Identity;
 using Pandora.NetStandard.Core.Interfaces;
+using Pandora.NetStandard.Core.Repository;
 using Pandora.NetStandard.Data.Dals;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
@@ -56,7 +57,7 @@ namespace Pandora.NetCore.WebApi
 
             // Add configuration for DbContext
             // Use connection string from appsettings.json file
-            services.AddDbContext<ApplicationDbContext>();
+            services.AddDbContext<SchoolDbContext>();
             //services.AddDbContext<ApplicationDbContext>(builder =>
             //{
             //    builder.UseSqlServer(appSettings.ConnectionString);
@@ -64,7 +65,7 @@ namespace Pandora.NetCore.WebApi
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<SchoolDbContext>();
 
             // Register authentication schema
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -89,7 +90,8 @@ namespace Pandora.NetCore.WebApi
             // configure DI for application services
             // Set up dependency injection for controller's logger
             services.AddScoped<ILogger, Logger<ApiBaseController>>();
-            services.AddScoped<IRepositoryProvider, RepositoryProvider>();
+            services.AddScoped<IRepositoryProvider<SchoolDbContext>, RepositoryProvider<SchoolDbContext>>();
+            services.AddSingleton<RepositoryFactories<SchoolDbContext>, RepositoryFactories<SchoolDbContext>>();
             services.AddScoped<IApplicationUow, ApplicationUow>();
             services.AddScoped<IGradeSvc, GradeSvc>();
             services.AddScoped<IClassSvc, ClassSvc>();

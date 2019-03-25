@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Pandora.NetStandard.Core.Repository;
+using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Pandora.NetStandard.Data.Dals
 {
-
     /// <summary>
     /// A maker of Code Camper Repositories.
     /// </summary>
@@ -19,24 +18,18 @@ namespace Pandora.NetStandard.Data.Dals
     /// before any request for a factory, and should be immutable thereafter.
     /// </para>
     /// </remarks>
-    public class RepositoryFactories
+    public class RepositoryFactories<TContext> where TContext : ApplicationDbContext
     {
         /// <summary>
-        /// Return the runtime Code Camper repository factory functions,
-        /// each one is a factory for a repository of a particular type.
+        /// Get the dictionary of repository factory functions.
         /// </summary>
         /// <remarks>
-        /// MODIFY THIS METHOD TO ADD CUSTOM CODE CAMPER FACTORY FUNCTIONS
+        /// A dictionary key is a System.Type, typically a repository type.
+        /// A value is a repository factory function
+        /// that takes a <see cref="DbContext"/> argument and returns
+        /// a repository object. Caller must know how to cast it.
         /// </remarks>
-        private IDictionary<Type, Func<ApplicationDbContext, object>> GetCodeCamperFactories()
-        {
-            return new Dictionary<Type, Func<ApplicationDbContext, object>>
-            {
-                //{typeof(IValeRepository), _dbContext => new ValeRepository(_dbContext)},
-                //{typeof(IPersonsRepository), _dbContext => new PersonsRepository(_dbContext)},
-                //{typeof(ISessionsRepository), _dbContext => new SessionsRepository(_dbContext)},
-            };
-        }
+        private readonly IDictionary<Type, Func<TContext, object>> _repositoryFactories;
 
         /// <summary>
         /// Constructor that initializes with runtime Code Camper repository factories
@@ -44,6 +37,23 @@ namespace Pandora.NetStandard.Data.Dals
         public RepositoryFactories()
         {
             _repositoryFactories = GetCodeCamperFactories();
+        }
+
+        /// <summary>
+        /// Return the runtime Code Camper repository factory functions,
+        /// each one is a factory for a repository of a particular type.
+        /// </summary>
+        /// <remarks>
+        /// MODIFY THIS METHOD TO ADD CUSTOM CODE CAMPER FACTORY FUNCTIONS
+        /// </remarks>
+        private IDictionary<Type, Func<TContext, object>> GetCodeCamperFactories()
+        {
+            return new Dictionary<Type, Func<TContext, object>>
+            {
+                //{typeof(IValeRepository), _dbContext => new ValeRepository(_dbContext)},
+                //{typeof(IPersonsRepository), _dbContext => new PersonsRepository(_dbContext)},
+                //{typeof(ISessionsRepository), _dbContext => new SessionsRepository(_dbContext)},
+            };
         }
 
         /// <summary>
@@ -57,10 +67,10 @@ namespace Pandora.NetStandard.Data.Dals
         /// </remarks>
         /// 
 
-        //public RepositoryFactories(IDictionary<Type, Func<ATPSistemaDbContext, object>> factories)
-        //{
-        //    _repositoryFactories = factories;
-        //}
+        public RepositoryFactories(IDictionary<Type, Func<TContext, object>> factories)
+        {
+            _repositoryFactories = factories;
+        }
 
         /// <summary>
         /// Get the repository factory function for the type.
@@ -71,11 +81,9 @@ namespace Pandora.NetStandard.Data.Dals
         /// The type parameter, T, is typically the repository type 
         /// but could be any type (e.g., an entity type)
         /// </remarks>
-        public Func<ApplicationDbContext, object> GetRepositoryFactory<T>()
+        public Func<TContext, object> GetRepositoryFactory<T>()
         {
-
-            Func<ApplicationDbContext, object> factory;
-            _repositoryFactories.TryGetValue(typeof(T), out factory);
+            _repositoryFactories.TryGetValue(typeof(T), out Func<TContext, object> factory);
             return factory;
         }
 
@@ -92,7 +100,7 @@ namespace Pandora.NetStandard.Data.Dals
         /// You can substitute an alternative factory for the default one by adding
         /// a repository factory for type "T" to <see cref="_repositoryFactories"/>.
         /// </remarks>
-        public Func<ApplicationDbContext, object> GetRepositoryFactoryForEntityType<T>() where T : class
+        public Func<TContext, object> GetRepositoryFactoryForEntityType<T>() where T : class
         {
             return GetRepositoryFactory<T>() ?? DefaultEntityRepositoryFactory<T>();
         }
@@ -101,21 +109,9 @@ namespace Pandora.NetStandard.Data.Dals
         /// Default factory for a <see cref="IRepository{T}"/> where T is an entity.
         /// </summary>
         /// <typeparam name="T">Type of the repository's root entity</typeparam>
-        protected virtual Func<ApplicationDbContext, object> DefaultEntityRepositoryFactory<T>() where T : class
+        protected virtual Func<TContext, object> DefaultEntityRepositoryFactory<T>() where T : class
         {
-            return dbContext => new EfRepository<T>(dbContext);
+            return dbContext => new EfRepository<T>(dbContext as SchoolDbContext);
         }
-
-        /// <summary>
-        /// Get the dictionary of repository factory functions.
-        /// </summary>
-        /// <remarks>
-        /// A dictionary key is a System.Type, typically a repository type.
-        /// A value is a repository factory function
-        /// that takes a <see cref="DbContext"/> argument and returns
-        /// a repository object. Caller must know how to cast it.
-        /// </remarks>
-        private readonly IDictionary<Type, Func<ApplicationDbContext, object>> _repositoryFactories;
-
     }
 }

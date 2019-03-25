@@ -1,6 +1,4 @@
-﻿using Pandora.NetStandard.Business.Dtos;
-using Pandora.NetStandard.Business.Mappers;
-using Pandora.NetStandard.Business.Services.Contracts;
+﻿using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Model.Entities;

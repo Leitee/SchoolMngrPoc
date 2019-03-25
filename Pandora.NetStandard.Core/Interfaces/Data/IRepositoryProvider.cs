@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Pandora.NetStandard.Core.Repository;
 using System;
 
 namespace Pandora.NetStandard.Core.Interfaces
@@ -12,15 +12,21 @@ namespace Pandora.NetStandard.Core.Interfaces
     /// Repositories created by this provider tend to require a <see cref="DbContext"/>
     /// to retrieve data.
     /// </remarks>
-    public interface IRepositoryProvider
+    public interface IRepositoryProvider<TContext> where TContext : ApplicationDbContext
     {
+        /// <summary>
+        /// Get and set the <see cref="DbContext"/> with which to initialize a repository
+        /// if one must be created.
+        /// </summary>
+        TContext DbContext { get; set; }
+
         /// <summary>
         /// Get an <see cref="IRepository{T}"/> for entity type, T.
         /// </summary>
         /// <typeparam name="T">
         /// Root entity type of the <see cref="IRepository{T}"/>.
         /// </typeparam>
-        IRepository<T> GetRepositoryByEntity<T>() where T : class;
+        IRepository<T> GetRepositoryForEntityType<T>() where T : class;
 
         /// <summary>
         /// Get a repository of type T.
@@ -37,7 +43,7 @@ namespace Pandora.NetStandard.Core.Interfaces
         /// If not found, tries to make one with the factory, fallingback to 
         /// a default factory if the factory parameter is null.
         /// </remarks>
-        T GetRepository<T>(Func<DbContext, object> factory = null) where T : class;
+        T GetRepository<T>(Func<TContext, object> factory = null) where T : class;
 
         /// <summary>
         /// Set the repository to return from this provider.

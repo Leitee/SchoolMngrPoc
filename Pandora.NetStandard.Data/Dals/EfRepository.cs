@@ -12,10 +12,10 @@ namespace Pandora.NetStandard.Data.Dals
 {
     public class EfRepository<TEntity> : IEfRepository<TEntity> where TEntity : class
     {
-        protected readonly ApplicationDbContext _dbContext;
+        protected readonly SchoolDbContext _dbContext;
         protected readonly DbSet<TEntity> _dbSet;
 
-        public EfRepository(ApplicationDbContext context)
+        public EfRepository(SchoolDbContext context)
         {
             _dbContext = context;
             _dbSet = _dbContext.Set<TEntity>();

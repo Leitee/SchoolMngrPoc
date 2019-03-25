@@ -1,35 +1,20 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using Pandora.NetStandard.Core.Identity;
-using Pandora.NetStandard.Model.Entities;
 using Microsoft.Extensions.Configuration;
+using Pandora.NetStandard.Core.Identity;
+using System;
 
-namespace Pandora.NetStandard.Data.Dals
+namespace Pandora.NetStandard.Core.Repository
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>, IDisposable
+    public abstract class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>, IDisposable
     {
         protected const string SCHEMA_NAME = "Auth";
-        private readonly IConfiguration _config;
+        protected readonly IConfiguration _config;
 
-        public ApplicationDbContext(IConfiguration config, DbContextOptions<ApplicationDbContext> options) : base(options)
+        public ApplicationDbContext(IConfiguration config, DbContextOptions options) : base(options)
         {
             _config = config ?? throw new ArgumentNullException(nameof(config));
-        }
-
-        public DbSet<Grade> Grades { get; set; }
-        public DbSet<Class> Classes { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            //base.OnConfiguring(optionsBuilder);
-            //optionsBuilder.UseSqlite("Filename = ./schoolDB.db");
-
-            optionsBuilder.UseSqlServer(_config["AppSettings:ConnectionString"], options =>
-            {
-                options.MigrationsHistoryTable("Migrations", "Config");
-            });
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -40,7 +25,7 @@ namespace Pandora.NetStandard.Data.Dals
             // Add your customizations after calling base.OnModelCreating(builder);
 
             //Rename Identity tables
-            
+
             builder.Entity<ApplicationUser>().ToTable("Users", SCHEMA_NAME);
             builder.Entity<ApplicationRole>().ToTable("Roles", SCHEMA_NAME);
             builder.Entity<IdentityRoleClaim<int>>().ToTable("RoleClaims", SCHEMA_NAME);
@@ -49,5 +34,6 @@ namespace Pandora.NetStandard.Data.Dals
             builder.Entity<IdentityUserLogin<int>>().ToTable("UserLogins", SCHEMA_NAME).HasKey(key => new { key.ProviderKey, key.LoginProvider });
             builder.Entity<IdentityUserToken<int>>().ToTable("UserTokens", SCHEMA_NAME).HasKey(key => new { key.UserId, key.LoginProvider, key.Name });
         }
+
     }
 }

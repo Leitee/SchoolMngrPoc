@@ -1,30 +1,33 @@
-﻿using System;
-using System.Threading.Tasks;
-using Pandora.NetStandard.Core.Interfaces;
+﻿using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Model.Entities;
+using System;
+using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Data.Dals
 {
     public class ApplicationUow : IApplicationUow
     {
-        private readonly ApplicationDbContext _dbContext;
-        private readonly IRepositoryProvider _repositoryProvider;
+        private readonly SchoolDbContext _dbContext;
+        private readonly IRepositoryProvider<SchoolDbContext> _repositoryProvider;
 
-        public ApplicationUow(IRepositoryProvider repositoryProvider, 
-            ApplicationDbContext context)
+        public ApplicationUow(IRepositoryProvider<SchoolDbContext> repositoryProvider)
         {
-            _dbContext = context;
-
             _repositoryProvider = repositoryProvider;
+            _dbContext = _repositoryProvider.DbContext;
         }
 
         // Repositories
-        public IRepository<Grade> Grades => GetRepo<Grade>();
-        public IRepository<Class> Classes => GetRepo<Class>();
+        public IRepository<Grade> Grades => GetRepoByEntity<Grade>();
+        public IRepository<Class> Classes => GetRepoByEntity<Class>();
 
-        private IRepository<TEntity> GetRepo<TEntity>() where TEntity : class
+        private IRepository<T> GetRepoByEntity<T>() where T : class
         {
-            return _repositoryProvider.GetRepositoryByEntity<TEntity>();
+            return _repositoryProvider.GetRepositoryForEntityType<T>();
+        }
+
+        private T GetRepo<T>() where T : class
+        {
+            return _repositoryProvider.GetRepository<T>();
         }
 
         /// <summary>
@@ -60,7 +63,7 @@ namespace Pandora.NetStandard.Data.Dals
             {
                 _dbContext?.Dispose();
             }
-            this.disposed = true;
+            disposed = true;
         }
 
         #endregion

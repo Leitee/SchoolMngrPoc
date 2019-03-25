@@ -5,7 +5,7 @@ namespace Pandora.NetStandard.Data.Dals
 {
     public static class DbContextExtensions
     {
-        public static void Seed(this ApplicationDbContext pDbContext)
+        public static void Seed(this SchoolDbContext pDbContext)
         {
             // Add entities for DbContext instance
             pDbContext.Users.Add(new ApplicationUser

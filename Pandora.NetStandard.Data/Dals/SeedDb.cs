@@ -8,10 +8,10 @@ namespace Pandora.NetStandard.Data.Dals
 {
     public class SeedDb
     {
-        private readonly ApplicationDbContext _context;
+        private readonly SchoolDbContext _context;
         private readonly Random _random;
 
-        public SeedDb(ApplicationDbContext context)
+        public SeedDb(SchoolDbContext context)
         {
             _context = context;
             _random = new Random();
