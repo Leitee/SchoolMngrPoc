@@ -11,9 +11,9 @@ namespace Pandora.NetStandard.Business.Services
 {
     public class AuthSvc : BaseService, IAuthSvc
     {
-        private readonly ISignInManagerFacade<ApplicationUser> _signInManager;
+        private readonly ISignInRepository<ApplicationUser> _signInManager;
 
-        public AuthSvc(IApplicationUow applicationUow, ISignInManagerFacade<ApplicationUser> signInManager) : base(applicationUow)
+        public AuthSvc(IApplicationUow applicationUow, ISignInRepository<ApplicationUser> signInManager) : base(applicationUow)
         {
             _signInManager = signInManager;
         }

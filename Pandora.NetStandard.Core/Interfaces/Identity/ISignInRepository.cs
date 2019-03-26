@@ -4,7 +4,12 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Core.Interfaces.Identity
 {
-    public interface ISignInManagerFacade<TUser> where TUser : ApplicationUser
+    public interface ISignInRepository : ISignInRepository<ApplicationUser>
+    {
+
+    }
+
+    public interface ISignInRepository<TUser> where TUser : ApplicationUser
     {
         Task<IdentityResult> SignUpAsync(TUser user, string pPassword);
         Task<SignInResult> SignInAsync(string pUsername, string pPassword, bool pRememberMe);

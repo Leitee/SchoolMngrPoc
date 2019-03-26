@@ -5,7 +5,12 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Core.Interfaces.Identity
 {
-    public interface IRoleManagerFacade<TRole> where TRole : ApplicationRole
+    public interface IRoleRepository : IRoleRepository<ApplicationRole>
+    {
+
+    }
+
+    public interface IRoleRepository<TRole> where TRole : ApplicationRole
     {
         Task<IQueryable<TRole>> GetAllRolesAsync();
 

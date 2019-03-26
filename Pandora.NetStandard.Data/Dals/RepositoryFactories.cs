@@ -1,4 +1,6 @@
-﻿using Pandora.NetStandard.Core.Repository;
+﻿using Pandora.NetStandard.Core.Identity;
+using Pandora.NetStandard.Core.Interfaces.Identity;
+using Pandora.NetStandard.Core.Repository;
 using System;
 using System.Collections.Generic;
 
@@ -50,9 +52,8 @@ namespace Pandora.NetStandard.Data.Dals
         {
             return new Dictionary<Type, Func<TContext, object>>
             {
-                //{typeof(IValeRepository), _dbContext => new ValeRepository(_dbContext)},
-                //{typeof(IPersonsRepository), _dbContext => new PersonsRepository(_dbContext)},
-                //{typeof(ISessionsRepository), _dbContext => new SessionsRepository(_dbContext)},
+                //{typeof(IRoleRepository), _dbContext => new RoleManagerFacade(_dbContext)},
+                //{typeof(IUserRepository), _dbContext => new UserManagerFacade(_dbContext)},
             };
         }
 

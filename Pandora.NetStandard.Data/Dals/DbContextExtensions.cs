@@ -5,8 +5,9 @@ namespace Pandora.NetStandard.Data.Dals
 {
     public static class DbContextExtensions
     {
-        public static void Seed(this SchoolDbContext pDbContext)
+        public async static void Seed(this SchoolDbContext pDbContext)
         {
+            await pDbContext.Database.EnsureCreatedAsync();
             // Add entities for DbContext instance
             pDbContext.Users.Add(new ApplicationUser
             {
@@ -25,7 +26,7 @@ namespace Pandora.NetStandard.Data.Dals
                 Description = "All features available for this role."
             });
 
-            pDbContext.SaveChanges();
+            await pDbContext.SaveChangesAsync();
         }
     }
 }

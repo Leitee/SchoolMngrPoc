@@ -8,7 +8,14 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Core.Identity
 {
-    public class SignInManagerFacade<TUser> : SignInManager<TUser>, ISignInManagerFacade<TUser> where TUser : ApplicationUser
+    public class SignInManagerFacade : SignInManagerFacade<ApplicationUser>
+    {
+        public SignInManagerFacade(UserManager<ApplicationUser> userManager, IHttpContextAccessor contextAccessor, IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory, IOptions<IdentityOptions> optionsAccessor, ILogger<SignInManager<ApplicationUser>> logger, IAuthenticationSchemeProvider schemes) : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes)
+        {
+        }
+    }
+
+    public class SignInManagerFacade<TUser> : SignInManager<TUser>, ISignInRepository<TUser> where TUser : ApplicationUser
     {
         public SignInManagerFacade(UserManager<TUser> userManager, 
             IHttpContextAccessor contextAccessor, 
