@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pandora.NetCore.WebApi\Pandora.NetCore.WebApi.csproj" />
+    <ProjectReference Include="..\Pandora.NetStandard.Data\Pandora.NetStandard.Data.csproj" />
   </ItemGroup>
 
 </Project>

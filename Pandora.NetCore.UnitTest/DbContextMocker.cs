@@ -1,10 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Pandora.NetStandard.Data.Dals;
 
 namespace Pandora.NetCore.UnitTest
 {
-    public static class DbContextMocker
+    public class DbContextMocker
     {
+        public DbContextMocker(IServiceCollection services)
+        {
+            services.AddDbContext<SchoolDbContext>(builder =>
+            {
+                builder.UseInMemoryDatabase("Test");
+            });
+        }
+
         public static SchoolDbContext GetApplicationDbContext(string dbName)
         {
             // Create options for DbContext instance

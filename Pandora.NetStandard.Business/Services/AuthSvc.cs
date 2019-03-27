@@ -6,16 +6,27 @@ using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Interfaces.Identity;
 using Pandora.NetStandard.Core.Identity;
 using System.Threading.Tasks;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System;
+using Microsoft.Extensions.Configuration;
+using Pandora.NetStandard.Core.Config;
+using System.Linq;
 
 namespace Pandora.NetStandard.Business.Services
 {
     public class AuthSvc : BaseService, IAuthSvc
     {
-        private readonly ISignInRepository<ApplicationUser> _signInManager;
+        private readonly ISignInManagerFacade _signInManager;
+        private readonly AppSettings _config;
 
-        public AuthSvc(IApplicationUow applicationUow, ISignInRepository<ApplicationUser> signInManager) : base(applicationUow)
+        public AuthSvc(IApplicationUow applicationUow, ISignInManagerFacade signInManager, IConfiguration config) : base(applicationUow)
         {
             _signInManager = signInManager;
+            _config = config.GetSection("AppSettings").Get<AppSettings>();
         }
 
         public async Task<BLSingleResponse<TokenRespDto>> LoginAsync(LoginDto model)
@@ -28,15 +39,17 @@ namespace Pandora.NetStandard.Business.Services
             {
                 HandleSVCException(response, "Username or Password is invalid.");
             }
-
-            if (signInResul == SignInResult.TwoFactorRequired)
+            else if (signInResul == SignInResult.TwoFactorRequired)
             {
                 HandleSVCException(response, "User did not confirm email.");
             }
-
-            if (signInResul == SignInResult.LockedOut)
+            else if (signInResul == SignInResult.LockedOut)
             {
                 HandleSVCException(response, "This User is currently locked out.");
+            }
+            else
+            {
+                response.Data = TokenBuilder(model.Username, "regular");
             }
 
             return response;
@@ -46,17 +59,43 @@ namespace Pandora.NetStandard.Business.Services
         {
             var response = new BLSingleResponse<TokenRespDto>();
 
-            var role = new ApplicationRole("User", "El mas user");
             var user = new ApplicationUser(model.Username, model.Email, model.Firstname, model.Lastname);
 
-            var signInResul = await _signInManager.SignUpAsync(user, model.Password);
+            var signInResul = await _signInManager.SignUpAsync(user, model.Password, new[] { new ApplicationRole("regular", string.Empty) });
 
-            if (response.HasErrors)
+            if (!signInResul.Succeeded)
             {
-                HandleSVCException(response, "There was an error, user was not created");
+                HandleSVCException(response, signInResul.Errors.ToList().ConvertAll(x => x.Description).ToArray());
+            }
+            else
+            {
+                response.Data = TokenBuilder(model.Username, "regular");
             }
 
             return response;
+        }
+
+        private TokenRespDto TokenBuilder(string username, string role)
+        {
+            IEnumerable<Claim> claims = new[] {
+                new Claim(ClaimTypes.Name, username),
+                new Claim(ClaimTypes.Role, role),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.JwtSecretKey));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var expiration = DateTime.UtcNow.AddHours(1);
+
+            var objToken = new JwtSecurityToken(
+                issuer: _config.JwtValidIssuer,
+                audience: _config.JwtValidAudience,
+                claims: claims,
+                expires: expiration,
+                signingCredentials: creds
+            );
+
+            return new TokenRespDto(new JwtSecurityTokenHandler().WriteToken(objToken), expiration);
         }
     }
 }

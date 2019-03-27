@@ -13,8 +13,9 @@ namespace Pandora.NetCore.WebApi.Controllers
     {
         private readonly IAuthSvc _authSvc;
 
-        public AuthController(ILogger<AuthController> logger) : base(logger)
+        public AuthController(ILogger<AuthController> logger, IAuthSvc authSvc) : base(logger)
         {
+            _authSvc = authSvc;
         }
 
         [HttpPost("Login")]

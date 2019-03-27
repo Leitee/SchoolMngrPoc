@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Core.Identity
 {
-    public class RoleManagerFacade : RoleManagerFacade<ApplicationRole>
+    public class RoleManagerFacade : RoleManagerFacade<ApplicationRole>, IRoleRepository
     {
         public RoleManagerFacade(IRoleStore<ApplicationRole> store, IEnumerable<IRoleValidator<ApplicationRole>> roleValidators, ILookupNormalizer keyNormalizer, IdentityErrorDescriber errors, ILogger<RoleManager<ApplicationRole>> logger) : base(store, roleValidators, keyNormalizer, errors, logger)
         {

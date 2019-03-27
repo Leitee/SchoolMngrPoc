@@ -1,6 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Pandora.NetCore.WebApi.Controllers;
 using Pandora.NetStandard.Business.Dtos;
 using Pandora.NetStandard.Core.Bases;
+using Pandora.NetStandard.Data.Dals;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -11,9 +14,12 @@ namespace Pandora.NetCore.UnitTest
     {
         private readonly GradesController _controller;
 
-        public GradeControllerUnitTest(GradesController controller)
+        public GradeControllerUnitTest(IServiceCollection services)
         {
-            _controller = controller;
+            services.AddDbContext<SchoolDbContext>(builder =>
+            {
+                builder.UseInMemoryDatabase("Test");
+            });
         }
 
         [Fact]
