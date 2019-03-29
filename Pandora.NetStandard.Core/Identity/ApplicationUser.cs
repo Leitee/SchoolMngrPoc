@@ -12,7 +12,7 @@ namespace Pandora.NetStandard.Core.Identity
             Email = pEmail;
             FirstName = pFirstName;
             LastName = pLastName;
-            JoinDate = DateTime.Now;
+            JoinDate = DateTime.UtcNow;
         }
 
         [Required]

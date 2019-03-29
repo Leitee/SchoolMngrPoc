@@ -13,7 +13,7 @@ namespace Pandora.NetStandard.Core.Security
 
             List<Claim> claims = new List<Claim>();
 
-            var daysInWork = (DateTime.Now.Date - user.JoinDate).TotalDays;
+            var daysInWork = (DateTime.UtcNow.Date - user.JoinDate).TotalDays;
 
             if (daysInWork > 90)
             {
