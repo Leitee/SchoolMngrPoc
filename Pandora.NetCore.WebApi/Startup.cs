@@ -64,12 +64,36 @@ namespace Pandora.NetCore.WebApi
             //    builder.UseSqlServer(appSettings.ConnectionString);
             //});
 
-            services.AddIdentity<ApplicationUser, ApplicationRole>()
+            //setting identity options 
+            services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+            {
+                // Password settings.
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 0;
+
+                // Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings.
+                options.User.AllowedUserNameCharacters =
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = true;
+                options.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
+                options.SignIn.RequireConfirmedEmail = true;
+            })
+                .AddDefaultTokenProviders()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<SchoolDbContext>();
 
             // Register authentication schema
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddCookie()
                 .AddJwtBearer(options =>
                 {
                     options.SaveToken = true;
@@ -154,7 +178,7 @@ namespace Pandora.NetCore.WebApi
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute(                    
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });

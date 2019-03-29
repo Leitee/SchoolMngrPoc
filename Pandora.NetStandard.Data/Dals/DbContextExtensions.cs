@@ -17,7 +17,7 @@ namespace Pandora.NetStandard.Data.Dals
                 EmailConfirmed = true,
                 FirstName = "Leonardo",
                 LastName = "Moreno",
-                JoinDate = DateTime.Now
+                JoinDate = DateTime.UtcNow
             });
 
             pDbContext.Roles.Add(new ApplicationRole
