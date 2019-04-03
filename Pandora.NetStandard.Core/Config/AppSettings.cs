@@ -6,9 +6,10 @@
         public string JwtSecretKey { get; set; }
         public string JwtValidIssuer { get; set; }
         public string JwtValidAudience { get; set; }
-        public string MailFrom { get; set; }
-        public string MailServer { get; set; }
-        public int MailPort { get; set; }
-        public string MailPassword { get; set; }
+        public string SendGridUser { get; set; }
+        public string SendGridApiKey { get; set; }
+        public string SendGridUserSender { get; set; }
+        public string SendGridSubject { get; set; }
+        public string SendGridFrom { get; set; }
     }
 }

@@ -27,7 +27,7 @@ namespace Pandora.NetCore.UnitTest
         {
             var response = await _controller.Get() as BLListResponse<GradeDto>;
 
-            Assert.False(response.HasErrors);
+            Assert.False(response.HasError);
         }
 
         public void Dispose()

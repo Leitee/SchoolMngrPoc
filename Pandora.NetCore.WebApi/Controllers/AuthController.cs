@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 namespace Pandora.NetCore.WebApi.Controllers
 {
     [Route("api/v1/[controller]")]
-    [ApiController]
     public class AuthController : ApiBaseController
     {
         private readonly IAuthSvc _authSvc;
@@ -26,7 +25,7 @@ namespace Pandora.NetCore.WebApi.Controllers
                 var response = await _authSvc.LoginAsync(model);
                 return response.ToHttpResponse();
             }
-            return BadRequest();
+            return BadRequest(ModelState.ValidationState);
         }
 
         [HttpPost("Register")]
@@ -34,10 +33,25 @@ namespace Pandora.NetCore.WebApi.Controllers
         {
             if (ModelState.IsValid)
             {
-                var response = await _authSvc.RegisterAsync(model);
+                var register = await _authSvc.RegisterAsync(model);
+
+                if (register.HasError)
+                {
+                    return register.ToHttpResponse();
+                }
+
+                if (true) //TODO: ask if email confirmation is requiered
+                {
+                    var token = await _authSvc.GetEmailConfirmTokenAsync(register.Data);
+                    var callbackUrl = Url.RouteUrl("/Account/ConfirmEmail", new { userId = register.Data.Id, token }, Request.Scheme);
+
+                    await _authSvc.SendEmailAsync(model.Email, callbackUrl);
+                }
+
+                var response = await _authSvc.LoginAsync(model);
                 return response.ToHttpResponse();
             }
-            return BadRequest();
+            return BadRequest(ModelState.ValidationState);
         }
     }
 }

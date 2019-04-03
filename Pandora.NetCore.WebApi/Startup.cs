@@ -16,7 +16,6 @@ using Pandora.NetStandard.Core.Config;
 using Pandora.NetStandard.Core.Identity;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Interfaces.Identity;
-using Pandora.NetStandard.Core.Repository;
 using Pandora.NetStandard.Data.Dals;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
@@ -118,13 +117,13 @@ namespace Pandora.NetCore.WebApi
             services.AddScoped<IRepositoryProvider<SchoolDbContext>, RepositoryProvider<SchoolDbContext>>();
             services.AddSingleton<RepositoryFactories<SchoolDbContext>, RepositoryFactories<SchoolDbContext>>();
             services.AddScoped<IApplicationUow, ApplicationUow>();
+            services.AddScoped<ISignInManagerFacade, SignInManagerFacade>();
+            services.AddScoped<IRoleRepository, RoleManagerFacade>();
+            services.AddScoped<IUserRepository, UserManagerFacade>();
             services.AddScoped<IGradeSvc, GradeSvc>();
             services.AddScoped<IClassSvc, ClassSvc>();
             services.AddScoped<IAccountSvc, AccountSvc>();
             services.AddScoped<IAuthSvc, AuthSvc>();
-            services.AddScoped<ISignInManagerFacade, SignInManagerFacade>();
-            services.AddScoped<IRoleRepository, RoleManagerFacade>();
-            services.AddScoped<IUserRepository, UserManagerFacade>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(options =>

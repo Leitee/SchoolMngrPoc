@@ -28,7 +28,7 @@ namespace Pandora.NetStandard.Core.Identity
 
         public override string ToString()
         {
-            return $"{FirstName} {LastName}";
+            return $"{base.UserName} - {LastName.ToUpper()} {FirstName}";
         }
     }
 }

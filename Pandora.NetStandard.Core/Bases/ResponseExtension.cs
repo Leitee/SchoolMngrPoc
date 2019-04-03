@@ -8,7 +8,7 @@ namespace Pandora.NetStandard.Core.Bases
     {
         public static IActionResult ToHttpResponse(this BLResponse response)
         {
-            var status = response.HasErrors ? HttpStatusCode.InternalServerError : HttpStatusCode.OK;
+            var status = response.HasError ? HttpStatusCode.InternalServerError : HttpStatusCode.OK;
 
             return new ObjectResult(response)
             {
@@ -20,7 +20,7 @@ namespace Pandora.NetStandard.Core.Bases
         {
             var status = HttpStatusCode.OK;
 
-            if (response.HasErrors)
+            if (response.HasError)
                 status = HttpStatusCode.InternalServerError;
             else if (response.Data == null)
                 status = HttpStatusCode.NotFound;
@@ -35,7 +35,7 @@ namespace Pandora.NetStandard.Core.Bases
         {
             var status = HttpStatusCode.OK;
 
-            if (response.HasErrors)
+            if (response.HasError)
                 status = HttpStatusCode.InternalServerError;
             else if (!response.Data.Any())
                 status = HttpStatusCode.NoContent;
