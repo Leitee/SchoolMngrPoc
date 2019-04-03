@@ -2,7 +2,7 @@
 using Pandora.NetCore.WebApi.Models;
 using System.Diagnostics;
 
-namespace Pandora.NetCore.WebApi.Controllers.Mvc
+namespace Pandora.NetCore.WebApi.Controllers
 {
     public class HomeController : Controller
     {

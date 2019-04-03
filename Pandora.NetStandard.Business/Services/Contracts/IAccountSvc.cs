@@ -4,20 +4,25 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Business.Services.Contracts
 {
-    public interface IAccountSvc 
+    public interface IAccountSvc : IAccountSvc<ApplicationUser, ApplicationRole>, IAuthSvc
     {
-        Task<BLListResponse<ApplicationRole>> GetAllRolesAsync();
-        Task<BLSingleResponse<ApplicationRole>> GetRoleByIdAsync(string pId);
-        Task<BLSingleResponse<ApplicationRole>> GetRoleByNameAsync(string pRolName);
-        Task<BLSingleResponse<ApplicationRole>> CreateRoleAsync(ApplicationRole pDto);
-        Task<BLSingleResponse<bool>> UpdateRoleAsync(ApplicationRole pDto);
-        Task<BLSingleResponse<bool>> DeleteRoleAsync(ApplicationRole pDto);
 
-        Task<BLListResponse<ApplicationUser>> GetAllUsersAsync();
-        Task<BLSingleResponse<ApplicationUser>> GetUserByIdAsync(string pId);
-        Task<BLSingleResponse<ApplicationUser>> GetUserByNameAsync(string pUserName);
-        Task<BLSingleResponse<ApplicationUser>> CreateUserAsync(ApplicationUser pDto);
-        Task<BLSingleResponse<bool>> UpdateUserAsync(ApplicationUser pDto);
-        Task<BLSingleResponse<bool>> DeleteUserAsync(ApplicationUser pDto);
+    }
+
+    public interface IAccountSvc<TUser, TRole> : IAuthSvc<TUser> where TUser : ApplicationUser where TRole : ApplicationRole
+    {
+        Task<BLListResponse<TRole>> GetAllRolesAsync();
+        Task<BLSingleResponse<TRole>> GetRoleByIdAsync(string pId);
+        Task<BLSingleResponse<TRole>> GetRoleByNameAsync(string pRolName);
+        Task<BLSingleResponse<TRole>> CreateRoleAsync(TRole pDto);
+        Task<BLSingleResponse<bool>> UpdateRoleAsync(TRole pDto);
+        Task<BLSingleResponse<bool>> DeleteRoleAsync(TRole pDto);
+
+        Task<BLListResponse<TUser>> GetAllUsersAsync();
+        Task<BLSingleResponse<TUser>> GetUserByIdAsync(string pId);
+        Task<BLSingleResponse<TUser>> GetUserByNameAsync(string pUserName);
+        Task<BLSingleResponse<TUser>> CreateUserAsync(TUser pDto);
+        Task<BLSingleResponse<bool>> UpdateUserAsync(TUser pDto);
+        Task<BLSingleResponse<bool>> DeleteUserAsync(TUser pDto);
     }
 }

@@ -4,7 +4,7 @@ using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
 using System.Threading.Tasks;
 
-namespace Pandora.NetCore.WebApi.Controllers
+namespace Pandora.NetCore.WebApi.Controllers.Api
 {
     [Route("api/v1/[controller]")]
    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

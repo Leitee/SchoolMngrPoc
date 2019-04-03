@@ -3,13 +3,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Pandora.NetCore.WebApi.Controllers;
+using Pandora.NetCore.WebApi.Controllers.Api;
 using Pandora.NetStandard.Business.Services;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Config;
@@ -87,7 +86,7 @@ namespace Pandora.NetCore.WebApi
                 options.SignIn.RequireConfirmedEmail = true;
             })
                 .AddDefaultTokenProviders()
-                .AddDefaultUI(UIFramework.Bootstrap4)
+                //.AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<SchoolDbContext>();
 
             // Register authentication schema
@@ -123,7 +122,6 @@ namespace Pandora.NetCore.WebApi
             services.AddScoped<IGradeSvc, GradeSvc>();
             services.AddScoped<IClassSvc, ClassSvc>();
             services.AddScoped<IAccountSvc, AccountSvc>();
-            services.AddScoped<IAuthSvc, AuthSvc>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(options =>
@@ -172,7 +170,6 @@ namespace Pandora.NetCore.WebApi
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
             app.UseAuthentication();
 
             app.UseMvc(routes =>

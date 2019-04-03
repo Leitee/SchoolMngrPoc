@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Pandora.NetCore.WebApi.Controllers
+namespace Pandora.NetCore.WebApi.Controllers.Api
 {
     [Produces("application/json")]
     [ApiController]

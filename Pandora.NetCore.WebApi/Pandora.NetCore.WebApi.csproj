@@ -11,6 +11,14 @@
     <DocumentationFile>C:\Projects\NetCoreBackend\Pandora.NetCore.WebApi\Pandora.NetCore.WebApi.xml</DocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Views\Account\Register.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Account\Register.cshtml" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
