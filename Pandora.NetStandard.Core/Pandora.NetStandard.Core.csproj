@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Remove="Interfaces\Data\IApplicationDbContext.cs" />
+    <Compile Remove="Interfaces\Identity\ISignInManagerFacade.cs" />
   </ItemGroup>
 
   <ItemGroup>

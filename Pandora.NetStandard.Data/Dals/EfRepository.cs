@@ -89,11 +89,11 @@ namespace Pandora.NetStandard.Data.Dals
 
         public async Task<TEntity> InsertAsync(TEntity entity)
         {
-            await Task.Run(() =>
+            var result = await Task.Run(() =>
             {
-                _dbSet.Add(entity);
+                return _dbSet.Add(entity);
             });
-            return entity;
+            return result.Entity;
         }
 
         public async Task DeleteAsync(object id)

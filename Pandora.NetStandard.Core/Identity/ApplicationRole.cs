@@ -11,5 +11,10 @@ namespace Pandora.NetStandard.Core.Identity
         }
 
         public string Description { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

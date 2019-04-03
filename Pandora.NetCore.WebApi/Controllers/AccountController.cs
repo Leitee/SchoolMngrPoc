@@ -68,7 +68,7 @@ namespace Pandora.NetCore.WebApi.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        public async Task<IActionResult> ConfirmEmail(int userId, string token)
         {
             if (userId == null || token == null)
             {

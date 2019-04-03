@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Pandora.NetCore.WebApi.Controllers;
+using Pandora.NetCore.WebApi.Controllers.Api;
 using Pandora.NetStandard.Business.Dtos;
 using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Data.Dals;

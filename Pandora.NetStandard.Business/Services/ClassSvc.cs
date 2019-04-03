@@ -1,4 +1,6 @@
-﻿using Pandora.NetStandard.Business.Services.Contracts;
+﻿using Pandora.NetStandard.Business.Dtos;
+using Pandora.NetStandard.Business.Mappers;
+using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Model.Entities;
@@ -8,32 +10,27 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Business.Services
 {
-    public class ClassSvc : BaseService, IClassSvc
+    public class ClassSvc : BaseService<Class, ClassDto>, IClassSvc
     {
 
-        public ClassSvc(IApplicationUow applicationUow) : base(applicationUow)
+        public ClassSvc(IApplicationUow applicationUow) : base(applicationUow, new ClassToDtoMapper())
         {
 
         }
 
-        public Task<BLSingleResponse<Class>> CreateAsync(Class pDto)
+        public async Task<BLSingleResponse<ClassDto>> CreateAsync(ClassDto pDto)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<BLSingleResponse<bool>> DeleteAsync(Class pDto)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<BLListResponse<Class>> GetAllAsync()
-        {
-            var response = new BLListResponse<Class>();
+            var response = new BLSingleResponse<ClassDto>();
 
             try
-            {
-                var entity = await _uow.Classes.AllAsync(null, o => o.OrderBy(g => g.Id), g => g.Grade);
-                response.Data = entity;
+            {                
+                var entity = await _uow.Classes.InsertAsync(pDto);
+                if (!await _uow.CommitAsync())
+                {
+                    HandleSVCException(response, "New Class creation failed.");
+                }
+                response.Data = _mapper.MapEntity(entity);
+
             }
             catch (Exception ex)
             {
@@ -43,14 +40,36 @@ namespace Pandora.NetStandard.Business.Services
             return response;
         }
 
-        public async Task<BLSingleResponse<Class>> GetByIdAsync(int pId)
+        public Task<BLSingleResponse<bool>> DeleteAsync(ClassDto pDto)
         {
-            var response = new BLSingleResponse<Class>();
+            throw new NotImplementedException();
+        }
+
+        public async Task<BLListResponse<ClassDto>> GetAllAsync()
+        {
+            var response = new BLListResponse<ClassDto>();
+
+            try
+            {
+                var entity = await _uow.Classes.AllAsync(null, o => o.OrderBy(g => g.GradeId), g => g.Grade);
+                response.Data = _mapper.MapEntity(entity);
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
+
+            return response;
+        }
+
+        public async Task<BLSingleResponse<ClassDto>> GetByIdAsync(int pId)
+        {
+            var response = new BLSingleResponse<ClassDto>();
 
             try
             {
                 var entity = await _uow.Classes.FindAsync(g => g.GradeId == pId, g => g.Grade);
-                response.Data = entity;
+                response.Data = _mapper.MapEntity(entity);
             }
             catch (Exception ex)
             {
@@ -60,7 +79,7 @@ namespace Pandora.NetStandard.Business.Services
             return response;
         }
 
-        public Task<BLSingleResponse<bool>> UpdateAsync(Class pDto)
+        public Task<BLSingleResponse<bool>> UpdateAsync(ClassDto pDto)
         {
             throw new NotImplementedException();
         }

@@ -18,9 +18,26 @@ namespace Pandora.NetStandard.Business.Services
 
         }
 
-        public Task<BLSingleResponse<GradeDto>> CreateAsync(GradeDto pDto)
+        public async Task<BLSingleResponse<GradeDto>> CreateAsync(GradeDto pDto)
         {
-            throw new NotImplementedException();
+            var response = new BLSingleResponse<GradeDto>();
+
+            try
+            {
+                var entity = await _uow.Grades.InsertAsync(pDto);
+                if(!await _uow.CommitAsync())
+                {
+                    HandleSVCException(response, "New Grade creation failed.");
+                }
+                response.Data = _mapper.MapEntity(entity);
+
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
+
+            return response;
         }
 
         public Task<BLSingleResponse<bool>> DeleteAsync(GradeDto pDto)

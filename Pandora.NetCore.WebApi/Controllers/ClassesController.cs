@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Pandora.NetStandard.Business.Dtos;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Data.Dals;
 using Pandora.NetStandard.Model.Entities;
@@ -13,11 +14,13 @@ namespace Pandora.NetCore.WebApi.Controllers
     {
         private readonly SchoolDbContext _context;
         private readonly IClassSvc _classSvc;
+        private readonly IGradeSvc _gradeSvc;
 
-        public ClassesController(SchoolDbContext context, IClassSvc classSvc)
+        public ClassesController(SchoolDbContext context, IClassSvc classSvc, IGradeSvc gradeSvc)
         {
             _context = context;
             _classSvc = classSvc;
+            _gradeSvc = gradeSvc;
         }
 
         // GET: Classes
@@ -42,8 +45,7 @@ namespace Pandora.NetCore.WebApi.Controllers
         // GET: Classes/Create
         public async Task<IActionResult> Create()
         {
-            var classes = await _classSvc.GetAllAsync();
-            ViewData["GradeId"] = new SelectList(classes.Data, "GradeId", "Name");
+            ViewData["Grades"] = new SelectList(_gradeSvc.GetAllAsync().Result.Data, "Id", "Name");
             return View();
         }
 
@@ -52,7 +54,7 @@ namespace Pandora.NetCore.WebApi.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Shift,GradeId")] Class pClass)
+        public async Task<IActionResult> Create(ClassDto pClass)
         {
             if (ModelState.IsValid)
             {
@@ -60,7 +62,7 @@ namespace Pandora.NetCore.WebApi.Controllers
                 pClass = response.Data;
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GradeId"] = new SelectList((await _classSvc.GetAllAsync()).Data, "GradeId", "Name", pClass.GradeId);
+            ViewData["Grades"] = new SelectList((await _gradeSvc.GetAllAsync()).Data, "Id", "Name", pClass.GradeId);
             return View(pClass);
         }
 

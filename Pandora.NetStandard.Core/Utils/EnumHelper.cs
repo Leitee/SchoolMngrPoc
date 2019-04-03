@@ -6,7 +6,12 @@ namespace Pandora.NetStandard.Core.Utils
 {
     public static class EnumHelper
     {
-        public static string GetDescription(Enum en)
+        public static int GetId(this Enum en)
+        {
+            return Convert.ToInt32(en);
+        }
+
+        public static string GetDescription(this Enum en)
         {
             Type type = en.GetType();
             MemberInfo[] memInfo = type.GetMember(en.ToString());
@@ -24,7 +29,7 @@ namespace Pandora.NetStandard.Core.Utils
             return en.ToString();
         }
 
-        public static string GetDescription<T>(T en)
+        public static string GetDescription<T>(T en) where T : Enum
         {
             Type type = en.GetType();
             MemberInfo[] memInfo = type.GetMember(en.ToString());

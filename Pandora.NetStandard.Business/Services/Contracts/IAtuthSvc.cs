@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Pandora.NetStandard.Business.Dtos;
+﻿using Pandora.NetStandard.Business.Dtos;
 using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Identity;
 using System.Threading.Tasks;

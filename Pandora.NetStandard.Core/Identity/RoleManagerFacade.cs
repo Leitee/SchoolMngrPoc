@@ -31,7 +31,7 @@ namespace Pandora.NetStandard.Core.Identity
             return await FindByIdAsync(roleId.ToString());
         }
 
-        public virtual async Task<IQueryable<TRole>> GetAllRolesAsync()
+        public virtual async Task<IQueryable<TRole>> GetAllAsync()
         {
             return await Task.Run(() =>
             {

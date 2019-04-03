@@ -23,11 +23,11 @@ namespace Pandora.NetStandard.Business.Services
 {
     public class AccountSvc : BaseService, IAccountSvc
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly SignInManagerFacade _signInManager;
         private readonly AppSettings _settings;
 
         public AccountSvc(IApplicationUow applicationUow,
-            SignInManager<ApplicationUser> signInManager,
+            SignInManagerFacade signInManager,
             IConfiguration config) : base(applicationUow)
         {
             _signInManager = signInManager;
@@ -77,7 +77,7 @@ namespace Pandora.NetStandard.Business.Services
 
             var user = new ApplicationUser(model.Username, model.Email, model.Firstname, model.Lastname);
 
-            var signUpResul = await _signInManager.UserManager.CreateAsync(user, model.Password);
+            var signUpResul = await _signInManager.SignUpAsync(user, model.Password);
 
             if (signUpResul.Succeeded)
             {
@@ -165,11 +165,16 @@ namespace Pandora.NetStandard.Business.Services
         {
             throw new NotImplementedException();
         }
-        public async Task<BLSingleResponse<ApplicationUser>> GetUserByIdAsync(string pId)
+        public async Task<BLSingleResponse<ApplicationUser>> GetUserByIdAsync(int pId)
         {
-            //TODO: user user facade
-            var response = new BLSingleResponse<ApplicationUser>();
-            response.Data = await _signInManager.UserManager.FindByIdAsync(pId);
+            var response = new BLSingleResponse<ApplicationUser>
+            {
+                Data = await _uow.Users.FindByIdAsync(pId)
+            };
+            if (response.Data == null)
+            {
+                HandleSVCException(response, "User not found");
+            }
             return response;
         }
         public Task<BLSingleResponse<ApplicationUser>> GetUserByNameAsync(string pUserName)
@@ -187,8 +192,6 @@ namespace Pandora.NetStandard.Business.Services
         {
             throw new NotImplementedException();
         }
-
-
         public Task<BLSingleResponse<bool>> DeleteRoleAsync(ApplicationRole pDto)
         {
             throw new NotImplementedException();
@@ -197,7 +200,7 @@ namespace Pandora.NetStandard.Business.Services
         {
             throw new NotImplementedException();
         }
-        public Task<BLSingleResponse<ApplicationRole>> GetRoleByIdAsync(string pId)
+        public Task<BLSingleResponse<ApplicationRole>> GetRoleByIdAsync(int pId)
         {
             throw new NotImplementedException();
         }

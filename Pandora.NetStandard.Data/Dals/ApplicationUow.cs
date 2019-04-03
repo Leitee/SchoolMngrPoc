@@ -1,4 +1,6 @@
-﻿using Pandora.NetStandard.Core.Interfaces;
+﻿using Pandora.NetStandard.Core.Identity;
+using Pandora.NetStandard.Core.Interfaces;
+using Pandora.NetStandard.Core.Interfaces.Identity;
 using Pandora.NetStandard.Model.Entities;
 using System;
 using System.Threading.Tasks;
@@ -17,6 +19,8 @@ namespace Pandora.NetStandard.Data.Dals
         }
 
         // Repositories
+        public IUserRepository Users => GetRepo<IUserRepository>();
+        public IRoleRepository Roles => GetRepo<IRoleRepository>();
         public IRepository<Grade> Grades => GetRepoByEntity<Grade>();
         public IRepository<Class> Classes => GetRepoByEntity<Class>();
 

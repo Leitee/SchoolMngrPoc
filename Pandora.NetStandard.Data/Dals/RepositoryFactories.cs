@@ -1,4 +1,5 @@
-﻿using Pandora.NetStandard.Core.Repository;
+﻿using Pandora.NetStandard.Core.Interfaces.Identity;
+using Pandora.NetStandard.Core.Repository;
 using System;
 using System.Collections.Generic;
 
@@ -40,22 +41,6 @@ namespace Pandora.NetStandard.Data.Dals
         }
 
         /// <summary>
-        /// Return the runtime Code Camper repository factory functions,
-        /// each one is a factory for a repository of a particular type.
-        /// </summary>
-        /// <remarks>
-        /// MODIFY THIS METHOD TO ADD CUSTOM CODE CAMPER FACTORY FUNCTIONS
-        /// </remarks>
-        private IDictionary<Type, Func<TContext, object>> GetCodeCamperFactories()
-        {
-            return new Dictionary<Type, Func<TContext, object>>
-            {
-                //{typeof(IRoleRepository), _dbContext => new RoleManagerFacade(_dbContext)},
-                //{typeof(IUserRepository), _dbContext => new UserManagerFacade(_dbContext)},
-            };
-        }
-
-        /// <summary>
         /// Constructor that initializes with an arbitrary collection of factories
         /// </summary>
         /// <param name="factories">
@@ -70,6 +55,23 @@ namespace Pandora.NetStandard.Data.Dals
         {
             _repositoryFactories = factories;
         }
+
+        /// <summary>
+        /// Return the runtime Code Camper repository factory functions,
+        /// each one is a factory for a repository of a particular type.
+        /// </summary>
+        /// <remarks>
+        /// MODIFY THIS METHOD TO ADD CUSTOM CODE CAMPER FACTORY FUNCTIONS
+        /// </remarks>
+        private IDictionary<Type, Func<TContext, object>> GetCodeCamperFactories()
+        {
+            return new Dictionary<Type, Func<TContext, object>>
+            {
+                //{typeof(IUserRepository), _dbContext => userRepository},
+                //{typeof(IRoleRepository), _dbContext => roleRepository},
+            };
+        }
+
 
         /// <summary>
         /// Get the repository factory function for the type.

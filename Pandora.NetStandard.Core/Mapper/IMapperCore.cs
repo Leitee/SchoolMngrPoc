@@ -5,7 +5,7 @@ namespace Pandora.NetStandard.Core.Mapper
 {
     public interface IMapperCore<in TConvertEntity, out TResultEntity>
     {
-        IMapper CreateMap();
+        IMapper CreateCustomMap();
         TResultEntity MapEntity(TConvertEntity entity);
         IEnumerable<TResultEntity> MapEntity(IEnumerable<TConvertEntity> entities);
     }

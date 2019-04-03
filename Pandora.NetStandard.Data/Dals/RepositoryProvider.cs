@@ -1,4 +1,5 @@
 ﻿using Pandora.NetStandard.Core.Interfaces;
+using Pandora.NetStandard.Core.Interfaces.Identity;
 using Pandora.NetStandard.Core.Repository;
 using System;
 using System.Collections.Generic;
@@ -39,11 +40,15 @@ namespace Pandora.NetStandard.Data.Dals
         /// </remarks>
         protected Dictionary<Type, object> Repositories { get; private set; }
 
-        public RepositoryProvider(RepositoryFactories<TContext> repositoryFactories, SchoolDbContext dbContext)
+        public RepositoryProvider(SchoolDbContext dbContext, IUserRepository userRepository, IRoleRepository roleRepository)
         {
             DbContext = dbContext as TContext;
-            _repositoryFactories = repositoryFactories;
             Repositories = new Dictionary<Type, object>();
+            _repositoryFactories = new RepositoryFactories<TContext>( new Dictionary<Type, Func<TContext, object>>
+            {
+                {typeof(IUserRepository), _dbContext => userRepository},
+                {typeof(IRoleRepository), _dbContext => roleRepository},
+            });
         }
 
         /// <summary>
@@ -80,8 +85,7 @@ namespace Pandora.NetStandard.Data.Dals
         public virtual T GetRepository<T>(Func<TContext, object> factory = null) where T : class
         {
             // Look for T dictionary cache under typeof(T).
-            object repoObj;
-            Repositories.TryGetValue(typeof(T), out repoObj);
+            Repositories.TryGetValue(typeof(T), out object repoObj);
             if (repoObj != null)
             {
                 return (T)repoObj;

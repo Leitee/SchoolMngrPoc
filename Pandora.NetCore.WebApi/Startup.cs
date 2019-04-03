@@ -85,6 +85,9 @@ namespace Pandora.NetCore.WebApi
                 options.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
                 options.SignIn.RequireConfirmedEmail = true;
             })
+                .AddSignInManager<SignInManagerFacade>()
+                .AddUserManager<UserManagerFacade>()
+                .AddRoleManager<RoleManagerFacade>()
                 .AddDefaultTokenProviders()
                 //.AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<SchoolDbContext>();
@@ -116,7 +119,6 @@ namespace Pandora.NetCore.WebApi
             services.AddScoped<IRepositoryProvider<SchoolDbContext>, RepositoryProvider<SchoolDbContext>>();
             services.AddSingleton<RepositoryFactories<SchoolDbContext>, RepositoryFactories<SchoolDbContext>>();
             services.AddScoped<IApplicationUow, ApplicationUow>();
-            services.AddScoped<ISignInManagerFacade, SignInManagerFacade>();
             services.AddScoped<IRoleRepository, RoleManagerFacade>();
             services.AddScoped<IUserRepository, UserManagerFacade>();
             services.AddScoped<IGradeSvc, GradeSvc>();

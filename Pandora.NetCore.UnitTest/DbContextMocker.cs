@@ -25,7 +25,7 @@ namespace Pandora.NetCore.UnitTest
             var dbContext = new SchoolDbContext(null, options);
 
             // Add entities in memory
-            dbContext.Seed();
+            dbContext.SeedDb();
 
             return dbContext;
         }
