@@ -10,7 +10,7 @@ namespace Pandora.NetStandard.Core.Identity
             Description = description;
         }
 
-        public string Description { get; set; }
+        public virtual string Description { get; set; }
 
         public override string ToString()
         {

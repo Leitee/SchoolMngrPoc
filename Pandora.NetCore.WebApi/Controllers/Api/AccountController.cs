@@ -70,5 +70,19 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
         {            
             return Ok();
         }
+
+        [HttpGet("Roles")]
+        public async Task<IActionResult> GetRoles()
+        {
+            var response = await _accountSvc.GetAllRolesAsync();
+            return response.ToHttpResponse();
+        }
+
+        [HttpGet("Users")]
+        public async Task<IActionResult> GetUsers()
+        {
+            var response = await _accountSvc.GetAllUsersAsync();
+            return response.ToHttpResponse();
+        }
     }
 }

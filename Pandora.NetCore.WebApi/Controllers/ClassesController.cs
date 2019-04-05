@@ -1,24 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Pandora.NetStandard.Business.Dtos;
 using Pandora.NetStandard.Business.Services.Contracts;
-using Pandora.NetStandard.Data.Dals;
-using Pandora.NetStandard.Model.Entities;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Pandora.NetCore.WebApi.Controllers
 {
     public class ClassesController : Controller
     {
-        private readonly SchoolDbContext _context;
         private readonly IClassSvc _classSvc;
         private readonly IGradeSvc _gradeSvc;
 
-        public ClassesController(SchoolDbContext context, IClassSvc classSvc, IGradeSvc gradeSvc)
+        public ClassesController(IClassSvc classSvc, IGradeSvc gradeSvc)
         {
-            _context = context;
             _classSvc = classSvc;
             _gradeSvc = gradeSvc;
         }
@@ -69,14 +63,14 @@ namespace Pandora.NetCore.WebApi.Controllers
         // GET: Classes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if (!id.HasValue)
             {
                 return NotFound();
             }
 
             var response = await _classSvc.GetByIdAsync(id.Value);
 
-            ViewData["GradeId"] = new SelectList((await _classSvc.GetAllAsync()).Data, "GradeId", "Name", response.Data.GradeId);
+            ViewData["Grades"] = new SelectList((await _gradeSvc.GetAllAsync()).Data, "Id", "Name", response.Data.GradeId);
             return View(response.Data);
         }
 
@@ -85,54 +79,37 @@ namespace Pandora.NetCore.WebApi.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Shift,GradeId")] Class @class)
+        public async Task<IActionResult> Edit(int id, ClassDto pClass)
         {
-            if (id != @class.Id)
+            if (id != pClass.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                try
+                var resul = await _classSvc.UpdateAsync(pClass);
+                if (resul.Data)
                 {
-                    _context.Update(@class);
-                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ClassExists(@class.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["GradeId"] = new SelectList(_context.Grades, "GradeId", "Name", @class.GradeId);
-            return View(@class);
+            ViewData["Grades"] = new SelectList((await _gradeSvc.GetAllAsync()).Data, "Id", "Name", pClass.GradeId);
+            return View(pClass);
         }
 
         // GET: Classes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            if (!id.HasValue)
             {
                 return NotFound();
             }
 
-            var @class = await _context.Classes
-                .Include(c => c.Grade)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (@class == null)
-            {
-                return NotFound();
-            }
+            var response = await _classSvc.GetByIdAsync(id.Value);
 
-            return View(@class);
+            ViewData["Grades"] = new SelectList((await _gradeSvc.GetAllAsync()).Data, "Id", "Name", response.Data.GradeId);
+            return View(response.Data);
         }
 
         // POST: Classes/Delete/5
@@ -140,15 +117,12 @@ namespace Pandora.NetCore.WebApi.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var @class = await _context.Classes.FindAsync(id);
-            _context.Classes.Remove(@class);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool ClassExists(int id)
-        {
-            return _context.Classes.Any(e => e.Id == id);
+            var resul = await _classSvc.DeleteAsync(id);
+            if (resul.Data)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            return NotFound();
         }
     }
 }

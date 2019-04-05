@@ -5,6 +5,7 @@ namespace Pandora.NetStandard.Business.Dtos
     public class LoginDto
     {
         [Required]
+        [Display(Name = "User Name")]
         public string Username { get; set; }
         [Required]
         [DataType(DataType.Password)]

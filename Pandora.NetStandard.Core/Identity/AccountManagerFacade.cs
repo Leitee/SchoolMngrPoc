@@ -3,40 +3,44 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Pandora.NetStandard.Core.Interfaces.Identity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Core.Identity
 {
-    public class SignInManagerFacade : SignInManagerFacade<ApplicationUser>
+    public class AccountManagerFacade : AccountManagerFacade<ApplicationUser, ApplicationRole>
     {
-        public SignInManagerFacade(UserManagerFacade userManager, 
-            IHttpContextAccessor contextAccessor, 
-            IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory, 
-            IOptions<IdentityOptions> optionsAccessor, 
-            ILogger<SignInManager<ApplicationUser>> logger, 
-            IAuthenticationSchemeProvider schemes) 
-            : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes)
+        public AccountManagerFacade(
+            UserManagerFacade userManager,
+            RoleManagerFacade roleManager,
+            IHttpContextAccessor contextAccessor,
+            IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory,
+            IOptions<IdentityOptions> optionsAccessor,
+            ILogger<SignInManager<ApplicationUser>> logger,
+            IAuthenticationSchemeProvider schemes)
+            : base(userManager, roleManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes)
         {
         }
     }
 
-    public class SignInManagerFacade<TUser> : SignInManager<TUser> where TUser : ApplicationUser
+    public class AccountManagerFacade<TUser, TRole> : SignInManager<TUser> where TUser : ApplicationUser where TRole : ApplicationRole
     {
-        public SignInManagerFacade(
+        public AccountManagerFacade(
             UserManagerFacade<TUser> userManager,
+            RoleManagerFacade<TRole> roleManager,
             IHttpContextAccessor contextAccessor,
             IUserClaimsPrincipalFactory<TUser> claimsFactory,
             IOptions<IdentityOptions> optionsAccessor,
             ILogger<SignInManager<TUser>> logger,
-            IAuthenticationSchemeProvider schemes) 
+            IAuthenticationSchemeProvider schemes)
             : base(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes)
         {
             UserManager = userManager;
+            RoleManager = roleManager;
         }
 
-        public new UserManagerFacade<TUser> UserManager { get; }
+        public virtual new UserManagerFacade<TUser> UserManager { get; }
+        public virtual RoleManagerFacade<TRole> RoleManager { get; }
 
         public virtual async Task<IdentityResult> SignUpAsync(TUser user, string pPassword)
         {
@@ -60,19 +64,14 @@ namespace Pandora.NetStandard.Core.Identity
             return base.SignOutAsync();
         }
 
-        public Task<string> GetEmailConfirmTokenAsync(TUser user)
+        public virtual async Task<string> GetEmailConfirmTokenAsync(TUser user)
         {
-            throw new System.NotImplementedException();
+            return await UserManager.GenerateEmailConfirmationTokenAsync(user);
         }
 
-        public Task<bool> SendEmailAsync(string pEmail, string pUrlRedirect)
+        public virtual async Task<IdentityResult> ConfirmEmailAsync(TUser user, string token)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<bool> ConfirmEmailAsync(TUser user, string token)
-        {
-            throw new System.NotImplementedException();
+            return await UserManager.ConfirmEmailAsync(user, token);
         }
     }
 }

@@ -23,11 +23,11 @@ namespace Pandora.NetStandard.Business.Services
 {
     public class AccountSvc : BaseService, IAccountSvc
     {
-        private readonly SignInManagerFacade _signInManager;
+        private readonly AccountManagerFacade _signInManager;
         private readonly AppSettings _settings;
 
         public AccountSvc(IApplicationUow applicationUow,
-            SignInManagerFacade signInManager,
+            AccountManagerFacade signInManager,
             IConfiguration config) : base(applicationUow)
         {
             _signInManager = signInManager;
@@ -37,7 +37,7 @@ namespace Pandora.NetStandard.Business.Services
         #region Auth
         public async Task<string> GetEmailConfirmTokenAsync(ApplicationUser user)
         {
-            return await _signInManager.UserManager.GenerateEmailConfirmationTokenAsync(user);
+            return await _signInManager.GetEmailConfirmTokenAsync(user);
         }
 
         public async Task<BLSingleResponse<TokenRespDto>> LoginAsync(LoginDto model)
@@ -115,8 +115,8 @@ namespace Pandora.NetStandard.Business.Services
         {
             var response = new BLSingleResponse<bool>();
 
-            var confirmResult = await _signInManager.UserManager.ConfirmEmailAsync(user, token);
-            if (confirmResult == IdentityResult.Success)
+            var confirmResult = await _signInManager.ConfirmEmailAsync(user, token);
+            if (confirmResult.Succeeded)
             {
                 response.Data = true;
             }
@@ -161,19 +161,31 @@ namespace Pandora.NetStandard.Business.Services
         {
             throw new NotImplementedException();
         }
-        public Task<BLListResponse<ApplicationUser>> GetAllUsersAsync()
+        public async Task<BLListResponse<ApplicationUser>> GetAllUsersAsync()
         {
-            throw new NotImplementedException();
+            var response = new BLListResponse<ApplicationUser>();
+
+            try
+            {
+                response.Data = await _uow.Users.GetAllAsync();
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
+
+            return response;
         }
         public async Task<BLSingleResponse<ApplicationUser>> GetUserByIdAsync(int pId)
         {
-            var response = new BLSingleResponse<ApplicationUser>
+            var response = new BLSingleResponse<ApplicationUser>();
+            try 
             {
-                Data = await _uow.Users.FindByIdAsync(pId)
-            };
-            if (response.Data == null)
+                response.Data = await _uow.Users.FindByIdAsync(pId);
+            }
+            catch (Exception ex)
             {
-                HandleSVCException(response, "User not found");
+                HandleSVCException(response, ex);
             }
             return response;
         }
@@ -196,9 +208,20 @@ namespace Pandora.NetStandard.Business.Services
         {
             throw new NotImplementedException();
         }
-        public Task<BLListResponse<ApplicationRole>> GetAllRolesAsync()
+        public async Task<BLListResponse<ApplicationRole>> GetAllRolesAsync()
         {
-            throw new NotImplementedException();
+            var response = new BLListResponse<ApplicationRole>();
+
+            try
+            {
+                response.Data = await _uow.Roles.GetAllAsync();
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
+
+            return response;
         }
         public Task<BLSingleResponse<ApplicationRole>> GetRoleByIdAsync(int pId)
         {

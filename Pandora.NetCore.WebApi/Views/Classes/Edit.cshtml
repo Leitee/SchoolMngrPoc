@@ -1,4 +1,4 @@
-﻿@model Pandora.NetStandard.Model.Entities.Class
+﻿@model ClassDto
 
 @{
     ViewData["Title"] = "Edit";
@@ -25,7 +25,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="GradeId" class="control-label"></label>
-                <select asp-for="GradeId" class="form-control" asp-items="ViewBag.GradeId"></select>
+                <select asp-for="GradeId" class="form-control" asp-items="ViewBag.Grades"></select>
                 <span asp-validation-for="GradeId" class="text-danger"></span>
             </div>
             <div class="form-group">

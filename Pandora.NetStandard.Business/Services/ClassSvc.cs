@@ -27,7 +27,7 @@ namespace Pandora.NetStandard.Business.Services
                 var entity = await _uow.Classes.InsertAsync(pDto);
                 if (!await _uow.CommitAsync())
                 {
-                    HandleSVCException(response, "New Class creation failed.");
+                    HandleSVCException(response, "Class could not be created");
                 }
                 response.Data = _mapper.MapEntity(entity);
 
@@ -40,9 +40,32 @@ namespace Pandora.NetStandard.Business.Services
             return response;
         }
 
-        public Task<BLSingleResponse<bool>> DeleteAsync(ClassDto pDto)
+        public async Task<BLSingleResponse<bool>> DeleteAsync(int classId)
         {
-            throw new NotImplementedException();
+            var resul = await GetByIdAsync(classId);
+            return await DeleteAsync(resul.Data);
+        }
+
+        public async Task<BLSingleResponse<bool>> DeleteAsync(ClassDto pDto)
+        {
+            var response = new BLSingleResponse<bool>();
+
+            try
+            {
+                await _uow.Classes.DeleteAsync(pDto);
+                if (!await _uow.CommitAsync())
+                {
+                    HandleSVCException(response, "Class could not be deleted");
+                }
+                response.Data = true;
+
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
+
+            return response;
         }
 
         public async Task<BLListResponse<ClassDto>> GetAllAsync()
@@ -68,7 +91,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entity = await _uow.Classes.FindAsync(g => g.GradeId == pId, g => g.Grade);
+                var entity = await _uow.Classes.GetByIdAsync(pId);
                 response.Data = _mapper.MapEntity(entity);
             }
             catch (Exception ex)
@@ -79,9 +102,26 @@ namespace Pandora.NetStandard.Business.Services
             return response;
         }
 
-        public Task<BLSingleResponse<bool>> UpdateAsync(ClassDto pDto)
+        public async Task<BLSingleResponse<bool>> UpdateAsync(ClassDto pDto)
         {
-            throw new NotImplementedException();
+            var response = new BLSingleResponse<bool>();
+
+            try
+            {
+                await _uow.Classes.UpdateAsync(pDto);
+                if (!await _uow.CommitAsync())
+                {
+                    HandleSVCException(response, "Class could not be modified");
+                }
+                response.Data = true;
+
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
+
+            return response;
         }
     }
 }

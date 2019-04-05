@@ -98,7 +98,7 @@ namespace Pandora.NetStandard.Data.Dals
 
         public async Task DeleteAsync(object id)
         {
-            await this.DeleteAsync(_dbSet.Find(id));
+            await DeleteAsync(_dbSet.Find(id));
         }
 
         public async Task DeleteAsync(TEntity entityToDelete)

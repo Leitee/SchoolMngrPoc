@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Pandora.NetStandard.Core.Identity;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Pandora.NetStandard.Core.Identity;
 
 namespace Pandora.NetStandard.Core.Interfaces.Identity
 {
