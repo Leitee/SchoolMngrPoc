@@ -7,6 +7,7 @@ using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Config;
 using Pandora.NetStandard.Core.Identity;
 using Pandora.NetStandard.Core.Interfaces;
+using Pandora.NetStandard.Core.Mapper;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
@@ -23,28 +24,31 @@ namespace Pandora.NetStandard.Business.Services
 {
     public class AccountSvc : BaseService, IAccountSvc
     {
-        private readonly AccountManagerFacade _signInManager;
+        private readonly AccountManagerFacade _accountManager;
+        private readonly IMapperCore _mapper;
         private readonly AppSettings _settings;
 
         public AccountSvc(IApplicationUow applicationUow,
             AccountManagerFacade signInManager,
-            IConfiguration config) : base(applicationUow)
+            IConfiguration config,
+            IMapperCore mapper) : base(applicationUow)
         {
-            _signInManager = signInManager;
+            _accountManager = signInManager;
+            _mapper = mapper;
             _settings = config.GetSection("AppSettings").Get<AppSettings>();
         }
 
         #region Auth
-        public async Task<string> GetEmailConfirmTokenAsync(ApplicationUser user)
+        public async Task<string> GetEmailConfirmTokenAsync(UserDto user)
         {
-            return await _signInManager.GetEmailConfirmTokenAsync(user);
+            return await _accountManager.GetEmailConfirmTokenAsync(user);
         }
 
         public async Task<BLSingleResponse<TokenRespDto>> LoginAsync(LoginDto model)
         {
             var response = new BLSingleResponse<TokenRespDto>();
-            //new PasswordHasher<ApplicationUser>().HashPassword(model.Username, pPassword);
-            var signInResul = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
+            //new PasswordHasher<UserDto>().HashPassword(model.Username, pPassword);
+            var signInResul = await _accountManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
 
             if (signInResul == SignInResult.Failed)
             {
@@ -68,20 +72,21 @@ namespace Pandora.NetStandard.Business.Services
 
         public async Task LogoutAsync()
         {
-            await _signInManager.SignOutAsync();
+            await _accountManager.SignOutAsync();
         }
 
-        public async Task<BLSingleResponse<ApplicationUser>> RegisterAsync(RegisterDto model)
+        public async Task<BLSingleResponse<UserDto>> RegisterAsync(RegisterDto model)
         {
-            var response = new BLSingleResponse<ApplicationUser>();
+            var response = new BLSingleResponse<UserDto>();
 
-            var user = new ApplicationUser(model.Username, model.Email, model.Firstname, model.Lastname);
+            var user = _mapper.MapToBaseClass<UserDto, ApplicationUser>(new UserDto(model.Username, model.Email, model.Firstname, model.Lastname));
 
-            var signUpResul = await _signInManager.SignUpAsync(user, model.Password);
+            var signUpResul = await _accountManager.SignUpAsync(user, model.Password);
 
             if (signUpResul.Succeeded)
             {
-                response.Data = await _signInManager.UserManager.FindByNameAsync(model.Username);
+                var entity = await _accountManager.UserManager.FindByNameAsync(model.Username);
+                response.Data = _mapper.MapEntity<ApplicationUser, UserDto>(entity);
             }
             else
             {
@@ -111,11 +116,11 @@ namespace Pandora.NetStandard.Business.Services
             return response;
         }
 
-        public async Task<BLSingleResponse<bool>> ConfirmEmailAsync(ApplicationUser user, string token)
+        public async Task<BLSingleResponse<bool>> ConfirmEmailAsync(UserDto user, string token)
         {
             var response = new BLSingleResponse<bool>();
 
-            var confirmResult = await _signInManager.ConfirmEmailAsync(user, token);
+            var confirmResult = await _accountManager.ConfirmEmailAsync(user, token);
             if (confirmResult.Succeeded)
             {
                 response.Data = true;
@@ -153,21 +158,22 @@ namespace Pandora.NetStandard.Business.Services
         #endregion
 
         #region User
-        public Task<BLSingleResponse<bool>> DeleteUserAsync(ApplicationUser pDto)
+        public Task<BLSingleResponse<bool>> DeleteUserAsync(UserDto pDto)
         {
             throw new NotImplementedException();
         }
-        public Task<BLSingleResponse<ApplicationUser>> CreateUserAsync(ApplicationUser pDto)
+        public Task<BLSingleResponse<UserDto>> CreateUserAsync(UserDto pDto)
         {
             throw new NotImplementedException();
         }
-        public async Task<BLListResponse<ApplicationUser>> GetAllUsersAsync()
+        public async Task<BLListResponse<UserDto>> GetAllUsersAsync()
         {
-            var response = new BLListResponse<ApplicationUser>();
+            var response = new BLListResponse<UserDto>();
 
             try
             {
-                response.Data = await _uow.Users.GetAllAsync();
+                var resul = await _uow.Users.GetAllAsync();
+                response.Data = _mapper.MapEntity<ApplicationUser, UserDto>(resul);
             }
             catch (Exception ex)
             {
@@ -176,12 +182,13 @@ namespace Pandora.NetStandard.Business.Services
 
             return response;
         }
-        public async Task<BLSingleResponse<ApplicationUser>> GetUserByIdAsync(int pId)
+        public async Task<BLSingleResponse<UserDto>> GetUserByIdAsync(int pId)
         {
-            var response = new BLSingleResponse<ApplicationUser>();
-            try 
+            var response = new BLSingleResponse<UserDto>();
+            try
             {
-                response.Data = await _uow.Users.FindByIdAsync(pId);
+                var result = await _uow.Users.FindByIdAsync(pId);
+                response.Data = _mapper.MapEntity<ApplicationUser, UserDto>(result);
             }
             catch (Exception ex)
             {
@@ -189,32 +196,33 @@ namespace Pandora.NetStandard.Business.Services
             }
             return response;
         }
-        public Task<BLSingleResponse<ApplicationUser>> GetUserByNameAsync(string pUserName)
+        public Task<BLSingleResponse<UserDto>> GetUserByNameAsync(string pUserName)
         {
             throw new NotImplementedException();
         }
-        public Task<BLSingleResponse<bool>> UpdateUserAsync(ApplicationUser pDto)
+        public Task<BLSingleResponse<bool>> UpdateUserAsync(UserDto pDto)
         {
             throw new NotImplementedException();
         }
         #endregion
 
         #region Role
-        public Task<BLSingleResponse<ApplicationRole>> CreateRoleAsync(ApplicationRole pDto)
+        public Task<BLSingleResponse<RoleDto>> CreateRoleAsync(RoleDto pDto)
         {
             throw new NotImplementedException();
         }
-        public Task<BLSingleResponse<bool>> DeleteRoleAsync(ApplicationRole pDto)
+        public Task<BLSingleResponse<bool>> DeleteRoleAsync(RoleDto pDto)
         {
             throw new NotImplementedException();
         }
-        public async Task<BLListResponse<ApplicationRole>> GetAllRolesAsync()
+        public async Task<BLListResponse<RoleDto>> GetAllRolesAsync()
         {
-            var response = new BLListResponse<ApplicationRole>();
+            var response = new BLListResponse<RoleDto>();
 
             try
             {
-                response.Data = await _uow.Roles.GetAllAsync();
+                var result = await _uow.Roles.GetAllAsync();
+                response.Data = _mapper.MapEntity<ApplicationRole, RoleDto>(result);
             }
             catch (Exception ex)
             {
@@ -223,15 +231,15 @@ namespace Pandora.NetStandard.Business.Services
 
             return response;
         }
-        public Task<BLSingleResponse<ApplicationRole>> GetRoleByIdAsync(int pId)
+        public Task<BLSingleResponse<RoleDto>> GetRoleByIdAsync(int pId)
         {
             throw new NotImplementedException();
         }
-        public Task<BLSingleResponse<ApplicationRole>> GetRoleByNameAsync(string pRolName)
+        public Task<BLSingleResponse<RoleDto>> GetRoleByNameAsync(string pRolName)
         {
             throw new NotImplementedException();
         }
-        public Task<BLSingleResponse<bool>> UpdateRoleAsync(ApplicationRole pDto)
+        public Task<BLSingleResponse<bool>> UpdateRoleAsync(RoleDto pDto)
         {
             throw new NotImplementedException();
         }

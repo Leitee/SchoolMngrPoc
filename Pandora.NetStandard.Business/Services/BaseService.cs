@@ -30,7 +30,7 @@ namespace Pandora.NetStandard.Business.Services
         }
     }
 
-    public abstract class BaseService<TEntity, TDto> : BaseService
+    public abstract class BaseService<TEntity, TDto> : BaseService where TEntity : IEntity where TDto : class
     {
         protected readonly IMapperCore<TEntity, TDto> _mapper;
 

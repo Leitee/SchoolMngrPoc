@@ -66,7 +66,7 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> ConfirmEmail()
+        public IActionResult ConfirmEmail()
         {            
             return Ok();
         }

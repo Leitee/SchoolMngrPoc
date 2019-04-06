@@ -25,6 +25,7 @@ namespace Pandora.NetStandard.Core.Identity
 
         public virtual DateTime JoinDate { get; set; }
 
+        public override sealed string PasswordHash { get; set; }
 
         public override string ToString()
         {

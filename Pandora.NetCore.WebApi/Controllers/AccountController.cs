@@ -70,7 +70,7 @@ namespace Pandora.NetCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> ConfirmEmail(int userId, string token)
         {
-            if (userId == null || token == null)
+            if (userId == 0 || token == null)
             {
                 return RedirectToAction("Index", "Home");
             }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Business.Services.Contracts
 {
-    public interface IAuthSvc : IAuthSvc<ApplicationUser>
+    public interface IAuthSvc : IAuthSvc<UserDto>
     {
 
     }
@@ -17,6 +17,6 @@ namespace Pandora.NetStandard.Business.Services.Contracts
         Task LogoutAsync();
         Task<string> GetEmailConfirmTokenAsync(TUser user);
         Task<BLSingleResponse<bool>> SendEmailAsync(string pEmail, string pUrlRedirect);
-        Task<BLSingleResponse<bool>> ConfirmEmailAsync(ApplicationUser user, string token);
+        Task<BLSingleResponse<bool>> ConfirmEmailAsync(TUser user, string token);
     }
 }

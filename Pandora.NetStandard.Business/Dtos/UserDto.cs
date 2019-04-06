@@ -9,7 +9,8 @@ namespace Pandora.NetStandard.Business.Dtos
         public UserDto()
         {
         }
-        public UserDto(string pUsername, string pEmail, string pFirstName, string pLastName) : base(pUsername, pEmail, pFirstName, pLastName)
+        public UserDto(string pUsername, string pEmail, string pFirstName, string pLastName) 
+            : base(pUsername, pEmail, pFirstName, pLastName)
         {
         }
 
@@ -25,5 +26,6 @@ namespace Pandora.NetStandard.Business.Dtos
         public override string LastName { get; set; }
         [Display(Name = "Join Date")]
         public override DateTime JoinDate { get { return base.JoinDate; } }
+        public string PasswordHash { set => base.PasswordHash = value; }
     }
 }

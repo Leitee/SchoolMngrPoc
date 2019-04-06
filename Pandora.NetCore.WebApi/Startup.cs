@@ -15,6 +15,7 @@ using Pandora.NetStandard.Core.Config;
 using Pandora.NetStandard.Core.Identity;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Interfaces.Identity;
+using Pandora.NetStandard.Core.Mapper;
 using Pandora.NetStandard.Data.Dals;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
@@ -121,6 +122,7 @@ namespace Pandora.NetCore.WebApi
             services.AddScoped<IApplicationUow, ApplicationUow>();
             services.AddScoped<IRoleRepository, RoleManagerFacade>();
             services.AddScoped<IUserRepository, UserManagerFacade>();
+            services.AddSingleton<IMapperCore, GenericMapperCore>();
             services.AddScoped<IGradeSvc, GradeSvc>();
             services.AddScoped<IClassSvc, ClassSvc>();
             services.AddScoped<IAccountSvc, AccountSvc>();

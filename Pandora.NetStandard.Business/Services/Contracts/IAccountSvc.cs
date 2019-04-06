@@ -1,11 +1,11 @@
-﻿using Pandora.NetStandard.Core.Bases;
+﻿using Pandora.NetStandard.Business.Dtos;
+using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Identity;
-using Pandora.NetStandard.Core.Interfaces.Identity;
 using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Business.Services.Contracts
 {
-    public interface IAccountSvc : IAccountSvc<ApplicationUser, ApplicationRole>, IAuthSvc
+    public interface IAccountSvc : IAccountSvc<UserDto, RoleDto>, IAuthSvc
     {
 
     }
