@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Pandora.NetStandard.Business.Dtos;
 using Pandora.NetStandard.Business.Services.Contracts;
-using Pandora.NetStandard.Data.Dals;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Pandora.NetCore.WebApi.Controllers
 {
+    [Authorize]
     public class ClassesController : Controller
     {
         private readonly IClassSvc _classSvc;
@@ -121,7 +120,7 @@ namespace Pandora.NetCore.WebApi.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var resul = await _classSvc.DeleteAsync(id);
-            if(resul.Data)
+            if (resul.Data)
             {
                 return RedirectToAction(nameof(Index));
             }

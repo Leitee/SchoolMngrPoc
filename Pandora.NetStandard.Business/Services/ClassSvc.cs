@@ -42,8 +42,8 @@ namespace Pandora.NetStandard.Business.Services
 
         public async Task<BLSingleResponse<bool>> DeleteAsync(int classId)
         {
-            var resul = await GetByIdAsync(classId);
-            return await DeleteAsync(resul.Data);
+            var classResul = await _uow.Classes.GetByIdAsync(classId);
+            return await DeleteAsync(_mapper.MapEntity(classResul));
         }
 
         public async Task<BLSingleResponse<bool>> DeleteAsync(ClassDto pDto)
@@ -91,7 +91,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entity = await _uow.Classes.GetByIdAsync(pId);
+                var entity = await _uow.Classes.FindAsync(c => c.Id == pId, c => c.Grade);
                 response.Data = _mapper.MapEntity(entity);
             }
             catch (Exception ex)

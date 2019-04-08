@@ -17,6 +17,6 @@ namespace Pandora.NetStandard.Business.Dtos
 
         //[JsonIgnore]
         [Display(Name = "Año", Order = 1)]
-        public override Grade Grade { get; set; }
+        public new GradeDto Grade { get; set; }
     }
 }

@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pandora.NetStandard.Business.Dtos;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
 using System.Threading.Tasks;
@@ -7,7 +10,7 @@ using System.Threading.Tasks;
 namespace Pandora.NetCore.WebApi.Controllers.Api
 {
     [Route("api/v1/[controller]")]
-   // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class GradesController : ApiBaseController
     {
         private readonly IGradeSvc _gradeSvc;
@@ -28,8 +31,8 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
         }
 
         // GET api/v1/grades/5
-        [HttpGet("{id}", Name = "getPais")]
-        public async Task<IActionResult> Get(int id)
+        [HttpGet("{id}", Name = "getGrade")]
+        public async Task<IActionResult> GetById(int id)
         {
             var response = await _gradeSvc.GetByIdAsync(id);
             return response.ToHttpResponse();
@@ -37,12 +40,12 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
 
         // POST api/v1/grades
         [HttpPost]
-        public IActionResult Post([FromBody] object obj)
+        public async Task<IActionResult> Post([FromBody] GradeDto pGradeObj)
         {
             if (ModelState.IsValid)
             {
-                //save data
-                return new CreatedAtRouteResult("getPais", new { id = obj }, obj);//return 201 created and its data entity 
+                var response = await _gradeSvc.CreateAsync(pGradeObj);
+                return CreatedAtAction(nameof(GetById), new { pGradeObj.Id } , pGradeObj);//return 201 created and its data entity 
             }
 
             return BadRequest(ModelState);

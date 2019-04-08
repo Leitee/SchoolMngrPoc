@@ -1,55 +1,57 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Pandora.NetStandard.Business.Dtos;
+using Pandora.NetStandard.Business.Services.Contracts;
+using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Data.Dals;
 using Pandora.NetStandard.Model.Entities;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Pandora.NetCore.WebApi.Controllers.Api
 {
     [Route("api/v1/[controller]")]
-    [ApiController]
-    public class ClassesController : ControllerBase
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public class ClassesController : ApiBaseController
     {
         private readonly SchoolDbContext _context;
+        private readonly IClassSvc _classSvc;
 
-        public ClassesController(SchoolDbContext context)
+        public ClassesController(SchoolDbContext context, IClassSvc classSvc, ILogger<ClassesController> logger) : base(logger)
         {
             _context = context;
+            _classSvc = classSvc;
         }
 
         // GET: api/Classes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Class>>> GetClasses()
+        public async Task<IActionResult> GetClasses()
         {
-            return await _context.Classes.ToListAsync();
+            var response = await _classSvc.GetAllAsync();
+            return response.ToHttpResponse();
         }
 
         // GET: api/Classes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Class>> GetClass(int id)
+        public async Task<IActionResult> GetClass(int id)
         {
-            var @class = await _context.Classes.FindAsync(id);
-
-            if (@class == null)
-            {
-                return NotFound();
-            }
-
-            return @class;
+            var response = await _classSvc.GetByIdAsync(id);
+            return response.ToHttpResponse();
         }
 
         // PUT: api/Classes/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutClass(int id, Class @class)
+        public async Task<IActionResult> PutClass(int pId, ClassDto pClass)
         {
-            if (id != @class.Id)
+            if (pId != pClass.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(@class).State = EntityState.Modified;
+            _context.Entry(pClass).State = EntityState.Modified;
 
             try
             {
@@ -57,7 +59,7 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClassExists(id))
+                if (!ClassExists(pId))
                 {
                     return NotFound();
                 }

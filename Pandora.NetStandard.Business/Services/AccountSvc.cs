@@ -151,7 +151,7 @@ namespace Pandora.NetStandard.Business.Services
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.JwtSecretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expiration = DateTime.UtcNow.AddHours(1);
+            var expiration = DateTime.UtcNow.AddHours(12);
 
             var objToken = new JwtSecurityToken(
                 issuer: _settings.JwtValidIssuer,
