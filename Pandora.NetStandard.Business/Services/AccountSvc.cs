@@ -44,27 +44,35 @@ namespace Pandora.NetStandard.Business.Services
             return await _accountManager.GetEmailConfirmTokenAsync(user);
         }
 
-        public async Task<BLSingleResponse<TokenRespDto>> LoginAsync(LoginDto model)
+        public async Task<BLSingleResponse<LoginRespDto>> LoginAsync(LoginDto model)
         {
-            var response = new BLSingleResponse<TokenRespDto>();
+            var response = new BLSingleResponse<LoginRespDto>();
             //new PasswordHasher<UserDto>().HashPassword(model.Username, pPassword);
-            var signInResul = await _accountManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
 
-            if (signInResul == SignInResult.Failed)
+            try
             {
-                HandleSVCException(response, "Username or Password is invalid.");
+                var signInResul = await _accountManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
+
+                if (signInResul == SignInResult.Failed)
+                {
+                    response.Data = new LoginRespDto("Username or Password is invalid.");
+                }
+                else if (signInResul == SignInResult.TwoFactorRequired)
+                {
+                    response.Data = new LoginRespDto("This User does not confirmed email or phone.");
+                }
+                else if (signInResul == SignInResult.LockedOut)
+                {
+                    response.Data = new LoginRespDto("This User is currently locked out.");
+                }
+                else
+                {
+                    response.Data = TokenBuilder(model.Username, "basic");
+                }
             }
-            else if (signInResul == SignInResult.TwoFactorRequired)
+            catch (Exception ex)
             {
-                HandleSVCException(response, "This User does not confirmed email.");
-            }
-            else if (signInResul == SignInResult.LockedOut)
-            {
-                HandleSVCException(response, "This User is currently locked out.");
-            }
-            else
-            {
-                response.Data = TokenBuilder(model.Username, "basic");
+                HandleSVCException(response, ex);
             }
 
             return response;
@@ -133,7 +141,7 @@ namespace Pandora.NetStandard.Business.Services
             return response;
         }
 
-        protected TokenRespDto TokenBuilder(string username, string role)
+        protected LoginRespDto TokenBuilder(string username, string role)
         {
             IEnumerable<Claim> claims = new[] {
                 new Claim(ClaimTypes.Name, username),
@@ -153,7 +161,7 @@ namespace Pandora.NetStandard.Business.Services
                 signingCredentials: creds
             );
 
-            return new TokenRespDto(new JwtSecurityTokenHandler().WriteToken(objToken), expiration);
+            return new LoginRespDto(new JwtSecurityTokenHandler().WriteToken(objToken), expiration);
         }
         #endregion
 

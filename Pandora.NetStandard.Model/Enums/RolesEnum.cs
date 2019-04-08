@@ -1,21 +1,17 @@
-﻿using Pandora.NetStandard.Core.Identity;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace Pandora.NetStandard.Model.Enums
 {
     public enum RolesEnum
     {
         [Description("Dev")]
-        DEBUG = 0,
+        DEBUG = -1,
         [Description("Admin")]
-        ADMINISTRADOR,
+        ADMINISTRADOR = 1,
         [Description("Super")]
         SUPERVISOR,
         [Description("Teacher")]
-        TEACHER       
+        TEACHER
     }
-    
+
 }

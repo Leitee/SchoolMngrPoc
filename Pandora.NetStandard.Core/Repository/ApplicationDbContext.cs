@@ -25,7 +25,6 @@ namespace Pandora.NetStandard.Core.Repository
             // Add your customizations after calling base.OnModelCreating(builder);
 
             //Rename Identity tables
-
             builder.Entity<ApplicationUser>().ToTable("Users", SCHEMA_NAME);
             builder.Entity<ApplicationRole>().ToTable("Roles", SCHEMA_NAME);
             builder.Entity<IdentityRoleClaim<int>>().ToTable("RoleClaims", SCHEMA_NAME);
@@ -34,6 +33,5 @@ namespace Pandora.NetStandard.Core.Repository
             builder.Entity<IdentityUserLogin<int>>().ToTable("UserLogins", SCHEMA_NAME).HasKey(key => new { key.ProviderKey, key.LoginProvider });
             builder.Entity<IdentityUserToken<int>>().ToTable("UserTokens", SCHEMA_NAME).HasKey(key => new { key.UserId, key.LoginProvider, key.Name });
         }
-
     }
 }

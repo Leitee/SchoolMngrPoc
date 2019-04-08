@@ -50,7 +50,7 @@ namespace Pandora.NetCore.WebApi.Controllers
             if (ModelState.IsValid)
             {
                 var response = await _accountSvc.LoginAsync(model);
-                if (!response.HasError)
+                if (response.Data.HasToken)
                 {
                     if (Request.Query.Keys.Contains("ReturnUrl"))
                     {
@@ -59,7 +59,7 @@ namespace Pandora.NetCore.WebApi.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
-                ErrorMessage = response.Errors.Last();
+                ErrorMessage = response.Data.MessageResponse;
             }
 
             this.ModelState.AddModelError(string.Empty, ErrorMessage);

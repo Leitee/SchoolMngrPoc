@@ -8,6 +8,7 @@ namespace Pandora.NetStandard.Core.Identity
         public ApplicationRole(string name, string description) : base(name)
         {
             Description = description;
+            NormalizedName = name.ToUpper();
         }
 
         public virtual string Description { get; set; }

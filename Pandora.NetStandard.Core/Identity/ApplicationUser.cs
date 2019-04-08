@@ -13,6 +13,8 @@ namespace Pandora.NetStandard.Core.Identity
             FirstName = pFirstName;
             LastName = pLastName;
             JoinDate = DateTime.UtcNow;
+            NormalizedUserName = UserName.ToUpper();
+            NormalizedEmail = Email.ToUpper();
         }
 
         [Required]
@@ -24,8 +26,6 @@ namespace Pandora.NetStandard.Core.Identity
         public virtual string LastName { get; set; }
 
         public virtual DateTime JoinDate { get; set; }
-
-        public override sealed string PasswordHash { get; set; }
 
         public override string ToString()
         {

@@ -3,14 +3,20 @@ using System;
 
 namespace Pandora.NetStandard.Business.Dtos
 {
-    public class TokenRespDto : TokenResponse
+    public class LoginRespDto : TokenResponse
     {
         public bool HasToken { get { return !string.IsNullOrEmpty(Token); } }
+        public string MessageResponse { get; set; }
 
-        public TokenRespDto(string token, DateTime expiration)
+        public LoginRespDto(string token, DateTime expiration)
         {
             Token = token;
             ExpirationDate = (int)expiration.Ticks;
+        }
+
+        public LoginRespDto(string  messageResponse)
+        {
+            MessageResponse = messageResponse;
         }
     }
 }

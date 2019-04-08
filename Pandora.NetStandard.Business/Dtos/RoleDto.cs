@@ -9,5 +9,10 @@ namespace Pandora.NetStandard.Business.Dtos
         [Display(Name = "Role Name")]
         public override string Name { get; set; }
         public override string Description { get; set; }
+
+        #region Security Identity fields Hidden
+        public override string ConcurrencyStamp { set { } }
+        public override string NormalizedName { set { } }
+        #endregion
     }
 }

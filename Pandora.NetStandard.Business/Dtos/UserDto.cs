@@ -15,17 +15,38 @@ namespace Pandora.NetStandard.Business.Dtos
         }
 
         public override int Id { get; set; }
+
         [Display(Name = "User Name")]
         public override string UserName { get; set; }
+
+        [DataType(DataType.EmailAddress)]
         public override string Email { get; set; }
+
         [Display(Name = "Phone Number")]
         public override string PhoneNumber { get; set; }
+
         [Display(Name = "First Name")]
         public override string FirstName { get; set; }
+
         [Display(Name = "Second Name")]
         public override string LastName { get; set; }
+
+        [Display(Name = "Full Name")]
+        public string FullName { get { return $"{LastName.ToUpper()} {FirstName}"; } }
+
         [Display(Name = "Join Date")]
         public override DateTime JoinDate { get { return base.JoinDate; } }
-        public string PasswordHash { set => base.PasswordHash = value; }
+
+        #region Security Identity fields Hidden
+        public override string PasswordHash { set => base.PasswordHash = null; }
+        public override bool EmailConfirmed { set { } }
+        public override string SecurityStamp { set { } }
+        public override string ConcurrencyStamp { set { } }
+        public override bool PhoneNumberConfirmed { set { } }
+        public override bool TwoFactorEnabled { set { } }
+        public override DateTimeOffset? LockoutEnd { set { } }
+        public override bool LockoutEnabled { set { } }
+        public override int AccessFailedCount { set { } }
+        #endregion
     }
 }

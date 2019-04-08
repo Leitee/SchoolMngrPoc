@@ -12,7 +12,7 @@ namespace Pandora.NetStandard.Business.Services.Contracts
 
     public interface IAuthSvc<TUser> where TUser : ApplicationUser
     {
-        Task<BLSingleResponse<TokenRespDto>> LoginAsync(LoginDto model);
+        Task<BLSingleResponse<LoginRespDto>> LoginAsync(LoginDto model);
         Task<BLSingleResponse<TUser>> RegisterAsync(RegisterDto model);
         Task LogoutAsync();
         Task<string> GetEmailConfirmTokenAsync(TUser user);
