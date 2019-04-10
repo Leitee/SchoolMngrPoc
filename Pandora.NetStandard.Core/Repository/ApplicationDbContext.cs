@@ -10,7 +10,7 @@ namespace Pandora.NetStandard.Core.Repository
     public abstract class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>, IDisposable
     {
         protected const string SCHEMA_NAME = "Auth";
-        protected readonly IConfiguration _config;
+        protected readonly IConfiguration _config;//TODO: to see...
 
         public ApplicationDbContext(IConfiguration config, DbContextOptions options) : base(options)
         {

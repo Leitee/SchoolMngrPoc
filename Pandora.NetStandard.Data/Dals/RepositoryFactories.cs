@@ -37,7 +37,7 @@ namespace Pandora.NetStandard.Data.Dals
         /// </summary>
         public RepositoryFactories()
         {
-            _repositoryFactories = GetCodeCamperFactories();
+            _repositoryFactories = GetCustomeFactories();
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Pandora.NetStandard.Data.Dals
         /// <remarks>
         /// MODIFY THIS METHOD TO ADD CUSTOM CODE CAMPER FACTORY FUNCTIONS
         /// </remarks>
-        private IDictionary<Type, Func<TContext, object>> GetCodeCamperFactories()
+        private IDictionary<Type, Func<TContext, object>> GetCustomeFactories()
         {
             return new Dictionary<Type, Func<TContext, object>>
             {

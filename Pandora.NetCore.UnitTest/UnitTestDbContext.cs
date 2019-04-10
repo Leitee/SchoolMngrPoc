@@ -9,17 +9,19 @@ namespace Pandora.NetCore.UnitTest
 {
     public class UnitTestDbContext : SchoolDbContext
     {
-        public UnitTestDbContext(IConfiguration config, DbContextOptions<SchoolDbContext> options) : base(config, options)
+        public UnitTestDbContext(IConfiguration config, DbContextOptions options) : base(config, options)
         {
-            // Create options for DbContext instance
-            options = new DbContextOptionsBuilder<SchoolDbContext>()
-                .UseInMemoryDatabase("Test")
-                .Options;
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //base.OnConfiguring(optionsBuilder);
+            //optionsBuilder.UseInMemoryDatabase("TestDB");
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
         }
     }
 }

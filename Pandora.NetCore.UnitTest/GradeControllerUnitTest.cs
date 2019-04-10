@@ -1,25 +1,29 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Pandora.NetCore.WebApi.Controllers.Api;
 using Pandora.NetStandard.Business.Dtos;
+using Pandora.NetStandard.Business.Services;
+using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
-using Pandora.NetStandard.Data.Dals;
 using System;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace Pandora.NetCore.UnitTest
 {
-    public class GradeControllerUnitTest : IDisposable
+    public class GradeControllerUnitTest : IClassFixture<DbContextMocker>
     {
         private readonly GradesController _controller;
 
-        public GradeControllerUnitTest(IServiceCollection services)
+        public GradeControllerUnitTest(DbContextMocker mocker)
         {
-            services.AddDbContext<SchoolDbContext>(builder =>
-            {
-                builder.UseInMemoryDatabase("Test");
-            });
+
+            //services.AddDbContext<UnitTestDbContext>(builder =>
+            //{
+            //    builder.UseInMemoryDatabase("Test");
+            //});
+            IGradeSvc gradeSvc = new GradeSvc(mocker.GetApplicationUoW("GradeTestDB"));
+
+            _controller = new GradesController(null, gradeSvc);
         }
 
         [Fact]

@@ -1,18 +1,25 @@
-﻿using Pandora.NetStandard.Core.Identity;
-using Pandora.NetStandard.Core.Interfaces;
+﻿using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Interfaces.Identity;
+using Pandora.NetStandard.Core.Repository;
 using Pandora.NetStandard.Model.Entities;
 using System;
 using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Data.Dals
 {
-    public class ApplicationUow : IApplicationUow
+    public class ApplicationUow : ApplicationUow<SchoolDbContext>, IApplicationUow
     {
-        private readonly SchoolDbContext _dbContext;
-        private readonly IRepositoryProvider<SchoolDbContext> _repositoryProvider;
+        public ApplicationUow(IRepositoryProvider<SchoolDbContext> repositoryProvider) 
+            : base(repositoryProvider)
+        {
+        }
+    }
+    public class ApplicationUow<TDbContext> : IApplicationUow where TDbContext : ApplicationDbContext
+    {
+        private readonly ApplicationDbContext _dbContext;
+        private readonly IRepositoryProvider<TDbContext> _repositoryProvider;
 
-        public ApplicationUow(IRepositoryProvider<SchoolDbContext> repositoryProvider)
+        public ApplicationUow(IRepositoryProvider<TDbContext> repositoryProvider)
         {
             _repositoryProvider = repositoryProvider;
             _dbContext = _repositoryProvider.DbContext;

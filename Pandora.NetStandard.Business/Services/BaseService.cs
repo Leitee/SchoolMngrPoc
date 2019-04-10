@@ -3,6 +3,7 @@ using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Mapper;
 using Pandora.NetStandard.Data.Dals;
 using System;
+using System.Collections.Generic;
 
 namespace Pandora.NetStandard.Business.Services
 {
@@ -17,10 +18,15 @@ namespace Pandora.NetStandard.Business.Services
 
         protected void HandleSVCException(BLResponse pResponse, Exception pEx)
         {
-            pResponse.Errors.Add("Internal Error at Service Layer");
-            pResponse.Errors.Add(pEx.Message);
-            if (pEx.InnerException != null)
-                pResponse.Errors.Add(pEx.InnerException.Message);
+            List<string> errs = new List<string>();
+            do
+            {
+                errs.Add(pEx.Message);
+                pEx = pEx.InnerException;
+
+            } while (pEx != null);
+
+            HandleSVCException(pResponse, errs.ToArray());
         }
 
         protected void HandleSVCException(BLResponse pResponse, params string[] pErrors)

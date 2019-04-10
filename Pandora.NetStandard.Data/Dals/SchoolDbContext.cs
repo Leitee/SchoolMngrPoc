@@ -6,15 +6,15 @@ using Pandora.NetStandard.Core.Repository;
 using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Entities;
 using Pandora.NetStandard.Model.Enums;
-using System;
 using System.Collections.Generic;
 
 namespace Pandora.NetStandard.Data.Dals
 {
     public class SchoolDbContext : ApplicationDbContext
     {
-        public SchoolDbContext(IConfiguration config, DbContextOptions<SchoolDbContext> options) : base(config, options)
+        public SchoolDbContext(IConfiguration config, DbContextOptions options) : base(config, options)
         {
+
         }
 
         public DbSet<Grade> Grades { get; set; }
@@ -22,12 +22,11 @@ namespace Pandora.NetStandard.Data.Dals
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //base.OnConfiguring(optionsBuilder);
             //optionsBuilder.UseSqlite("Filename = ./schoolDB.db");
 
             optionsBuilder.UseSqlServer(_config["AppSettings:ConnectionString"], options =>
             {
-                options.MigrationsHistoryTable("Migrations", "Config");
+                options.MigrationsHistoryTable("Migrations", "EFwk");
             });
         }
 

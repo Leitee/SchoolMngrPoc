@@ -40,9 +40,9 @@ namespace Pandora.NetStandard.Data.Dals
         /// </remarks>
         protected Dictionary<Type, object> Repositories { get; private set; }
 
-        public RepositoryProvider(SchoolDbContext dbContext, IUserRepository userRepository, IRoleRepository roleRepository)
+        public RepositoryProvider(TContext dbContext, IUserRepository userRepository, IRoleRepository roleRepository)
         {
-            DbContext = dbContext as TContext;
+            DbContext = dbContext;
             Repositories = new Dictionary<Type, object>();
             _repositoryFactories = new RepositoryFactories<TContext>( new Dictionary<Type, Func<TContext, object>>
             {
