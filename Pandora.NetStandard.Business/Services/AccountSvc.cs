@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Pandora.NetStandard.Business.Dtos;
 using Pandora.NetStandard.Business.Services.Contracts;
@@ -30,8 +31,9 @@ namespace Pandora.NetStandard.Business.Services
 
         public AccountSvc(IApplicationUow applicationUow,
             AccountManagerFacade signInManager,
+            ILogger<AccountSvc> logger,
             IConfiguration config,
-            IMapperCore mapper) : base(applicationUow)
+            IMapperCore mapper) : base(applicationUow, logger)
         {
             _accountManager = signInManager;
             _mapper = mapper;

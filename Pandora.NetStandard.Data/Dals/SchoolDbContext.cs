@@ -2,19 +2,22 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Pandora.NetStandard.Core.Identity;
-using Pandora.NetStandard.Core.Repository;
+using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Entities;
 using Pandora.NetStandard.Model.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Pandora.NetStandard.Data.Dals
 {
     public class SchoolDbContext : ApplicationDbContext
     {
-        public SchoolDbContext(IConfiguration config, DbContextOptions options) : base(config, options)
-        {
+        protected readonly IConfiguration _config;//TODO: to see...
 
+        public SchoolDbContext(IConfiguration config, DbContextOptions options) : base(options)
+        {
+            _config = config ?? throw new ArgumentNullException(nameof(config));
         }
 
         public DbSet<Grade> Grades { get; set; }

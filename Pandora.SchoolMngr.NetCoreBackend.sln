@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.329
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pandora.NetStandard.Model", "Pandora.NetStandard.Model\Pandora.NetStandard.Model.csproj", "{A4BEDF85-FEE0-485F-93CD-73C9BDB008B3}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BackEnd", "BackEnd", "{EECA589D-DCEE-4033-96B1-AFDFB1FABE1B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrontEnd", "FrontEnd", "{3BEFEA8E-BFAE-48DB-A2EE-1F9C8336CD6A}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{344E8AEE-2C43-45ED-8179-81DDE8D9BAA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,10 @@ Global
 		{136DFF0A-6E48-49AA-921F-92DA48462633}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{136DFF0A-6E48-49AA-921F-92DA48462633}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{136DFF0A-6E48-49AA-921F-92DA48462633}.Release|Any CPU.Build.0 = Release|Any CPU
+		{344E8AEE-2C43-45ED-8179-81DDE8D9BAA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{344E8AEE-2C43-45ED-8179-81DDE8D9BAA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{344E8AEE-2C43-45ED-8179-81DDE8D9BAA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{344E8AEE-2C43-45ED-8179-81DDE8D9BAA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

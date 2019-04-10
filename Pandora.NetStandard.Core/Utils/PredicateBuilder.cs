@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
 
-namespace Pandora.NetStandard.Core.Repository
+namespace Pandora.NetStandard.Core.Utils
 {
     public static class PredicateBuilder
     {

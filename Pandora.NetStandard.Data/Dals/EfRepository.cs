@@ -21,7 +21,7 @@ namespace Pandora.NetStandard.Data.Dals
             _dbSet = _dbContext.Set<TEntity>();
         }
 
-        public async Task<IQueryable<TEntity>> AllAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, 
+        public async Task<IQueryable<TEntity>> AllAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>,
             IOrderedQueryable<TEntity>> orderBy, params Expression<Func<TEntity, object>>[] includes)
         {
             return await Task.Run(() =>
@@ -37,8 +37,8 @@ namespace Pandora.NetStandard.Data.Dals
             });
         }
 
-        public async Task<BLPagedResponse<TEntity>> AllPagedAsync(int skip, int take, int pageSize, int currentPage, 
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, Expression<Func<TEntity, 
+        public async Task<BLPagedResponse<TEntity>> AllPagedAsync(int skip, int take, int pageSize, int currentPage,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, Expression<Func<TEntity,
                 bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
         {
             IQueryable<TEntity> entities;

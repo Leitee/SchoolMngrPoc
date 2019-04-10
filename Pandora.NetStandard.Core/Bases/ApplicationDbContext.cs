@@ -1,20 +1,18 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Pandora.NetStandard.Core.Identity;
 using System;
 
-namespace Pandora.NetStandard.Core.Repository
+namespace Pandora.NetStandard.Core.Bases
 {
     public abstract class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>, IDisposable
     {
         protected const string SCHEMA_NAME = "Auth";
-        protected readonly IConfiguration _config;//TODO: to see...
 
-        public ApplicationDbContext(IConfiguration config, DbContextOptions options) : base(options)
+        public ApplicationDbContext(DbContextOptions options) : base(options)
         {
-            _config = config ?? throw new ArgumentNullException(nameof(config));
+
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

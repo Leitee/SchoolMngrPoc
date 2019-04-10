@@ -45,7 +45,7 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
             if (ModelState.IsValid)
             {
                 var response = await _gradeSvc.CreateAsync(pGradeObj);
-                return CreatedAtAction(nameof(GetById), new { pGradeObj.Id } , pGradeObj);//return 201 created and its data entity 
+                return CreatedAtAction(nameof(GetById), new { pGradeObj.Id } , response.Data);//return 201 created and its data entity 
             }
 
             return BadRequest(ModelState);

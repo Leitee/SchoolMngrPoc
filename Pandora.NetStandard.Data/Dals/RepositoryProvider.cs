@@ -1,6 +1,6 @@
-﻿using Pandora.NetStandard.Core.Interfaces;
+﻿using Pandora.NetStandard.Core.Bases;
+using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Interfaces.Identity;
-using Pandora.NetStandard.Core.Repository;
 using System;
 using System.Collections.Generic;
 

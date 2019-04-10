@@ -13,3 +13,5 @@
 /Pandora.NetStandard.Core/bin
 /Pandora.NetCore.UnitTest/obj
 /Pandora.NetCore.UnitTest/bin
+/obj
+/bin

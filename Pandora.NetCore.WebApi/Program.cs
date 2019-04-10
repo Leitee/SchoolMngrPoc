@@ -1,12 +1,17 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Pandora.NetStandard.Data.Dals;
 
 namespace Pandora.NetCore.WebApi
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
         public static void Main(string[] args)
         {
             var host = CreateWebHostBuilder(args).Build();
@@ -14,16 +19,21 @@ namespace Pandora.NetCore.WebApi
             host.Run();
         }
 
-        private static void RunSeeding(IWebHost host)
-        {
-            var scopeFactory = host.Services.GetService<IServiceScopeFactory>();
-            using (var scope = scopeFactory.CreateScope())
-            {
-                var seeder = scope.ServiceProvider.GetService<SeedDb>();
-                seeder.SeedAsync().Wait();
-            }
-        }
+        //private static void RunSeeding(IWebHost host)
+        //{
+        //    var scopeFactory = host.Services.GetService<IServiceScopeFactory>();
+        //    using (var scope = scopeFactory.CreateScope())
+        //    {
+        //        var seeder = scope.ServiceProvider.GetService<AnyService>();
+        //        seeder.SeedAsync().Wait();
+        //    }
+        //}
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();

@@ -1,4 +1,5 @@
-﻿using Pandora.NetStandard.Business.Dtos;
+﻿using Microsoft.Extensions.Logging;
+using Pandora.NetStandard.Business.Dtos;
 using Pandora.NetStandard.Business.Mappers;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
@@ -13,7 +14,7 @@ namespace Pandora.NetStandard.Business.Services
     public class GradeSvc : BaseService<Grade, GradeDto>, IGradeSvc
     {
 
-        public GradeSvc(IApplicationUow applicationUow) : base(applicationUow, new GradeToDtoMapper())
+        public GradeSvc(IApplicationUow applicationUow, ILogger<GradeSvc> logger) : base(applicationUow, logger, new GradeToDtoMapper())
         {
 
         }

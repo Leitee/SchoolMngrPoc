@@ -17,6 +17,9 @@ using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Interfaces.Identity;
 using Pandora.NetStandard.Core.Mapper;
 using Pandora.NetStandard.Data.Dals;
+using Serilog;
+using Serilog.Exceptions;
+using Serilog.Sinks.Elasticsearch;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
@@ -25,25 +28,34 @@ using System.Text;
 
 namespace Pandora.NetCore.WebApi
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             // configure strongly typed settings objects
             IConfigurationSection appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
             var appSettings = appSettingsSection.Get<AppSettings>();
-
-            //Seed the db
-            services.AddTransient<SeedDb>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -58,10 +70,6 @@ namespace Pandora.NetCore.WebApi
             // Add configuration for DbContext
             // Use connection string from appsettings.json file
             services.AddDbContext<SchoolDbContext>();
-            //services.AddDbContext<ApplicationDbContext>(builder =>
-            //{
-            //    builder.UseSqlServer(appSettings.ConnectionString);
-            //});
 
             //setting identity options 
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -86,12 +94,12 @@ namespace Pandora.NetCore.WebApi
                 options.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
                 options.SignIn.RequireConfirmedEmail = true;
             })
+                .AddDefaultTokenProviders()
                 .AddSignInManager<AccountManagerFacade>()
                 .AddUserManager<UserManagerFacade>()
                 .AddRoleManager<RoleManagerFacade>()
-                .AddDefaultTokenProviders()
-                //.AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<SchoolDbContext>();
+            //.AddDefaultUI(UIFramework.Bootstrap4)
 
             // Register authentication schema
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -114,18 +122,29 @@ namespace Pandora.NetCore.WebApi
                     };
                 });
 
+
+            var elasticUrl = Configuration.GetSection("AppSettings").Get<AppSettings>().ElasticServerUrl;
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .Enrich.WithExceptionDetails()
+                .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(elasticUrl))
+                {
+                    AutoRegisterTemplate = true,
+                })
+                .CreateLogger();
+
             // configure DI for application services
             // Set up dependency injection for controller's logger
-            services.AddScoped<ILogger, Logger<ApiBaseController>>();
-            services.AddScoped<IRepositoryProvider<SchoolDbContext>, RepositoryProvider<SchoolDbContext>>();
+            //services.AddScoped<ILogger, Logger<ApiBaseController>>();
             services.AddSingleton<RepositoryFactories<SchoolDbContext>, RepositoryFactories<SchoolDbContext>>();
-            services.AddScoped<IApplicationUow, ApplicationUow>();
+            services.AddScoped<IRepositoryProvider<SchoolDbContext>, RepositoryProvider<SchoolDbContext>>();
+            services.AddScoped<IApplicationUow, ApplicationUow<SchoolDbContext>>();
+            services.AddSingleton<IMapperCore, GenericMapperCore>();
             services.AddScoped<IRoleRepository, RoleManagerFacade>();
             services.AddScoped<IUserRepository, UserManagerFacade>();
-            services.AddSingleton<IMapperCore, GenericMapperCore>();
+            services.AddScoped<IAccountSvc, AccountSvc>();
             services.AddScoped<IGradeSvc, GradeSvc>();
             services.AddScoped<IClassSvc, ClassSvc>();
-            services.AddScoped<IAccountSvc, AccountSvc>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(options =>
@@ -141,8 +160,13 @@ namespace Pandora.NetCore.WebApi
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
+        /// <param name="loggerFactory"></param>
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -155,6 +179,9 @@ namespace Pandora.NetCore.WebApi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            //Enable serilog loggin
+            loggerFactory.AddSerilog();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();

@@ -1,4 +1,5 @@
-﻿using Pandora.NetStandard.Core.Bases;
+﻿using Microsoft.Extensions.Logging;
+using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Mapper;
 using Pandora.NetStandard.Data.Dals;
@@ -10,9 +11,12 @@ namespace Pandora.NetStandard.Business.Services
     public abstract class BaseService
     {
         protected readonly ApplicationUow _uow;
+        protected readonly ILogger _logger;
 
-        public BaseService(IApplicationUow applicationUow)
+        public BaseService(IApplicationUow applicationUow, ILogger logger)
         {
+            _logger = logger;
+            _logger?.LogInformation($"Access to service : {DateTime.UtcNow}");
             _uow = applicationUow as ApplicationUow;
         }
 
@@ -31,7 +35,9 @@ namespace Pandora.NetStandard.Business.Services
 
         protected void HandleSVCException(BLResponse pResponse, params string[] pErrors)
         {
-            pResponse.Errors.Add("Internal Error at Service Layer");
+            string defaultMsg = "Internal Error at Service Layer. ";
+            _logger?.LogError(defaultMsg, pErrors);
+            pResponse.Errors.Add(defaultMsg);
             pResponse.Errors.AddRange(pErrors);
         }
     }
@@ -40,7 +46,7 @@ namespace Pandora.NetStandard.Business.Services
     {
         protected readonly IMapperCore<TEntity, TDto> _mapper;
 
-        public BaseService(IApplicationUow applicationUow, IMapperCore<TEntity, TDto> mapperCore) : base(applicationUow)
+        public BaseService(IApplicationUow applicationUow, ILogger logger, IMapperCore<TEntity, TDto> mapperCore) : base(applicationUow, logger)
         {
             _mapper = mapperCore;
         }

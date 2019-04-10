@@ -1,45 +1,27 @@
 ﻿using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Interfaces.Identity;
-using Pandora.NetStandard.Core.Repository;
+using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Model.Entities;
 using System;
 using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Data.Dals
 {
-    public class ApplicationUow : ApplicationUow<SchoolDbContext>, IApplicationUow
-    {
-        public ApplicationUow(IRepositoryProvider<SchoolDbContext> repositoryProvider) 
-            : base(repositoryProvider)
-        {
-        }
-    }
-    public class ApplicationUow<TDbContext> : IApplicationUow where TDbContext : ApplicationDbContext
+    public abstract class ApplicationUow : IApplicationUow
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly IRepositoryProvider<TDbContext> _repositoryProvider;
 
-        public ApplicationUow(IRepositoryProvider<TDbContext> repositoryProvider)
+        public ApplicationUow(ApplicationDbContext dbContext)
         {
-            _repositoryProvider = repositoryProvider;
-            _dbContext = _repositoryProvider.DbContext;
+            _dbContext = dbContext;
         }
+        
+        //Repositories
+        public abstract IUserRepository Users { get; }
+        public abstract IRoleRepository Roles { get; }
+        public abstract IRepository<Grade> Grades { get; }
+        public abstract IRepository<Class> Classes { get; }
 
-        // Repositories
-        public IUserRepository Users => GetRepo<IUserRepository>();
-        public IRoleRepository Roles => GetRepo<IRoleRepository>();
-        public IRepository<Grade> Grades => GetRepoByEntity<Grade>();
-        public IRepository<Class> Classes => GetRepoByEntity<Class>();
-
-        private IRepository<T> GetRepoByEntity<T>() where T : class
-        {
-            return _repositoryProvider.GetRepositoryForEntityType<T>();
-        }
-
-        private T GetRepo<T>() where T : class
-        {
-            return _repositoryProvider.GetRepository<T>();
-        }
 
         /// <summary>
         /// Save pending changes to the database and return true if there was at least 1 row affected
@@ -59,7 +41,7 @@ namespace Pandora.NetStandard.Data.Dals
         }
 
         #region IDisposable
-
+        //TODO: see Dispose pattern
         private bool disposed = false;
 
         public void Dispose()
@@ -78,5 +60,31 @@ namespace Pandora.NetStandard.Data.Dals
         }
 
         #endregion
+    }
+    public class ApplicationUow<TContext> : ApplicationUow where TContext : ApplicationDbContext
+    {
+        private readonly IRepositoryProvider<TContext> _repositoryProvider;
+
+        public ApplicationUow(TContext context, IRepositoryProvider<TContext> repositoryProvider)
+            : base(context)
+        {
+            _repositoryProvider = repositoryProvider;
+        }
+
+        // Repositories
+        public override IUserRepository Users => GetRepo<IUserRepository>();
+        public override IRoleRepository Roles => GetRepo<IRoleRepository>();
+        public override IRepository<Grade> Grades => GetRepoByEntity<Grade>();
+        public override IRepository<Class> Classes => GetRepoByEntity<Class>();
+
+        private IRepository<T> GetRepoByEntity<T>() where T : class
+        {
+            return _repositoryProvider.GetRepositoryForEntityType<T>();
+        }
+
+        private T GetRepo<T>() where T : class
+        {
+            return _repositoryProvider.GetRepository<T>();
+        }
     }
 }

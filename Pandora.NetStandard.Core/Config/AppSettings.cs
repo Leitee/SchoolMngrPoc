@@ -11,5 +11,6 @@
         public string SendGridUserSender { get; set; }
         public string SendGridSubject { get; set; }
         public string SendGridFrom { get; set; }
+        public string ElasticServerUrl { get; set; }
     }
 }
