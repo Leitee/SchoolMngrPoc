@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Projects\NetCoreBackend\Pandora.NetCore.WebApi\Pandora.NetCore.WebApi.xml</DocumentationFile>
+    <DocumentationFile>C:\Projects\SchoolMngrDemo\Pandora.NetCore.WebApi\Pandora.NetCore.WebApi.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
