@@ -1,4 +1,4 @@
-# ShoolMngr Architecture Template
+# SchoolMngr Architecture Template
 
 A reference template for develop business applications with ASP.NET Core WebApi, Xamarin and Angular into Docker container...
 
