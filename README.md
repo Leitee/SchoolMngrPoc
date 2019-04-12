@@ -1,5 +1,5 @@
-#ShoolMngr Business Architecture Applications Demo
+# ShoolMngr Architecture Template
 
-A template for develop business applications with ASP.NET Core WebApi, Xamarin and Angular into Docker container...
+A reference template for develop business applications with ASP.NET Core WebApi, Xamarin and Angular into Docker container...
 
 ![Alt text](Pandora.Resources/SchoolMngr-Diagram.png?raw=true "Environment Diagram")
