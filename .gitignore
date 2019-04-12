@@ -1,6 +1,8 @@
 /.vs
 /.vscode
 *.user
+/obj
+/bin
 /Pandora.NetCore.WebApi/bin
 /Pandora.NetCore.WebApi/obj
 /Pandora.NetStandard.Model/bin
@@ -13,7 +15,11 @@
 /Pandora.NetStandard.Core/bin
 /Pandora.NetCore.UnitTest/obj
 /Pandora.NetCore.UnitTest/bin
-/Pandora.NetStandard.Shared/obj
-/Pandora.NetStandard.Shared/bin
-/obj
-/bin
+/Pandora.XamarinForms.Shared/bin
+/Pandora.XamarinForms.Shared/obj
+/Pandora.XamarinForms.UWP/obj
+/Pandora.XamarinForms.UWP/bin
+/Pandora.XamarinForms.iOS/bin
+/Pandora.XamarinForms.iOS/obj
+/Pandora.XamarinForms.Android/bin
+/Pandora.XamarinForms.Android/obj
