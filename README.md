@@ -1,2 +1,5 @@
-# NetCoreBackend
-ASP.NET Core WebApi for backend template 
+#ShoolMngr Business Architecture Applications Demo
+
+A template for develop business applications with ASP.NET Core WebApi, Xamarin and Angular into Docker container...
+
+![Alt text](Pandora.Resources/SchoolMngr-Diagram.png?raw=true "Environment Diagram")

@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrontEnd", "FrontEnd", "{3B
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{344E8AEE-2C43-45ED-8179-81DDE8D9BAA9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pandora.NetStandard.Shared", "Pandora.NetStandard.Shared\Pandora.NetStandard.Shared.csproj", "{D49B1791-6C0B-4F15-BBD7-CBF047FDAA21}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{344E8AEE-2C43-45ED-8179-81DDE8D9BAA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{344E8AEE-2C43-45ED-8179-81DDE8D9BAA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{344E8AEE-2C43-45ED-8179-81DDE8D9BAA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D49B1791-6C0B-4F15-BBD7-CBF047FDAA21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D49B1791-6C0B-4F15-BBD7-CBF047FDAA21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D49B1791-6C0B-4F15-BBD7-CBF047FDAA21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D49B1791-6C0B-4F15-BBD7-CBF047FDAA21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +72,7 @@ Global
 		{D72BB440-1F5F-48B1-9C21-8AE86F77FED0} = {EECA589D-DCEE-4033-96B1-AFDFB1FABE1B}
 		{E0D95756-EA99-4D16-8AAC-35DB4654BD45} = {EECA589D-DCEE-4033-96B1-AFDFB1FABE1B}
 		{136DFF0A-6E48-49AA-921F-92DA48462633} = {EECA589D-DCEE-4033-96B1-AFDFB1FABE1B}
+		{D49B1791-6C0B-4F15-BBD7-CBF047FDAA21} = {3BEFEA8E-BFAE-48DB-A2EE-1F9C8336CD6A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {962AACFB-972A-487A-A172-17AC6F68F9C2}
