@@ -1,6 +1,7 @@
 /.vs
 /.vscode
 *.user
+*.suo
 /obj
 /bin
 /Pandora.NetCore.WebApi/bin
@@ -23,3 +24,9 @@
 /Pandora.XamarinForms.iOS/obj
 /Pandora.XamarinForms.Android/bin
 /Pandora.XamarinForms.Android/obj
+/Pandora.NetCore.Identity/obj
+/Pandora.NetCore.Identity/bin
+/Pandora.NetStandard.Report/obj
+/Pandora.NetStandard.Report/bin
+/Pandora.Angular.WebApp/bin
+/Pandora.Angular.WebApp/obj

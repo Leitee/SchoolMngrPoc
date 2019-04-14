@@ -8,6 +8,7 @@ namespace Pandora.NetStandard.Core.Interfaces
     {
         IUserRepository Users { get; }
         IRoleRepository Roles { get; }
+        IRepository<TEntity> GetRepo<TEntity>() where TEntity : class;
         bool Commit();
         Task<bool> CommitAsync();
     }

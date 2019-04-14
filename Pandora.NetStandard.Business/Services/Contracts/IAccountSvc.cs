@@ -5,13 +5,17 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Business.Services.Contracts
 {
-    public interface IAccountSvc : IAccountSvc<UserDto, RoleDto>, IAuthSvc
+    public interface IAccountSvc : IAccountSvc<UserDto, RoleDto>
     {
 
     }
 
-    public interface IAccountSvc<TUser, TRole> : IAuthSvc<TUser> where TUser : ApplicationUser where TRole : ApplicationRole
+    public interface IAccountSvc<TUser, TRole> where TRole : ApplicationRole
     {
+        Task<BLSingleResponse<LoginRespDto>> LoginAsync(LoginDto model);
+        Task LogoutAsync();
+        Task<BLSingleResponse<bool>> ConfirmEmailAsync(TUser user, string token);
+
         Task<BLListResponse<TRole>> GetAllRolesAsync();
         Task<BLSingleResponse<TRole>> GetRoleByIdAsync(int pId);
         Task<BLSingleResponse<TRole>> GetRoleByNameAsync(string pRolName);

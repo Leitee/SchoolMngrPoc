@@ -2,7 +2,6 @@
 using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Mapper;
-using Pandora.NetStandard.Data.Dals;
 using System;
 using System.Collections.Generic;
 
@@ -10,14 +9,14 @@ namespace Pandora.NetStandard.Business.Services
 {
     public abstract class BaseService
     {
-        protected readonly ApplicationUow _uow;
+        protected readonly IApplicationUow _uow;
         protected readonly ILogger _logger;
 
         public BaseService(IApplicationUow applicationUow, ILogger logger)
         {
             _logger = logger;
-            _logger?.LogInformation($"Access to service : {DateTime.UtcNow}");
-            _uow = applicationUow as ApplicationUow;
+            _logger?.LogInformation($"Accessing to service : {DateTime.UtcNow}");
+            _uow = applicationUow;
         }
 
         protected void HandleSVCException(BLResponse pResponse, Exception pEx)

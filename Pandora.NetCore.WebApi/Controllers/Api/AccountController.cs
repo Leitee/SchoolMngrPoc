@@ -31,38 +31,7 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
                 return response.ToHttpResponse();
             }
             return BadRequest(ModelState.ValidationState);
-        }
-
-        [AllowAnonymous]
-        [HttpPost("Register")]
-        public async Task<IActionResult> Register([FromBody] RegisterDto model)
-        {
-            if (ModelState.IsValid)
-            {
-                var register = await _accountSvc.RegisterAsync(model);
-
-                if (register.HasError)
-                {
-                    return register.ToHttpResponse();
-                }
-
-                if (true) //TODO: ask if email confirmation is requiered and fix url
-                {
-                    var token = await _accountSvc.GetEmailConfirmTokenAsync(register.Data);
-                    var confirmUrl = Url.Action("ConfirmEmail", "Account", new
-                    {
-                        userid = register.Data.Id,
-                        token
-                    }, protocol: HttpContext.Request.Scheme);
-
-                    await _accountSvc.SendEmailAsync(model.Email, confirmUrl);
-                }
-
-                var response = await _accountSvc.LoginAsync(model);
-                return response.ToHttpResponse();
-            }
-            return BadRequest(ModelState.ValidationState);
-        }
+        }       
 
         [AllowAnonymous]
         [HttpGet]

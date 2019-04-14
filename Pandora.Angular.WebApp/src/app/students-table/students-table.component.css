@@ -1,0 +1,13 @@
+table {
+    width: 100%;
+    border: transparent ;
+  }
+  .full-width-table {
+    background-color: #1da79b;
+  }
+  
+
+.mat-paginator{background-color: #1da79b;}
+.mat-h1{
+  padding: 15px;
+}

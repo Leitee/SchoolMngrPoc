@@ -48,7 +48,7 @@ namespace Pandora.NetStandard.Core.Identity
             return await UserManager.CreateAsync(user);
         }
 
-        public virtual async Task<IdentityResult> SignUpAsync<TRole>(TUser user, string pPassword, IEnumerable<TRole> roles) where TRole : ApplicationRole
+        public virtual async Task<IdentityResult> SignUpAsync(TUser user, string pPassword, IEnumerable<TRole> roles) 
         {
             user.PasswordHash = new PasswordHasher<TUser>().HashPassword(user, pPassword);
             return await UserManager.CreateAsync(user, roles);

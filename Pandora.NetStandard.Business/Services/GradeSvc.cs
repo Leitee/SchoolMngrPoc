@@ -25,7 +25,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entity = await _uow.Grades.InsertAsync(pDto);
+                var entity = await _uow.GetRepo<Grade>().InsertAsync(pDto);
                 if(!await _uow.CommitAsync())
                 {
                     HandleSVCException(response, "New Grade creation failed.");
@@ -52,7 +52,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entity = await _uow.Grades.AllAsync(null, o => o.OrderBy(g => g.Id), null);
+                var entity = await _uow.GetRepo<Grade>().AllAsync(null, o => o.OrderBy(g => g.Id), null);
                 response.Data = _mapper.MapEntity(entity);
             }
             catch (Exception ex)
@@ -69,7 +69,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entity = await _uow.Grades.GetByIdAsync(pId);
+                var entity = await _uow.GetRepo<Grade>().GetByIdAsync(pId);
                 response.Data = _mapper.MapEntity(entity);
             }
             catch (Exception ex)

@@ -1,0 +1,27 @@
+<div class="container">
+  <HEader class="mat-header">
+    <div class="over-header"></div>
+    <H2>School App</H2>
+    <div class="logo"> <h6>Iniciar sesion</h6></div>
+  </HEader>
+    
+    <div class="login-item">
+      <form #myform="ngForm" (ngSubmit)="login(myform)" class="form form-login">
+        <div class="form-field">
+          <label class="user" for="login-email"><span class="hidden">Email</span></label>
+          <input name="email" id="login-email" type="email" class="form-input" placeholder="Email" required ngModel>
+        </div>
+
+        <div class="form-field">
+          <label class="lock" for="login-password"><span class="hidden">Password</span></label>
+          <input name="password" id="login-password" type="password" class="form-input" placeholder="Password" required ngModel>
+        </div>
+
+        <div class="form-login">
+          <input type="submit" value="Log in" style="    margin-bottom: 0;
+          padding-top: 20px;
+          padding-bottom: 20px">
+        </div>
+      </form>
+    </div>
+</div>

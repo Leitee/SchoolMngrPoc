@@ -1,7 +1,6 @@
-﻿using Pandora.NetStandard.Core.Interfaces;
+﻿using Pandora.NetStandard.Core.Bases;
+using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Interfaces.Identity;
-using Pandora.NetStandard.Core.Bases;
-using Pandora.NetStandard.Model.Entities;
 using System;
 using System.Threading.Tasks;
 
@@ -15,13 +14,10 @@ namespace Pandora.NetStandard.Data.Dals
         {
             _dbContext = dbContext;
         }
-        
+
         //Repositories
         public abstract IUserRepository Users { get; }
         public abstract IRoleRepository Roles { get; }
-        public abstract IRepository<Grade> Grades { get; }
-        public abstract IRepository<Class> Classes { get; }
-
 
         /// <summary>
         /// Save pending changes to the database and return true if there was at least 1 row affected
@@ -59,6 +55,8 @@ namespace Pandora.NetStandard.Data.Dals
             disposed = true;
         }
 
+        public abstract IRepository<T> GetRepo<T>() where T : class;
+
         #endregion
     }
     public class ApplicationUow<TContext> : ApplicationUow where TContext : ApplicationDbContext
@@ -72,17 +70,19 @@ namespace Pandora.NetStandard.Data.Dals
         }
 
         // Repositories
-        public override IUserRepository Users => GetRepo<IUserRepository>();
-        public override IRoleRepository Roles => GetRepo<IRoleRepository>();
-        public override IRepository<Grade> Grades => GetRepoByEntity<Grade>();
-        public override IRepository<Class> Classes => GetRepoByEntity<Class>();
+        public override IUserRepository Users => GetCustomRepo<IUserRepository>();
+        public override IRoleRepository Roles => GetCustomRepo<IRoleRepository>();
 
-        private IRepository<T> GetRepoByEntity<T>() where T : class
+
+        //public override IRepository<Grade> Grades => GetRepoByEntity<Grade>();
+        //public override IRepository<Class> Classes => GetRepoByEntity<Class>();
+
+        public override IRepository<T> GetRepo<T>()
         {
             return _repositoryProvider.GetRepositoryForEntityType<T>();
         }
 
-        private T GetRepo<T>() where T : class
+        private T GetCustomRepo<T>() where T : class
         {
             return _repositoryProvider.GetRepository<T>();
         }

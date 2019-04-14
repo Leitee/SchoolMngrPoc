@@ -9,8 +9,6 @@ using Pandora.NetStandard.Core.Config;
 using Pandora.NetStandard.Core.Identity;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Mapper;
-using SendGrid;
-using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -103,26 +101,6 @@ namespace Pandora.NetStandard.Business.Services
                 HandleSVCException(response, signUpResul.Errors.ToList().ConvertAll(x => x.Description).ToArray());
             }
 
-            return response;
-        }
-
-        public async Task<BLSingleResponse<bool>> SendEmailAsync(string email, string callbackUrl)
-        {
-            var response = new BLSingleResponse<bool>();
-
-            var client = new SendGridClient(_settings.SendGridApiKey);
-            var msg = MailHelper.CreateSingleEmail(
-                new EmailAddress(_settings.SendGridFrom, _settings.SendGridUserSender),
-                new EmailAddress(email),
-                _settings.SendGridSubject,
-                "Thank you for register.",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-            // Disable click tracking.
-            // See https://sendgrid.com/docs/User_Guide/Settings/tracking.html
-            msg.SetClickTracking(false, false);
-            var sentResult = await client.SendEmailAsync(msg);
-            response.Data = sentResult.StatusCode == System.Net.HttpStatusCode.Accepted;
             return response;
         }
 

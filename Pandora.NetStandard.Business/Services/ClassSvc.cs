@@ -24,8 +24,8 @@ namespace Pandora.NetStandard.Business.Services
             var response = new BLSingleResponse<ClassDto>();
 
             try
-            {                
-                var entity = await _uow.Classes.InsertAsync(pDto);
+            {
+                var entity = await _uow.GetRepo<Class>().InsertAsync(pDto);
                 if (!await _uow.CommitAsync())
                 {
                     HandleSVCException(response, "Class could not be created");
@@ -43,7 +43,7 @@ namespace Pandora.NetStandard.Business.Services
 
         public async Task<BLSingleResponse<bool>> DeleteAsync(int classId)
         {
-            var classResul = await _uow.Classes.GetByIdAsync(classId);
+            var classResul = await _uow.GetRepo<Class>().GetByIdAsync(classId);
             return await DeleteAsync(_mapper.MapEntity(classResul));
         }
 
@@ -53,7 +53,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                await _uow.Classes.DeleteAsync(pDto);
+                await _uow.GetRepo<Class>().DeleteAsync(pDto);
                 if (!await _uow.CommitAsync())
                 {
                     HandleSVCException(response, "Class could not be deleted");
@@ -75,7 +75,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entity = await _uow.Classes.AllAsync(null, o => o.OrderBy(g => g.GradeId), g => g.Grade);
+                var entity = await _uow.GetRepo<Class>().AllAsync(null, o => o.OrderBy(g => g.GradeId), g => g.Grade);
                 response.Data = _mapper.MapEntity(entity);
             }
             catch (Exception ex)
@@ -92,7 +92,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entity = await _uow.Classes.FindAsync(c => c.Id == pId, c => c.Grade);
+                var entity = await _uow.GetRepo<Class>().FindAsync(c => c.Id == pId, c => c.Grade);
                 response.Data = _mapper.MapEntity(entity);
             }
             catch (Exception ex)
@@ -109,7 +109,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                await _uow.Classes.UpdateAsync(pDto);
+                await _uow.GetRepo<Class>().UpdateAsync(pDto);
                 if (!await _uow.CommitAsync())
                 {
                     HandleSVCException(response, "Class could not be modified");
