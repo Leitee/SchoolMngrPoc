@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Data.Dals
 {
-    public abstract class ApplicationUow : IApplicationUow
+    public abstract class ApplicationUow : IApplicationUow, IDisposable
     {
         private readonly ApplicationDbContext _dbContext;
 
@@ -59,6 +59,7 @@ namespace Pandora.NetStandard.Data.Dals
 
         #endregion
     }
+
     public class ApplicationUow<TContext> : ApplicationUow where TContext : ApplicationDbContext
     {
         private readonly IRepositoryProvider<TContext> _repositoryProvider;
@@ -72,10 +73,6 @@ namespace Pandora.NetStandard.Data.Dals
         // Repositories
         public override IUserRepository Users => GetCustomRepo<IUserRepository>();
         public override IRoleRepository Roles => GetCustomRepo<IRoleRepository>();
-
-
-        //public override IRepository<Grade> Grades => GetRepoByEntity<Grade>();
-        //public override IRepository<Class> Classes => GetRepoByEntity<Class>();
 
         public override IRepository<T> GetRepo<T>()
         {

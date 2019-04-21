@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using Pandora.NetStandard.Business.Dtos;
+using Pandora.NetStandard.Model.Dtos;
 using Pandora.NetStandard.Business.Mappers;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;

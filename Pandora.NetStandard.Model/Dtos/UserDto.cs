@@ -1,9 +1,11 @@
 ﻿using Pandora.NetStandard.Core.Identity;
+using Reinforced.Typings.Attributes;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Pandora.NetStandard.Business.Dtos
+namespace Pandora.NetStandard.Model.Dtos
 {
+    [TsInterface(AutoI = false, Name = "User")]
     public class UserDto : ApplicationUser
     {
         public UserDto()
@@ -37,15 +39,26 @@ namespace Pandora.NetStandard.Business.Dtos
         [Display(Name = "Join Date")]
         public override DateTime JoinDate { get { return base.JoinDate; } }
 
+        public RoleDto Role { get; set; }
+
         #region Security Identity fields Hidden
+        [TsIgnore]
         public override string PasswordHash { set => base.PasswordHash = null; }
+        [TsIgnore]
         public override bool EmailConfirmed { set { } }
+        [TsIgnore]
         public override string SecurityStamp { set { } }
+        [TsIgnore]
         public override string ConcurrencyStamp { set { } }
+        [TsIgnore]
         public override bool PhoneNumberConfirmed { set { } }
+        [TsIgnore]
         public override bool TwoFactorEnabled { set { } }
+        [TsIgnore]
         public override DateTimeOffset? LockoutEnd { set { } }
+        [TsIgnore]
         public override bool LockoutEnabled { set { } }
+        [TsIgnore]
         public override int AccessFailedCount { set { } }
         #endregion
     }

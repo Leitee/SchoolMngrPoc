@@ -1,21 +1,19 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pandora.NetStandard.Business.Dtos;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
+using Pandora.NetStandard.Model.Dtos;
 using System.Threading.Tasks;
 
 namespace Pandora.NetCore.WebApi.Controllers.Api
 {
     [Route("api/v1/[controller]")]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class GradesController : ApiBaseController
     {
         private readonly IGradeSvc _gradeSvc;
 
-        public GradesController(ILogger<GradesController> logger, 
+        public GradesController(ILogger<GradesController> logger,
             IGradeSvc gradeSvc) : base(logger)
         {
             _gradeSvc = gradeSvc;
@@ -23,7 +21,7 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
 
         // GET api/v1/grades
         [HttpGet]
-        [ResponseCache(VaryByHeader = "User-Agent", Duration = 30)]
+        [ResponseCache(VaryByHeader = "User-Agent", Duration = 00, Location = ResponseCacheLocation.Any)]//TODO:ver cache
         public async Task<IActionResult> Get()
         {
             var response = await _gradeSvc.GetAllAsync();
@@ -45,7 +43,7 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
             if (ModelState.IsValid)
             {
                 var response = await _gradeSvc.CreateAsync(pGradeObj);
-                return CreatedAtAction(nameof(GetById), new { pGradeObj.Id } , response.Data);//return 201 created and its data entity 
+                return CreatedAtAction(nameof(GetById), new { pGradeObj.Id }, response.Data);//return 201 created and its data entity 
             }
 
             return BadRequest(ModelState);
@@ -59,8 +57,17 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
 
         // DELETE api/v1/grades/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            var resul = await _gradeSvc.GetByIdAsync(id);
+            if (resul == null)
+            {
+                return NotFound();
+            }
+
+            var response = await _gradeSvc.DeleteAsync(resul.Data);
+            return response.ToHttpResponse();
+
         }
     }
 }

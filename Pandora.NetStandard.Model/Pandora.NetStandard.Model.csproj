@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="2.2.0" />
+    <PackageReference Include="Reinforced.Typings" Version="1.5.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +20,14 @@
     <Reference Include="System.ComponentModel.Annotations">
       <HintPath>..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.netcore.app\2.2.0\ref\netcoreapp2.2\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TypeScript\Scripts\" />
   </ItemGroup>
 
 </Project>

@@ -74,10 +74,7 @@ namespace Pandora.NetStandard.Data.Dals
 
         public async Task<TEntity> GetByIdAsync(object id)
         {
-            return await Task.Run(() =>
-            {
-                return _dbSet.Find(id);
-            });
+            return await _dbSet.FindAsync(id);
         }
 
         public async Task<TEntity> GetByExpressionAsync(Expression<Func<TEntity, bool>> predicate)

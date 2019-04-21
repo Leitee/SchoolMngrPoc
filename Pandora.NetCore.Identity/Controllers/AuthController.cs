@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pandora.NetCore.WebApi.Controllers.Api;
-using Pandora.NetStandard.Business.Dtos;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
+using Pandora.NetStandard.Model.Dtos;
 using System.Threading.Tasks;
 
 namespace Pandora.NetCore.Identity.Controllers

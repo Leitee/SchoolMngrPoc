@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Pandora.NetStandard.Business.Dtos;
 using Pandora.NetStandard.Business.Services.Contracts;
+using Pandora.NetStandard.Model.Dtos;
 using System.Threading.Tasks;
 
 namespace Pandora.NetCore.WebApi.Controllers

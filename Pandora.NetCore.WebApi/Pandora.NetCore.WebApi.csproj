@@ -20,6 +20,10 @@
     <Content Remove="Views\Account\Register.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Reinforced.Typings.settings.xml" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />

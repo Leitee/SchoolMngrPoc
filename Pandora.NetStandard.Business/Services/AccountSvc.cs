@@ -2,20 +2,19 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Pandora.NetStandard.Business.Dtos;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Config;
 using Pandora.NetStandard.Core.Identity;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Mapper;
+using Pandora.NetStandard.Model.Dtos;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 

@@ -26,7 +26,8 @@ namespace Pandora.NetStandard.Data.Dals
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlite("Filename = ./schoolDB.db");
-
+            optionsBuilder.EnableDetailedErrors(true);
+            optionsBuilder.EnableSensitiveDataLogging(true);
             optionsBuilder.UseSqlServer(_config["AppSettings:ConnectionString"], options =>
             {
                 options.MigrationsHistoryTable("Migrations", "EFwk");

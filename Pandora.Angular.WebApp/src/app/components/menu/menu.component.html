@@ -1,0 +1,9 @@
+<div>
+    <button mat-button [matMenuTriggerFor]="menu">Cursos<i class="material-icons">arrow_drop_down</i></button>
+    <mat-menu #menu="matMenu">
+        <ng-template matMenuContent>
+            <button mat-menu-item *ngFor="let grade of gradeListAsync | async">{{grade.name}} Grado</button>
+        </ng-template>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+</div>

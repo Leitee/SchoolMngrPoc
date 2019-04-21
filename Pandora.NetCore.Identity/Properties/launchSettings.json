@@ -2,8 +2,12 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/Pandora.NetCore.Identity",
+      "sslPort": 0
+    },
     "iisExpress": {
-      "applicationUrl": "http://localhost:50302",
+      "applicationUrl": "http://localhost:5010",
       "sslPort": 44366
     }
   },
@@ -11,15 +15,13 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": true,
       "launchUrl": "auth/v1/auth",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "Pandora.NetCore.Identity": {
-      "commandName": "Project",
-      "launchBrowser": true,
+      "commandName": "IISExpress",
       "launchUrl": "auth/v1/auth",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

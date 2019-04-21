@@ -1,8 +1,10 @@
 ﻿using Pandora.NetStandard.Core.Identity;
+using Reinforced.Typings.Attributes;
 using System.ComponentModel.DataAnnotations;
 
-namespace Pandora.NetStandard.Business.Dtos
+namespace Pandora.NetStandard.Model.Dtos
 {
+    [TsInterface(AutoI = false, Name = "Role")]
     public class RoleDto : ApplicationRole
     {
         public override int Id { get; set; }
@@ -11,7 +13,9 @@ namespace Pandora.NetStandard.Business.Dtos
         public override string Description { get; set; }
 
         #region Security Identity fields Hidden
+        [TsIgnore]
         public override string ConcurrencyStamp { set { } }
+        [TsIgnore]
         public override string NormalizedName { set { } }
         #endregion
     }

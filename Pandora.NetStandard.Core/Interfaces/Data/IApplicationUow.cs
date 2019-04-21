@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Core.Interfaces
 {
-    public interface IApplicationUow : IDisposable
+    public interface IApplicationUow
     {
         IUserRepository Users { get; }
         IRoleRepository Roles { get; }

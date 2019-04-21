@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 
-namespace Pandora.NetCore.WebApi.Controllers.Api
+namespace Pandora.NetStandard.Core.Bases
 {
     [Produces("application/json")]
     [ApiController]

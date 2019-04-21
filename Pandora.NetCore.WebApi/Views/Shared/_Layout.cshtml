@@ -1,6 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<Pandora.NetStandard.Core.Identity.ApplicationUser> SignInManager
-@inject UserManager<Pandora.NetStandard.Core.Identity.ApplicationUser> UserManager
 
 <!DOCTYPE html>
 <html>
@@ -37,17 +35,20 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         @*<li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                            </li>*@
-                        @if (SignInManager.IsSignedIn(User))
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>*@
+                        @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Classes" asp-action="Index">Classes</a>
                             </li>
+                            @if (User.IsInRole("Dev"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" href="~/swagger">Swagger</a>
+                                </li>
+                            }
                         }
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="~/swagger">Swagger</a>
-                        </li>
                     </ul>
                 </div>
             </div>

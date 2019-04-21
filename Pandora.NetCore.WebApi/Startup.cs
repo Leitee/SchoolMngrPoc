@@ -72,30 +72,7 @@ namespace Pandora.NetCore.WebApi
             services.AddDbContext<SchoolDbContext>();
 
             //setting identity options 
-            services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
-            {
-                // Password settings.
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = true;
-                options.Password.RequiredLength = 6;
-                options.Password.RequiredUniqueChars = 0;
-
-                // Lockout settings.
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-                options.Lockout.MaxFailedAccessAttempts = 5;
-                options.Lockout.AllowedForNewUsers = true;
-
-                // User settings.
-                options.User.AllowedUserNameCharacters =
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                options.User.RequireUniqueEmail = true;
-                options.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
-                options.SignIn.RequireConfirmedEmail = true;
-            })
-                .AddDefaultTokenProviders()
-                .AddSignInManager<AccountManagerFacade>()
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddUserManager<UserManagerFacade>()
                 .AddRoleManager<RoleManagerFacade>()
                 .AddEntityFrameworkStores<SchoolDbContext>();

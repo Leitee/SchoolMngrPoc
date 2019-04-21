@@ -1,6 +1,6 @@
-﻿using Pandora.NetStandard.Business.Dtos;
-using Pandora.NetStandard.Core.Bases;
+﻿using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Identity;
+using Pandora.NetStandard.Model.Dtos;
 using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Business.Services.Contracts

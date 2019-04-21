@@ -1,7 +1,7 @@
 ﻿using Pandora.NetStandard.Core.Security;
 using System;
 
-namespace Pandora.NetStandard.Business.Dtos
+namespace Pandora.NetStandard.Model.Dtos
 {
     public class LoginRespDto : TokenResponse
     {

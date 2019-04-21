@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using Pandora.NetCore.WebApi.Controllers.Api;
-using Pandora.NetStandard.Business.Dtos;
 using Pandora.NetStandard.Business.Services;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
-using System;
+using Pandora.NetStandard.Model.Dtos;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -18,7 +16,7 @@ namespace Pandora.NetCore.UnitTest.TestController
         public GradeTestController(TestDbContextMocker mocker)
         {
             IGradeSvc gradeSvc = new GradeSvc(mocker.UoW, null);
-            
+
             _controller = new GradesController(null, gradeSvc);
         }
 

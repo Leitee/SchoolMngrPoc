@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Pandora.NetStandard.Core.Interfaces
+﻿namespace Pandora.NetStandard.Core.Interfaces
 {
     public interface IEntity
     {

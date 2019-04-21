@@ -1,11 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
-using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Mapper;
 using System;
 using System.Collections.Generic;
 
-namespace Pandora.NetStandard.Business.Services
+namespace Pandora.NetStandard.Core.Bases
 {
     public abstract class BaseService
     {

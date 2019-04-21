@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Pandora.NetStandard.Business.Dtos;
 using Pandora.NetStandard.Business.Services.Contracts;
+using Pandora.NetStandard.Model.Dtos;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
 using Pandora.NetStandard.Model.Entities;
 using Pandora.NetStandard.Model.Enums;
+using Reinforced.Typings.Attributes;
 using System.ComponentModel.DataAnnotations;
 
-namespace Pandora.NetStandard.Business.Dtos
+namespace Pandora.NetStandard.Model.Dtos
 {
+    [TsInterface(AutoI = false, Name = "Class")]
     public class ClassDto : Class
     {
         public override int Id { get; set; }

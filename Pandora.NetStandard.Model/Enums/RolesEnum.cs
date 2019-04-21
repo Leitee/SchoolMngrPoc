@@ -1,7 +1,9 @@
-﻿using System.ComponentModel;
+﻿using Reinforced.Typings.Attributes;
+using System.ComponentModel;
 
 namespace Pandora.NetStandard.Model.Enums
 {
+    [TsEnum(Name = "Roles")]
     public enum RolesEnum
     {
         [Description("Dev")]

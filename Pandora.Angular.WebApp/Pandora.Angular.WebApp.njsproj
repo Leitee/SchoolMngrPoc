@@ -1,93 +1,111 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>Pandora.Angular.WebApp</Name>
+    <RootNamespace>Pandora.Angular.WebApp</RootNamespace>
+    <SaveNodeJsSettingsInProjectFile>True</SaveNodeJsSettingsInProjectFile>
+    <LaunchUrl>localhost</LaunchUrl>
+    <ScriptArguments>npm start</ScriptArguments>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5610bcf6-8d96-4b05-a89a-c6ba2a1a38c9}</ProjectGuid>
+    <ProjectGuid>19709941-a1e2-49a4-9c35-9454e4d967b4</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <ProjectView>ShowAllFiles</ProjectView>
-    <StartupFile />
+    <StartupFile>src/app/index.html</StartupFile>
+    <StartWebBrowser>True</StartWebBrowser>
+    <SearchPath>
+    </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <NodejsPort>4200</NodejsPort>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
     <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
+    <TypeScriptToolsVersion>3.4.4</TypeScriptToolsVersion>
     <EnableTypeScript>true</EnableTypeScript>
-    <TypeScriptToolsVersion>3.3</TypeScriptToolsVersion>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <StartWebBrowser>True</StartWebBrowser>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
   <ItemGroup>
-    <Content Include="angular.json" />
-    <Content Include="package-lock.json" />
-    <Content Include="package.json" />
-    <Content Include="tsconfig.json" />
-    <Content Include="tslint.json" />
-    <Content Include="README.md" />
-    <Content Include="e2e\tsconfig.e2e.json" />
-    <Content Include="src\index.html" />
-    <Content Include="src\styles.css" />
-    <Content Include="src\favicon.ico" />
-    <Content Include="src\tsconfig.app.json" />
-    <Content Include="src\tsconfig.spec.json" />
-    <Content Include="src\tslint.json" />
-    <TypeScriptCompile Include="src\main.ts" />
-    <TypeScriptCompile Include="src\polyfills.ts" />
-    <TypeScriptCompile Include="src\test.ts" />
-    <TypeScriptCompile Include="e2e\src\app.e2e-spec.ts" />
-    <TypeScriptCompile Include="e2e\src\app.po.ts" />
+    <Content Include="LICENSE" />
+    <Content Include="src\app\admin\admin.component.html" />
     <Content Include="src\app\app.component.html" />
-    <Content Include="src\app\app.component.css" />
-    <TypeScriptCompile Include="src\app\app-routing.module.ts" />
+    <Content Include="src\app\auth\login\login.component.html" />
+    <Content Include="src\app\auth\register\register.component.html" />
+    <Content Include="src\app\class\class.component.html" />
+    <Content Include="src\app\components\menu\menu.component.html" />
+    <Content Include="src\app\grade\grade.component.html" />
+    <Content Include="src\app\home\home.component.html" />
+    <Content Include="src\index.html" />
+    <Content Include="tsconfig.json" />
+    <Content Include="package.json" />
+    <Content Include="README.md" />
+    <TypeScriptCompile Include="src\app\admin\admin.component.ts" />
+    <TypeScriptCompile Include="src\app\admin\index.ts" />
     <TypeScriptCompile Include="src\app\app.component.ts" />
     <TypeScriptCompile Include="src\app\app.module.ts" />
-    <TypeScriptCompile Include="src\environments\environment.prod.ts" />
-    <TypeScriptCompile Include="src\environments\environment.ts" />
-    <TypeScriptCompile Include="src\app\auth\auth.module.ts" />
-    <Content Include="src\app\card-render\card-render.component.html" />
-    <Content Include="src\app\card-render\card-render.component.css" />
-    <TypeScriptCompile Include="src\app\card-render\card-render.component.ts" />
-    <TypeScriptCompile Include="src\app\entities\class.model.ts" />
-    <TypeScriptCompile Include="src\app\entities\grade.model.ts" />
-    <TypeScriptCompile Include="src\app\entities\login.model.ts" />
-    <TypeScriptCompile Include="src\app\entities\register.model.ts" />
-    <Content Include="src\app\main-nav\main-nav.component.html" />
-    <Content Include="src\app\main-nav\main-nav.component.css" />
-    <TypeScriptCompile Include="src\app\main-nav\main-nav.component.ts" />
-    <TypeScriptCompile Include="src\app\services\auth.service.ts" />
-    <TypeScriptCompile Include="src\app\services\school.service.ts" />
-    <Content Include="src\app\students-table\students-table.component.html" />
-    <Content Include="src\app\students-table\students-table.component.css" />
-    <TypeScriptCompile Include="src\app\students-table\students-table-datasource.ts" />
-    <TypeScriptCompile Include="src\app\students-table\students-table.component.spec.ts" />
-    <TypeScriptCompile Include="src\app\students-table\students-table.component.ts" />
-    <Content Include="src\app\auth\login\login.component.html" />
-    <Content Include="src\app\auth\login\login.component.css" />
+    <TypeScriptCompile Include="src\app\app.routing.ts" />
+    <TypeScriptCompile Include="src\app\auth\index.ts" />
     <TypeScriptCompile Include="src\app\auth\login\login.component.ts" />
-    <Content Include="src\app\auth\register\register.component.html" />
-    <Content Include="src\app\auth\register\register.component.css" />
     <TypeScriptCompile Include="src\app\auth\register\register.component.ts" />
+    <TypeScriptCompile Include="src\app\class\class.component.ts" />
+    <TypeScriptCompile Include="src\app\components\menu\menu.component.ts" />
+    <TypeScriptCompile Include="src\app\grade\grade.component.ts" />
+    <TypeScriptCompile Include="src\app\home\home.component.ts" />
+    <TypeScriptCompile Include="src\app\home\index.ts" />
+    <TypeScriptCompile Include="src\app\material.module.ts" />
+    <TypeScriptCompile Include="src\app\_guards\auth.guard.ts" />
+    <TypeScriptCompile Include="src\app\_guards\index.ts" />
+    <TypeScriptCompile Include="src\app\_helpers\error.interceptor.ts" />
+    <TypeScriptCompile Include="src\app\_helpers\fake-backend.ts" />
+    <TypeScriptCompile Include="src\app\_helpers\index.ts" />
+    <TypeScriptCompile Include="src\app\_helpers\jwt.interceptor.ts" />
+    <TypeScriptCompile Include="src\app\_helpers\response.service.ts" />
+    <TypeScriptCompile Include="src\app\_models\index.ts" />
+    <TypeScriptCompile Include="src\app\_models\role.ts" />
+    <TypeScriptCompile Include="src\app\_models\schoolmngr.model.ts" />
+    <TypeScriptCompile Include="src\app\_models\user.ts" />
+    <TypeScriptCompile Include="src\app\_services\authentication.service.ts" />
+    <TypeScriptCompile Include="src\app\_services\base.service.ts" />
+    <TypeScriptCompile Include="src\app\_services\index.ts" />
+    <TypeScriptCompile Include="src\app\_services\rest.interface.ts" />
+    <TypeScriptCompile Include="src\app\_services\school.service.ts" />
+    <TypeScriptCompile Include="src\app\_services\user.service.ts" />
+    <TypeScriptCompile Include="src\main.ts" />
+    <TypeScriptCompile Include="src\polyfills.ts" />
+    <TypeScriptCompile Include="src\typings.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="e2e" />
-    <Folder Include="e2e\src" />
-    <Folder Include="src" />
-    <Folder Include="src\app" />
-    <Folder Include="src\app\auth" />
-    <Folder Include="src\app\auth\login" />
-    <Folder Include="src\app\auth\register" />
-    <Folder Include="src\app\card-render" />
-    <Folder Include="src\app\entities" />
-    <Folder Include="src\app\main-nav" />
-    <Folder Include="src\app\services" />
-    <Folder Include="src\app\students-table" />
-    <Folder Include="src\assets" />
-    <Folder Include="src\environments" />
+    <Folder Include="src\" />
+    <Folder Include="src\app\" />
+    <Folder Include="src\app\admin\" />
+    <Folder Include="src\app\auth\" />
+    <Folder Include="src\app\auth\login\" />
+    <Folder Include="src\app\auth\register\" />
+    <Folder Include="src\app\class\" />
+    <Folder Include="src\app\components\" />
+    <Folder Include="src\app\components\menu\" />
+    <Folder Include="src\app\grade\" />
+    <Folder Include="src\app\home\" />
+    <Folder Include="src\app\_guards\" />
+    <Folder Include="src\app\_helpers\" />
+    <Folder Include="src\app\_models\" />
+    <Folder Include="src\app\_services\" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->
+  <ItemGroup>
+    <Compile Include="webpack.config.js" />
+  </ItemGroup>
+  <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
   <ProjectExtensions>

@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
-using Pandora.NetStandard.Business.Dtos;
 using Pandora.NetStandard.Business.Mappers;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Interfaces;
+using Pandora.NetStandard.Model.Dtos;
 using Pandora.NetStandard.Model.Entities;
 using System;
 using System.Linq;
@@ -26,7 +26,7 @@ namespace Pandora.NetStandard.Business.Services
             try
             {
                 var entity = await _uow.GetRepo<Grade>().InsertAsync(pDto);
-                if(!await _uow.CommitAsync())
+                if (!await _uow.CommitAsync())
                 {
                     HandleSVCException(response, "New Grade creation failed.");
                 }
@@ -41,9 +41,29 @@ namespace Pandora.NetStandard.Business.Services
             return response;
         }
 
-        public Task<BLSingleResponse<bool>> DeleteAsync(GradeDto pDto)
+        public async Task<BLSingleResponse<bool>> DeleteAsync(GradeDto pDto)
         {
-            throw new NotImplementedException();
+            var response = new BLSingleResponse<bool>();
+
+            try
+            {
+                //var entity = await _uow.GetRepo<Grade>().GetByIdAsync(pDto.Id);
+                await _uow.GetRepo<Grade>().DeleteAsync(pDto);
+                if (await _uow.CommitAsync())
+                {
+                    response.Data = true;
+                }
+                else
+                {
+                    HandleSVCException(response, "This grade was not deleted.");
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
+
+            return response;
         }
 
         public async Task<BLListResponse<GradeDto>> GetAllAsync()

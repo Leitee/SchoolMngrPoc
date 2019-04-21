@@ -1,4 +1,4 @@
-﻿using Pandora.NetStandard.Business.Dtos;
+﻿using Pandora.NetStandard.Model.Dtos;
 using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Interfaces;
 using System.Threading.Tasks;

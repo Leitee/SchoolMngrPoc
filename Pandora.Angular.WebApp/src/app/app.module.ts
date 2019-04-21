@@ -1,47 +1,45 @@
+﻿import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MainNavComponent } from './main-nav/main-nav.component';
-import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule, MatGridListModule, MatCardModule, MatMenuModule, MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
-import { CardRenderComponent } from './card-render/card-render.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { StudentsTableComponent } from './students-table/students-table.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+// used to create fake backend
+import { fakeBackendProvider } from './_helpers';
+
+import { AppComponent } from './app.component';
+import { routing } from './app.routing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { JwtInterceptor, ErrorInterceptor } from './_helpers';
+import { HomeComponent } from './home';
+import { AdminComponent } from './admin';
+import { LoginComponent } from './auth';
+import { MaterialModule } from './material.module';
+import { MenuComponent } from './components/menu/menu.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MainNavComponent,
-    CardRenderComponent,
-    StudentsTableComponent,
-  ],
-  imports: [
-    MatFormFieldModule,
-    FlexLayoutModule,
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatGridListModule,
-    MatCardModule,
-    MatMenuModule,
-    HttpClientModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    imports: [
+        BrowserModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        routing,
+        BrowserAnimationsModule,
+        MaterialModule
+    ],
+    declarations: [
+        AppComponent,
+        HomeComponent,
+        AdminComponent,
+        LoginComponent,
+        MenuComponent
+    ],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 
+        // provider used to create fake backend
+        fakeBackendProvider
+    ],
+    bootstrap: [AppComponent]
 })
+
 export class AppModule { }

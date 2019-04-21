@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pandora.NetStandard.Business.Dtos;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
+using Pandora.NetStandard.Model.Dtos;
 using System.Threading.Tasks;
 
 namespace Pandora.NetCore.WebApi.Controllers.Api
@@ -31,12 +31,12 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
                 return response.ToHttpResponse();
             }
             return BadRequest(ModelState.ValidationState);
-        }       
+        }
 
         [AllowAnonymous]
-        [HttpGet]
+        [HttpGet("ConfirmEmail")]
         public IActionResult ConfirmEmail()
-        {            
+        {
             return Ok();
         }
 
