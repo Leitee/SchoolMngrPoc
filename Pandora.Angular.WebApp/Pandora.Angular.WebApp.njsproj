@@ -37,7 +37,6 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="LICENSE" />
     <Content Include="src\app\admin\admin.component.html" />
     <Content Include="src\app\app.component.html" />
     <Content Include="src\app\auth\login\login.component.html" />
