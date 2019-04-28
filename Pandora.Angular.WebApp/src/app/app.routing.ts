@@ -1,10 +1,9 @@
 ﻿import { Routes, RouterModule } from '@angular/router';
 
-import { HomeComponent } from './_components/home';
-import { AdminComponent } from './_components/admin';
 import { LoginComponent } from './_auth';
 import { AuthGuard } from './_guards';
-import { Role2 } from './_models';
+import { RolesEnum } from './_models';
+import { HomeComponent, AdminComponent } from './_pages';
 
 const appRoutes: Routes = [
     {
@@ -16,7 +15,7 @@ const appRoutes: Routes = [
         path: 'admin',
         component: AdminComponent,
         canActivate: [AuthGuard],
-        data: { roles: [Role2.Admin] }
+        data: { roles: [RolesEnum.ADMINISTRADOR] }
     },
     {
         path: 'login',

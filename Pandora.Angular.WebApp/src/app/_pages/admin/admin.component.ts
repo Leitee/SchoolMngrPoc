@@ -1,12 +1,12 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
-import { User2 } from '@/_models';
+import { User } from '@/_models';
 import { UserService } from '@/_services';
 
 @Component({ templateUrl: 'admin.component.html' })
 export class AdminComponent implements OnInit {
-    users: User2[] = [];
+    users: User[] = [];
 
     constructor(private userService: UserService) { }
 

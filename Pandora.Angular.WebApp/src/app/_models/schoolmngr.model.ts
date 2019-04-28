@@ -44,6 +44,13 @@ export interface Role
 	name: string;
 	description: string;
 }
+export interface LoginResp
+{
+	token: string;
+	expirationDate: number;
+	hasToken: boolean;
+	messageResponse: string;
+}
 export interface User
 {
 	id: number;

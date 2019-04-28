@@ -1,4 +1,2 @@
-﻿export * from './role';
-export * from './user';
-export * from './schoolmngr.model';
+﻿export * from './schoolmngr.model';
  
