@@ -1,0 +1,35 @@
+version: '3.4'
+
+services:
+  pandora.netcore.webapi:
+    image: ${DOCKER_REGISTRY-}pandoranetcorewebapi
+    build:
+      context: .
+      dockerfile: Pandora.NetCore.WebApi/Dockerfile
+
+  elasticsearch:
+     image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
+     container_name: elasticsearch
+     ports:
+      - "9200:9200"
+     volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+     networks:
+      - docker-network
+
+  kibana:
+   image: docker.elastic.co/kibana/kibana:6.2.4
+   container_name: kibana
+   ports:
+    - "5601:5601"
+   depends_on:
+    - elasticsearch
+   networks:
+    - docker-network
+
+networks:
+  docker-network:
+    driver: bridge
+
+volumes:
+  elasticsearch-data:

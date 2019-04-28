@@ -39,3 +39,7 @@ typings
 
 # Generated files
 dist
+
+# VS's
+/.vs
+/.vscode

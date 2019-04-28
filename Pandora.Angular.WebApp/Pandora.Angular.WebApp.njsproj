@@ -5,9 +5,10 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>Pandora.Angular.WebApp</Name>
     <RootNamespace>Pandora.Angular.WebApp</RootNamespace>
-    <SaveNodeJsSettingsInProjectFile>True</SaveNodeJsSettingsInProjectFile>
+    <SaveNodeJsSettingsInProjectFile>False</SaveNodeJsSettingsInProjectFile>
     <LaunchUrl>localhost</LaunchUrl>
     <ScriptArguments>npm start</ScriptArguments>
+    <JavaScriptTestFramework>Jasmine</JavaScriptTestFramework>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -26,7 +27,7 @@
     <NodejsPort>4200</NodejsPort>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
     <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
-    <TypeScriptToolsVersion>3.4.4</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>3.3</TypeScriptToolsVersion>
     <EnableTypeScript>true</EnableTypeScript>
     <StartWebBrowser>True</StartWebBrowser>
   </PropertyGroup>

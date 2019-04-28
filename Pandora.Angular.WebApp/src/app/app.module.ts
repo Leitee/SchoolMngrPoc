@@ -10,11 +10,11 @@ import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
-import { HomeComponent } from './home';
-import { AdminComponent } from './admin';
-import { LoginComponent } from './auth';
 import { MaterialModule } from './material.module';
-import { MenuComponent } from './components/menu/menu.component';
+import { HomeComponent } from './_components/home';
+import { AdminComponent } from './_components/admin';
+import { LoginComponent } from './_auth';
+import { MenuComponent } from './_components/menu/menu.component';
 
 @NgModule({
     imports: [

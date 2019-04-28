@@ -1,8 +1,8 @@
 ﻿import { Routes, RouterModule } from '@angular/router';
 
-import { HomeComponent } from './home';
-import { AdminComponent } from './admin';
-import { LoginComponent } from './auth';
+import { HomeComponent } from './_components/home';
+import { AdminComponent } from './_components/admin';
+import { LoginComponent } from './_auth';
 import { AuthGuard } from './_guards';
 import { Role2 } from './_models';
 

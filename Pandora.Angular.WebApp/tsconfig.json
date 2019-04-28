@@ -1,22 +1,23 @@
 ﻿{
-    "compilerOptions": {
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "lib": [
-            "es2015",
-            "dom"
-        ],
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "noImplicitAny": false,
-        "sourceMap": true,
-        "suppressImplicitAnyIndexErrors": true,
-        "target": "es5",
-        "baseUrl": "src",
-        "paths": {
-            "@/*": [
-                "app/*"
-            ]
-        }
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es2015",
+      "dom"
+    ],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "target": "es5",
+    "baseUrl": "src",
+    "outDir": "./dist",
+    "paths": {
+      "@/*": [
+        "app/*"
+      ]
     }
+  }
 }
