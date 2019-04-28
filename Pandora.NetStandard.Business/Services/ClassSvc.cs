@@ -103,6 +103,23 @@ namespace Pandora.NetStandard.Business.Services
             return response;
         }
 
+        public async Task<BLListResponse<ClassDto>> GetClassesByGradeId(int gradeId)
+        {
+            var response = new BLListResponse<ClassDto>();
+
+            try
+            {
+                var entity = await _uow.GetRepo<Class>().AllAsync(c => c.GradeId == gradeId, null, null);
+                response.Data = _mapper.MapEntity(entity);
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
+
+            return response;
+        }
+
         public async Task<BLSingleResponse<bool>> UpdateAsync(ClassDto pDto)
         {
             var response = new BLSingleResponse<bool>();

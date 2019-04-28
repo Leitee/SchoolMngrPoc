@@ -8,7 +8,7 @@ declare enum Roles {
 	TEACHER = 3, 
 	DEBUG = -1
 }
-declare enum ShiftTime { 
+declare enum ShiftTimeEnum { 
 	TOMORROW = 1, 
 	AFTERNOON = 2, 
 	NIGHT = 3
@@ -17,7 +17,7 @@ export interface Class
 {
 	id: number;
 	name: string;
-	shift: ShiftTime;
+	shift: ShiftTimeEnum;
 	grade: Grade;
 }
 export interface Grade
