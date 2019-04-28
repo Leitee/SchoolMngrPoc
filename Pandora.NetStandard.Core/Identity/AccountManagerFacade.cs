@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Core.Identity
@@ -48,7 +49,7 @@ namespace Pandora.NetStandard.Core.Identity
             return await UserManager.CreateAsync(user);
         }
 
-        public virtual async Task<IdentityResult> SignUpAsync(TUser user, string pPassword, IEnumerable<TRole> roles) 
+        public virtual async Task<IdentityResult> SignUpAsync(TUser user, string pPassword, IEnumerable<TRole> roles)
         {
             user.PasswordHash = new PasswordHasher<TUser>().HashPassword(user, pPassword);
             return await UserManager.CreateAsync(user, roles);
@@ -72,6 +73,17 @@ namespace Pandora.NetStandard.Core.Identity
         public virtual async Task<IdentityResult> ConfirmEmailAsync(TUser user, string token)
         {
             return await UserManager.ConfirmEmailAsync(user, token);
+        }
+
+        public virtual async Task<TRole> GetRoleByUserAsync(TUser user)
+        {
+            return (await GetRolesByUserAsync(user)).FirstOrDefault();
+        }
+
+        public async Task<IEnumerable<TRole>> GetRolesByUserAsync(TUser user)
+        {
+            var rolesStr = await UserManager.GetRolesAsync(user);
+            return rolesStr.ToList().ConvertAll(x => RoleManager.FindByNameAsync(x).Result);
         }
     }
 }

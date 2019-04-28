@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Pandora.NetStandard.Model.Enums
 {
-    [TsEnum(Name = "Roles")]
+    [TsEnum]
     public enum RolesEnum
     {
         [Description("Dev")]

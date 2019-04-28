@@ -1,4 +1,6 @@
-﻿namespace Pandora.NetStandard.Core.Config
+﻿using Microsoft.Extensions.Configuration;
+
+namespace Pandora.NetStandard.Core.Config
 {
     public class AppSettings
     {
@@ -12,5 +14,10 @@
         public string SendGridSubject { get; set; }
         public string SendGridFrom { get; set; }
         public string ElasticServerUrl { get; set; }
+
+        public static AppSettings GetSettings(IConfiguration config)
+        {
+            return config.GetSection(nameof(AppSettings)).Get<AppSettings>();
+        }
     }
 }

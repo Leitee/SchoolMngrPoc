@@ -1,4 +1,5 @@
-﻿using Pandora.NetStandard.Core.Identity;
+﻿using Newtonsoft.Json;
+using Pandora.NetStandard.Core.Identity;
 using Reinforced.Typings.Attributes;
 using System.ComponentModel.DataAnnotations;
 

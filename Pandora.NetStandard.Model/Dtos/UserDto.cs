@@ -43,6 +43,10 @@ namespace Pandora.NetStandard.Model.Dtos
 
         #region Security Identity fields Hidden
         [TsIgnore]
+        public override string NormalizedUserName { set { } }
+        [TsIgnore]
+        public override string NormalizedEmail { set { } }
+        [TsIgnore]
         public override string PasswordHash { set => base.PasswordHash = null; }
         [TsIgnore]
         public override bool EmailConfirmed { set { } }

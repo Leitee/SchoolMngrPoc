@@ -2,8 +2,8 @@
 /.vscode
 *.user
 *.suo
-/obj
-/bin
+/Pandora.Docker.Deploy/obj
+/Pandora.Docker.Deploy/bin
 /Pandora.NetCore.WebApi/bin
 /Pandora.NetCore.WebApi/obj
 /Pandora.NetStandard.Model/bin
