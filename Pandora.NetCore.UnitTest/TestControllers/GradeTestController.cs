@@ -16,8 +16,9 @@ namespace Pandora.NetCore.UnitTest.TestController
         public GradeTestController(TestDbContextMocker mocker)
         {
             IGradeSvc gradeSvc = new GradeSvc(mocker.UoW, null);
+            IClassSvc classSvc = new ClassSvc(mocker.UoW, null);
 
-            _controller = new GradesController(null, gradeSvc);
+            _controller = new GradesController(null, classSvc, gradeSvc);
         }
 
         [Fact(DisplayName = "Retriving all existing grades")]
