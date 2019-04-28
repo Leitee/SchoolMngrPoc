@@ -75,6 +75,7 @@ namespace Pandora.NetCore.WebApi
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddUserManager<UserManagerFacade>()
                 .AddRoleManager<RoleManagerFacade>()
+                .AddSignInManager<AccountManagerFacade>()
                 .AddEntityFrameworkStores<SchoolDbContext>();
             //.AddDefaultUI(UIFramework.Bootstrap4)
 

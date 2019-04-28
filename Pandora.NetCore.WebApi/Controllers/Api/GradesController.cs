@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 namespace Pandora.NetCore.WebApi.Controllers.Api
 {
     [Route("api/v1/[controller]")]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class GradesController : ApiBaseController
     {
         private readonly IGradeSvc _gradeSvc;
@@ -21,7 +23,7 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
 
         // GET api/v1/grades
         [HttpGet]
-        [ResponseCache(VaryByHeader = "User-Agent", Duration = 00, Location = ResponseCacheLocation.Any)]//TODO:ver cache
+        [ResponseCache(VaryByHeader = "User-Agent", Duration = 3600, Location = ResponseCacheLocation.Any)]//TODO:ver cache
         public async Task<IActionResult> Get()
         {
             var response = await _gradeSvc.GetAllAsync();

@@ -3,17 +3,18 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { User, LoginResp, Login } from '@/_models';
+import { User, LoginResp, Login, Token } from '@/_models';
 import { Response } from '@/_helpers';
 import jwt_decode = require('jwt-decode');
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
+    private tokenKey = "storedToken";
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
 
     constructor(private http: HttpClient) {
-        this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('storedToken')));
+        this.currentUserSubject = new BehaviorSubject<User>(this.GetUserFromStoredToken(localStorage.getItem(this.tokenKey)));
         this.currentUser = this.currentUserSubject.asObservable();
     }
 
@@ -22,19 +23,18 @@ export class AuthenticationService {
     }
 
     public get storedToken(): string {
-        return localStorage.getItem('storedToken');
+        return localStorage.getItem(this.tokenKey);
     }
 
     login(loginObj : Login) {
-        return this.http.post<Response<LoginResp>>(`${config.authUrl}/auth/vi/login`,  loginObj )
+        return this.http.post<Response<LoginResp>>(`${config.authUrl}/login`,  loginObj )
             .pipe(map(resp => {
                 // login successful if there's a jwt token in the response
                 if (resp && !resp.hasError && resp.data.hasToken) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('storedToken', JSON.stringify(resp.data.token));
-
-                    let user : User = jwt_decode<User>(resp.data.token)
-                    this.currentUserSubject.next(user);
+                    localStorage.setItem(this.tokenKey, resp.data.token);
+                    
+                    this.currentUserSubject.next(this.GetUserFromStoredToken(resp.data.token));
                 }
 
                 return resp;
@@ -43,7 +43,12 @@ export class AuthenticationService {
 
     logout() {
         // remove user from local storage to log user out
-        localStorage.removeItem('storedToken');
+        localStorage.removeItem(this.tokenKey);
         this.currentUserSubject.next(null);
+    }
+
+    private GetUserFromStoredToken(tokenStr : string): User {
+        let userStr = (tokenStr === null) ? tokenStr : jwt_decode<Token>(tokenStr).userdata;
+        return JSON.parse(userStr);
     }
 }

@@ -8,6 +8,7 @@ using Pandora.NetStandard.Core.Config;
 using Pandora.NetStandard.Core.Identity;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Mapper;
+using Pandora.NetStandard.Core.Security;
 using Pandora.NetStandard.Model.Dtos;
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -26,7 +27,7 @@ namespace Pandora.NetCore.Identity
     {
         private readonly AccountManagerFacade _accountManager;
         private readonly IMapperCore _mapper;
-        private readonly AppSettings _settings;
+        private readonly IConfiguration _config;
 
         public AuthSvc(
             IApplicationUow applicationUow,
@@ -36,7 +37,7 @@ namespace Pandora.NetCore.Identity
             IConfiguration config) : base(applicationUow, logger)
         {
             _mapper = mapper;
-            _settings = config.GetSection("AppSettings").Get<AppSettings>();
+            _config = config;
             _accountManager = accountManager;
         }
 
@@ -68,7 +69,11 @@ namespace Pandora.NetCore.Identity
                 }
                 else
                 {
-                    response.Data = TokenBuilder(model.Username, "basic");
+                    var user = _mapper.MapEntity<ApplicationUser, UserDto>(await _accountManager.UserManager.FindByNameAsync(model.Username));
+                    user.Role = _mapper.MapEntity<ApplicationRole, RoleDto>(await _accountManager.GetRoleByUserAsync(user));
+
+                    var tokenResul = new JwtTokenProvider(_config).GenerateToken(user);
+                    response.Data = new LoginRespDto { Token = tokenResul.Token, ExpirationDate = tokenResul.ExpirationDate };
                 }
             }
             catch (Exception ex)
@@ -108,12 +113,13 @@ namespace Pandora.NetCore.Identity
         public async Task<BLSingleResponse<bool>> SendEmailAsync(string email, string callbackUrl)
         {
             var response = new BLSingleResponse<bool>();
+            AppSettings settings = AppSettings.GetSettings(_config);
 
-            var client = new SendGridClient(_settings.SendGridApiKey);
+            var client = new SendGridClient(AppSettings.GetSettings(_config).SendGridApiKey);
             var msg = MailHelper.CreateSingleEmail(
-                new EmailAddress(_settings.SendGridFrom, _settings.SendGridUserSender),
+                new EmailAddress(settings.SendGridFrom, settings.SendGridUserSender),
                 new EmailAddress(email),
-                _settings.SendGridSubject,
+                settings.SendGridSubject,
                 "Thank you for register.",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
@@ -142,27 +148,27 @@ namespace Pandora.NetCore.Identity
             return response;
         }
 
-        protected LoginRespDto TokenBuilder(string username, string role)
-        {
-            IEnumerable<Claim> claims = new[] {
-                new Claim(ClaimTypes.Name, username),
-                new Claim(ClaimTypes.Role, role),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
+        //protected LoginRespDto TokenBuilder(string username, string role)
+        //{
+        //    IEnumerable<Claim> claims = new[] {
+        //        new Claim(ClaimTypes.Name, username),
+        //        new Claim(ClaimTypes.Role, role),
+        //        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        //    };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.JwtSecretKey));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expiration = DateTime.UtcNow.AddHours(12);
+        //    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.JwtSecretKey));
+        //    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        //    var expiration = DateTime.UtcNow.AddHours(12);
 
-            var objToken = new JwtSecurityToken(
-                issuer: _settings.JwtValidIssuer,
-                audience: _settings.JwtValidAudience,
-                claims: claims,
-                expires: expiration,
-                signingCredentials: creds
-            );
+        //    var objToken = new JwtSecurityToken(
+        //        issuer: _settings.JwtValidIssuer,
+        //        audience: _settings.JwtValidAudience,
+        //        claims: claims,
+        //        expires: expiration,
+        //        signingCredentials: creds
+        //    );
 
-            return new LoginRespDto(new JwtSecurityTokenHandler().WriteToken(objToken), expiration);
-        }
+        //    return new TokenResponse(new JwtSecurityTokenHandler().WriteToken(objToken), expiration);
+        //}
     }
 }

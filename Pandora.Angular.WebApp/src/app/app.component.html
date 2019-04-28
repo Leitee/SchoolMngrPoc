@@ -6,10 +6,14 @@
             <!-- This fills the remaining space of the current row -->
         </span>
         <span>
-            <app-menu></app-menu>
+            <app-menu *ngIf="isAdmin"></app-menu>
         </span>
         <span style="flex: 1 1 auto"></span>
-        <span><i class="material-icons">account_box</i></span>
+        <span *ngIf="isAdmin">
+            <button (click)="logout()">
+                <i class="material-icons">account_box</i>
+            </button>
+        </span>
     </mat-toolbar-row>
 </mat-toolbar>
 

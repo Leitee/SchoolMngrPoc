@@ -23,7 +23,7 @@ namespace Pandora.NetStandard.Core.Security
         public virtual TokenResponse GenerateToken<TUser>(TUser pUser) where TUser : ApplicationUser
         {
             IEnumerable<Claim> claims = new[] {
-                new Claim(typeof(TUser).Name, JsonConvert.SerializeObject(pUser)),
+                new Claim("userdata", JsonConvert.SerializeObject(pUser).ToLower()),//TODO: get rid tolower
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 

@@ -39,6 +39,13 @@ namespace Pandora.NetCore.Identity
             services.Configure<AppSettings>(appSettingsSection);
             var appSettings = appSettingsSection.Get<AppSettings>();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowMyOrigin",
+                builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());//TODO: set origin from config
+            });
+
+            //services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -76,9 +83,7 @@ namespace Pandora.NetCore.Identity
             services.AddSingleton<IMapperCore, GenericMapperCore>();
             services.AddScoped<IApplicationUow, IdentityUow>();
             services.AddScoped<IAuthSvc, AuthSvc>();
-        }
-
-        
+        }        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -92,7 +97,7 @@ namespace Pandora.NetCore.Identity
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseCors("AllowMyOrigin");
             app.UseHttpsRedirection();
             app.UseMvc();
         }
