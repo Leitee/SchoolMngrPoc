@@ -28,7 +28,7 @@ namespace Pandora.NetCore.Identity.Controllers
                 var response = await _authSvc.LoginAsync(model);
                 return response.ToHttpResponse();
             }
-            return BadRequest(ModelState.ValidationState);
+            return BadRequest(ModelState);
         }
 
         [AllowAnonymous]
@@ -59,7 +59,7 @@ namespace Pandora.NetCore.Identity.Controllers
                 var response = await _authSvc.LoginAsync(model);
                 return response.ToHttpResponse();
             }
-            return BadRequest(ModelState.ValidationState);
+            return BadRequest(ModelState);
         }
     }
 }

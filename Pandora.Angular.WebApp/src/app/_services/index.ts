@@ -1,5 +1,3 @@
 ﻿export * from './authentication.service';
-export * from './user.service';
-export * from './rest.interface';
-export * from './base.service';//base class must be declared before sub class
+export * from './account.service';
 export * from './school.service';

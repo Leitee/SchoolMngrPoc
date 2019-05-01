@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Pandora.NetCore.Identity.DataAccess;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
@@ -19,6 +13,7 @@ using Pandora.NetStandard.Core.Config;
 using Pandora.NetStandard.Core.Identity;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Mapper;
+using System;
 
 namespace Pandora.NetCore.Identity
 {
@@ -46,7 +41,12 @@ namespace Pandora.NetCore.Identity
             });
 
             //services.AddCors();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .ConfigureApiBehaviorOptions(opt =>
+                {
+                    opt.SuppressModelStateInvalidFilter = true;//allow reach controller when model state invalid request
+                });
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
             {
@@ -83,7 +83,7 @@ namespace Pandora.NetCore.Identity
             services.AddSingleton<IMapperCore, GenericMapperCore>();
             services.AddScoped<IApplicationUow, IdentityUow>();
             services.AddScoped<IAuthSvc, AuthSvc>();
-        }        
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

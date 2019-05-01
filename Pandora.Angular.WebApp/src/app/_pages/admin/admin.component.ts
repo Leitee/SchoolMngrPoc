@@ -2,16 +2,16 @@
 import { first } from 'rxjs/operators';
 
 import { User } from '@/_models';
-import { UserService } from '@/_services';
+import { AccountService } from '@/_services';
 
 @Component({ templateUrl: 'admin.component.html' })
 export class AdminComponent implements OnInit {
     users: User[] = [];
 
-    constructor(private userService: UserService) { }
+    constructor(private userService: AccountService) { }
 
     ngOnInit() {
-        this.userService.getAll().pipe(first()).subscribe(users => {
+        this.userService.getAllUsers().pipe(first()).subscribe(users => {
             this.users = users;
         });
     }

@@ -100,9 +100,20 @@ namespace Pandora.NetStandard.Business.Services
             return response;
         }
 
-        public Task<BLSingleResponse<bool>> UpdateAsync(GradeDto pDto)
+        public async Task<BLSingleResponse<bool>> UpdateAsync(GradeDto pDto)
         {
-            throw new NotImplementedException();
+            var response = new BLSingleResponse<bool>();
+
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
+
+            return response;
         }
     }
 }

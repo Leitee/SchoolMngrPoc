@@ -2,7 +2,7 @@
 import { first } from 'rxjs/operators';
 
 import { User } from '@/_models';
-import { UserService, AuthenticationService } from '@/_services';
+import { AccountService, AuthenticationService } from '@/_services';
 
 @Component({ templateUrl: 'home.component.html' })
 export class HomeComponent {
@@ -10,14 +10,14 @@ export class HomeComponent {
     userFromApi: User;
 
     constructor(
-        private userService: UserService,
+        private userService: AccountService,
         private authenticationService: AuthenticationService
     ) {
         this.currentUser = this.authenticationService.currentUserValue;
     }
 
     ngOnInit() {
-        this.userService.getById(this.currentUser.id).pipe(first()).subscribe(user => {
+        this.userService.getUserById(this.currentUser.id).pipe(first()).subscribe(user => {
             this.userFromApi = user;
             console.log(user)
         });

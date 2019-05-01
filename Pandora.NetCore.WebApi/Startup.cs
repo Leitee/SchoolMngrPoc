@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Pandora.NetCore.WebApi.Controllers.Api;
 using Pandora.NetStandard.Business.Services;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Config;
@@ -100,7 +99,7 @@ namespace Pandora.NetCore.WebApi
                     };
                 });
 
-
+            //configure logger provider 
             var elasticUrl = Configuration.GetSection("AppSettings").Get<AppSettings>().ElasticServerUrl;
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()

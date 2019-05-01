@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 import { Login } from "@/_models";
 
 import { AuthenticationService } from '@/_services';
+import { errorHandler } from '@angular/platform-browser/src/browser';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
@@ -54,9 +55,17 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+
+                    if(data.hasToken)
+                        this.router.navigate([this.returnUrl]);
+                    else
+                        this.error = data.messageResponse;
+
+                    this.loading = false;
                 },
                 error => {
+                    console.error(error);
+                    
                     this.error = error;
                     this.loading = false;
                 });

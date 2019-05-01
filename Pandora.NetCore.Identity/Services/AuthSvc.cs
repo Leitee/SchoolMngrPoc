@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Config;
@@ -13,11 +12,7 @@ using Pandora.NetStandard.Model.Dtos;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
@@ -147,28 +142,5 @@ namespace Pandora.NetCore.Identity
 
             return response;
         }
-
-        //protected LoginRespDto TokenBuilder(string username, string role)
-        //{
-        //    IEnumerable<Claim> claims = new[] {
-        //        new Claim(ClaimTypes.Name, username),
-        //        new Claim(ClaimTypes.Role, role),
-        //        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        //    };
-
-        //    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.JwtSecretKey));
-        //    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-        //    var expiration = DateTime.UtcNow.AddHours(12);
-
-        //    var objToken = new JwtSecurityToken(
-        //        issuer: _settings.JwtValidIssuer,
-        //        audience: _settings.JwtValidAudience,
-        //        claims: claims,
-        //        expires: expiration,
-        //        signingCredentials: creds
-        //    );
-
-        //    return new TokenResponse(new JwtSecurityTokenHandler().WriteToken(objToken), expiration);
-        //}
     }
 }

@@ -1,9 +1,8 @@
 import { Grade, Class } from "@/_models";
-import { BaseService } from "@/_services";
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
-import { map } from "rxjs/operators";
+import { BaseService } from './base.service';
 
 @Injectable()
 export class SchoolService extends BaseService {
