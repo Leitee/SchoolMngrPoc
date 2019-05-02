@@ -1,13 +1,12 @@
-﻿import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
-import { Login } from "@/_models";
-
+﻿import { Login } from "@/_models";
 import { AuthenticationService } from '@/_services';
-import { errorHandler } from '@angular/platform-browser/src/browser';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { first } from 'rxjs/operators';
 
-@Component({ templateUrl: 'login.component.html' })
+
+@Component({ templateUrl: 'login.component.html', styleUrls: ['../auth.component.scss'] })
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     loading = false;
@@ -20,9 +19,9 @@ export class LoginComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService
-    ) { 
+    ) {
         // redirect to home if already logged in
-        if (this.authenticationService.currentUserValue) { 
+        if (this.authenticationService.currentUserValue) {
             this.router.navigate(['/']);
         }
     }
@@ -48,7 +47,7 @@ export class LoginComponent implements OnInit {
             return;
         }
 
-        let loginObj : Login = {username: this.f.username.value, password: this.f.password.value, rememberMe: false}
+        let loginObj: Login = { username: this.f.username.value, password: this.f.password.value, rememberMe: false }
 
         this.loading = true;
         this.authenticationService.login(loginObj)
@@ -56,7 +55,7 @@ export class LoginComponent implements OnInit {
             .subscribe(
                 data => {
 
-                    if(data.hasToken)
+                    if (data.hasToken)
                         this.router.navigate([this.returnUrl]);
                     else
                         this.error = data.messageResponse;
@@ -65,7 +64,7 @@ export class LoginComponent implements OnInit {
                 },
                 error => {
                     console.error(error);
-                    
+
                     this.error = error;
                     this.loading = false;
                 });

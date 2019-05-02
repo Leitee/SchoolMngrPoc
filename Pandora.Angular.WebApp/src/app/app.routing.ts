@@ -1,13 +1,11 @@
-﻿import { Routes, RouterModule } from '@angular/router';
-
-import { LoginComponent } from './_auth';
-import { AuthGuard } from './_guards';
-import { RolesEnum } from './_models';
-import { HomeComponent, AdminComponent } from './_pages';
+﻿import { AuthGuard } from '@/_commons';
+import { RolesEnum } from '@/_models';
+import { AdminComponent, HomeComponent } from '@/_pages';
+import { RouterModule, Routes } from '@angular/router';
 
 const appRoutes: Routes = [
     {
-        path: '',
+        path: '', pathMatch: 'full',
         component: HomeComponent,
         canActivate: [AuthGuard]
     },
@@ -18,8 +16,8 @@ const appRoutes: Routes = [
         data: { roles: [RolesEnum.DEBUG, RolesEnum.ADMINISTRADOR] }
     },
     {
-        path: 'login',
-        component: LoginComponent
+        path: 'auth',
+        loadChildren: './_auth/auth.module#AuthModule'//lazy loading
     },
 
     // otherwise redirect to home

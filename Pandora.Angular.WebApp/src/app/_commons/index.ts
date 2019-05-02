@@ -1,3 +1,4 @@
 ﻿export * from './error.interceptor';
 export * from './jwt.interceptor';
-export * from './response.service';
+export * from './auth.guard';
+export * from './response';
