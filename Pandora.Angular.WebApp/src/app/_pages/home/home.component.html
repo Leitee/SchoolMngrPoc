@@ -1,10 +1,22 @@
-﻿<h1>Home</h1>
-<p>You're logged in with Angular 7 & JWT!!</p>
-<p>Your role is: <strong>{{currentUser.role.name}}</strong>.</p>
-<p>This page can be accessed by all authenticated users.</p>
-<div>
-    Current user from secure api end point:
-    <ul>
-        <li *ngIf="userFromApi">{{userFromApi.fullName}}</li>
-    </ul>
+﻿<div class="page-content-wrapper">
+    <div class="content-wrapper-header">
+        <div style="flex: 1 1 auto;">
+            Aca el titulo
+
+        </div>
+    </div>
+
+    <div style="padding: 30px">
+
+        <p>You're logged in with Angular 7 & JWT!!</p>
+        <p>Your role is: <strong>{{currentUser.role.name}}</strong>.</p>
+        <p>This page can be accessed by all authenticated users.</p>
+        <div>
+            Current user from secure api end point:
+            <ul>
+                <li *ngIf="userFromApi">{{userFromApi.fullName}}</li>
+            </ul>
+        </div>
+
+    </div>
 </div>

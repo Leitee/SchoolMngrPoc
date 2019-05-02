@@ -4,7 +4,7 @@ import { first } from 'rxjs/operators';
 import { User } from '@/_models';
 import { AccountService, AuthenticationService } from '@/_services';
 
-@Component({ templateUrl: 'home.component.html' })
+@Component({ templateUrl: 'home.component.html', styleUrls: ['../pages.component.scss'] })
 export class HomeComponent {
     currentUser: User;
     userFromApi: User;

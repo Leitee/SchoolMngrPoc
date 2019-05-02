@@ -3,15 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-// used to create fake backend
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { MaterialModule } from './material.module';
-import { HomeComponent } from './_pages/home';
-import { AdminComponent } from './_pages/admin';
 import { LoginComponent } from './_auth';
+import { AdminComponent, HomeComponent } from './_pages';
 import { MenuComponent } from './_components/menu/menu.component';
 
 @NgModule({
