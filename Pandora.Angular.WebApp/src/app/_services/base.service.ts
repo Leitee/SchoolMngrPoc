@@ -23,7 +23,7 @@ export abstract class BaseService implements IRestService {
     }
 
     getById<T>(id: number): Observable<T> {
-        let response = this.http.get<Response<T>>(`${environment.apiUrl}/${this.path}/${id}`, { headers: this.headerReq });
+        let response = this.http.get<Response<T>>(`${environment.apiUrl}/${this.path}/${id}/classes`, { headers: this.headerReq });
         return response.pipe(map(a => a.data));
     }
 }

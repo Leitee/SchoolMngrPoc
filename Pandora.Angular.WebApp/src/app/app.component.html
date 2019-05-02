@@ -1,15 +1,18 @@
 ﻿<mat-toolbar color="primary">
     <mat-toolbar-row>
         <span>
-            <i class="material-icons">school</i>
-            <span style="margin: 10 -2">School Mngr</span>
-            <!-- This fills the remaining space of the current row -->
+            <button style="font-size: large" mat-button routerLink="/">
+                <i class="material-icons">school</i>
+                <span style="margin-left: 10px">School Mngr</span>
+            </button>
         </span>
         <span>
-            <app-menu *ngIf="isAdmin"></app-menu>
+            <app-menu *ngIf="currentUser"></app-menu>
         </span>
+        <!-- This fills the remaining space of the current row -->
         <span style="flex: 1 1 auto"></span>
-        <span *ngIf="isAdmin">
+        <span *ngIf="currentUser">
+            <button *ngIf="isAdmin" mat-button routerLink="/admin">Admin</button>
             <button mat-button (click)="logout()">
                 <i class="material-icons">account_box</i>
             </button>

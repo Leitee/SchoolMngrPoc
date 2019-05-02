@@ -2,7 +2,7 @@
 import { routing } from '@/app.routing';
 import { SharedModule } from '@/shared.module';
 import { ErrorInterceptor, JwtInterceptor } from '@/_commons';
-import { AdminComponent, HomeComponent } from '@/_pages';
+import { AdminComponent, HomeComponent, GradeComponent } from '@/_pages';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -21,7 +21,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     declarations: [
         AppComponent,
         HomeComponent,
-        AdminComponent
+        AdminComponent,
+        GradeComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

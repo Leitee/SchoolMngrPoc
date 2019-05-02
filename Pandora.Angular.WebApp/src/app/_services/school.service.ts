@@ -17,7 +17,7 @@ export class SchoolService extends BaseService {
     }
 
     public getClassesByGradeId(gradeId: number): Observable<Class[]> {
-        this.path = "classes";
+        this.path = "grades";
         return this.getById<Class[]>(gradeId);
     }
 }

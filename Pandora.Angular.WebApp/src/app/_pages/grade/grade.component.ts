@@ -1,11 +1,18 @@
+import { Class } from '@/_models';
+import { SchoolService } from '@/_services';
+import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { Component, OnInit } from "@angular/core";
-import { Breakpoints, BreakpointObserver } from "@angular/cdk/layout";
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
-    templateUrl: './grade.component.html'
+    templateUrl: './grade.component.html',
+    providers: [SchoolService]
 })
 export class GradeComponent implements OnInit {
+    classListSource: Observable<Array<Class>>;
+
+
 
     /** Based on the screen size, switch from standard to one column per row */
     cards = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
@@ -28,10 +35,10 @@ export class GradeComponent implements OnInit {
         })
     );
 
-    constructor(private breakpointObserver: BreakpointObserver) { }
+    constructor(private breakpointObserver: BreakpointObserver, private schoolSvc: SchoolService) { }
 
     ngOnInit(): void {
-
+        this.classListSource = this.schoolSvc.getClassesByGradeId(1);
     }
 
 }

@@ -11,8 +11,8 @@ export class AdminComponent implements OnInit {
     constructor(private userService: AccountService) { }
 
     ngOnInit() {
-        this.userService.getAllUsers().pipe(first()).subscribe(users => {
-            this.users = users;
-        });
+        // this.userService.getAllUsers().pipe(first()).subscribe(users => {
+        //     this.users = users;
+        // });
     }
 }
