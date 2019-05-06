@@ -134,7 +134,7 @@ namespace Pandora.NetCore.WebApi
 
                 // Set xml path
                 options.IncludeXmlComments(xmlPath);
-            });
+            });// TODO add Authorization JWT
         }
 
         /// <summary>
