@@ -22,6 +22,7 @@ namespace Pandora.NetStandard.Data.Dals
 
         public DbSet<Grade> Grades { get; set; }
         public DbSet<Class> Classes { get; set; }
+        public DbSet<Student> Students { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -61,7 +62,7 @@ namespace Pandora.NetStandard.Data.Dals
             #endregion
 
             builder.Entity<Grade>().HasData(
-                new Grade { Id = 1, Name = "1ro" },
+                new Grade { Id = 1, Name = "1er" },
                 new Grade { Id = 2, Name = "2do" },
                 new Grade { Id = 3, Name = "3ro" }
                 );

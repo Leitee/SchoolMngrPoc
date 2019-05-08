@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Model.Enums;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,5 +23,7 @@ namespace Pandora.NetStandard.Model.Entities
 
         //[JsonIgnore]
         public virtual Grade Grade { get; set; }
+
+        public virtual IEnumerable<Student> Students { get; set; }
     }
 }

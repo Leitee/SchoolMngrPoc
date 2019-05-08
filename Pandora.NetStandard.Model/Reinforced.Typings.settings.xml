@@ -18,7 +18,7 @@
 			It is not used if RtDivideTypesAmongFiles='true' specified.
 			Important! Do not forget to include generated file to solution.
 		-->
-    <RtTargetFile>$(ProjectDir)TypeScript\Scripts\schoolmngr.model.ts</RtTargetFile>
+    <RtTargetFile>$(ProjectDir)TypeScript\schoolmngr.model.ts</RtTargetFile>
 
     <!--
 			This property sets RT configuration method for fluent configuration.

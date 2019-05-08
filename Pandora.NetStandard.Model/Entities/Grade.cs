@@ -11,7 +11,8 @@ namespace Pandora.NetStandard.Model.Entities
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public virtual int Id { get; set; }
-        
+
+        [Required, MaxLength(50)]
         public virtual string Name { get; set; }
 
         [JsonIgnore]

@@ -27,9 +27,11 @@ namespace Pandora.NetStandard.Core.Identity
 
         public virtual DateTime JoinDate { get; set; }
 
+        public virtual string FullName { get { return $"{LastName.ToUpper()} {FirstName}"; } }
+
         public override string ToString()
         {
-            return $"{UserName} - {LastName.ToUpper()} {FirstName}";
+            return $"{UserName} - {FullName}";
         }
     }
 }

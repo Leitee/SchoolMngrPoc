@@ -11,7 +11,7 @@ namespace Pandora.NetStandard.Model.Dtos
         public UserDto()
         {
         }
-        public UserDto(string pUsername, string pEmail, string pFirstName, string pLastName) 
+        public UserDto(string pUsername, string pEmail, string pFirstName, string pLastName)
             : base(pUsername, pEmail, pFirstName, pLastName)
         {
         }
@@ -34,7 +34,7 @@ namespace Pandora.NetStandard.Model.Dtos
         public override string LastName { get; set; }
 
         [Display(Name = "Full Name")]
-        public string FullName { get { return $"{LastName.ToUpper()} {FirstName}"; } }
+        public override string FullName { get; }
 
         [Display(Name = "Join Date")]
         public override DateTime JoinDate { get { return base.JoinDate; } }

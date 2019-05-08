@@ -1,17 +1,19 @@
-import { Class } from '@/_models';
+import { Class, Grade, ShiftTimeEnum } from '@/_models';
 import { SchoolService } from '@/_services';
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { Component, OnInit } from "@angular/core";
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     templateUrl: './grade.component.html',
+    styleUrls: ['../pages.component.scss'],
     providers: [SchoolService]
 })
 export class GradeComponent implements OnInit {
     classListSource: Observable<Array<Class>>;
-
+    grade: Grade;
 
 
     /** Based on the screen size, switch from standard to one column per row */
@@ -35,10 +37,23 @@ export class GradeComponent implements OnInit {
         })
     );
 
-    constructor(private breakpointObserver: BreakpointObserver, private schoolSvc: SchoolService) { }
+    constructor(private breakpointObserver: BreakpointObserver, private schoolSvc: SchoolService, private route: ActivatedRoute) { }
 
     ngOnInit(): void {
-        this.classListSource = this.schoolSvc.getClassesByGradeId(1);
+        this.route.queryParams
+            .subscribe((gr: Grade) => {
+                this.grade = gr;
+                this.classListSource = this.schoolSvc.getClassesByGradeId(gr.id);
+            });
+    }
+
+    private getShiftEnumName(shift: ShiftTimeEnum){
+        if(shift == ShiftTimeEnum.TOMORROW)
+            return "Mañana";
+        else if (shift == ShiftTimeEnum.AFTERNOON)
+            return "Tarde";
+        else
+            return "Noche";
     }
 
 }

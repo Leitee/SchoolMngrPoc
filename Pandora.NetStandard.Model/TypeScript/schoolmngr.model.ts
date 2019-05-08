@@ -2,6 +2,13 @@
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
 
+declare enum ExamEnum { 
+	FIRST = 1, 
+	SECOND = 2, 
+	THIRD = 3, 
+	RETRY = 4, 
+	FINAL = 5
+}
 declare enum RolesEnum { 
 	ADMINISTRADOR = 1, 
 	SUPERVISOR = 2, 
@@ -43,6 +50,17 @@ export interface Role
 	id: number;
 	name: string;
 	description: string;
+}
+export interface Student
+{
+	id: number;
+	identityCode: string;
+	firstName: string;
+	lastName: string;
+	email: string;
+	phoneNumber: string;
+	fullName: string;
+	class: any;
 }
 export interface LoginResp
 {
