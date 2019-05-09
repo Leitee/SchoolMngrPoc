@@ -9,18 +9,14 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetCore.WebApi.Controllers.Api
 {
-    [Route("api/v1/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class GradesController : ApiBaseController
     {
-        private readonly IClassSvc _classSvc;
         private readonly IGradeSvc _gradeSvc;
 
         public GradesController(ILogger<GradesController> logger,
-            IClassSvc classSvc,
             IGradeSvc gradeSvc) : base(logger)
         {
-            _classSvc = classSvc;
             _gradeSvc = gradeSvc;
         }
 
@@ -75,71 +71,6 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
             return response.ToHttpResponse();
         }
 
-        #region class
-        // GET: api/v1/grades/5/classes
-        [HttpGet("{id}/classes")]
-        public async Task<IActionResult> GetClassesByGrade(int id)
-        {
-            var response = await _classSvc.GetClassesByGradeId(id);
-            return response.ToHttpResponse();
-        }
-
-        // GET: api/v1/grades/classes
-        [HttpGet("classes")]
-        public async Task<IActionResult> GetClasses()
-        {
-            var response = await _classSvc.GetAllAsync();
-            return response.ToHttpResponse();
-        }
-
-        // GET: api/v1/grades/classes/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetClass(int id)
-        {
-            var response = await _classSvc.GetByIdAsync(id);
-            return response.ToHttpResponse();
-        }
-
-        // PUT: api/v1/grades/classes/5
-        [HttpPut("classes/{id}")]
-        public async Task<IActionResult> PutClass([FromBody] ClassDto pClass, int pId)
-        {
-            if (pId != pClass.Id)
-            {
-                return BadRequest();
-            }
-
-
-            return NoContent();
-        }
-
-        // POST: api/v1/grades/5/classes
-        [HttpPost("{id}/classes")]
-        public async Task<IActionResult> PostClass([FromBody] ClassDto pClass, int id)
-        {
-            if (ModelState.IsValid)
-            {
-                var response = await _classSvc.CreateAsync(pClass);
-                return CreatedAtAction(nameof(GetById), new { pClass.Id }, response.Data);//return 201 created and its data entity 
-            }
-
-            return BadRequest(ModelState);
-        }
-
-        // DELETE: api/v1/grades/classes/5
-        [HttpDelete("classes/{id}")]
-        public async Task<IActionResult> DeleteClass(int id)
-        {
-            var resul = await _classSvc.GetByIdAsync(id);
-            if (resul == null)
-            {
-                return NotFound();
-            }
-
-            var response = await _classSvc.DeleteAsync(resul.Data);
-            return response.ToHttpResponse();
-        }
-
-        #endregion
+        
     }
 }

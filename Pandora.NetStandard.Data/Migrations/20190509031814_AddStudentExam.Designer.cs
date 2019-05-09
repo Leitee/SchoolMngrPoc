@@ -10,8 +10,8 @@ using Pandora.NetStandard.Data.Dals;
 namespace Pandora.NetStandard.Data.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20190508143352_AddStudent")]
-    partial class AddStudent
+    [Migration("20190509031814_AddStudentExam")]
+    partial class AddStudentExam
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -143,7 +143,7 @@ namespace Pandora.NetStandard.Data.Migrations
                         new
                         {
                             Id = -1,
-                            ConcurrencyStamp = "d44fb4f9-a8b6-409d-9329-2e69f36fc202",
+                            ConcurrencyStamp = "bb85c4d2-8e06-496d-87e4-3d9945ed489e",
                             Description = "Full functionality over app and debugin",
                             Name = "Dev",
                             NormalizedName = "DEV"
@@ -151,7 +151,7 @@ namespace Pandora.NetStandard.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "e57e4a27-931c-4e6d-b097-6b7efec307d4",
+                            ConcurrencyStamp = "f00fc888-f013-4262-b26e-9e828b78d7bd",
                             Description = "Full permissions and features",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
@@ -159,7 +159,7 @@ namespace Pandora.NetStandard.Data.Migrations
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "682aac90-9152-4784-8b22-87af67db1b1a",
+                            ConcurrencyStamp = "6133dff7-9c65-49bc-aa2c-e1f65a7aa935",
                             Description = "Limited functionality just administrative permissions",
                             Name = "Super",
                             NormalizedName = "SUPER"
@@ -167,7 +167,7 @@ namespace Pandora.NetStandard.Data.Migrations
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "47d7b938-8b5f-4c7e-98cc-326635132e54",
+                            ConcurrencyStamp = "5d92e7d7-0e70-4f1f-a82d-13ea8274d028",
                             Description = "Limited functionality just teaching-relative permissions",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
@@ -240,16 +240,16 @@ namespace Pandora.NetStandard.Data.Migrations
                         {
                             Id = -1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5d2dbd2a-806f-41ee-8ff6-d73231b13580",
+                            ConcurrencyStamp = "4ae6e4fd-8060-488d-807b-3b35b17693a5",
                             Email = "info@pandorasistemas.com",
                             EmailConfirmed = true,
                             FirstName = "Jhon",
-                            JoinDate = new DateTime(2019, 5, 8, 14, 33, 51, 473, DateTimeKind.Utc).AddTicks(8628),
+                            JoinDate = new DateTime(2019, 5, 9, 3, 18, 13, 562, DateTimeKind.Utc).AddTicks(5226),
                             LastName = "Doe",
                             LockoutEnabled = false,
                             NormalizedEmail = "INFO@PANDORASISTEMAS.COM",
                             NormalizedUserName = "DEVADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAW39ogz8noQdOXX1sLdsS+QgCVP819gZn1WLqHfnLkAwc6n+bsItN800WNM684uAw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEv1jpiIzb477co1YPlEBrAFpbguHFl1oujbtbYyKb2SkGs9mSA5ujNlkkqK1F1ACA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -322,6 +322,33 @@ namespace Pandora.NetStandard.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Exam", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("Date");
+
+                    b.Property<int>("ExamType");
+
+                    b.Property<string>("Obs");
+
+                    b.Property<float>("Score");
+
+                    b.Property<int?>("StudentId");
+
+                    b.Property<int?>("SubjectId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("Exams","School");
+                });
+
             modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Grade", b =>
                 {
                     b.Property<int>("Id");
@@ -354,9 +381,7 @@ namespace Pandora.NetStandard.Data.Migrations
 
             modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Student", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("Id");
 
                     b.Property<int?>("ClassId");
 
@@ -366,10 +391,6 @@ namespace Pandora.NetStandard.Data.Migrations
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(100);
-
-                    b.Property<string>("IdentityCode")
-                        .IsRequired()
-                        .HasMaxLength(50);
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -383,6 +404,47 @@ namespace Pandora.NetStandard.Data.Migrations
                     b.HasIndex("ClassId");
 
                     b.ToTable("Students","School");
+                });
+
+            modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Subject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<int?>("TeacherId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("Subjects","School");
+                });
+
+            modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Teacher", b =>
+                {
+                    b.Property<int>("Id");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Teachers","School");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -438,11 +500,29 @@ namespace Pandora.NetStandard.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Exam", b =>
+                {
+                    b.HasOne("Pandora.NetStandard.Model.Entities.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId");
+
+                    b.HasOne("Pandora.NetStandard.Model.Entities.Subject", "Subject")
+                        .WithMany("Exams")
+                        .HasForeignKey("SubjectId");
+                });
+
             modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Student", b =>
                 {
                     b.HasOne("Pandora.NetStandard.Model.Entities.Class", "Class")
                         .WithMany("Students")
                         .HasForeignKey("ClassId");
+                });
+
+            modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Subject", b =>
+                {
+                    b.HasOne("Pandora.NetStandard.Model.Entities.Teacher", "Teacher")
+                        .WithMany("Subjects")
+                        .HasForeignKey("TeacherId");
                 });
 #pragma warning restore 612, 618
         }

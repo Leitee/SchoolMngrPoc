@@ -15,7 +15,7 @@ namespace Pandora.NetStandard.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -141,7 +141,7 @@ namespace Pandora.NetStandard.Data.Migrations
                         new
                         {
                             Id = -1,
-                            ConcurrencyStamp = "3673eea3-fd15-4b34-b6e1-3fa4592cd5c9",
+                            ConcurrencyStamp = "bb85c4d2-8e06-496d-87e4-3d9945ed489e",
                             Description = "Full functionality over app and debugin",
                             Name = "Dev",
                             NormalizedName = "DEV"
@@ -149,7 +149,7 @@ namespace Pandora.NetStandard.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "c17e9d8c-5d70-455a-88a7-2f64c27d44f9",
+                            ConcurrencyStamp = "f00fc888-f013-4262-b26e-9e828b78d7bd",
                             Description = "Full permissions and features",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
@@ -157,7 +157,7 @@ namespace Pandora.NetStandard.Data.Migrations
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "9024bfe1-368b-45ce-98a4-e349efdfa718",
+                            ConcurrencyStamp = "6133dff7-9c65-49bc-aa2c-e1f65a7aa935",
                             Description = "Limited functionality just administrative permissions",
                             Name = "Super",
                             NormalizedName = "SUPER"
@@ -165,7 +165,7 @@ namespace Pandora.NetStandard.Data.Migrations
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "c6c49ded-5da4-4ccd-bdd2-2f6be44068e8",
+                            ConcurrencyStamp = "5d92e7d7-0e70-4f1f-a82d-13ea8274d028",
                             Description = "Limited functionality just teaching-relative permissions",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
@@ -238,16 +238,16 @@ namespace Pandora.NetStandard.Data.Migrations
                         {
                             Id = -1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "111e1652-566f-4008-91ca-1047fa2e4d89",
+                            ConcurrencyStamp = "4ae6e4fd-8060-488d-807b-3b35b17693a5",
                             Email = "info@pandorasistemas.com",
                             EmailConfirmed = true,
                             FirstName = "Jhon",
-                            JoinDate = new DateTime(2019, 4, 8, 2, 0, 32, 462, DateTimeKind.Utc).AddTicks(3675),
+                            JoinDate = new DateTime(2019, 5, 9, 3, 18, 13, 562, DateTimeKind.Utc).AddTicks(5226),
                             LastName = "Doe",
                             LockoutEnabled = false,
                             NormalizedEmail = "INFO@PANDORASISTEMAS.COM",
                             NormalizedUserName = "DEVADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPOlC1DqxEu6oOBpbuxdMcMb3Gu+s3aCpygJbmXiJTTsLCMN5QIsldK5HFVnVO0kyA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEv1jpiIzb477co1YPlEBrAFpbguHFl1oujbtbYyKb2SkGs9mSA5ujNlkkqK1F1ACA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -320,6 +320,33 @@ namespace Pandora.NetStandard.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Exam", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("Date");
+
+                    b.Property<int>("ExamType");
+
+                    b.Property<string>("Obs");
+
+                    b.Property<float>("Score");
+
+                    b.Property<int?>("StudentId");
+
+                    b.Property<int?>("SubjectId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("Exams","School");
+                });
+
             modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Grade", b =>
                 {
                     b.Property<int>("Id");
@@ -336,7 +363,7 @@ namespace Pandora.NetStandard.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "1ro"
+                            Name = "1er"
                         },
                         new
                         {
@@ -348,6 +375,74 @@ namespace Pandora.NetStandard.Data.Migrations
                             Id = 3,
                             Name = "3ro"
                         });
+                });
+
+            modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Student", b =>
+                {
+                    b.Property<int>("Id");
+
+                    b.Property<int?>("ClassId");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassId");
+
+                    b.ToTable("Students","School");
+                });
+
+            modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Subject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<int?>("TeacherId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("Subjects","School");
+                });
+
+            modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Teacher", b =>
+                {
+                    b.Property<int>("Id");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100);
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Teachers","School");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -401,6 +496,31 @@ namespace Pandora.NetStandard.Data.Migrations
                         .WithMany("Classes")
                         .HasForeignKey("GradeId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Exam", b =>
+                {
+                    b.HasOne("Pandora.NetStandard.Model.Entities.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId");
+
+                    b.HasOne("Pandora.NetStandard.Model.Entities.Subject", "Subject")
+                        .WithMany("Exams")
+                        .HasForeignKey("SubjectId");
+                });
+
+            modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Student", b =>
+                {
+                    b.HasOne("Pandora.NetStandard.Model.Entities.Class", "Class")
+                        .WithMany("Students")
+                        .HasForeignKey("ClassId");
+                });
+
+            modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Subject", b =>
+                {
+                    b.HasOne("Pandora.NetStandard.Model.Entities.Teacher", "Teacher")
+                        .WithMany("Subjects")
+                        .HasForeignKey("TeacherId");
                 });
 #pragma warning restore 612, 618
         }

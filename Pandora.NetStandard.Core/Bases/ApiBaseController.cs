@@ -4,6 +4,7 @@ using System;
 
 namespace Pandora.NetStandard.Core.Bases
 {
+    [Route("api/v{v:apiVersion}/[controller]")]
     [Produces("application/json")]
     [ApiController]
     public abstract class ApiBaseController : ControllerBase

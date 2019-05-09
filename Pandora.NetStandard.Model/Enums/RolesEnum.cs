@@ -15,5 +15,4 @@ namespace Pandora.NetStandard.Model.Enums
         [Description("Teacher")]
         TEACHER
     }
-
 }

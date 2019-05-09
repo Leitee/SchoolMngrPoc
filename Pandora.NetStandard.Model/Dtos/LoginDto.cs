@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Pandora.NetStandard.Model.Dtos
 {
-    [TsInterface(AutoI = false, Name = "Login")]
+    [TsInterface(AutoI = false, Name = "Login")]//TODO: look for using viewmodel-based validation on web client
     public class LoginDto
     {
         [Required]

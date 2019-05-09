@@ -1,11 +1,12 @@
 ﻿using Pandora.NetStandard.Model.Entities;
 using Reinforced.Typings.Attributes;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Pandora.NetStandard.Model.Dtos
 {
-    [TsInterface(AutoI = false, Name = "Student")]
-    public class StudentDto : Student
+    [TsInterface(AutoI = false, Name = "Teacher")]
+    public class TeacherDto : Teacher
     {
         public override int Id { get => base.Id; set => base.Id = value; }
         [MaxLength(50), Display(Name = "First Name")]
@@ -19,7 +20,6 @@ namespace Pandora.NetStandard.Model.Dtos
 
         [Display(Name = "Full Name")]
         public override string FullName => base.FullName;
-
-        public override Class Class { get => base.Class; set => base.Class = value; }
+        public override IEnumerable<Subject> Subjects { get => base.Subjects; set => base.Subjects = value; }
     }
 }

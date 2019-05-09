@@ -20,9 +20,9 @@ namespace Pandora.NetStandard.Core.Mapper
             }).CreateMapper();
         }
 
-        //TODO: add expressin functionaity
         public virtual void SetMapperConfiguration(IMapperConfigurationExpression configurationExpression)
         {
+            //TODO: add expression param functionaity
             var test = configurationExpression;
         }
 

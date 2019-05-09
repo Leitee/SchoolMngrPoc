@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetCore.WebApi.Controllers.Api
 {
-    [Route("api/v1/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class AccountController : ApiBaseController
     {

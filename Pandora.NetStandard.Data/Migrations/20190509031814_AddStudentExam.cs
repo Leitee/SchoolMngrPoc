@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Pandora.NetStandard.Data.Migrations
 {
-    public partial class AddStudent : Migration
+    public partial class AddStudentExam : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,9 +13,7 @@ namespace Pandora.NetStandard.Data.Migrations
                 schema: "School",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    IdentityCode = table.Column<string>(maxLength: 50, nullable: false),
+                    Id = table.Column<int>(nullable: false),
                     FirstName = table.Column<string>(maxLength: 100, nullable: false),
                     LastName = table.Column<string>(maxLength: 100, nullable: false),
                     Email = table.Column<string>(maxLength: 100, nullable: true),
@@ -34,13 +32,84 @@ namespace Pandora.NetStandard.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Teachers",
+                schema: "School",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false),
+                    FirstName = table.Column<string>(maxLength: 100, nullable: false),
+                    LastName = table.Column<string>(maxLength: 100, nullable: false),
+                    Email = table.Column<string>(maxLength: 100, nullable: true),
+                    PhoneNumber = table.Column<string>(maxLength: 100, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Teachers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Subjects",
+                schema: "School",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: false),
+                    TeacherId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subjects", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Subjects_Teachers_TeacherId",
+                        column: x => x.TeacherId,
+                        principalSchema: "School",
+                        principalTable: "Teachers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Exams",
+                schema: "School",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ExamType = table.Column<int>(nullable: false),
+                    Score = table.Column<float>(nullable: false),
+                    Date = table.Column<DateTime>(nullable: true),
+                    Obs = table.Column<string>(nullable: true),
+                    StudentId = table.Column<int>(nullable: true),
+                    SubjectId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Exams", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Exams_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalSchema: "School",
+                        principalTable: "Students",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Exams_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalSchema: "School",
+                        principalTable: "Subjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.UpdateData(
                 schema: "Auth",
                 table: "Roles",
                 keyColumn: "Id",
                 keyValue: -1,
                 column: "ConcurrencyStamp",
-                value: "d44fb4f9-a8b6-409d-9329-2e69f36fc202");
+                value: "bb85c4d2-8e06-496d-87e4-3d9945ed489e");
 
             migrationBuilder.UpdateData(
                 schema: "Auth",
@@ -48,7 +117,7 @@ namespace Pandora.NetStandard.Data.Migrations
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "ConcurrencyStamp",
-                value: "e57e4a27-931c-4e6d-b097-6b7efec307d4");
+                value: "f00fc888-f013-4262-b26e-9e828b78d7bd");
 
             migrationBuilder.UpdateData(
                 schema: "Auth",
@@ -56,7 +125,7 @@ namespace Pandora.NetStandard.Data.Migrations
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "ConcurrencyStamp",
-                value: "682aac90-9152-4784-8b22-87af67db1b1a");
+                value: "6133dff7-9c65-49bc-aa2c-e1f65a7aa935");
 
             migrationBuilder.UpdateData(
                 schema: "Auth",
@@ -64,7 +133,7 @@ namespace Pandora.NetStandard.Data.Migrations
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "ConcurrencyStamp",
-                value: "47d7b938-8b5f-4c7e-98cc-326635132e54");
+                value: "5d92e7d7-0e70-4f1f-a82d-13ea8274d028");
 
             migrationBuilder.UpdateData(
                 schema: "Auth",
@@ -72,7 +141,7 @@ namespace Pandora.NetStandard.Data.Migrations
                 keyColumn: "Id",
                 keyValue: -1,
                 columns: new[] { "ConcurrencyStamp", "JoinDate", "PasswordHash" },
-                values: new object[] { "5d2dbd2a-806f-41ee-8ff6-d73231b13580", new DateTime(2019, 5, 8, 14, 33, 51, 473, DateTimeKind.Utc).AddTicks(8628), "AQAAAAEAACcQAAAAEAW39ogz8noQdOXX1sLdsS+QgCVP819gZn1WLqHfnLkAwc6n+bsItN800WNM684uAw==" });
+                values: new object[] { "4ae6e4fd-8060-488d-807b-3b35b17693a5", new DateTime(2019, 5, 9, 3, 18, 13, 562, DateTimeKind.Utc).AddTicks(5226), "AQAAAAEAACcQAAAAEEv1jpiIzb477co1YPlEBrAFpbguHFl1oujbtbYyKb2SkGs9mSA5ujNlkkqK1F1ACA==" });
 
             migrationBuilder.UpdateData(
                 schema: "School",
@@ -83,16 +152,46 @@ namespace Pandora.NetStandard.Data.Migrations
                 value: "1er");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Exams_StudentId",
+                schema: "School",
+                table: "Exams",
+                column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Exams_SubjectId",
+                schema: "School",
+                table: "Exams",
+                column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Students_ClassId",
                 schema: "School",
                 table: "Students",
                 column: "ClassId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subjects_TeacherId",
+                schema: "School",
+                table: "Subjects",
+                column: "TeacherId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Exams",
+                schema: "School");
+
+            migrationBuilder.DropTable(
                 name: "Students",
+                schema: "School");
+
+            migrationBuilder.DropTable(
+                name: "Subjects",
+                schema: "School");
+
+            migrationBuilder.DropTable(
+                name: "Teachers",
                 schema: "School");
 
             migrationBuilder.UpdateData(

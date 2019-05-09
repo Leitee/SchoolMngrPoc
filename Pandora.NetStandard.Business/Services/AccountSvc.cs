@@ -86,7 +86,7 @@ namespace Pandora.NetStandard.Business.Services
         {
             var response = new BLSingleResponse<UserDto>();
 
-            var user = _mapper.MapToBaseClass<UserDto, ApplicationUser>(new UserDto(model.Username, model.Email, model.Firstname, model.Lastname));
+            var user = _mapper.MapToBaseClass<UserDto, ApplicationUser>(new UserDto(model.Username, model.Email, model.FirstName, model.LastName));
 
             var signUpResul = await _accountManager.SignUpAsync(user, model.Password);
 

@@ -4,7 +4,7 @@ using System.ComponentModel;
 namespace Pandora.NetStandard.Model.Enums
 {
     [TsEnum]
-    public enum ExamEnum
+    public enum ExamTypeEnum
     {
         [Description("Primer")]
         FIRST = 1,
@@ -16,6 +16,5 @@ namespace Pandora.NetStandard.Model.Enums
         RETRY = 4,
         [Description("Final")]
         FINAL = 5
-
     }
 }

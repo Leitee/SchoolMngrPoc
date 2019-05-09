@@ -7,9 +7,8 @@ namespace Pandora.NetStandard.Model.Entities
     [Table("Students", Schema = "School")]
     public class Student : IEntity //TODO look for using ApplicationUser as base class
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public virtual int Id { get; set; }
-        [Required, MaxLength(50)]
-        public virtual string IdentityCode { get; set; }
         [Required, MaxLength(100)]
         public virtual string FirstName { get; set; }
         [Required, MaxLength(100)]

@@ -2,7 +2,7 @@
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
 
-declare enum ExamEnum { 
+declare enum ExamTypeEnum { 
 	FIRST = 1, 
 	SECOND = 2, 
 	THIRD = 3, 
@@ -27,6 +27,16 @@ export interface Class
 	shift: ShiftTimeEnum;
 	grade: Grade;
 }
+export interface Exam
+{
+	id: number;
+	examType: ExamTypeEnum;
+	score: number;
+	date?: any;
+	obs: string;
+	student: any;
+	subject: any;
+}
 export interface Grade
 {
 	id: number;
@@ -41,8 +51,8 @@ export interface Login
 export interface Register extends Login
 {
 	email: string;
-	firstname: string;
-	lastname: string;
+	firstName: string;
+	lastName: string;
 	confirm: string;
 }
 export interface Role
@@ -54,13 +64,28 @@ export interface Role
 export interface Student
 {
 	id: number;
-	identityCode: string;
 	firstName: string;
 	lastName: string;
 	email: string;
 	phoneNumber: string;
 	fullName: string;
 	class: any;
+}
+export interface Subject
+{
+	id: number;
+	name: string;
+	teacher: any;
+}
+export interface Teacher
+{
+	id: number;
+	firstName: string;
+	lastName: string;
+	email: string;
+	phoneNumber: string;
+	fullName: string;
+	subjects: any[];
 }
 export interface LoginResp
 {

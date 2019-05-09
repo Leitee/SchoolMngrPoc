@@ -14,7 +14,8 @@ namespace Pandora.NetStandard.Business.Services
     public class ClassSvc : BaseService<Class, ClassDto>, IClassSvc
     {
 
-        public ClassSvc(IApplicationUow applicationUow, ILogger<ClassSvc> logger) : base(applicationUow, logger, new ClassToDtoMapper())
+        public ClassSvc(IApplicationUow applicationUow, ILogger<ClassSvc> logger) : 
+            base(applicationUow, logger, new ClassToDtoMapper())
         {
 
         }
