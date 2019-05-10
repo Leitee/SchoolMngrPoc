@@ -12,6 +12,8 @@ namespace Pandora.NetStandard.Model.Entities
         public virtual string Email { get; set; }
         [MaxLength(100)]
         public virtual string PhoneNumber { get; set; }
+        [MaxLength(200)]
+        public virtual string Address { get; set; }
 
         public virtual string FullName { get { return $"{LastName.ToUpper()} {FirstName}"; } }
     }

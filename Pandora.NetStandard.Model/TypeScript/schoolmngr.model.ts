@@ -2,6 +2,11 @@
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
 
+declare enum AttendanceEnum { 
+	ATTEND = 1, 
+	MISS = 2, 
+	REASON = 3
+}
 declare enum ExamTypeEnum { 
 	FIRST = 1, 
 	SECOND = 2, 
@@ -13,12 +18,19 @@ declare enum RolesEnum {
 	ADMINISTRADOR = 1, 
 	SUPERVISOR = 2, 
 	TEACHER = 3, 
+	STUDENT = 4, 
 	DEBUG = -1
 }
 declare enum ShiftTimeEnum { 
 	TOMORROW = 1, 
 	AFTERNOON = 2, 
 	NIGHT = 3
+}
+declare enum SubjectStateEnum { 
+	SUBSCRIBED = 0, 
+	ACCOMPLISHED = 1, 
+	IN_PROGRESS = 2, 
+	ABANDONED = 3
 }
 export interface Class
 {

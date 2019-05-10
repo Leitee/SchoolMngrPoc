@@ -13,6 +13,8 @@ namespace Pandora.NetStandard.Model.Enums
         [Description("Super")]
         SUPERVISOR,
         [Description("Teacher")]
-        TEACHER
+        TEACHER,
+        [Description("Student")]
+        STUDENT
     }
 }

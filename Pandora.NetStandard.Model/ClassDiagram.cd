@@ -1,25 +1,81 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="NetCore.Model.Entities.Class">
-    <Position X="10.75" Y="1.5" Width="1.5" />
+  <Class Name="Pandora.NetStandard.Model.Entities.Class" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAgAAAAAAgAAAAAAAQAAAAAAAAAEAAAAAgAAAA=</HashCode>
+      <HashCode>AAICAAAAAAAAAAgAAAAAAAwAAAAAAAAAEAAAAAEAAAA=</HashCode>
       <FileName>Entities\Class.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="NetCore.Model.Entities.Grade" Collapsed="true">
-    <Position X="12.5" Y="1.5" Width="1.5" />
+  <Class Name="Pandora.NetStandard.Model.Entities.Exam" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAEAAAAAAAAAAAQAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAQACAAAgAAKAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Exam.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Pandora.NetStandard.Model.Entities.Grade" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAEAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entities\Grade.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Enum Name="NetCore.Model.Enums.ShiftTimeEnum" Collapsed="true">
-    <Position X="9" Y="1.5" Width="1.5" />
+  <Class Name="Pandora.NetStandard.Model.Entities.Person" Collapsed="true">
+    <Position X="6.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAECAAAAA=</HashCode>
-      <FileName>Enums\ShiftTimeEnum.cs</FileName>
+      <HashCode>AAAAAEAAACAAAIAAAAAAQAAAAAAAAAACAAAAAAAAAAg=</HashCode>
+      <FileName>Entities\Person.cs</FileName>
     </TypeIdentifier>
-  </Enum>
+  </Class>
+  <Class Name="Pandora.NetStandard.Model.Entities.Student" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAABAAAAIAAAAAAAAAAAAAAAAAAAAgCAA=</HashCode>
+      <FileName>Entities\Student.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Pandora.NetStandard.Model.Entities.Subject" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAECAAAAAAAAABAAAAAAAAQAAAACAAAAAAAAAAAgCAA=</HashCode>
+      <FileName>Entities\Subject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Pandora.NetStandard.Model.Entities.Teacher">
+    <Position X="5.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Teacher.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Pandora.NetStandard.Model.Entities.ClassRoom" Collapsed="true">
+    <Position X="13.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAgAAgAAgAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\ClassRoom.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pandora.NetStandard.Model.Entities.StudentState">
+    <Position X="13.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAQAAAAAAAAKAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\StudentState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pandora.NetStandard.Model.Entities.Attend" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAQAAAAAAAAKAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Entities\Attend.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

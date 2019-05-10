@@ -21,6 +21,8 @@ namespace Pandora.NetStandard.Model.Entities
         [ForeignKey("Grade")]
         public int GradeId { get; set; }
 
+        public virtual ClassRoom ClassRoom { get; set; }
+
         //[JsonIgnore]
         public virtual Grade Grade { get; set; }
 
