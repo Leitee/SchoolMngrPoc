@@ -22,6 +22,6 @@ export class MenuComponent implements OnInit {
     }
 
     onGradeSelect(grade: Grade): void {
-        this.router.navigate([`grade/${grade.id}`], {queryParams: grade});
+        this.router.navigate([`grade`], {queryParams: grade});
     }
 }

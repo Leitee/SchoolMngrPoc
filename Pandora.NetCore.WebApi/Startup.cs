@@ -39,11 +39,13 @@ namespace Pandora.NetCore.WebApi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            AppSettings = AppSettings.GetSettings(configuration);
         }
         /// <summary>
         /// 
         /// </summary>
         public IConfiguration Configuration { get; }
+        public AppSettings AppSettings { get; }
 
         /// <summary>
         /// This method gets called by the runtime. Use this method to add services to the container.
@@ -51,11 +53,6 @@ namespace Pandora.NetCore.WebApi
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            // configure strongly typed settings objects
-            IConfigurationSection appSettingsSection = Configuration.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingsSection);
-            var appSettings = appSettingsSection.Get<AppSettings>();
-
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -91,16 +88,16 @@ namespace Pandora.NetCore.WebApi
                         ValidateAudience = true,
                         ValidateIssuerSigningKey = true,
                         ValidateLifetime = true,
-                        ValidIssuer = appSettings.JwtValidIssuer,
-                        ValidAudience = appSettings.JwtValidAudience,
+                        ValidIssuer = AppSettings.JwtValidIssuer,
+                        ValidAudience = AppSettings.JwtValidAudience,
                         ClockSkew = TimeSpan.Zero,
                         IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(appSettings.JwtSecretKey))
+                            Encoding.UTF8.GetBytes(AppSettings.JwtSecretKey))
                     };
                 });
 
             //configure logger provider 
-            var elasticUrl = Configuration.GetSection("AppSettings").Get<AppSettings>().ElasticServerUrl;
+            var elasticUrl = AppSettings.ElasticServerUrl;
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .Enrich.WithExceptionDetails()
@@ -122,11 +119,12 @@ namespace Pandora.NetCore.WebApi
             services.AddScoped<IAccountSvc, AccountSvc>();
             services.AddScoped<IGradeSvc, GradeSvc>();
             services.AddScoped<IClassSvc, ClassSvc>();
+            services.AddScoped<IStudentSvc, StudentSvc>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new Info { Title = "NetCoreBackend API", Version = "v1" });
+                options.SwaggerDoc("v1", new Info { Title = "ShchoolMngr API", Version = ApiVersion.Default.ToString() });
 
                 // Get xml comments path
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -173,7 +171,9 @@ namespace Pandora.NetCore.WebApi
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "NetCoreBackend API V1");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1");
+                options.DefaultModelExpandDepth(0);
+                options.DefaultModelsExpandDepth(-1);
             });
 
             // global cors policy

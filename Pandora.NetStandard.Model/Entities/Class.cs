@@ -18,13 +18,12 @@ namespace Pandora.NetStandard.Model.Entities
 
         public virtual ShiftTimeEnum Shift { get; set; }
 
-        [ForeignKey("Grade")]
         public int GradeId { get; set; }
+        public virtual Grade Grade { get; set; }
 
         public virtual ClassRoom ClassRoom { get; set; }
 
         //[JsonIgnore]
-        public virtual Grade Grade { get; set; }
 
         public virtual IEnumerable<Student> Students { get; set; }
     }

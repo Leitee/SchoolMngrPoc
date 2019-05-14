@@ -22,18 +22,15 @@ namespace Pandora.NetCore.Identity
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            AppSettings = AppSettings.GetSettings(configuration);
         }
 
         public IConfiguration Configuration { get; }
+        public AppSettings AppSettings { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // configure strongly typed settings objects
-            IConfigurationSection appSettingsSection = Configuration.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingsSection);
-            var appSettings = appSettingsSection.Get<AppSettings>();
-
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowMyOrigin",
@@ -77,7 +74,7 @@ namespace Pandora.NetCore.Identity
                 .AddEntityFrameworkStores<IdentityDbContext>();
             //.AddDefaultUI(UIFramework.Bootstrap4)
 
-            services.AddDbContext<IdentityDbContext>(ctx => ctx.UseSqlServer(appSettings.ConnectionString));
+            services.AddDbContext<IdentityDbContext>(ctx => ctx.UseSqlServer(AppSettings.ConnectionString));
 
             services.AddScoped<ILogger, Logger<ApiBaseController>>();
             services.AddSingleton<IMapperCore, GenericMapperCore>();

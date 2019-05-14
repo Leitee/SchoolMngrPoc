@@ -2,10 +2,23 @@
 //     Changes to this file may cause incorrect behavior and will be lost if
 //     the code is regenerated.
 
+export enum AttendanceEnum { 
+	ATTEND = 1, 
+	MISS = 2, 
+	REASON = 3
+}
+export enum ExamTypeEnum { 
+	FIRST = 1, 
+	SECOND = 2, 
+	THIRD = 3, 
+	RETRY = 4, 
+	FINAL = 5
+}
 export enum RolesEnum { 
 	ADMINISTRADOR = 1, 
 	SUPERVISOR = 2, 
 	TEACHER = 3, 
+	STUDENT = 4, 
 	DEBUG = -1
 }
 export enum ShiftTimeEnum { 
@@ -13,12 +26,28 @@ export enum ShiftTimeEnum {
 	AFTERNOON = 2, 
 	NIGHT = 3
 }
+export enum SubjectStateEnum { 
+	SUBSCRIBED = 0, 
+	ACCOMPLISHED = 1, 
+	IN_PROGRESS = 2, 
+	ABANDONED = 3
+}
 export interface Class
 {
 	id: number;
 	name: string;
 	shift: ShiftTimeEnum;
 	grade: Grade;
+}
+export interface Exam
+{
+	id: number;
+	examType: ExamTypeEnum;
+	score: number;
+	date?: any;
+	obs: string;
+	student: any;
+	subject: any;
 }
 export interface Grade
 {
@@ -34,8 +63,8 @@ export interface Login
 export interface Register extends Login
 {
 	email: string;
-	firstname: string;
-	lastname: string;
+	firstName: string;
+	lastName: string;
 	confirm: string;
 }
 export interface Role
@@ -43,6 +72,32 @@ export interface Role
 	id: number;
 	name: string;
 	description: string;
+}
+export interface Student
+{
+	id: number;
+	firstName: string;
+	lastName: string;
+	email: string;
+	phoneNumber: string;
+	fullName: string;
+	class: any;
+}
+export interface Subject
+{
+	id: number;
+	name: string;
+	teacher: any;
+}
+export interface Teacher
+{
+	id: number;
+	firstName: string;
+	lastName: string;
+	email: string;
+	phoneNumber: string;
+	fullName: string;
+	subjects: any[];
 }
 export interface LoginResp
 {

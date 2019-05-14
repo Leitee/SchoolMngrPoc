@@ -16,8 +16,9 @@ namespace Pandora.NetStandard.Model.Entities
         public virtual float Score { get; set; }
         public virtual DateTime? Date { get; set; }
         public virtual string Obs { get; set; }
-
+        [Required]
         public virtual Student Student { get; set; }
+        [Required]
         public virtual Subject Subject { get; set; }
 
     }

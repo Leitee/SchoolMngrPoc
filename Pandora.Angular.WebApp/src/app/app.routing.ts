@@ -1,6 +1,6 @@
 ﻿import { AuthGuard } from '@/_commons';
 import { RolesEnum } from '@/_models';
-import { AdminComponent, HomeComponent, GradeComponent } from '@/_pages';
+import { AdminComponent, HomeComponent, GradeComponent, ClassComponent } from '@/_pages';
 import { RouterModule, Routes } from '@angular/router';
 
 const appRoutes: Routes = [
@@ -16,8 +16,13 @@ const appRoutes: Routes = [
         data: { roles: [RolesEnum.DEBUG, RolesEnum.ADMINISTRADOR] }
     },
     {
-        path: 'grade/:id',
+        path: 'grade',
         component: GradeComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'class',
+        component: ClassComponent,
         canActivate: [AuthGuard]
     },
     {

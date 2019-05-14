@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Pandora.NetStandard.Model.Dtos
 {
     [TsInterface(AutoI = false, Name = "Student")]
-    public class StudentDto : Student
+    public sealed class StudentDto : Student
     {
         public override int Id { get => base.Id; set => base.Id = value; }
         [MaxLength(50), Display(Name = "First Name")]

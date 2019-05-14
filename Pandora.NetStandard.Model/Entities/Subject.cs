@@ -12,6 +12,7 @@ namespace Pandora.NetStandard.Model.Entities
         [Required]
         public virtual string Name { get; set; }
         public virtual IEnumerable<Subject> PreReqSubjects { get; set; }
+        public virtual int TeacherId { get; set; }
         public virtual Teacher Teacher { get; set; }
         public virtual IEnumerable<StudentState> SubjectStates { get; set; }
 

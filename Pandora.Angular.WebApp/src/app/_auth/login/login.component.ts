@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
     loading = false;
     submitted = false;
     returnUrl: string;
+    hidePassword = true;
     error = '';
 
     constructor(
@@ -29,7 +30,8 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
-            password: ['', Validators.required]
+            password: ['', Validators.required],
+            rememberme: [false]
         });
 
         // get return url from route parameters or default to '/'
@@ -47,7 +49,7 @@ export class LoginComponent implements OnInit {
             return;
         }
 
-        let loginObj: Login = { username: this.f.username.value, password: this.f.password.value, rememberMe: false }
+        let loginObj: Login = { username: this.f.username.value, password: this.f.password.value, rememberMe: this.f.rememberme.value }
 
         this.loading = true;
         this.authenticationService.login(loginObj)

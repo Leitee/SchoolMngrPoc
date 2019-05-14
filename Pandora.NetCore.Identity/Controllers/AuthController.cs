@@ -19,6 +19,13 @@ namespace Pandora.NetCore.Identity.Controllers
             _authSvc = authSvc;
         }
 
+        [HttpGet]
+        public ActionResult Test()
+        {
+            return Ok("AuthServer Working...");
+        }
+
+
         [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginDto model)

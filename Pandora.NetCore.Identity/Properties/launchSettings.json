@@ -7,7 +7,7 @@
       "sslPort": 0
     },
     "iisExpress": {
-      "applicationUrl": "http://localhost:5010",
+      "applicationUrl": "http://localhost:65432",
       "sslPort": 44366
     }
   },
@@ -30,11 +30,7 @@
     },
     "Docker": {
       "commandName": "Docker",
-      "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/auth/v1/auth",
-      "httpPort": 50303,
-      "useSSL": true,
-      "sslPort": 44367
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/auth/v1/auth"
     }
   }
 }

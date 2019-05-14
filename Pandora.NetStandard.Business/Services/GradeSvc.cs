@@ -28,7 +28,7 @@ namespace Pandora.NetStandard.Business.Services
                 var entity = await _uow.GetRepo<Grade>().InsertAsync(pDto);
                 if (!await _uow.CommitAsync())
                 {
-                    HandleSVCException(response, "New Grade creation failed.");
+                    HandleSVCException(response, "This action couldn't be performed.");
                 }
                 response.Data = _mapper.MapEntity(entity);
 
@@ -55,7 +55,7 @@ namespace Pandora.NetStandard.Business.Services
                 }
                 else
                 {
-                    HandleSVCException(response, "This grade was not deleted.");
+                    HandleSVCException(response, "This action couldn't be performed.");
                 }
             }
             catch (Exception ex)

@@ -8,6 +8,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ClassComponent } from './_pages/class/class.component';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         AppComponent,
         HomeComponent,
         AdminComponent,
-        GradeComponent
+        GradeComponent,
+        ClassComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

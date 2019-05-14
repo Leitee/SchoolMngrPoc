@@ -1,4 +1,5 @@
 ﻿using Pandora.NetStandard.Model.Enums;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,6 +11,9 @@ namespace Pandora.NetStandard.Model.Entities
         public virtual int Id { get; set; }
         [Required]
         public virtual SubjectStateEnum AcademicState { get; set; }
+        [Required]
+        public DateTime DateFrom { get; set; }
+        public DateTime? DateTo { get; set; }
         [Required]
         public virtual Student Student { get; set; }
         [Required]

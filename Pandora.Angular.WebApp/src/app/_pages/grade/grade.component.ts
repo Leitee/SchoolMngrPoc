@@ -1,10 +1,11 @@
-import { Class, Grade, ShiftTimeEnum } from '@/_models';
+import { Class, Grade } from '@/_models';
 import { SchoolService } from '@/_services';
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { Component, OnInit } from "@angular/core";
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { Utils } from "@/_commons";
 
 @Component({
     templateUrl: './grade.component.html',
@@ -46,14 +47,8 @@ export class GradeComponent implements OnInit {
                 this.classListSource = this.schoolSvc.getClassesByGradeId(gr.id);
             });
     }
-
-    private getShiftEnumName(shift: ShiftTimeEnum){
-        if(shift == ShiftTimeEnum.TOMORROW)
-            return "Mañana";
-        else if (shift == ShiftTimeEnum.AFTERNOON)
-            return "Tarde";
-        else
-            return "Noche";
+    
+    public get util() {
+        return Utils;
     }
-
 }

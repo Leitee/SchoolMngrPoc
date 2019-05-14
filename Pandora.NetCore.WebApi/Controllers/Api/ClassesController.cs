@@ -34,14 +34,14 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetClass(int id)
+        public async Task<IActionResult> Get(int id)
         {
             var response = await _classSvc.GetByIdAsync(id);
             return response.ToHttpResponse();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutClass([FromBody] ClassDto pClass, int pId)
+        public async Task<IActionResult> Put([FromBody] ClassDto pClass, int pId)
         {
             if (pId != pClass.Id)
             {
@@ -53,19 +53,19 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
         }
 
         [HttpPost()]
-        public async Task<IActionResult> PostClass([FromBody] ClassDto pClass)
+        public async Task<IActionResult> Post([FromBody] ClassDto pClass)
         {
             if (ModelState.IsValid)
             {
                 var response = await _classSvc.CreateAsync(pClass);
-                return CreatedAtAction(nameof(GetClass), new { pClass.Id }, response.Data);//return 201 created and its data entity 
+                return CreatedAtAction(nameof(Get), new { pClass.Id }, response.Data);//return 201 created and its data entity 
             }
 
             return BadRequest(ModelState);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteClass(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var resul = await _classSvc.GetByIdAsync(id);
             if (resul == null)

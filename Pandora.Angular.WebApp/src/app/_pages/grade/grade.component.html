@@ -1,11 +1,11 @@
 <app-content-wrapper headerTitle="{{grade.name}} Grado">
   <mat-grid-list cols="3" rowHeight="250px">
     <mat-grid-tile *ngFor="let class of classListSource | async" [colspan]="1" [rowspan]="1">
-      <a [routerLink]="[ '/' ]" [queryParams]="class">
+      <a [routerLink]="[ '/class' ]" [queryParams]="class">
         <mat-card router class="dashboard-card">
           <mat-card-header>
             <mat-card-title>
-              {{class.name}} División - Turno {{getShiftEnumName(class.shift)}}
+              {{class.name}} División - Turno {{util.getShiftEnumName(class.shift)}}
               <!-- <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
                 <mat-icon>more_vert</mat-icon>
               </button> -->

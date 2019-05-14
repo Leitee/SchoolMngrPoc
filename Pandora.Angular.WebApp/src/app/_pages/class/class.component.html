@@ -1,0 +1,33 @@
+<app-content-wrapper headerTitle="{{class.name}} División - Turno {{util.getShiftEnumName(class.shift)}}">
+  <mat-accordion class="example-headers-align">
+    
+    <mat-expansion-panel *ngFor="let stud of students; let i=index">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Legajo
+        </mat-panel-title>
+        <mat-panel-description>
+          Nombre Appelido
+          <mat-icon>account_circle</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <mat-form-field>
+        <input type="number" matInput placeholder="Primer Parcial">
+      </mat-form-field>
+  
+      <mat-form-field>
+          <input type="number" matInput placeholder="Segundo Parcial">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input type="number" matInput placeholder="Tercer Parcial">
+          </mat-form-field>
+
+          <mat-action-row>
+              <button mat-raised-button color="primary"  hideToggle>Guardar</button>
+            </mat-action-row>
+    </mat-expansion-panel>
+  
+  </mat-accordion>
+</app-content-wrapper>

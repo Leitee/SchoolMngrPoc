@@ -1,11 +1,37 @@
 version: '3.4'
 
 services:
+  pandora.netcore.identity:
+    image: ${DOCKER_REGISTRY-}pandoranetcoreidentity
+    container_name: pandoranetcoreidentity
+    build:
+      context: .
+      dockerfile: ../Pandora.NetCore.Identity/Dockerfile
+    depends_on:
+      - mssqlserver
+      - elasticsearch
+
   pandora.netcore.webapi:
     image: ${DOCKER_REGISTRY-}pandoranetcorewebapi
+    container_name: pandoranetcorewebapi
     build:
       context: .
       dockerfile: ../Pandora.NetCore.WebApi/Dockerfile
+    depends_on:
+      - mssqlserver
+      - elasticsearch
+
+  mssqlserver:
+    image: mcr.microsoft.com/mssql/server:latest
+    container_name: mssqlserver
+    environment:
+      SA_PASSWORD: "Devadmin321"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "5433:1433"
+    volumes:
+      - mssqlserver-data:/var/opt/mssql
+    
 
   elasticsearch:
      image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
@@ -18,18 +44,19 @@ services:
       - docker-network
 
   kibana:
-   image: docker.elastic.co/kibana/kibana:6.2.4
-   container_name: kibana
-   ports:
-    - "5601:5601"
-   depends_on:
-    - elasticsearch
-   networks:
-    - docker-network
+     image: docker.elastic.co/kibana/kibana:6.2.4
+     container_name: kibana
+     ports:
+      - "5601:5601"
+     depends_on:
+      - elasticsearch
+     networks:
+      - docker-network
 
 networks:
   docker-network:
     driver: bridge
 
 volumes:
+  mssqlserver-data:
   elasticsearch-data:

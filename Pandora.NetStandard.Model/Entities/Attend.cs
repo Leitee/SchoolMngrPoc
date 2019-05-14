@@ -15,8 +15,9 @@ namespace Pandora.NetStandard.Model.Entities
         [Required]
         public virtual DateTime Date { get; set; }
         public virtual string Obs { get; set; }
-
+        [Required]
         public virtual Student Student { get; set; }
+        [Required]
         public virtual Subject Subject { get; set; }
 
     }
