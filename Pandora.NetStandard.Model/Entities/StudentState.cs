@@ -1,4 +1,5 @@
-﻿using Pandora.NetStandard.Model.Enums;
+﻿using Pandora.NetStandard.Core.Interfaces;
+using Pandora.NetStandard.Model.Enums;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,11 +7,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pandora.NetStandard.Model.Entities
 {
     [Table("StudentStates", Schema = "School")]
-    public class StudentState
+    public class StudentState : IEntity
     {
         public virtual int Id { get; set; }
         [Required]
-        public virtual SubjectStateEnum AcademicState { get; set; }
+        public virtual StudentStateEnum AcademicState { get; set; }
         [Required]
         public DateTime DateFrom { get; set; }
         public DateTime? DateTo { get; set; }

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Business.Services.Contracts
 {
-    public interface ISubjectSvc : IBasicCrudOperations<SubjectDto>
+    public interface IStudentStateSvc : IBasicCrudOperations<StudentStateDto>
     {
-        Task<BLSingleResponse<bool>> EnrollStudent(SubjectDto subjectDto, StudentDto studentDto);
+        Task<BLSingleResponse<StudentStateDto>> GetLastValidStateAsync(StudentDto studentDto, SubjectDto subjectDto);
     }
 }

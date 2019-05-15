@@ -18,5 +18,12 @@ namespace Pandora.NetStandard.Model.Entities
 
         public virtual IEnumerable<Attend> Attends { get; set; }
         public virtual IEnumerable<Exam> Exams { get; set; }
+
+        #region subject constrains
+
+        public static int MaxAttendenceAllowed { get { return 2; } }
+        public static int MinExamScoreRequired { get { return 6; } }
+
+        #endregion
     }
 }

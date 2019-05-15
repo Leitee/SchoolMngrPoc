@@ -20,6 +20,6 @@ namespace Pandora.NetStandard.Model.Dtos
         [Display(Name = "Full Name")]
         public override string FullName => base.FullName;
 
-        public override Class Class { get => base.Class; set => base.Class = value; }
+        public StudentState StudentState { get; set; }
     }
 }

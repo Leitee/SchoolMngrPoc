@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Pandora.NetStandard.Core.Bases;
+using Pandora.NetStandard.Core.Config;
 using Pandora.NetStandard.Core.Identity;
 using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Entities;
@@ -13,11 +15,12 @@ namespace Pandora.NetStandard.Data.Dals
 {
     public class SchoolDbContext : ApplicationDbContext
     {
-        protected readonly IConfiguration _config;//TODO: to see...
+        protected readonly AppSettings _appSettings;//TODO: to see...
 
-        public SchoolDbContext(IConfiguration config, DbContextOptions options) : base(options)
+        public SchoolDbContext(IConfiguration config, DbContextOptions options, bool isTestInstance = false) : base(options)
         {
-            _config = config ?? throw new ArgumentNullException(nameof(config));
+            if(!isTestInstance)
+                _appSettings = AppSettings.GetSettings(config ?? throw new ArgumentNullException(nameof(config)));
         }
 
         public DbSet<Grade> Grades { get; set; }
@@ -33,7 +36,7 @@ namespace Pandora.NetStandard.Data.Dals
             //optionsBuilder.UseSqlite("Filename = ./schoolDB.db");
             optionsBuilder.EnableDetailedErrors(true);
             optionsBuilder.EnableSensitiveDataLogging(true);
-            optionsBuilder.UseSqlServer(_config["AppSettings:ConnectionString"], options =>
+            optionsBuilder.UseSqlServer(_appSettings.ConnectionString, options =>
             {
                 options.MigrationsHistoryTable("Migrations", "EFwk");
             });

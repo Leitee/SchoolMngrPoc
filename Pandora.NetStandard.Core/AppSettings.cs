@@ -4,6 +4,7 @@ namespace Pandora.NetStandard.Core.Config
 {
     public class AppSettings
     {
+        public string Environment { get; set; }
         public string ConnectionString { get; set; }
         public string JwtSecretKey { get; set; }
         public string JwtValidIssuer { get; set; }

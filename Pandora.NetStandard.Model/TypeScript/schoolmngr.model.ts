@@ -26,11 +26,11 @@ declare enum ShiftTimeEnum {
 	AFTERNOON = 2, 
 	NIGHT = 3
 }
-declare enum SubjectStateEnum { 
-	SUBSCRIBED = 0, 
-	ACCOMPLISHED = 1, 
-	IN_PROGRESS = 2, 
-	ABANDONED = 3
+declare enum StudentStateEnum { 
+	ENROLLED = 0, 
+	ACTIVE = 1, 
+	INACTIVE = 2, 
+	ACHIEVED = 3
 }
 export interface Class
 {
@@ -43,7 +43,7 @@ export interface Exam
 {
 	id: number;
 	examType: ExamTypeEnum;
-	score: number;
+	score?: number;
 	date?: any;
 	obs: string;
 	student: any;
@@ -81,7 +81,7 @@ export interface Student
 	email: string;
 	phoneNumber: string;
 	fullName: string;
-	class: any;
+	studentState: any;
 }
 export interface Subject
 {

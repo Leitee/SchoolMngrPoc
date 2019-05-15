@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Pandora.NetStandard.Business.Mappers;
 using Pandora.NetStandard.Business.Services.Contracts;
+using Pandora.NetStandard.Business.States;
 using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Model.Dtos;
@@ -13,21 +14,23 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Business.Services
 {
-    public class StudentSvc : BaseService<Student, StudentDto>, IStudentSvc
+    public class SubjectSvc : BaseService<Subject, SubjectDto>, ISubjectSvc
     {
-        public StudentSvc(IApplicationUow applicationUow, ILogger<StudentSvc> logger)
-            : base(applicationUow, logger, new StudentToDtoMapper())
+        private readonly IStudentStateSvc _studentStateSvc;
+        public SubjectSvc(IApplicationUow applicationUow, ILogger<SubjectSvc> logger,
+            IStudentStateSvc studentStateSvc)
+            : base(applicationUow, logger, new SubjectToDtoMapper())
         {
-
+            _studentStateSvc = studentStateSvc;
         }
 
-        public async Task<BLSingleResponse<StudentDto>> CreateAsync(StudentDto pDto)
+        public async Task<BLSingleResponse<SubjectDto>> CreateAsync(SubjectDto pDto)
         {
-            var response = new BLSingleResponse<StudentDto>();
+            var response = new BLSingleResponse<SubjectDto>();
 
             try
             {
-                var entityResult = await _uow.GetRepo<Student>().InsertAsync(pDto);
+                var entityResult = await _uow.GetRepo<Subject>().InsertAsync(pDto);
                 if (await _uow.CommitAsync())
                 {
                     response.Data = _mapper.MapEntity(entityResult);
@@ -45,40 +48,23 @@ namespace Pandora.NetStandard.Business.Services
             return response;
         }
 
-        public Task<BLSingleResponse<bool>> DeleteAsync(StudentDto pDto)
+        public async Task<BLSingleResponse<bool>> DeleteAsync(SubjectDto pDto)
         {
             throw new NotImplementedException();
         }
 
-        public Task<BLListResponse<StudentDto>> GetAllAsync()
+        public async Task<BLListResponse<SubjectDto>> GetAllAsync()
         {
             throw new NotImplementedException();
         }
 
-        public async Task<BLListResponse<StudentDto>> GetAllExamsResultsByClass(int pClassId)
-        {
-            var response = new BLListResponse<StudentDto>();
-
-            try
-            {
-                var entityReult = await _uow.GetRepo<Student>().AllAsync(null, null, s => s.SubjectStates.Any(st => st.AcademicState == StudentStateEnum.ACTIVE));
-                response.Data = _mapper.MapEntity(entityReult);
-            }
-            catch (Exception ex)
-            {
-                HandleSVCException(response, ex);
-            }
-
-            return response;
-        }
-
-        public async Task<BLSingleResponse<bool>> SaveStudentExams(StudentDto pStudent)
+        public async Task<BLSingleResponse<bool>> SaveSubjectExams(SubjectDto pSubject)
         {
             var response = new BLSingleResponse<bool>();
 
             try
             {
-                await _uow.GetRepo<Student>().UpdateAsync(pStudent);
+                await _uow.GetRepo<Subject>().UpdateAsync(pSubject);
                 if (await _uow.CommitAsync())
                 {
                     response.Data = true;
@@ -96,13 +82,13 @@ namespace Pandora.NetStandard.Business.Services
             return response;
         }
 
-        public async Task<BLSingleResponse<StudentDto>> GetByIdAsync(int pId)
+        public async Task<BLSingleResponse<SubjectDto>> GetByIdAsync(int pId)
         {
-            var response = new BLSingleResponse<StudentDto>();
+            var response = new BLSingleResponse<SubjectDto>();
 
             try
             {
-                var entityResult = await _uow.GetRepo<Student>().FindAsync(s => s.Id == pId, s => s.Class);
+                var entityResult = await _uow.GetRepo<Subject>().GetByIdAsync(pId);
                 response.Data = _mapper.MapEntity(entityResult);
             }
             catch (Exception ex)
@@ -113,9 +99,26 @@ namespace Pandora.NetStandard.Business.Services
             return response;
         }
 
-        public Task<BLSingleResponse<bool>> UpdateAsync(StudentDto pDto)
+        public async Task<BLSingleResponse<bool>> UpdateAsync(SubjectDto pDto)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<BLSingleResponse<bool>> EnrollStudent(SubjectDto subjectDto, StudentDto studentDto)
+        {
+            var response = new BLSingleResponse<bool>();
+
+            try
+            {
+                StateManager stateManager = await StateManager.GetStateManagerAsync(_studentStateSvc, studentDto, subjectDto);
+                response.Data = await stateManager.EnrollAsync(studentDto, subjectDto);
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
+
+            return response;
         }
     }
 }

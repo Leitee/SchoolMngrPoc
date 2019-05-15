@@ -1,5 +1,4 @@
 ﻿using Pandora.NetStandard.Core.Interfaces.Identity;
-using System;
 using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Core.Interfaces

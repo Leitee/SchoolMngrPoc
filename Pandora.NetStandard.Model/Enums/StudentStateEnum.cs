@@ -4,15 +4,15 @@ using System.ComponentModel;
 namespace Pandora.NetStandard.Model.Enums
 {
     [TsEnum]
-    public enum SubjectStateEnum
+    public enum StudentStateEnum
     {
         [Description("Matriculado")]
-        SUBSCRIBED,
-        [Description("Aprobado")]
-        ACCOMPLISHED,
+        ENROLLED,
         [Description("Regular")]
-        IN_PROGRESS,
+        ACTIVE,
         [Description("Irregular")]
-        ABANDONED
+        INACTIVE,
+        [Description("Aprobado")]
+        ACHIEVED
     }
 }

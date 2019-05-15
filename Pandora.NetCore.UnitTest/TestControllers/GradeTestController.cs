@@ -7,7 +7,7 @@ using Pandora.NetStandard.Model.Dtos;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Pandora.NetCore.UnitTest.TestController
+namespace Pandora.NetCore.UnitTest.TestControllers
 {
     public class GradeTestController : IClassFixture<TestDbContextMocker>
     {

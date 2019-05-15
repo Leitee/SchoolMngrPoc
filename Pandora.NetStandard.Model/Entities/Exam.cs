@@ -13,7 +13,7 @@ namespace Pandora.NetStandard.Model.Entities
         [Required]
         public virtual ExamTypeEnum ExamType { get; set; }
         [Required]
-        public virtual float Score { get; set; }
+        public virtual float? Score { get; set; }
         public virtual DateTime? Date { get; set; }
         public virtual string Obs { get; set; }
         [Required]
