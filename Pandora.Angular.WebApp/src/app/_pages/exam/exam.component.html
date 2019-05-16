@@ -1,13 +1,13 @@
 <app-content-wrapper headerTitle="{{class.name}} División - Turno {{util.getShiftEnumName(class.shift)}}">
   <mat-accordion class="example-headers-align">
     
-    <mat-expansion-panel *ngFor="let stud of students; let i=index">
+    <mat-expansion-panel *ngFor="let stud of studentListSource | async; let i=index">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Legajo
+          Legajo - Nombre Apellido
         </mat-panel-title>
         <mat-panel-description>
-          Nombre Appelido
+          Descripcion del alumno
           <mat-icon>account_circle</mat-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>

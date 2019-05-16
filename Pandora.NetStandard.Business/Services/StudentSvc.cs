@@ -27,13 +27,13 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                Student studentEntity = pDto;
-                studentEntity.SubjectStates = new List<StudentState> { new StudentState() {
-                    DateFrom = DateTime.Now,
-                    AcademicState = SubjectStateEnum.SUBSCRIBED,
-                    Student = studentEntity,
-                } };
-                var entityResult = await _uow.GetRepo<Student>().InsertAsync(studentEntity);
+                //Student studentEntity = pDto;
+                //studentEntity.SubjectStates = new List<StudentState> { new StudentState() {
+                //    DateFrom = DateTime.Now,
+                //    AcademicState = SubjectStateEnum.SUBSCRIBED,
+                //    Student = studentEntity,
+                //} };
+                var entityResult = await _uow.GetRepo<Student>().InsertAsync(pDto);
                 if (await _uow.CommitAsync())
                 {
                     response.Data = _mapper.MapEntity(entityResult);
@@ -122,6 +122,23 @@ namespace Pandora.NetStandard.Business.Services
         public Task<BLSingleResponse<bool>> UpdateAsync(StudentDto pDto)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<BLListResponse<StudentDto>> GetStudentsByClassId(int pClassId)
+        {
+            var response = new BLListResponse<StudentDto>();
+
+            try
+            {
+                var entityResult = await _uow.GetRepo<Student>().AllAsync(s => s.ClassId == pClassId, null, s => s.SubjectStates);
+                response.Data = _mapper.MapEntity(entityResult);
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
+
+            return response;
         }
     }
 }

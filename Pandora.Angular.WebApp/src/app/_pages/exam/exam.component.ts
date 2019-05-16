@@ -4,30 +4,31 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { SchoolService } from '@/_services';
 import { ActivatedRoute } from '@angular/router';
 import { Utils } from '@/_commons';
+import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-class',
-  templateUrl: './class.component.html',
+  selector: 'app-exam',
+  templateUrl: './exam.component.html',
   styleUrls: ['../pages.component.scss'],
   providers: [SchoolService]
 })
-export class ClassComponent implements OnInit {
+export class ExamComponent implements OnInit {
 
-  students = [{},{},{},{}];
+  studentListSource: Observable<Array<Student>>;
   class: Class;
 
   constructor(private breakpointObserver: BreakpointObserver, private schoolSvc: SchoolService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.queryParams
-        .subscribe((cl: Class) => {
-            this.class = cl;
-            //this.classListSource = this.schoolSvc.getClassesByGradeId(cl.id);
-        });
-}
+      .subscribe((cl: Class) => {
+        this.class = cl;
+        this.studentListSource = this.schoolSvc.getStudentsByClassId(cl.id);
+      });
+  }
 
-public get util() {
-  return Utils;
-}
+  public get util() {
+    return Utils;
+  }
 
 }
