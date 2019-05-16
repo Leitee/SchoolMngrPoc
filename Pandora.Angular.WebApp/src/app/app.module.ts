@@ -2,13 +2,12 @@
 import { routing } from '@/app.routing';
 import { SharedModule } from '@/shared.module';
 import { ErrorInterceptor, JwtInterceptor } from '@/_commons';
-import { AdminComponent, HomeComponent, GradeComponent } from '@/_pages';
+import { AdminComponent, HomeComponent, GradeComponent, ExamComponent } from '@/_pages';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ClassComponent } from './_pages/class/class.component';
 
 @NgModule({
     imports: [
@@ -24,7 +23,7 @@ import { ClassComponent } from './_pages/class/class.component';
         HomeComponent,
         AdminComponent,
         GradeComponent,
-        ClassComponent
+        ExamComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

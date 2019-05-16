@@ -9,5 +9,6 @@ namespace Pandora.NetStandard.Business.Services.Contracts
     {
         Task<BLListResponse<StudentDto>> GetAllExamsResultsByClass(int pClassId);
         Task<BLSingleResponse<bool>> SaveStudentExams(StudentDto pStudent);
+        Task<BLListResponse<StudentDto>> GetStudentsByClassId(int pClassId);
     }
 }

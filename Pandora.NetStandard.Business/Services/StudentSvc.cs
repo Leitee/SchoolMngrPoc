@@ -117,5 +117,22 @@ namespace Pandora.NetStandard.Business.Services
         {
             throw new NotImplementedException();
         }
+
+        public async Task<BLListResponse<StudentDto>> GetStudentsByClassId(int pClassId)
+        {
+            var response = new BLListResponse<StudentDto>();
+
+            try
+            {
+                var entityResult = await _uow.GetRepo<Student>().AllAsync(s => s.ClassId == pClassId, null, s => s.SubjectStates);
+                response.Data = _mapper.MapEntity(entityResult);
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
+
+            return response;
+        }
     }
 }

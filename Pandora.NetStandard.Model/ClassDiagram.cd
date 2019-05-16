@@ -8,8 +8,8 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Pandora.NetStandard.Model.Entities.Exam" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="10" Y="2.5" Width="1.5" />
+  <Class Name="Pandora.NetStandard.Model.Entities.Exam" BaseTypeListCollapsed="true">
+    <Position X="9.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAQACAAAgAAKAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>Entities\Exam.cs</FileName>
@@ -34,15 +34,15 @@
   <Class Name="Pandora.NetStandard.Model.Entities.Student" BaseTypeListCollapsed="true">
     <Position X="7.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAABAAAAIAAAAAAAAAAAAAAAAAAAAgCAA=</HashCode>
+      <HashCode>AAACAAAgAAAAABAAAAIAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entities\Student.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Pandora.NetStandard.Model.Entities.Subject" BaseTypeListCollapsed="true">
-    <Position X="10" Y="3.5" Width="1.5" />
+  <Class Name="Pandora.NetStandard.Model.Entities.Subject" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAECAAAAAAAAABAAAAAAAAQAAAACAAAAAAAAAAAgCAA=</HashCode>
+      <HashCode>AAECAAAAAAAAABAAAAAACAQAAAACAAAAAAAAAAAgCAA=</HashCode>
       <FileName>Entities\Subject.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -63,14 +63,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Pandora.NetStandard.Model.Entities.StudentState">
-    <Position X="13.5" Y="2.5" Width="1.5" />
+    <Position X="11.75" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAQAAAAAAAAKAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAQAAAAAAAAKAAAAAAACAAABAAAAAAAAAEAAA=</HashCode>
       <FileName>Entities\StudentState.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Pandora.NetStandard.Model.Entities.Attend" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="10" Y="1.5" Width="1.5" />
+  <Class Name="Pandora.NetStandard.Model.Entities.Attend" BaseTypeListCollapsed="true">
+    <Position X="9.75" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAEAAQAAAAAAAAKAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
       <FileName>Entities\Attend.cs</FileName>

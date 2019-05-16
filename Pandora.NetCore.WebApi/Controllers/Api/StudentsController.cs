@@ -36,10 +36,17 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
             if (ModelState.IsValid)
             {
                 var response = await _studentSvc.CreateAsync(pStudent);
-                return CreatedAtAction("getStudent", new { pStudent.Id }, response.Data);//return 201 created and its data entity 
+                return response.ToHttpResponse();
             }
 
             return BadRequest(ModelState);
+        }
+
+        [HttpGet("GetByClass/{id}")]
+        public async Task<IActionResult> GetByGrade(int id)
+        {
+            var response = await _studentSvc.GetStudentsByClassId(id);
+            return response.ToHttpResponse();
         }
     }
 }

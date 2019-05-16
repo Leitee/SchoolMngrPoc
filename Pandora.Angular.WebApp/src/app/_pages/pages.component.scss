@@ -4,7 +4,7 @@ mat-card-header {
 
 mat-card-content {
     text-align: -webkit-center;
-    height: 150px;
+    height: 100px;
 }
 
 .example-headers-align .mat-expansion-panel-header-title,
@@ -19,4 +19,12 @@ mat-card-content {
 
 mat-form-field {
   margin-right: 12px;
+}
+
+mat-card-actions {
+  border-top: solid 1px green;
+  button{
+    width: 50%;
+    margin: 0px;
+  }
 }
