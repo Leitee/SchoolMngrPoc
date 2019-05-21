@@ -34,7 +34,7 @@ namespace Pandora.NetStandard.Business.Services
         {
             _accountManager = signInManager;
             _mapper = mapper;
-            _settings = config.GetSection("AppSettings").Get<AppSettings>();
+            _settings = AppSettings.GetSettings(config);
         }
 
         #region Auth

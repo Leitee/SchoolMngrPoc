@@ -2,7 +2,7 @@
 
 namespace Pandora.NetStandard.Model.Entities
 {
-    public class Person
+    public abstract class Person
     {
         [Required, MaxLength(100)]
         public virtual string FirstName { get; set; }

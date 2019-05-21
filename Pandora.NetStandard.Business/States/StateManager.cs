@@ -1,6 +1,9 @@
 ﻿using Pandora.NetStandard.Business.Services.Contracts;
+using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Model.Dtos;
 using Pandora.NetStandard.Model.Enums;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Business.States
@@ -14,9 +17,9 @@ namespace Pandora.NetStandard.Business.States
             _studentStateSvc = studentStateSvc;
         }
 
-        public async static Task<StateManager> GetStateManagerAsync(IStudentStateSvc studentStateSvc, StudentDto studentDto, SubjectDto subjectDto)
+        public async static Task<StateManager> GetStateManagerAsync(IStudentStateSvc studentStateSvc, int studentId, int subjectId)
         {
-            var validState = studentDto.StudentState ?? (await studentStateSvc.GetLastValidStateAsync(studentDto, subjectDto)).Data;
+            var validState = (await studentStateSvc.GetLastValidStateAsync(studentId, subjectId)).Data;
 
             switch (validState?.AcademicState)
             {
@@ -33,8 +36,18 @@ namespace Pandora.NetStandard.Business.States
             }
         }
 
-        public abstract Task<bool> EnrollAsync(StudentDto studentDto, SubjectDto subjectDto);
-        public abstract Task<bool> TakeAnExamAsync(StudentDto studentDto, SubjectDto subjectDto);
+        public abstract Task<bool> EnrollStudentAsync(StudentDto studentDto, SubjectDto subjectDto);
+        public abstract Task<bool> SaveExamsResultAsync(IList<ExamDto> examDtos);
         public abstract Task<bool> StoreAttendenceAsync(StudentDto studentDto, SubjectDto subjectDto);
+
+        protected virtual bool StateManagerResponseHandler(BLResponse bLResponse)
+        {
+            if(bLResponse == null)
+                throw new StateManagerException("Null Result Exception");
+            else if (bLResponse.HasError)
+                throw new StateManagerException(string.Concat(bLResponse.Errors.ToArray()));
+            else
+                return true;
+        }
     }
 }

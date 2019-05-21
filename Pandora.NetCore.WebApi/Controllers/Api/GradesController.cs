@@ -54,7 +54,13 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
         [HttpPut("{id}")]
         public async Task<IActionResult> Put([FromBody] GradeDto pGrade, int pId)
         {
-            return NoContent();
+            if (ModelState.IsValid && pGrade.Id == pId)
+            {
+                var response = await _gradeSvc.UpdateAsync(pGrade);
+                return response.ToHttpResponse();
+            }
+
+            return BadRequest(ModelState);
         }
 
         // DELETE api/v1/grades/5

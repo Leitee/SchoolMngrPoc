@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Model.Dtos;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Pandora.NetCore.WebApi.Controllers.Api
@@ -41,12 +42,24 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
             return BadRequest(ModelState);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> EnrollStudent([FromBody] SubjectDto subjectDto, [FromBody] StudentDto studentDto)
+        [HttpPut("{subjectId}/EnrollStudent")]
+        public async Task<IActionResult> EnrollStudent(StudentDto studentDto, int subjectId)
         {
             if (ModelState.IsValid)
             {
-                var response = await _subjectSvc.EnrollStudent(subjectDto, studentDto);
+                var response = await _subjectSvc.EnrollStudentAsync(studentDto, subjectId);
+                return response.ToHttpResponse();
+            }
+
+            return BadRequest(ModelState);
+        }
+
+        [HttpPut("{subjectId}/SaveExams")]
+        public async Task<IActionResult> SaveExams(IList<ExamDto> examDtos, int subjectId)
+        {
+            if (ModelState.IsValid && examDtos[0].SubjectId == subjectId)
+            {
+                var response = await _subjectSvc.SaveExamResultAsync(examDtos);
                 return response.ToHttpResponse();
             }
 

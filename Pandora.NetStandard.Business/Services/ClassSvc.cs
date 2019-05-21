@@ -76,7 +76,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entity = await _uow.GetRepo<Class>().AllAsync(null, o => o.OrderBy(g => g.GradeId), g => g.Grade);
+                var entity = await _uow.GetRepo<Class>().AllAsync(null, o => o.OrderBy(g => g.GradeId),  null);
                 response.Data = _mapper.MapEntity(entity);
             }
             catch (Exception ex)

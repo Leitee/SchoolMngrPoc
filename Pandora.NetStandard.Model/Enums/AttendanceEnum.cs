@@ -9,8 +9,8 @@ namespace Pandora.NetStandard.Model.Enums
         [Description("Presente")]
         ATTEND = 1,
         [Description("Ausente")]
-        MISS = 2,
+        MISS,
         [Description("Justificado")]
-        REASON = 3,
+        REASON,
     }
 }

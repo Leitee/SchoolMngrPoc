@@ -17,7 +17,7 @@ namespace Pandora.NetStandard.Core.Security
 
         public JwtTokenProvider(IConfiguration config)
         {
-            _settings = config.GetSection("AppSettings").Get<AppSettings>() ?? throw new ArgumentNullException(nameof(config));
+            _settings = AppSettings.GetSettings(config) ?? throw new ArgumentNullException(nameof(config));
         }
 
         public virtual TokenResponse GenerateToken<TUser>(TUser pUser) where TUser : ApplicationUser

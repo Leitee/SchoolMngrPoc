@@ -11,9 +11,9 @@ namespace Pandora.NetStandard.Model.Entities
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public virtual int Id { get; set; }
 
-        public virtual int ClassId { get; set; }
+        public virtual int? ClassId { get; set; }
         public virtual Class Class { get; set; }
 
-        public virtual IEnumerable<StudentState> SubjectStates { get; set; }
+        public virtual ICollection<StudentState> SubjectStates { get; set; }
     }
 }

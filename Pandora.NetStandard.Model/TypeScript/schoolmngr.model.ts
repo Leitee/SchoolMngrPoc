@@ -27,10 +27,19 @@ declare enum ShiftTimeEnum {
 	NIGHT = 3
 }
 declare enum StudentStateEnum { 
-	ENROLLED = 0, 
-	ACTIVE = 1, 
-	INACTIVE = 2, 
-	ACHIEVED = 3
+	ENROLLED = 1, 
+	ACTIVE = 2, 
+	INACTIVE = 3, 
+	ACHIEVED = 4
+}
+export interface Attend
+{
+	id: number;
+	attendance: AttendanceEnum;
+	date: any;
+	obs: string;
+	student: Student;
+	subject: Subject;
 }
 export interface Class
 {
@@ -43,11 +52,13 @@ export interface Exam
 {
 	id: number;
 	examType: ExamTypeEnum;
-	score?: number;
+	score: number;
 	date?: any;
 	obs: string;
-	student: any;
-	subject: any;
+	studentId: number;
+	subjectId: number;
+	student: Student;
+	subject: Subject;
 }
 export interface Grade
 {
@@ -81,13 +92,31 @@ export interface Student
 	email: string;
 	phoneNumber: string;
 	fullName: string;
-	studentState: any;
+	address: string;
+	classId?: number;
+	class: Class;
+	subjectStates: StudentState[];
+	studentState: StudentState;
+}
+export interface StudentState
+{
+	id: number;
+	academicState: StudentStateEnum;
+	dateFrom: any;
+	dateTo?: any;
+	student: Student;
+	subject: Subject;
+	obs: string;
 }
 export interface Subject
 {
 	id: number;
 	name: string;
-	teacher: any;
+	preReqSubjects: Subject[];
+	teacherId?: number;
+	teacher: Teacher;
+	attends: Attend[];
+	exams: Exam[];
 }
 export interface Teacher
 {
@@ -97,7 +126,7 @@ export interface Teacher
 	email: string;
 	phoneNumber: string;
 	fullName: string;
-	subjects: any[];
+	subjects: Subject[];
 }
 export interface LoginResp
 {

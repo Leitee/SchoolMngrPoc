@@ -104,14 +104,47 @@ namespace Pandora.NetStandard.Business.Services
             throw new NotImplementedException();
         }
 
-        public async Task<BLSingleResponse<bool>> EnrollStudent(SubjectDto subjectDto, StudentDto studentDto)
+        public async Task<BLSingleResponse<bool>> EnrollStudentAsync(StudentDto studentDto, int subjectId)
         {
             var response = new BLSingleResponse<bool>();
 
             try
             {
-                StateManager stateManager = await StateManager.GetStateManagerAsync(_studentStateSvc, studentDto, subjectDto);
-                response.Data = await stateManager.EnrollAsync(studentDto, subjectDto);
+                var subjResponse = await GetByIdAsync(subjectId);
+                if (subjResponse.HasError || subjResponse.Data == null)
+                    throw new Exception($"Subject Id = {subjectId} didn't match any result.");
+
+                StateManager stateManager = await StateManager.GetStateManagerAsync(_studentStateSvc, studentDto.Id, subjectId);
+                response.Data = await stateManager.EnrollStudentAsync(studentDto, subjResponse.Data);
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
+
+            return response;
+        }
+
+        public async Task<BLSingleResponse<bool>> SaveExamResultAsync(IList<ExamDto> examDtos)
+        {
+            var response = new BLSingleResponse<bool>();
+
+            try
+            {
+                foreach (ExamDto exam in examDtos)
+                {
+                    await _uow.GetRepo<Exam>().InsertAsync(exam);
+                }
+
+                if(await _uow.CommitAsync())
+                {
+                    StateManager stateManager = await StateManager.GetStateManagerAsync(_studentStateSvc, examDtos.FirstOrDefault().StudentId, examDtos.FirstOrDefault().SubjectId);
+                    response.Data = await stateManager.SaveExamsResultAsync(examDtos);
+                }
+                else
+                {
+                    response.Data = false;
+                }
             }
             catch (Exception ex)
             {

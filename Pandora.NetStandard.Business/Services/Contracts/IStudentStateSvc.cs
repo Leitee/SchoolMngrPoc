@@ -7,6 +7,6 @@ namespace Pandora.NetStandard.Business.Services.Contracts
 {
     public interface IStudentStateSvc : IBasicCrudOperations<StudentStateDto>
     {
-        Task<BLSingleResponse<StudentStateDto>> GetLastValidStateAsync(StudentDto studentDto, SubjectDto subjectDto);
+        Task<BLSingleResponse<StudentStateDto>> GetLastValidStateAsync(int studentId, int subjectId);
     }
 }

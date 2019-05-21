@@ -12,7 +12,7 @@ namespace Pandora.NetStandard.Model.Entities
         public virtual string Description { get; set; }
         [Required]
         public virtual short Capacity { get; set; }
-        public bool? HasNetworkConexioin { get; set; }
-        public bool? HasScreenProjector { get; set; }
+        public virtual bool? HasNetworkConexioin { get; set; }
+        public virtual bool? HasScreenProjector { get; set; }
     }
 }

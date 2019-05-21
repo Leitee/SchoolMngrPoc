@@ -9,15 +9,14 @@ namespace Pandora.NetStandard.Model.Entities
     public class Subject : IEntity
     {
         public virtual int Id { get; set; }
-        [Required]
+        [Required, MaxLength(50)]
         public virtual string Name { get; set; }
-        public virtual IEnumerable<Subject> PreReqSubjects { get; set; }
-        public virtual int TeacherId { get; set; }
+        public virtual ICollection<Subject> PreReqSubjects { get; set; }
+        public virtual int? TeacherId { get; set; }
         public virtual Teacher Teacher { get; set; }
-        public virtual IEnumerable<StudentState> SubjectStates { get; set; }
 
-        public virtual IEnumerable<Attend> Attends { get; set; }
-        public virtual IEnumerable<Exam> Exams { get; set; }
+        public virtual ICollection<Attend> Attends { get; set; }
+        public virtual ICollection<Exam> Exams { get; set; }
 
         #region subject constrains
 

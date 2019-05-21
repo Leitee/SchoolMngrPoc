@@ -55,8 +55,7 @@ namespace Pandora.NetCore.WebApi.Controllers
             if (ModelState.IsValid)
             {
                 var response = await _classSvc.CreateAsync(pClass);
-                pClass = response.Data;
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index),response.Data);
             }
             ViewData["Grades"] = new SelectList((await _gradeSvc.GetAllAsync()).Data, "Id", "Name", pClass.GradeId);
             return View(pClass);

@@ -51,7 +51,8 @@ namespace Pandora.NetStandard.Data.Dals
             else
             {
                 entities = _dbSet
-                    .IncludeMultiple(includes).Where(predicate);
+                    .IncludeMultiple(includes)
+                    .Where(predicate);
             }
 
             var totalCount = entities.Count();
@@ -141,22 +142,23 @@ namespace Pandora.NetStandard.Data.Dals
 
         public async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
         {
-            return await Task.Run(() =>
+            IQueryable<TEntity> entities;
+
+            if (predicate == null)
             {
-                if (predicate == null)
-                {
-                    return _dbSet
-                        .IncludeMultiple(includes)
-                        .FirstOrDefault();
-                }
-                else
-                {
-                    return _dbSet
-                        .IncludeMultiple(includes)
-                        .Where(predicate)
-                        .FirstOrDefault();
-                };
-            });
+                entities = _dbSet
+                    .AsNoTracking()
+                    .IncludeMultiple(includes);
+            }
+            else
+            {
+                entities = _dbSet
+                    .AsNoTracking()
+                    .IncludeMultiple(includes)
+                    .Where(predicate);
+            }
+
+            return await entities.FirstOrDefaultAsync();
         }
 
         public async Task<List<TEntity>> ExecSp(string spName, params object[] parameters)

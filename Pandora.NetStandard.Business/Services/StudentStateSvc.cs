@@ -12,7 +12,7 @@ namespace Pandora.NetStandard.Business.Services
 {
     public class StudentStateSvc : BaseService<StudentState, StudentStateDto>, IStudentStateSvc
     {
-        public StudentStateSvc(IApplicationUow applicationUow, ILogger logger) : base(applicationUow, logger, new StudentStateToDtoMapper())
+        public StudentStateSvc(IApplicationUow applicationUow, ILogger<StudentStateSvc> logger) : base(applicationUow, logger, new StudentStateToDtoMapper())
         {
         }
 
@@ -55,14 +55,46 @@ namespace Pandora.NetStandard.Business.Services
             throw new NotImplementedException();
         }
 
-        public async Task<BLSingleResponse<StudentStateDto>> GetLastValidStateAsync(StudentDto studentDto, SubjectDto subjectDto)
+        public async Task<BLSingleResponse<StudentStateDto>> GetLastValidStateAsync(int studentId, int subjectId)
         {
-            return new BLSingleResponse<StudentStateDto>();
+            var response = new BLSingleResponse<StudentStateDto>();
+
+            try
+            {
+                var entityResult = await _uow.GetRepo<StudentState>().FindAsync(
+                    s => !s.DateTo.HasValue && s.StudentId == studentId && s.SubjectId == subjectId);
+                response.Data = _mapper.MapEntity(entityResult);
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
+
+            return response;
         }
 
-        public Task<BLSingleResponse<bool>> UpdateAsync(StudentStateDto pDto)
+        public async Task<BLSingleResponse<bool>> UpdateAsync(StudentStateDto pDto)
         {
-            throw new NotImplementedException();
+            var response = new BLSingleResponse<bool>();
+
+            try
+            {
+                await _uow.GetRepo<StudentState>().UpdateAsync(pDto);
+                if (await _uow.CommitAsync())
+                {
+                    response.Data = true;
+                }
+                else
+                {
+                    HandleSVCException(response, "This action couldn't be performed.");
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
+
+            return response;
         }
     }
 }

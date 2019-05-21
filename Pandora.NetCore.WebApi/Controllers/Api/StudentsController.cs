@@ -45,8 +45,13 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
         [HttpGet("GetByClass/{id}")]
         public async Task<IActionResult> GetByGrade(int id)
         {
-            var response = await _studentSvc.GetStudentsByClassId(id);
-            return response.ToHttpResponse();
+            if (ModelState.IsValid)
+            {
+                var response = await _studentSvc.GetStudentsByClassId(id);
+                return response.ToHttpResponse();
+            }
+
+            return BadRequest(ModelState);
         }
     }
 }

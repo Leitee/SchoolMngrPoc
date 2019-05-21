@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Pandora.NetStandard.Core.Bases;
@@ -19,7 +18,7 @@ namespace Pandora.NetStandard.Data.Dals
 
         public SchoolDbContext(IConfiguration config, DbContextOptions options, bool isTestInstance = false) : base(options)
         {
-            if(!isTestInstance)
+            if (!isTestInstance)
                 _appSettings = AppSettings.GetSettings(config ?? throw new ArgumentNullException(nameof(config)));
         }
 
@@ -33,12 +32,14 @@ namespace Pandora.NetStandard.Data.Dals
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
             //optionsBuilder.UseSqlite("Filename = ./schoolDB.db");
-            optionsBuilder.EnableDetailedErrors(true);
-            optionsBuilder.EnableSensitiveDataLogging(true);
+            optionsBuilder.EnableDetailedErrors(!_appSettings.IsProdMode);
+            optionsBuilder.EnableSensitiveDataLogging(!_appSettings.IsProdMode);
+            optionsBuilder.UseLazyLoadingProxies();
             optionsBuilder.UseSqlServer(_appSettings.ConnectionString, options =>
             {
-                options.MigrationsHistoryTable("Migrations", "EFwk");
+                options.MigrationsHistoryTable("Migrations", "EFConfig");
             });
         }
 

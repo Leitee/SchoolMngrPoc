@@ -4,7 +4,7 @@ using Reinforced.Typings.Attributes;
 namespace Pandora.NetStandard.Model.Dtos
 {
     [TsInterface(AutoI = false, Name = "LoginResp")]
-    public class LoginRespDto
+    public sealed class LoginRespDto
     {
         public string Token { get; set; }
         public int ExpirationDate { get; set; }

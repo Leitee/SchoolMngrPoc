@@ -7,7 +7,7 @@ namespace Pandora.NetStandard.Model.Enums
     public enum StudentStateEnum
     {
         [Description("Matriculado")]
-        ENROLLED,
+        ENROLLED = 1,
         [Description("Regular")]
         ACTIVE,
         [Description("Irregular")]

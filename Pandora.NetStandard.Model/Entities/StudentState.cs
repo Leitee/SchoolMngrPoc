@@ -13,11 +13,13 @@ namespace Pandora.NetStandard.Model.Entities
         [Required]
         public virtual StudentStateEnum AcademicState { get; set; }
         [Required]
-        public DateTime DateFrom { get; set; }
-        public DateTime? DateTo { get; set; }
-        [Required]
+        public virtual DateTime DateFrom { get; set; }
+        public virtual DateTime? DateTo { get; set; }
+        public virtual int StudentId { get; set; }
+        [NotMapped]
         public virtual Student Student { get; set; }
-        [Required]
+        public int SubjectId { get; set; }
+        [NotMapped]
         public virtual Subject Subject { get; set; }
         public virtual string Obs { get; set; }
     }

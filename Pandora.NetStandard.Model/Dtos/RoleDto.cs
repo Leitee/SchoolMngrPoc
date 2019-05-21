@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Pandora.NetStandard.Model.Dtos
 {
     [TsInterface(AutoI = false, Name = "Role")]
-    public class RoleDto : ApplicationRole
+    public sealed class RoleDto : ApplicationRole
     {
         public override int Id { get; set; }
         [Display(Name = "Role Name")]

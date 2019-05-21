@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Pandora.NetStandard.Model.Dtos
 {
     [TsInterface(AutoI = false, Name = "Register")]
-    public class RegisterDto : LoginDto
+    public sealed class RegisterDto : LoginDto
     {
         [Required]
         [EmailAddress]

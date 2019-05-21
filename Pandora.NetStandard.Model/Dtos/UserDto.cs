@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Pandora.NetStandard.Model.Dtos
 {
     [TsInterface(AutoI = false, Name = "User")]
-    public class UserDto : ApplicationUser
+    public sealed class UserDto : ApplicationUser
     {
         public UserDto()
         {

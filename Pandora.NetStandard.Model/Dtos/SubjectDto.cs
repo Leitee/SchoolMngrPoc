@@ -1,18 +1,25 @@
 ﻿using Pandora.NetStandard.Model.Entities;
 using Reinforced.Typings.Attributes;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Pandora.NetStandard.Model.Dtos
 {
     [TsInterface(AutoI = false, Name = "Subject")]
-    public class SubjectDto : Subject
+    public sealed class SubjectDto : Subject
     {
+        public SubjectDto()
+        {
+            PreReqSubjects = new List<SubjectDto>();
+            Exams = new List<ExamDto>();
+            Attends = new List<AttendDto>();
+        }
+
         public override int Id { get => base.Id; set => base.Id = value; }
         public override string Name { get => base.Name; set => base.Name = value; }
-        public override Teacher Teacher { get => base.Teacher; set => base.Teacher = value; }
-        [TsIgnore]
-        public override IEnumerable<Exam> Exams { get => base.Exams; set => base.Exams = value; }
+        public new IEnumerable<SubjectDto> PreReqSubjects { get; set; }
+        public override int? TeacherId { get => base.TeacherId; set => base.TeacherId = value; }
+        public new TeacherDto Teacher { get; set; }
+        public new IEnumerable<AttendDto> Attends { get; set; }
+        public new IEnumerable<ExamDto> Exams { get; set; }
     }
 }
