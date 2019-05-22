@@ -4,7 +4,7 @@
         <mat-card router class="dashboard-card">
           <mat-card-header>
             <mat-card-title>
-              {{class.name}} División - Turno {{util.getShiftEnumName(class.shift)}}
+              Matematicas I
               <!-- <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
                 <mat-icon>more_vert</mat-icon>
               </button> -->
@@ -15,7 +15,7 @@
             </mat-card-title>
           </mat-card-header>
           <mat-card-content class="dashboard-card-content">
-            <div><i>Informacion de la clase aqui</i></div>
+            <div><i>{{class.name}} División - Turno {{util.getShiftEnumName(class.shift)}}</i></div>
           </mat-card-content>
           <mat-card-actions>
             <button routerLink="/attend" color="primary" mat-button>Asistencia</button>

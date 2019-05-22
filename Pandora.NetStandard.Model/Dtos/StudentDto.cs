@@ -27,8 +27,6 @@ namespace Pandora.NetStandard.Model.Dtos
         public override string FullName => base.FullName;
 
         public override string Address { get => base.Address; set => base.Address = value; }
-        public override int? ClassId { get => base.ClassId; set => base.ClassId = value; }
-        public new ClassDto Class { get; set; }
         public new IEnumerable<StudentStateDto> SubjectStates { get; set; }
         public StudentStateDto StudentState { get; set; }
     }

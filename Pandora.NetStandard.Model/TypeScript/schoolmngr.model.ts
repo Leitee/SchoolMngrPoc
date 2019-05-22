@@ -93,8 +93,6 @@ export interface Student
 	phoneNumber: string;
 	fullName: string;
 	address: string;
-	classId?: number;
-	class: Class;
 	subjectStates: StudentState[];
 	studentState: StudentState;
 }
@@ -108,25 +106,32 @@ export interface StudentState
 	subject: Subject;
 	obs: string;
 }
+export interface SubjectAssingment
+{
+	id: number;
+	date: any;
+	disable: boolean;
+	subjectId: number;
+	subject: Subject;
+	classId: number;
+	class: any;
+	classRoomId?: number;
+	classRoom: any;
+	teacherId?: number;
+	teacher: any;
+}
 export interface Subject
 {
 	id: number;
 	name: string;
 	preReqSubjects: Subject[];
-	teacherId?: number;
-	teacher: Teacher;
 	attends: Attend[];
 	exams: Exam[];
 }
 export interface Teacher
 {
 	id: number;
-	firstName: string;
-	lastName: string;
-	email: string;
-	phoneNumber: string;
-	fullName: string;
-	subjects: Subject[];
+	subjectAssingments: any[];
 }
 export interface LoginResp
 {

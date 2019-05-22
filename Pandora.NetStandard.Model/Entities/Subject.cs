@@ -12,15 +12,14 @@ namespace Pandora.NetStandard.Model.Entities
         [Required, MaxLength(50)]
         public virtual string Name { get; set; }
         public virtual ICollection<Subject> PreReqSubjects { get; set; }
-        public virtual int? TeacherId { get; set; }
-        public virtual Teacher Teacher { get; set; }
-
+        public virtual ICollection<SubjectAssingment> SubjectAssingments { get; set; }
+        public virtual ICollection<StudentState> StudentStates { get; set; }
         public virtual ICollection<Attend> Attends { get; set; }
         public virtual ICollection<Exam> Exams { get; set; }
 
         #region subject constrains
 
-        public static int MaxAttendenceAllowed { get { return 2; } }
+        public static int MaxAbsencesAllowed { get { return 2; } }
         public static int MinExamScoreRequired { get { return 6; } }
 
         #endregion

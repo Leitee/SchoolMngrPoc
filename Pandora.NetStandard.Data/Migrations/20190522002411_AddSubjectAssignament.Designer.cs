@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pandora.NetStandard.Data.Dals;
 
 namespace Pandora.NetStandard.Data.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190522002411_AddSubjectAssignament")]
+    partial class AddSubjectAssignament
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,7 +143,7 @@ namespace Pandora.NetStandard.Data.Migrations
                         new
                         {
                             Id = -1,
-                            ConcurrencyStamp = "7500f333-d906-4203-9dbf-db5bba8b7ec2",
+                            ConcurrencyStamp = "f8fd2a09-5bd5-46ce-b844-2ed9eea88ba6",
                             Description = "Full functionality over app and debugin",
                             Name = "Dev",
                             NormalizedName = "DEV"
@@ -149,7 +151,7 @@ namespace Pandora.NetStandard.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "9d455f3d-ba0b-4cdb-b756-9c7ee4177305",
+                            ConcurrencyStamp = "ba3490e2-1e93-49bf-9133-b131c38ed090",
                             Description = "Full permissions and features",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
@@ -157,7 +159,7 @@ namespace Pandora.NetStandard.Data.Migrations
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "a1a10ada-5b93-4930-85a3-aa832c35b2e4",
+                            ConcurrencyStamp = "2a30e87f-f325-4df6-a950-055658ccf18c",
                             Description = "Limited functionality just administrative permissions",
                             Name = "Super",
                             NormalizedName = "SUPER"
@@ -165,7 +167,7 @@ namespace Pandora.NetStandard.Data.Migrations
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "e929acb3-8a85-4af3-a8d9-21869473f792",
+                            ConcurrencyStamp = "104ad33a-f0ec-4da8-b00a-db2f741a5f8c",
                             Description = "Limited functionality just teaching-relative permissions",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
@@ -173,7 +175,7 @@ namespace Pandora.NetStandard.Data.Migrations
                         new
                         {
                             Id = 4,
-                            ConcurrencyStamp = "acd38c5e-05fd-4b74-bf4b-225413dbb629",
+                            ConcurrencyStamp = "92d8afeb-0199-4d38-a2a4-05ff190849f8",
                             Description = "Limited functionality just student-relative permissions",
                             Name = "Student",
                             NormalizedName = "STUDENT"
@@ -246,16 +248,16 @@ namespace Pandora.NetStandard.Data.Migrations
                         {
                             Id = -1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a46cda2d-0ba7-4c66-9e9d-fbd884fcae7c",
+                            ConcurrencyStamp = "636dea41-3f2a-4b67-ada3-7aed3006c09d",
                             Email = "info@pandorasistemas.com",
                             EmailConfirmed = true,
                             FirstName = "Jhon",
-                            JoinDate = new DateTime(2019, 5, 22, 0, 34, 56, 170, DateTimeKind.Utc).AddTicks(2462),
+                            JoinDate = new DateTime(2019, 5, 22, 0, 24, 10, 546, DateTimeKind.Utc).AddTicks(442),
                             LastName = "Doe",
                             LockoutEnabled = false,
                             NormalizedEmail = "INFO@PANDORASISTEMAS.COM",
                             NormalizedUserName = "DEVADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJHzNoXtnfoUQbQBxYoBPrPlFp9ATN9Fh2i5mUi2iXSEZN8BdA2EFgnQc2o2igIbLA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEG2RoREOCUjz2cWpJrmNpYYUOwCBmvfGIOOtChYuxGl/b5CWruAFdcvty3bYTqg8Kw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -280,8 +282,6 @@ namespace Pandora.NetStandard.Data.Migrations
                     b.Property<int>("SubjectId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
 
                     b.HasIndex("SubjectId");
 
@@ -394,8 +394,6 @@ namespace Pandora.NetStandard.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId");
-
                     b.HasIndex("SubjectId");
 
                     b.ToTable("Exams","School");
@@ -478,8 +476,6 @@ namespace Pandora.NetStandard.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("StudentId");
-
-                    b.HasIndex("SubjectId");
 
                     b.ToTable("StudentStates","School");
                 });
@@ -607,11 +603,6 @@ namespace Pandora.NetStandard.Data.Migrations
 
             modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Attend", b =>
                 {
-                    b.HasOne("Pandora.NetStandard.Model.Entities.Student")
-                        .WithMany("Attends")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Pandora.NetStandard.Model.Entities.Subject")
                         .WithMany("Attends")
                         .HasForeignKey("SubjectId")
@@ -628,11 +619,6 @@ namespace Pandora.NetStandard.Data.Migrations
 
             modelBuilder.Entity("Pandora.NetStandard.Model.Entities.Exam", b =>
                 {
-                    b.HasOne("Pandora.NetStandard.Model.Entities.Student")
-                        .WithMany("Exams")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("Pandora.NetStandard.Model.Entities.Subject")
                         .WithMany("Exams")
                         .HasForeignKey("SubjectId")
@@ -644,11 +630,6 @@ namespace Pandora.NetStandard.Data.Migrations
                     b.HasOne("Pandora.NetStandard.Model.Entities.Student")
                         .WithMany("SubjectStates")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Pandora.NetStandard.Model.Entities.Subject")
-                        .WithMany("StudentStates")
-                        .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

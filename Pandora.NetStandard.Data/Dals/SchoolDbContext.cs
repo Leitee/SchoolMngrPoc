@@ -84,6 +84,10 @@ namespace Pandora.NetStandard.Data.Dals
                 new Class { Id = 5, Name = "2da", Shift = ShiftTimeEnum.AFTERNOON, GradeId = 2 },
                 new Class { Id = 6, Name = "1ra", Shift = ShiftTimeEnum.NIGHT, GradeId = 3 }
                 );
+
+            builder.Entity<Student>().HasData(
+                new Student { Id = 1000,  }
+                );
         }
     }
 }

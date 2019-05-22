@@ -20,9 +20,6 @@ namespace Pandora.NetStandard.Model.Entities
 
         public virtual int GradeId { get; set; }
         public virtual Grade Grade { get; set; }
-        public virtual int? ClassRoomId { get; set; }
-        public virtual ClassRoom ClassRoom { get; set; }
-
-        public virtual ICollection<Student> Students { get; set; }
+        public virtual ICollection<SubjectAssingment> SubjectAssingments { get; set; }
     }
 }

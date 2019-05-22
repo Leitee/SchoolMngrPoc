@@ -102,7 +102,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entityResult = await _uow.GetRepo<Student>().FindAsync(s => s.Id == pId, s => s.Class);
+                var entityResult = await _uow.GetRepo<Student>().GetByIdAsync(pId);
                 response.Data = _mapper.MapEntity(entityResult);
             }
             catch (Exception ex)
@@ -124,7 +124,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entityResult = await _uow.GetRepo<Student>().AllAsync(s => s.ClassId == pClassId, null, s => s.SubjectStates);
+                var entityResult = await _uow.GetRepo<Student>().AllAsync(s => s.SubjectStates.Any(a1 => a1.Subject.SubjectAssingments.Any(a2 => a2.ClassId == pClassId)), null, s => s.SubjectStates);
                 response.Data = _mapper.MapEntity(entityResult);
             }
             catch (Exception ex)

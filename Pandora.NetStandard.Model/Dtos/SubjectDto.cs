@@ -17,8 +17,6 @@ namespace Pandora.NetStandard.Model.Dtos
         public override int Id { get => base.Id; set => base.Id = value; }
         public override string Name { get => base.Name; set => base.Name = value; }
         public new IEnumerable<SubjectDto> PreReqSubjects { get; set; }
-        public override int? TeacherId { get => base.TeacherId; set => base.TeacherId = value; }
-        public new TeacherDto Teacher { get; set; }
         public new IEnumerable<AttendDto> Attends { get; set; }
         public new IEnumerable<ExamDto> Exams { get; set; }
     }
