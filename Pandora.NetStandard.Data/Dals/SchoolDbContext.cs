@@ -48,6 +48,7 @@ namespace Pandora.NetStandard.Data.Dals
             base.OnModelCreating(builder);
 
             #region Identity fields seeding
+
             builder.Entity<ApplicationRole>().HasData(new List<ApplicationRole>
             {
                 new ApplicationRole(RolesEnum.DEBUG.GetDescription(), "Full functionality over app and debugin") { Id = RolesEnum.DEBUG.GetId() },
@@ -67,9 +68,19 @@ namespace Pandora.NetStandard.Data.Dals
                 SecurityStamp = string.Empty,
             });
 
-            builder.Entity<ApplicationUser>().HasData(new ApplicationUser("dabrown", "dabrown@teacher.com", "Dan", "Brown")
+            builder.Entity<ApplicationUser>().HasData(new ApplicationUser("risanchez", "risanchez@admin.com", "Rick", "Sanchez")
             {
-                Id = 100,
+                Id = 1,
+                EmailConfirmed = true,
+                LockoutEnabled = false,
+                TwoFactorEnabled = false,
+                PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Rick321"),
+                SecurityStamp = string.Empty,
+            });
+
+            builder.Entity<ApplicationUser>().HasData(new ApplicationUser("dabrown", "dabrown@teacher.com", "Dan", "Brown")            
+            {
+                Id = 10,
                 EmailConfirmed = true,
                 LockoutEnabled = false,
                 TwoFactorEnabled = false,
@@ -78,32 +89,40 @@ namespace Pandora.NetStandard.Data.Dals
             });
 
             builder.Entity<IdentityUserRole<int>>().HasData(new IdentityUserRole<int>() { UserId = -1, RoleId = RolesEnum.DEBUG.GetId() });
-            builder.Entity<IdentityUserRole<int>>().HasData(new IdentityUserRole<int>() { UserId = 100, RoleId = RolesEnum.TEACHER.GetId() });
+            builder.Entity<IdentityUserRole<int>>().HasData(new IdentityUserRole<int>() { UserId = 1, RoleId = RolesEnum.ADMINISTRADOR.GetId() });
+            builder.Entity<IdentityUserRole<int>>().HasData(new IdentityUserRole<int>() { UserId = 10, RoleId = RolesEnum.TEACHER.GetId() });
+
             #endregion
 
             builder.Entity<Grade>().HasData(
                 new Grade { Id = 1, Name = "1er" },
                 new Grade { Id = 2, Name = "2do" },
-                new Grade { Id = 3, Name = "3ro" }
+                new Grade { Id = 3, Name = "3ro" },
+                new Grade { Id = 4, Name = "4to" },
+                new Grade { Id = 5, Name = "5to" }
                 );
 
             builder.Entity<Class>().HasData(
                 new Class { Id = 1, Name = "1ra", Shift = ShiftTimeEnum.TOMORROW, GradeId = 1 },
                 new Class { Id = 2, Name = "2da", Shift = ShiftTimeEnum.AFTERNOON, GradeId = 1 },
-                new Class { Id = 3, Name = "3ra", Shift = ShiftTimeEnum.NIGHT, GradeId = 1 },
-                new Class { Id = 4, Name = "1ra", Shift = ShiftTimeEnum.TOMORROW, GradeId = 2 },
-                new Class { Id = 5, Name = "2da", Shift = ShiftTimeEnum.AFTERNOON, GradeId = 2 },
-                new Class { Id = 6, Name = "1ra", Shift = ShiftTimeEnum.NIGHT, GradeId = 3 }
+                new Class { Id = 3, Name = "1ra", Shift = ShiftTimeEnum.TOMORROW, GradeId = 2 },
+                new Class { Id = 4, Name = "2da", Shift = ShiftTimeEnum.NIGHT, GradeId = 2 },
+                new Class { Id = 5, Name = "1ra", Shift = ShiftTimeEnum.AFTERNOON, GradeId = 3 },
+                new Class { Id = 6, Name = "2da", Shift = ShiftTimeEnum.NIGHT, GradeId = 3 },
+                new Class { Id = 7, Name = "1ra", Shift = ShiftTimeEnum.TOMORROW, GradeId = 4 },
+                new Class { Id = 8, Name = "1ra", Shift = ShiftTimeEnum.TOMORROW, GradeId = 5 }
                 );
 
             builder.Entity<Subject>().HasData(
-                new Subject { Id = 1, Name = "Matemáticas I" },
-                new Subject { Id = 2, Name = "Fisica I" },
-                new Subject { Id = 3, Name = "Matemáticas II", SubjectId = 1 }
+                new Subject { Id = 1, Name = "Matemáticas" },
+                new Subject { Id = 2, Name = "Fisica" },
+                new Subject { Id = 3, Name = "Redes" },
+                new Subject { Id = 4, Name = "Algoritmos" },
+                new Subject { Id = 5, Name = "Programación", SubjectId = 4 }
                 );
 
             builder.Entity<Teacher>().HasData(
-                new Teacher { Id = 1, ApplicationUserId = 100 }
+                new Teacher { Id = 1, ApplicationUserId = 10 }
                 );
 
             builder.Entity<Student>().HasData(
@@ -111,8 +130,6 @@ namespace Pandora.NetStandard.Data.Dals
                 new Student { Id = 1001, FirstName = "Bruce", LastName = "Wayne", Email = "bruce.wayne@student.com", PhoneNumber = "321850465" },
                 new Student { Id = 1002, FirstName = "Milton", LastName = "Friedman", Email = "milton.friedman@student.com", PhoneNumber = "390987465" }
                 );
-
-
         }
     }
 }
