@@ -8,6 +8,7 @@ using Pandora.NetStandard.Model.Entities;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Pandora.NetStandard.Core.Utils;
 
 namespace Pandora.NetStandard.Business.Services
 {
@@ -93,7 +94,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entity = await _uow.GetRepo<Class>().FindAsync(c => c.Id == pId, c => c.Grade);
+                var entity = await _uow.GetRepo<Class>().FindAsync(c => c.Id == pId, x => x.Include(c => c.Grade));
                 response.Data = _mapper.MapEntity(entity);
             }
             catch (Exception ex)

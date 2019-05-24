@@ -5,7 +5,7 @@ using Pandora.NetStandard.Model.Entities;
 
 namespace Pandora.NetStandard.Business.Mappers
 {
-    public class StudentStateToDtoMapper : GenericMapperCore<StudentState, StudentStateDto>
+    public class SubjectAssignmentToDtoMapper : GenericMapperCore<SubjectAssingment, SubjectAssingmentDto>
     {
         protected override IMapper CreateMapConfiguration()
         {

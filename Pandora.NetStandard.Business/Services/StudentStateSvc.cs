@@ -62,7 +62,7 @@ namespace Pandora.NetStandard.Business.Services
             try
             {
                 var entityResult = await _uow.GetRepo<StudentState>().FindAsync(
-                    s => !s.DateTo.HasValue && s.StudentId == studentId && s.SubjectId == subjectId);
+                    s => !s.DateTo.HasValue && s.StudentId == studentId && s.SubjectId == subjectId, null);
                 response.Data = _mapper.MapEntity(entityResult);
             }
             catch (Exception ex)

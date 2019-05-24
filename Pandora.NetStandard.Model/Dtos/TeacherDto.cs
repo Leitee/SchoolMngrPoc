@@ -9,6 +9,6 @@ namespace Pandora.NetStandard.Model.Dtos
     {
         public override int Id { get => base.Id; set => base.Id = value; }
 
-        public new ICollection<SubjectAssingment> SubjectAssingments { get; set; }
+        public new ICollection<SubjectAssingmentDto> SubjectAssingments { get; set; }
     }
 }

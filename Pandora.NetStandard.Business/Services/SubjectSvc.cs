@@ -4,6 +4,7 @@ using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Business.States;
 using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Interfaces;
+using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Dtos;
 using Pandora.NetStandard.Model.Entities;
 using Pandora.NetStandard.Model.Enums;
@@ -55,7 +56,20 @@ namespace Pandora.NetStandard.Business.Services
 
         public async Task<BLListResponse<SubjectDto>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            var response = new BLListResponse<SubjectDto>();
+
+            try
+            {
+                var entitiesResult = await _uow.GetRepo<Subject>().AllAsync(null, null, null);
+                response.Data = _mapper.MapEntity(entitiesResult);
+                
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
+
+            return response;
         }
 
         public async Task<BLSingleResponse<bool>> SaveSubjectExams(SubjectDto pSubject)
@@ -153,5 +167,27 @@ namespace Pandora.NetStandard.Business.Services
 
             return response;
         }
+
+        public async Task<BLListResponse<SubjectDto>> GetByTeacherIdAsync(int teacherId)
+        {
+            var response = new BLListResponse<SubjectDto>();
+
+            try
+            {
+                var entitiesResult = await _uow.GetRepo<Subject>().AllAsync(sb => sb.SubjectAssingments.Any(sa => sa.TeacherId.Value == teacherId),
+                    null,
+                    x => x.Include(sb => sb.SubjectAssingments).ThenInclude(sa => sa.Class), x => x.Include(sb => sb.Attends));
+
+                response.Data = _mapper.MapEntity(entitiesResult);
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
+
+            return response;
+        }
+
+        
     }
 }

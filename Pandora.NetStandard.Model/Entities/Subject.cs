@@ -11,7 +11,9 @@ namespace Pandora.NetStandard.Model.Entities
         public virtual int Id { get; set; }
         [Required, MaxLength(50)]
         public virtual string Name { get; set; }
-        public virtual ICollection<Subject> PreReqSubjects { get; set; }
+        public virtual int? SubjectId { get; set; }
+        [ForeignKey("SubjectId")]
+        public virtual Subject PreReqSubject { get; set; }
         public virtual ICollection<SubjectAssingment> SubjectAssingments { get; set; }
         public virtual ICollection<StudentState> StudentStates { get; set; }
         public virtual ICollection<Attend> Attends { get; set; }

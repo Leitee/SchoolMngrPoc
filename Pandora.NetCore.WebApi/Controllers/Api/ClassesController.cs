@@ -20,10 +20,15 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
         }
 
         [HttpGet("GetByGrade/{id}")]
-        public async Task<IActionResult> GetByGrade(int id)
+        public async Task<IActionResult> GetByGrade(int? id)
         {
-            var response = await _classSvc.GetClassesByGradeId(id);
-            return response.ToHttpResponse();
+            if (ModelState.IsValid && id.HasValue)
+            {
+                var response = await _classSvc.GetClassesByGradeId(id.Value);
+                return response.ToHttpResponse();                
+            }
+
+            return BadRequest(ModelState);
         }
 
         [HttpGet()]
@@ -34,10 +39,15 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(int? id)
         {
-            var response = await _classSvc.GetByIdAsync(id);
-            return response.ToHttpResponse();
+            if (ModelState.IsValid && id.HasValue)
+            {
+                var response = await _classSvc.GetByIdAsync(id.Value);
+                return response.ToHttpResponse();
+            }
+
+            return BadRequest(ModelState);
         }
 
         [HttpPut("{id}")]

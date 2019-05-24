@@ -16,10 +16,8 @@ namespace Pandora.NetStandard.Model.Entities
         public virtual DateTime DateFrom { get; set; }
         public virtual DateTime? DateTo { get; set; }
         public virtual int StudentId { get; set; }
-        [NotMapped]
         public virtual Student Student { get; set; }
-        public int SubjectId { get; set; }
-        [NotMapped]
+        public virtual int SubjectId { get; set; }
         public virtual Subject Subject { get; set; }
         public virtual string Obs { get; set; }
     }

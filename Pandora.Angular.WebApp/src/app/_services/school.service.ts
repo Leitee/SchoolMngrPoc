@@ -20,6 +20,11 @@ export class SchoolService extends BaseService {
         this.path = "classes/GetByGrade";
         return this.getById<Class[]>(gradeId);
     }
+
+    public getSubjectsByTeacherId(teacherId: number): Observable<Class[]> {
+        this.path = "subjects/GetByGrade";
+        return this.getById<Class[]>(teacherId);
+    }
     
     public getStudentsByClassId(classId: number): Observable<Student[]> {
         this.path = "students/GetByClass";

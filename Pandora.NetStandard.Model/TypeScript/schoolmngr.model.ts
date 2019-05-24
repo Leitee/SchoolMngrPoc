@@ -48,6 +48,14 @@ export interface Class
 	shift: ShiftTimeEnum;
 	grade: Grade;
 }
+export interface ClassRoom
+{
+	id: number;
+	description: string;
+	capacity: number;
+	hasNetworkConexion?: boolean;
+	hasScreenProjector?: boolean;
+}
 export interface Exam
 {
 	id: number;
@@ -93,8 +101,10 @@ export interface Student
 	phoneNumber: string;
 	fullName: string;
 	address: string;
-	subjectStates: StudentState[];
-	studentState: StudentState;
+	attends: Attend[];
+	exams: Exam[];
+	studentStates: StudentState[];
+	validStudentState: StudentState;
 }
 export interface StudentState
 {
@@ -114,24 +124,23 @@ export interface SubjectAssingment
 	subjectId: number;
 	subject: Subject;
 	classId: number;
-	class: any;
+	class: Class;
 	classRoomId?: number;
-	classRoom: any;
+	classRoom: ClassRoom;
 	teacherId?: number;
-	teacher: any;
+	teacher: Teacher;
 }
 export interface Subject
 {
 	id: number;
 	name: string;
-	preReqSubjects: Subject[];
 	attends: Attend[];
 	exams: Exam[];
 }
 export interface Teacher
 {
 	id: number;
-	subjectAssingments: any[];
+	subjectAssingments: SubjectAssingment[];
 }
 export interface LoginResp
 {

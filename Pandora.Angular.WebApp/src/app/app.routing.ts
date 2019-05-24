@@ -1,6 +1,6 @@
 ﻿import { AuthGuard } from '@/_commons';
 import { RolesEnum } from '@/_models';
-import { AdminComponent, HomeComponent, GradeComponent, ExamComponent } from '@/_pages';
+import { AdminComponent, HomeComponent, GradeComponent, ExamComponent, SubjectComponent } from '@/_pages';
 import { RouterModule, Routes } from '@angular/router';
 
 const appRoutes: Routes = [
@@ -23,6 +23,11 @@ const appRoutes: Routes = [
     {
         path: 'exam',
         component: ExamComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'subject',
+        component: SubjectComponent,
         canActivate: [AuthGuard]
     },
     {

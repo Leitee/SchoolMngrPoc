@@ -36,7 +36,7 @@ namespace Pandora.NetStandard.Data.Dals
             //optionsBuilder.UseSqlite("Filename = ./schoolDB.db");
             optionsBuilder.EnableDetailedErrors(!_appSettings.IsProdMode);
             optionsBuilder.EnableSensitiveDataLogging(!_appSettings.IsProdMode);
-            optionsBuilder.UseLazyLoadingProxies();
+            //optionsBuilder.UseLazyLoadingProxies();
             optionsBuilder.UseSqlServer(_appSettings.ConnectionString, options =>
             {
                 options.MigrationsHistoryTable("Migrations", "EFConfig");
@@ -67,7 +67,18 @@ namespace Pandora.NetStandard.Data.Dals
                 SecurityStamp = string.Empty,
             });
 
-            builder.Entity<IdentityUserRole<int>>().HasData(new IdentityUserRole<int>() { UserId = -1, RoleId = -1 });
+            builder.Entity<ApplicationUser>().HasData(new ApplicationUser("dabrown", "dabrown@teacher.com", "Dan", "Brown")
+            {
+                Id = 100,
+                EmailConfirmed = true,
+                LockoutEnabled = false,
+                TwoFactorEnabled = false,
+                PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Dan321"),
+                SecurityStamp = string.Empty,
+            });
+
+            builder.Entity<IdentityUserRole<int>>().HasData(new IdentityUserRole<int>() { UserId = -1, RoleId = RolesEnum.DEBUG.GetId() });
+            builder.Entity<IdentityUserRole<int>>().HasData(new IdentityUserRole<int>() { UserId = 100, RoleId = RolesEnum.TEACHER.GetId() });
             #endregion
 
             builder.Entity<Grade>().HasData(
@@ -85,9 +96,23 @@ namespace Pandora.NetStandard.Data.Dals
                 new Class { Id = 6, Name = "1ra", Shift = ShiftTimeEnum.NIGHT, GradeId = 3 }
                 );
 
-            builder.Entity<Student>().HasData(
-                new Student { Id = 1000,  }
+            builder.Entity<Subject>().HasData(
+                new Subject { Id = 1, Name = "Matemáticas I" },
+                new Subject { Id = 2, Name = "Fisica I" },
+                new Subject { Id = 3, Name = "Matemáticas II", SubjectId = 1 }
                 );
+
+            builder.Entity<Teacher>().HasData(
+                new Teacher { Id = 1, ApplicationUserId = 100 }
+                );
+
+            builder.Entity<Student>().HasData(
+                new Student { Id = 1000, FirstName = "Atila", LastName = "TheHun", Email = "atila.thehun@student.com", PhoneNumber = "321987465" },
+                new Student { Id = 1001, FirstName = "Bruce", LastName = "Wayne", Email = "bruce.wayne@student.com", PhoneNumber = "321850465" },
+                new Student { Id = 1002, FirstName = "Milton", LastName = "Friedman", Email = "milton.friedman@student.com", PhoneNumber = "390987465" }
+                );
+
+
         }
     }
 }

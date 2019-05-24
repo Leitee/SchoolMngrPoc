@@ -2,6 +2,7 @@
 using Reinforced.Typings.Attributes;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Pandora.NetStandard.Model.Dtos
 {
@@ -10,7 +11,7 @@ namespace Pandora.NetStandard.Model.Dtos
     {
         public StudentDto()
         {
-            SubjectStates = new List<StudentStateDto>();
+            StudentStates = new List<StudentStateDto>();
         }
 
         public override int Id { get => base.Id; set => base.Id = value; }
@@ -27,7 +28,11 @@ namespace Pandora.NetStandard.Model.Dtos
         public override string FullName => base.FullName;
 
         public override string Address { get => base.Address; set => base.Address = value; }
-        public new IEnumerable<StudentStateDto> SubjectStates { get; set; }
-        public StudentStateDto StudentState { get; set; }
+
+        public new ICollection<AttendDto> Attends { get; set; }
+        public new ICollection<ExamDto> Exams { get; set; }
+        public new IEnumerable<StudentStateDto> StudentStates { get; set; }
+        public StudentStateDto ValidStudentState { get { return StudentStates.FirstOrDefault(ss => !ss.DateTo.HasValue); } }
+
     }
 }

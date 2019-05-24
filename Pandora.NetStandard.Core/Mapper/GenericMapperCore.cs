@@ -9,21 +9,24 @@ namespace Pandora.NetStandard.Core.Mapper
 
         public GenericMapperCore()
         {
-            MappingConfiguration = DefaultMapConfiguration();
+            MappingConfiguration = CreateMapConfiguration();
         }
 
-        protected virtual IMapper DefaultMapConfiguration()
+        protected IMapper DefaultMapConfiguration()
         {
             return new MapperConfiguration(c =>
             {
-                c.CreateMap<TInputEntity, TOutputEntity>();
+                //c.ForAllMaps((typeMap, mappingExpression) => mappingExpression.MaxDepth(2));
+                c.CreateMap<TInputEntity, TOutputEntity>().MaxDepth(2);
             }).CreateMapper();
         }
+
+        protected abstract IMapper CreateMapConfiguration();
 
         public virtual void SetMapperConfiguration(IMapperConfigurationExpression configurationExpression)
         {
             //TODO: add expression param functionaity
-            var test = configurationExpression;
+            var expression = configurationExpression;
         }
 
         public virtual void SetMapperConfiguration(IMapper pMapperConfig)
@@ -50,6 +53,7 @@ namespace Pandora.NetStandard.Core.Mapper
         {
             return new MapperConfiguration(c =>
             {
+                c.ForAllMaps((typeMap, mappingExpression) => mappingExpression.MaxDepth(1));
                 c.CreateMap<TInputEntity, TOutputEntity>();
             }).CreateMapper();
         }

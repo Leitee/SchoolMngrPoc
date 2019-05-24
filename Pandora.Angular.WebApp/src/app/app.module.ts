@@ -2,7 +2,7 @@
 import { routing } from '@/app.routing';
 import { SharedModule } from '@/shared.module';
 import { ErrorInterceptor, JwtInterceptor } from '@/_commons';
-import { AdminComponent, HomeComponent, GradeComponent, ExamComponent } from '@/_pages';
+import { AdminComponent, HomeComponent, GradeComponent, ExamComponent, SubjectComponent } from '@/_pages';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -22,6 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         AppComponent,
         HomeComponent,
         AdminComponent,
+        SubjectComponent,
         GradeComponent,
         ExamComponent
     ],

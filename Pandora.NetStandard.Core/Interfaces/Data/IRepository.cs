@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pandora.NetStandard.Core.Interfaces.Data;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -8,12 +9,12 @@ namespace Pandora.NetStandard.Core.Interfaces
     public interface IRepository
     {
         Task<IQueryable<TEntity>> AllAsync<TEntity>(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>,
-            IOrderedQueryable<TEntity>> orderBy, params Expression<Func<TEntity, object>>[] includes); 
+            IOrderedQueryable<TEntity>> orderBy, params Expression<Func<IIncludable<TEntity>, IIncludable>>[] includes); 
 
         Task<TEntity> GetByIdAsync<TEntity>(object id);
 
         Task<TEntity> FindAsync<TEntity>(Expression<Func<TEntity, bool>> predicate,
-            params Expression<Func<TEntity, object>>[] includes);
+            params Expression<Func<IIncludable<TEntity>, IIncludable>>[] includes);
 
         Task<TEntity> InsertAsync<TEntity>(TEntity entity);
 
@@ -27,12 +28,12 @@ namespace Pandora.NetStandard.Core.Interfaces
     public interface IRepository<TEntity> where TEntity : class
     {
         Task<IQueryable<TEntity>> AllAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>,
-            IOrderedQueryable<TEntity>> orderBy, params Expression<Func<TEntity, object>>[] includes);
+            IOrderedQueryable<TEntity>> orderBy, params Expression<Func<IIncludable<TEntity>, IIncludable>>[] includes);
 
         Task<TEntity> GetByIdAsync(object id);
 
         Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate,
-            params Expression<Func<TEntity, object>>[] includes);
+            params Expression<Func<IIncludable<TEntity>, IIncludable>>[] includes);
 
         Task<TEntity> InsertAsync(TEntity entity);
 

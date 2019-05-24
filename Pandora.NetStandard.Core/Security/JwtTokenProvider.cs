@@ -23,13 +23,13 @@ namespace Pandora.NetStandard.Core.Security
         public virtual TokenResponse GenerateToken<TUser>(TUser pUser) where TUser : ApplicationUser
         {
             IEnumerable<Claim> claims = new[] {
-                new Claim("userdata", JsonConvert.SerializeObject(pUser).ToLower()),//TODO: get rid tolower
+                new Claim("userdata", JsonConvert.SerializeObject(pUser).ToLower()),//TODO: get rid ToLower and fix Json parsing
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.JwtSecretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expiration = DateTime.UtcNow.AddHours(12);
+            var expiration = _settings.IsProdMode ? DateTime.UtcNow.AddHours(12) : DateTime.UtcNow.AddMonths(1);
 
             var objToken = new JwtSecurityToken(
                 issuer: _settings.JwtValidIssuer,

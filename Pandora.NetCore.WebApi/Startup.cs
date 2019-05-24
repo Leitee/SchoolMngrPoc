@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Serialization;
 using Pandora.NetStandard.Business.Services;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Config;
@@ -61,7 +62,14 @@ namespace Pandora.NetCore.WebApi
             });
 
             services.AddCors();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                .AddJsonOptions(jop =>
+                {
+                    jop.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    jop.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+                    jop.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // Add configuration for DbContext
             // Use connection string from appsettings.json file

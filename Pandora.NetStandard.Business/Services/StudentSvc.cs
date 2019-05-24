@@ -3,11 +3,11 @@ using Pandora.NetStandard.Business.Mappers;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Interfaces;
+using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Dtos;
 using Pandora.NetStandard.Model.Entities;
 using Pandora.NetStandard.Model.Enums;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -61,7 +61,9 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entityReult = await _uow.GetRepo<Student>().AllAsync(null, null, s => s.SubjectStates.Any(st => st.AcademicState == StudentStateEnum.ACTIVE));
+                var entityReult = await _uow.GetRepo<Student>().AllAsync(sb => sb.StudentStates.Any(ss => ss.Subject.SubjectAssingments.Any(sa => sa.ClassId == pClassId)),
+                    null,
+                    x => x.Include(s => s.StudentStates));
                 response.Data = _mapper.MapEntity(entityReult);
             }
             catch (Exception ex)
@@ -124,7 +126,11 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entityResult = await _uow.GetRepo<Student>().AllAsync(s => s.SubjectStates.Any(a1 => a1.Subject.SubjectAssingments.Any(a2 => a2.ClassId == pClassId)), null, s => s.SubjectStates);
+                var entityResult = await _uow.GetRepo<Student>()
+                    .AllAsync(s => s.StudentStates.Any(ss => ss.Subject.SubjectAssingments.Any(sa => sa.ClassId == pClassId))
+                    , null
+                    , x => x.Include(s => s.StudentStates));
+
                 response.Data = _mapper.MapEntity(entityResult);
             }
             catch (Exception ex)

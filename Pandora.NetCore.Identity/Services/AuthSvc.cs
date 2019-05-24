@@ -65,10 +65,16 @@ namespace Pandora.NetCore.Identity
                 else
                 {
                     var user = _mapper.MapEntity<ApplicationUser, UserDto>(await _accountManager.UserManager.FindByNameAsync(model.Username));
-                    user.Role = _mapper.MapEntity<ApplicationRole, RoleDto>(await _accountManager.GetRoleByUserAsync(user));
+                    var role = _mapper.MapEntity<ApplicationRole, RoleDto>(await _accountManager.GetRoleByUserAsync(user));
 
-                    var tokenResul = new JwtTokenProvider(_config).GenerateToken(user);
-                    response.Data = new LoginRespDto { Token = tokenResul.Token, ExpirationDate = tokenResul.ExpirationDate };
+                    if (role != null)
+                    {
+                        user.Role = role;
+                        var tokenResul = new JwtTokenProvider(_config).GenerateToken(user);
+                        response.Data = new LoginRespDto { Token = tokenResul.Token, ExpirationDate = tokenResul.ExpirationDate };
+                    }
+                    else
+                        response.Data = new LoginRespDto("This User has no role assigned.");
                 }
             }
             catch (Exception ex)

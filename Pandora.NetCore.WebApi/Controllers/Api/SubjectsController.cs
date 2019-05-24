@@ -23,11 +23,35 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
             _subjectSvc = subjectSvc;
         }
 
-        [HttpGet("{id}", Name = "getSubject")]
-        public async Task<IActionResult> Get(int id)
+        [HttpGet]
+        public async Task<IActionResult> Get()
         {
-            var response = await _subjectSvc.GetByIdAsync(id);
+            var response = await _subjectSvc.GetAllAsync();
             return response.ToHttpResponse();
+        }
+
+        [HttpGet("{id}", Name = "getSubject")]
+        public async Task<IActionResult> Get(int? id)
+        {
+            if (ModelState.IsValid && id.HasValue)
+            {
+                var response = await _subjectSvc.GetByIdAsync(id.Value);
+                return response.ToHttpResponse();
+            }
+
+            return BadRequest(ModelState);
+        }
+
+        [HttpGet("GetByTeacher/{teacherId}")]
+        public async Task<IActionResult> GetByTeacher(int? teacherId)
+        {
+            if (ModelState.IsValid && teacherId.HasValue)
+            {
+                var response = await _subjectSvc.GetByTeacherIdAsync(teacherId.Value);
+                return response.ToHttpResponse();
+            }
+
+            return BadRequest(ModelState);
         }
 
         [HttpPost]
@@ -43,11 +67,11 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
         }
 
         [HttpPut("{subjectId}/EnrollStudent")]
-        public async Task<IActionResult> EnrollStudent(StudentDto studentDto, int subjectId)
+        public async Task<IActionResult> EnrollStudent(StudentDto studentDto, int? subjectId)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && subjectId.HasValue)
             {
-                var response = await _subjectSvc.EnrollStudentAsync(studentDto, subjectId);
+                var response = await _subjectSvc.EnrollStudentAsync(studentDto, subjectId.Value);
                 return response.ToHttpResponse();
             }
 

@@ -1,4 +1,5 @@
 ﻿using Pandora.NetStandard.Core.Bases;
+using Pandora.NetStandard.Core.Interfaces.Data;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -9,8 +10,8 @@ namespace Pandora.NetStandard.Core.Interfaces
     public interface IPaginableRepository<TEntity> where TEntity : class
     {
         Task<BLPagedResponse<TEntity>> AllPagedAsync(int skip, int take, int pageSize, int currentPage,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy,
             Expression<Func<TEntity, bool>> predicate,
-            params Expression<Func<TEntity, object>>[] includes);
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy,
+            params Expression<Func<IIncludable<TEntity>, IIncludable>>[] includes);
     }
 }

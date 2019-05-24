@@ -26,11 +26,20 @@ export enum ShiftTimeEnum {
 	AFTERNOON = 2, 
 	NIGHT = 3
 }
-export enum SubjectStateEnum { 
+export enum StudentStateEnum { 
 	SUBSCRIBED = 0, 
 	ACCOMPLISHED = 1, 
 	IN_PROGRESS = 2, 
 	ABANDONED = 3
+}
+export interface Attend
+{
+	id: number;
+	attendance: AttendanceEnum;
+	date: any;
+	obs: string;
+	student: Student;
+	subject: Subject;
 }
 export interface Class
 {
@@ -39,6 +48,14 @@ export interface Class
 	shift: ShiftTimeEnum;
 	grade: Grade;
 }
+export interface ClassRoom
+{
+	id: number;
+	description: string;
+	capacity: number;
+	hasNetworkConexioin?: boolean;
+	hasScreenProjector?: boolean;
+}
 export interface Exam
 {
 	id: number;
@@ -46,8 +63,10 @@ export interface Exam
 	score: number;
 	date?: any;
 	obs: string;
-	student: any;
-	subject: any;
+	studentId: number;
+	subjectId: number;
+	student: Student;
+	subject: Subject;
 }
 export interface Grade
 {
@@ -81,23 +100,45 @@ export interface Student
 	email: string;
 	phoneNumber: string;
 	fullName: string;
-	class: any;
+	address: string;
+	subjectStates: StudentState[];
+	studentState: StudentState;
+}
+export interface StudentState
+{
+	id: number;
+	academicState: StudentStateEnum;
+	dateFrom: any;
+	dateTo?: any;
+	student: Student;
+	subject: Subject;
+	obs: string;
+}
+export interface SubjectAssingment
+{
+	id: number;
+	date: any;
+	disable: boolean;
+	subjectId: number;
+	subject: Subject;
+	classId: number;
+	class: Class;
+	classRoomId?: number;
+	classRoom: ClassRoom;
+	teacherId?: number;
+	teacher: Teacher;
 }
 export interface Subject
 {
 	id: number;
 	name: string;
-	teacher: any;
+	attends: Attend[];
+	exams: Exam[];
 }
 export interface Teacher
 {
 	id: number;
-	firstName: string;
-	lastName: string;
-	email: string;
-	phoneNumber: string;
-	fullName: string;
-	subjects: any[];
+	subjectAssingments: SubjectAssingment[];
 }
 export interface LoginResp
 {

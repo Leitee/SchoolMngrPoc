@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Interfaces;
+using Pandora.NetStandard.Core.Interfaces.Data;
 using Pandora.NetStandard.Core.Utils;
+using Pandora.NetStandard.Model.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +24,7 @@ namespace Pandora.NetStandard.Data.Dals
         }
 
         public async Task<IQueryable<TEntity>> AllAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>,
-            IOrderedQueryable<TEntity>> orderBy, params Expression<Func<TEntity, object>>[] includes)
+            IOrderedQueryable<TEntity>> orderBy, params Expression<Func<IIncludable<TEntity>, IIncludable>>[] includes)
         {
             return await Task.Run(() =>
             {
@@ -38,21 +40,15 @@ namespace Pandora.NetStandard.Data.Dals
         }
 
         public async Task<BLPagedResponse<TEntity>> AllPagedAsync(int skip, int take, int pageSize, int currentPage,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy, Expression<Func<TEntity,
-                bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
+            Expression<Func<TEntity, bool>> predicate,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy,
+            params Expression<Func<IIncludable<TEntity>, IIncludable>>[] includes)
         {
-            IQueryable<TEntity> entities;
+            IQueryable<TEntity> entities = _dbSet.IncludeMultiple(includes);
 
-            if (predicate == null)
+            if (predicate != null)
             {
-                entities = _dbSet
-                   .IncludeMultiple(includes);
-            }
-            else
-            {
-                entities = _dbSet
-                    .IncludeMultiple(includes)
-                    .Where(predicate);
+                entities = entities.Where(predicate);
             }
 
             var totalCount = entities.Count();
@@ -73,6 +69,12 @@ namespace Pandora.NetStandard.Data.Dals
             });
         }
 
+        public async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate, 
+            params Expression<Func<IIncludable<TEntity>, IIncludable>>[] includes)
+        {
+            return await _dbSet.IncludeMultiple(includes).FirstOrDefaultAsync(predicate);
+        }
+
         public async Task<TEntity> GetByIdAsync(object id)
         {
             return await _dbSet.FindAsync(id);
@@ -81,7 +83,7 @@ namespace Pandora.NetStandard.Data.Dals
         public async Task<TEntity> GetByExpressionAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _dbSet
-                .AsNoTracking<TEntity>()
+                .AsNoTracking()
                 .FirstOrDefaultAsync(predicate);
         }
 
@@ -138,27 +140,6 @@ namespace Pandora.NetStandard.Data.Dals
             {
                 return 1;
             });
-        }
-
-        public async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes)
-        {
-            IQueryable<TEntity> entities;
-
-            if (predicate == null)
-            {
-                entities = _dbSet
-                    .AsNoTracking()
-                    .IncludeMultiple(includes);
-            }
-            else
-            {
-                entities = _dbSet
-                    .AsNoTracking()
-                    .IncludeMultiple(includes)
-                    .Where(predicate);
-            }
-
-            return await entities.FirstOrDefaultAsync();
         }
 
         public async Task<List<TEntity>> ExecSp(string spName, params object[] parameters)
