@@ -4,7 +4,7 @@
     <mat-expansion-panel *ngFor="let stud of studentListSource | async; let i=index">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Legajo - Nombre Apellido
+          {{stud.id}} - {{stud.fullName}}
         </mat-panel-title>
         <mat-panel-description>
           Descripcion del alumno
@@ -25,7 +25,7 @@
           </mat-form-field>
 
           <mat-action-row>
-              <button mat-raised-button color="primary"  hideToggle>Guardar</button>
+              <button mat-raised-button color="primary" hideToggle>Guardar</button>
             </mat-action-row>
     </mat-expansion-panel>
   

@@ -18,7 +18,8 @@ const appRoutes: Routes = [
     {
         path: 'grade',
         component: GradeComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        data: { roles: [RolesEnum.DEBUG, RolesEnum.ADMINISTRADOR] }
     },
     {
         path: 'exam',

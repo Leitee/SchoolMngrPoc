@@ -1,4 +1,4 @@
-import { Grade, Class, Student } from "@/_models";
+import { Grade, Class, Student, Subject } from "@/_models";
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
@@ -21,9 +21,9 @@ export class SchoolService extends BaseService {
         return this.getById<Class[]>(gradeId);
     }
 
-    public getSubjectsByTeacherId(teacherId: number): Observable<Class[]> {
-        this.path = "subjects/GetByGrade";
-        return this.getById<Class[]>(teacherId);
+    public getSubjectsByTeacherId(teacherId: number): Observable<Subject[]> {
+        this.path = "subjects/GetByTeacher";
+        return this.getById<Subject[]>(teacherId);
     }
     
     public getStudentsByClassId(classId: number): Observable<Student[]> {
