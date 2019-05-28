@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Pandora.NetStandard.Core.Bases
+namespace Pandora.NetStandard.Core.Util
 {
     public abstract class BLResponse
     {
@@ -11,7 +11,7 @@ namespace Pandora.NetStandard.Core.Bases
 
         public int ErrorsCount { get { return Errors.Count; } }
 
-        public int ErrorCode { get; set; }
+        public int ResponseCode { get; set; }
 
         public BLResponse()
         {

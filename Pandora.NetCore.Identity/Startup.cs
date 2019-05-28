@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Pandora.NetCore.Identity.DataAccess;
 using Pandora.NetStandard.Business.Services.Contracts;
-using Pandora.NetStandard.Core.Bases;
+using Pandora.NetStandard.Core.Util;
 using Pandora.NetStandard.Core.Config;
 using Pandora.NetStandard.Core.Identity;
 using Pandora.NetStandard.Core.Interfaces;

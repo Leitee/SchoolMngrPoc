@@ -1,5 +1,5 @@
 ﻿using Pandora.NetStandard.Business.Services.Contracts;
-using Pandora.NetStandard.Core.Bases;
+using Pandora.NetStandard.Core.Util;
 using Pandora.NetStandard.Model.Dtos;
 using Pandora.NetStandard.Model.Enums;
 using System;

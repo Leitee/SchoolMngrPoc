@@ -2,7 +2,7 @@
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Pandora.NetStandard.Core.Bases
+namespace Pandora.NetStandard.Core.Util
 {
     public static class ResponseExtensions
     {
@@ -25,6 +25,7 @@ namespace Pandora.NetStandard.Core.Bases
             else if (response.Data == null)
                 status = HttpStatusCode.NotFound;
 
+            response.ResponseCode = (int)status;
             return new ObjectResult(response)
             {
                 StatusCode = (int)status
@@ -38,7 +39,10 @@ namespace Pandora.NetStandard.Core.Bases
             if (response.HasError)
                 status = HttpStatusCode.InternalServerError;
             else if (!response.Data.Any())
-                status = HttpStatusCode.NoContent;
+                response.ResponseCode = (int)HttpStatusCode.NoContent;
+
+            if(response.ResponseCode != (int)HttpStatusCode.NoContent)
+                response.ResponseCode = (int)status;
 
             return new ObjectResult(response)
             {

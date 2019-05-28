@@ -1,12 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
 using Pandora.NetStandard.Business.Mappers;
 using Pandora.NetStandard.Business.Services.Contracts;
-using Pandora.NetStandard.Core.Bases;
 using Pandora.NetStandard.Core.Interfaces;
+using Pandora.NetStandard.Core.Util;
 using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Dtos;
 using Pandora.NetStandard.Model.Entities;
-using Pandora.NetStandard.Model.Enums;
 using System;
 using System.Linq;
 using System.Threading.Tasks;

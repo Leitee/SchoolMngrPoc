@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pandora.NetStandard.Business.Services.Contracts;
-using Pandora.NetStandard.Core.Bases;
+using Pandora.NetStandard.Core.Util;
 using Pandora.NetStandard.Model.Dtos;
 using System.Collections.Generic;
 using System.Threading.Tasks;
