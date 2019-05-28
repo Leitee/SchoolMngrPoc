@@ -27,10 +27,10 @@ export enum ShiftTimeEnum {
 	NIGHT = 3
 }
 export enum StudentStateEnum { 
-	SUBSCRIBED = 0, 
-	ACCOMPLISHED = 1, 
-	IN_PROGRESS = 2, 
-	ABANDONED = 3
+	ENROLLED = 1, 
+	ACTIVE = 2, 
+	INACTIVE = 3, 
+	ACHIEVED = 4
 }
 export interface Attend
 {
@@ -53,7 +53,7 @@ export interface ClassRoom
 	id: number;
 	description: string;
 	capacity: number;
-	hasNetworkConexioin?: boolean;
+	hasNetworkConexion?: boolean;
 	hasScreenProjector?: boolean;
 }
 export interface Exam
@@ -101,8 +101,10 @@ export interface Student
 	phoneNumber: string;
 	fullName: string;
 	address: string;
-	subjectStates: StudentState[];
-	studentState: StudentState;
+	attends: Attend[];
+	exams: Exam[];
+	studentStates: StudentState[];
+	validStudentState: StudentState;
 }
 export interface StudentState
 {
