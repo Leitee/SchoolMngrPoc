@@ -2,7 +2,7 @@
 using Pandora.NetCore.WebApi.Controllers.Api;
 using Pandora.NetStandard.Business.Services;
 using Pandora.NetStandard.Business.Services.Contracts;
-using Pandora.NetStandard.Core.Bases;
+using Pandora.NetStandard.Core.Util;
 using Pandora.NetStandard.Model.Dtos;
 using System;
 using System.Collections.Generic;

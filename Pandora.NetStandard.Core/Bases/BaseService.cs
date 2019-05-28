@@ -4,7 +4,7 @@ using Pandora.NetStandard.Core.Mapper;
 using System;
 using System.Collections.Generic;
 
-namespace Pandora.NetStandard.Core.Bases
+namespace Pandora.NetStandard.Core.Util
 {
     public abstract class BaseService
     {
@@ -30,7 +30,7 @@ namespace Pandora.NetStandard.Core.Bases
 
             HandleSVCException(pResponse, errs.ToArray());
         }
-
+        //TODO: response generic error msg on prod mode
         protected void HandleSVCException(BLResponse pResponse, params string[] pErrors)
         {
             string defaultMsg = "Internal Error at Service Layer. ";

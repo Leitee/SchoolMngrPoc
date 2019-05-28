@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Pandora.NetStandard.Core.Bases;
+using Pandora.NetStandard.Core.Util;
 
 namespace Pandora.NetCore.Identity
 {

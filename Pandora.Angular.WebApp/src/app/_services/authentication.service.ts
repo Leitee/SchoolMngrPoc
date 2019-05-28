@@ -1,4 +1,4 @@
-﻿import { Response } from '@/_commons';
+﻿import { ApiResponse } from '@/_commons';
 import { Login, LoginResp, Token, User } from '@/_models';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -28,7 +28,7 @@ export class AuthenticationService {
     }
 
     login(loginObj: Login): Observable<LoginResp> {
-        return this.http.post<Response<LoginResp>>(`${environment.authUrl}/login`, loginObj)
+        return this.http.post<ApiResponse<LoginResp>>(`${environment.authUrl}/login`, loginObj)
             .pipe(
 
                 map(resp => {

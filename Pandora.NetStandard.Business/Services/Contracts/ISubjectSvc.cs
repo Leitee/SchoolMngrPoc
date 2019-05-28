@@ -1,4 +1,4 @@
-﻿using Pandora.NetStandard.Core.Bases;
+﻿using Pandora.NetStandard.Core.Util;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Model.Dtos;
 using System.Collections.Generic;

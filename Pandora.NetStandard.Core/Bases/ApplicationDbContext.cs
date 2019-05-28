@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Pandora.NetStandard.Core.Identity;
 using System;
 
-namespace Pandora.NetStandard.Core.Bases
+namespace Pandora.NetStandard.Core.Util
 {
     public abstract class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>, IDisposable
     {

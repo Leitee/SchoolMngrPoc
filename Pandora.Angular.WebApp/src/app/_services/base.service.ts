@@ -1,4 +1,4 @@
-import { Response } from '@/_commons';
+import { ApiResponse } from '@/_commons';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
@@ -18,12 +18,12 @@ export abstract class BaseService implements IRestService {
     }
 
     get<T>(): Observable<T[]> {
-        let response = this.http.get<Response<T[]>>(`${environment.apiUrl}/${this.path}`, { headers: this.headerReq });
+        let response = this.http.get<ApiResponse<T[]>>(`${environment.apiUrl}/${this.path}`, { headers: this.headerReq });
         return response.pipe(map(a => a.data));
     }
 
     getById<T>(id: number): Observable<T> {
-        let response = this.http.get<Response<T>>(`${environment.apiUrl}/${this.path}/${id}`, { headers: this.headerReq });
+        let response = this.http.get<ApiResponse<T>>(`${environment.apiUrl}/${this.path}/${id}`, { headers: this.headerReq });
         return response.pipe(map(a => a.data));
     }
 }

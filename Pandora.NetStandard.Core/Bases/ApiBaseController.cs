@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 
-namespace Pandora.NetStandard.Core.Bases
+namespace Pandora.NetStandard.Core.Util
 {
     [Route("api/v{version:apiVersion}/[controller]")]
     [Produces("application/json")]

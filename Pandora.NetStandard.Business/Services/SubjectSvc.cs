@@ -2,7 +2,7 @@
 using Pandora.NetStandard.Business.Mappers;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Business.States;
-using Pandora.NetStandard.Core.Bases;
+using Pandora.NetStandard.Core.Util;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Dtos;

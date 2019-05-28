@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Pandora.NetStandard.Core.Bases;
+using Pandora.NetStandard.Core.Util;
 
 namespace Pandora.NetStandard.Core.Interfaces
 {

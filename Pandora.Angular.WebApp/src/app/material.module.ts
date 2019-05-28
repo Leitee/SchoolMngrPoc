@@ -11,7 +11,8 @@ import { MatToolbarModule,
     MatExpansionModule, 
     MatFormFieldModule, 
     MatInputModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDialogModule
 } from '@angular/material';
 
 @NgModule({
@@ -28,7 +29,8 @@ import { MatToolbarModule,
         MatExpansionModule,
         MatFormFieldModule,
         MatInputModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatDialogModule
     ],
     exports: [
         LayoutModule,
@@ -43,7 +45,8 @@ import { MatToolbarModule,
         MatExpansionModule,
         MatFormFieldModule,
         MatInputModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatDialogModule
     ]
 })
 export class MaterialModule { }
