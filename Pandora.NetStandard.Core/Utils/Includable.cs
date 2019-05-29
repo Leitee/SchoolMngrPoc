@@ -54,10 +54,10 @@ namespace Pandora.NetStandard.Core.Utils
         }
 
         public static IIncludable<TEntity, TOtherProperty> ThenInclude<TEntity, TOtherProperty, TProperty>(
-                this IIncludable<TEntity, ICollection<TProperty>> includes,
+                this IIncludable<TEntity, IEnumerable<TProperty>> includes,
                 Expression<Func<TProperty, TOtherProperty>> propertySelector) where TEntity : class
         {
-            var result = ((Includable<TEntity, ICollection<TProperty>>)includes)
+            var result = ((Includable<TEntity, IEnumerable<TProperty>>)includes)
                 .IncludableInput
                 .ThenInclude(propertySelector);
 

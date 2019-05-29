@@ -16,6 +16,6 @@ namespace Pandora.NetStandard.Model.Dtos
         public override string Name { get => base.Name; set => base.Name = value; }
 
         [TsIgnore]
-        public new ICollection<ClassDto> Classes { set { } }
+        public new IEnumerable<ClassDto> Classes { set { } }
     }
 }

@@ -54,15 +54,18 @@ namespace Pandora.NetStandard.Business.Services
             throw new NotImplementedException();
         }
 
-        public async Task<BLListResponse<StudentDto>> GetAllExamsResultsByClass(int pClassId)
+        public async Task<BLListResponse<StudentDto>> GetStudentsAttendsBySubjectId(int pSubjectId)
         {
             var response = new BLListResponse<StudentDto>();
 
             try
             {
-                var entityReult = await _uow.GetRepo<Student>().AllAsync(sb => sb.StudentStates.Any(ss => ss.Subject.SubjectAssingments.Any(sa => sa.ClassId == pClassId)),
+                var entityReult = await _uow.GetRepo<Student>()
+                    .AllAsync(s => s.StudentStates.Any(ss => ss.SubjectId == pSubjectId),
                     null,
-                    x => x.Include(s => s.StudentStates));
+                    x => x.Include(s => s.StudentStates),
+                    x => x.Include(s => s.Attends));
+
                 response.Data = _mapper.MapEntity(entityReult);
             }
             catch (Exception ex)
@@ -119,16 +122,17 @@ namespace Pandora.NetStandard.Business.Services
             throw new NotImplementedException();
         }
 
-        public async Task<BLListResponse<StudentDto>> GetStudentsByClassId(int pClassId)
+        public async Task<BLListResponse<StudentDto>> GetStudentsExamsBySubjectId(int pSubjectId)
         {
             var response = new BLListResponse<StudentDto>();
 
             try
             {
                 var entityResult = await _uow.GetRepo<Student>()
-                    .AllAsync(s => s.StudentStates.Any(ss => ss.Subject.SubjectAssingments.Any(sa => sa.ClassId == pClassId))
+                    .AllAsync(s => s.StudentStates.Any(ss => ss.SubjectId == pSubjectId)
                     , null
-                    , x => x.Include(s => s.StudentStates));
+                    , x => x.Include(s => s.StudentStates)
+                    , x => x.Include(s => s.Exams));
 
                 response.Data = _mapper.MapEntity(entityResult);
             }

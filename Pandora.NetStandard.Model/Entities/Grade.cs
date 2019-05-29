@@ -16,6 +16,6 @@ namespace Pandora.NetStandard.Model.Entities
         public virtual string Name { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Class> Classes { get; set; }
+        public virtual IEnumerable<Class> Classes { get; set; }
     }
 }

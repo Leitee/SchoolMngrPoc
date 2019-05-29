@@ -42,12 +42,24 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
             return BadRequest(ModelState);
         }
 
-        [HttpGet("GetByClass/{id}")]
-        public async Task<IActionResult> GetByGrade(int id)
+        [HttpGet("GetExamsBySubject/{id}")]
+        public async Task<IActionResult> GetExamsBySubject(int id)
         {
             if (ModelState.IsValid)
             {
-                var response = await _studentSvc.GetStudentsByClassId(id);
+                var response = await _studentSvc.GetStudentsExamsBySubjectId(id);
+                return response.ToHttpResponse();
+            }
+
+            return BadRequest(ModelState);
+        }
+
+        [HttpGet("GetAttendsBySubject/{id}")]
+        public async Task<IActionResult> GetAttendsBySubject(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                var response = await _studentSvc.GetStudentsAttendsBySubjectId(id);
                 return response.ToHttpResponse();
             }
 

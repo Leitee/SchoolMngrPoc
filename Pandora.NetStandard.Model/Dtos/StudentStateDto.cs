@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Entities;
 using Pandora.NetStandard.Model.Enums;
 using Reinforced.Typings.Attributes;
@@ -11,6 +12,7 @@ namespace Pandora.NetStandard.Model.Dtos
     {
         public override int Id { get => base.Id; set => base.Id = value; }
         public override StudentStateEnum AcademicState { get => base.AcademicState; set => base.AcademicState = value; }
+        public string AcademicStateDescription { get { return AcademicState.GetDescription(); } }
         public override DateTime DateFrom { get => base.DateFrom; set => base.DateFrom = value; }
         public override DateTime? DateTo { get => base.DateTo; set => base.DateTo = value; }
         [IgnoreMap]

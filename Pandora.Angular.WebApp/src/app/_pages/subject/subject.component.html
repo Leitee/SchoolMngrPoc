@@ -1,10 +1,10 @@
-<app-content-wrapper headerTitle="Materias Asignadas">
+<app-content-wrapper headerTitle="Materias Asignadas" headerIcon="subject">
   <mat-grid-list cols="3" rowHeight="250px">
     <mat-grid-tile *ngFor="let subj of subjectListAsync | async" [colspan]="1" [rowspan]="1">
         <mat-card router class="dashboard-card">
           <mat-card-header>
             <mat-card-title>
-              Matematicas I
+              {{subj.name}}
               <!-- <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
                 <mat-icon>more_vert</mat-icon>
               </button> -->
@@ -15,10 +15,10 @@
             </mat-card-title>
           </mat-card-header>
           <mat-card-content class="dashboard-card-content">
-            <div><i>{{subj.name}} División - Turno {{util.getShiftEnumName(subj.shift)}}</i></div>
+            <div><i>{{subj.validSubjectAssingment.class.name}} División - Turno {{util.getShiftEnumName(subj.shift)}}</i></div>
           </mat-card-content>
           <mat-card-actions>
-            <button routerLink="/attend" color="primary" mat-button>Asistencia</button>
+            <button routerLink="/attend" [queryParams]="subj" color="primary" mat-button>Asistencia</button>
             <button routerLink="/exam" [queryParams]="subj" style="float:right" color="primary" mat-button>Examenes</button>
           </mat-card-actions>
         </mat-card>

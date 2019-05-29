@@ -1,14 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from './material.module';
-import { MenuComponent, ErrorDialogComponent, ContentWrapperComponent } from './_components';
+import { MenuComponent, ErrorDialogComponent, ContentWrapperComponent, LoaderComponent } from './_components';
 
 @NgModule({
   entryComponents: [ErrorDialogComponent],
   declarations: [
     MenuComponent,
     ContentWrapperComponent,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    LoaderComponent
   ],
   imports: [
     CommonModule,
@@ -18,7 +19,8 @@ import { MenuComponent, ErrorDialogComponent, ContentWrapperComponent } from './
     CommonModule,
     MaterialModule,
     MenuComponent,
-    ContentWrapperComponent
+    ContentWrapperComponent,
+    LoaderComponent
   ]
 })
 export class SharedModule { }

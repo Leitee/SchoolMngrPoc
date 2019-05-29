@@ -2,6 +2,7 @@
 import { RolesEnum } from '@/_models';
 import { AdminComponent, HomeComponent, GradeComponent, ExamComponent, SubjectComponent } from '@/_pages';
 import { RouterModule, Routes } from '@angular/router';
+import { AttendComponent } from './_pages/attend/attend.component';
 
 const appRoutes: Routes = [
     {
@@ -24,6 +25,11 @@ const appRoutes: Routes = [
     {
         path: 'exam',
         component: ExamComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'attend',
+        component: AttendComponent,
         canActivate: [AuthGuard]
     },
     {

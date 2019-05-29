@@ -14,10 +14,10 @@ namespace Pandora.NetStandard.Model.Entities
         public virtual int? SubjectId { get; set; }
         [ForeignKey("SubjectId")]
         public virtual Subject PreReqSubject { get; set; }
-        public virtual ICollection<SubjectAssingment> SubjectAssingments { get; set; }
-        public virtual ICollection<StudentState> StudentStates { get; set; }
-        public virtual ICollection<Attend> Attends { get; set; }
-        public virtual ICollection<Exam> Exams { get; set; }
+        public virtual IEnumerable<SubjectAssingment> SubjectAssingments { get; set; }
+        public virtual IEnumerable<StudentState> StudentStates { get; set; }
+        public virtual IEnumerable<Attend> Attends { get; set; }
+        public virtual IEnumerable<Exam> Exams { get; set; }
 
         #region subject constrains
 

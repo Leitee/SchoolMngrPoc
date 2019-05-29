@@ -46,7 +46,10 @@ export interface Class
 	id: number;
 	name: string;
 	shift: ShiftTimeEnum;
+	shiftDescription: string;
 	grade: Grade;
+	validSubjectAssingment: SubjectAssingment;
+	subjectAssingments: SubjectAssingment[];
 }
 export interface ClassRoom
 {
@@ -60,6 +63,7 @@ export interface Exam
 {
 	id: number;
 	examType: ExamTypeEnum;
+	examTypeDescription: string;
 	score: number;
 	date?: any;
 	obs: string;
@@ -110,6 +114,7 @@ export interface StudentState
 {
 	id: number;
 	academicState: StudentStateEnum;
+	academicStateDescription: string;
 	dateFrom: any;
 	dateTo?: any;
 	student: Student;
@@ -134,12 +139,17 @@ export interface Subject
 {
 	id: number;
 	name: string;
+	validSubjectAssingment: SubjectAssingment;
+	validStudentState: StudentState;
+	subjectAssingments: SubjectAssingment[];
+	studentStates: StudentState[];
 	attends: Attend[];
 	exams: Exam[];
 }
 export interface Teacher
 {
 	id: number;
+	validSubjectAssingment: SubjectAssingment;
 	subjectAssingments: SubjectAssingment[];
 }
 export interface LoginResp

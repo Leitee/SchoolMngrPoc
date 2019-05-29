@@ -1,4 +1,5 @@
-﻿using Pandora.NetStandard.Model.Entities;
+﻿using Pandora.NetStandard.Core.Utils;
+using Pandora.NetStandard.Model.Entities;
 using Pandora.NetStandard.Model.Enums;
 using Reinforced.Typings.Attributes;
 using System;
@@ -8,9 +9,10 @@ namespace Pandora.NetStandard.Model.Dtos
 {
     [TsInterface(AutoI = false, Name = "Exam")]
     public sealed class ExamDto : Exam
-    {        
+    {
         public override int Id { get => base.Id; set => base.Id = value; }
         public override ExamTypeEnum ExamType { get => base.ExamType; set => base.ExamType = value; }
+        public string ExamTypeDescription { get { return ExamType.GetDescription(); } }
         public override float Score { get => base.Score; set => base.Score = value; }
         public override DateTime? Date { get => base.Date; set => base.Date = value; }
         public override string Obs { get => base.Obs; set => base.Obs = value; }

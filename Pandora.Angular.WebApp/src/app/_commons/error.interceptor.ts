@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse, HttpResponse, HttpEventType } from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiResponse } from "@/_commons";
 
-import { AuthenticationService, DialogService } from '@/_services';
+import { AuthenticationService } from '@/_services/authentication.service';
+import { DialogService } from '@/_services/dialog.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -17,7 +18,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                     if (event.body.hasError)
                     {
                         let data = {title: "Error", message: "Ocurrio un error en el servidor."};
-                        this.dialogService.openErrorDialog(data);                        
+                        this.dialogService.openErrorDialog(data);                     
                     }
 
                     if ([204].indexOf(event.body.responseCode) !== -1) {
@@ -34,12 +35,12 @@ export class ErrorInterceptor implements HttpInterceptor {
                     location.reload(true);
                 }
                 
-                console.log(err)
+                console.error(err)
 
-                const errorMsg = err.error.message || err.statusText;
-                let data = {title: "Error", message: errorMsg};
+                let data = {title: "Error", message: "No hay conexion con el servidor."};
                 this.dialogService.openErrorDialog(data);
-
+                
+                const errorMsg = err.error.message || err.statusText;
                 return throwError(errorMsg);
             })
         )

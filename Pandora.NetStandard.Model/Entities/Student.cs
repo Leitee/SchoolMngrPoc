@@ -22,8 +22,8 @@ namespace Pandora.NetStandard.Model.Entities
         public virtual string Address { get; set; }
         public virtual string FullName { get { return $"{LastName.ToUpper()} {FirstName}"; } }
 
-        public virtual ICollection<StudentState> StudentStates { get; set; }
-        public virtual ICollection<Attend> Attends { get; set; }
-        public virtual ICollection<Exam> Exams { get; set; }
+        public virtual IEnumerable<StudentState> StudentStates { get; set; }
+        public virtual IEnumerable<Attend> Attends { get; set; }
+        public virtual IEnumerable<Exam> Exams { get; set; }
     }
 }

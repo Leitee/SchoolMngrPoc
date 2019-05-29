@@ -1,4 +1,5 @@
-﻿using Pandora.NetStandard.Model.Entities;
+﻿using Newtonsoft.Json;
+using Pandora.NetStandard.Model.Entities;
 using Reinforced.Typings.Attributes;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,7 +12,7 @@ namespace Pandora.NetStandard.Model.Dtos
     {
         public StudentDto()
         {
-            StudentStates = new List<StudentStateDto>();
+            //StudentStates = new List<StudentStateDto>();
         }
 
         public override int Id { get => base.Id; set => base.Id = value; }
@@ -29,10 +30,11 @@ namespace Pandora.NetStandard.Model.Dtos
 
         public override string Address { get => base.Address; set => base.Address = value; }
 
-        public new ICollection<AttendDto> Attends { get; set; }
-        public new ICollection<ExamDto> Exams { get; set; }
+        public new IEnumerable<AttendDto> Attends { get; set; }
+        public new IEnumerable<ExamDto> Exams { get; set; }
+        [JsonIgnore]
         public new IEnumerable<StudentStateDto> StudentStates { get; set; }
-        public StudentStateDto ValidStudentState { get { return StudentStates.FirstOrDefault(ss => !ss.DateTo.HasValue); } }
+        public StudentStateDto ValidStudentState { get; set; }
 
     }
 }

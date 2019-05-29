@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ContentWrapperComponent implements OnInit {
 
   @Input() headerTitle: string;
+  @Input() headerIcon: string;
 
   constructor() { }
 

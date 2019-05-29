@@ -1,5 +1,6 @@
 mat-card-header {
     border-bottom: solid 1px green;
+    justify-content: center;
 }
 
 mat-card-content {
@@ -27,4 +28,24 @@ mat-card-actions {
     width: 50%;
     margin: 0px;
   }
+
+}
+
+mat-icon {
+  margin-right: 15px;
+}
+
+mat-button-toggle-group {
+  //height: 40px;
+  font-weight: 500;
+}
+
+#bt1.mat-button-toggle-checked {
+  background-color: green;  
+}
+#bt2.mat-button-toggle-checked {
+  background-color: red;
+}
+#bt3.mat-button-toggle-checked {
+  background-color: yellow;
 }

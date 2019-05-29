@@ -15,7 +15,7 @@ namespace Pandora.NetStandard.Model.Entities
         public virtual int ApplicationUserId { get; set; }
         public virtual ApplicationUser  ApplicationUser { get; set; }
 
-        public virtual ICollection<SubjectAssingment> SubjectAssingments { get; set; }
+        public virtual IEnumerable<SubjectAssingment> SubjectAssingments { get; set; }
 
     }
 }

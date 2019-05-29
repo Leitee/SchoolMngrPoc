@@ -8,6 +8,8 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoaderInterceptor } from './_commons/loader.interceptor';
+import { AttendComponent } from './_pages/attend/attend.component';
 
 @NgModule({
     imports: [
@@ -24,11 +26,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         AdminComponent,
         SubjectComponent,
         GradeComponent,
-        ExamComponent
+        ExamComponent,
+        AttendComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
     ],
     bootstrap: [AppComponent]
 })

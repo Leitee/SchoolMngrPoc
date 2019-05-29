@@ -1,4 +1,5 @@
-﻿using Pandora.NetStandard.Model.Entities;
+﻿using Newtonsoft.Json;
+using Pandora.NetStandard.Model.Entities;
 using Reinforced.Typings.Attributes;
 using System.Collections.Generic;
 
@@ -9,6 +10,8 @@ namespace Pandora.NetStandard.Model.Dtos
     {
         public override int Id { get => base.Id; set => base.Id = value; }
 
-        public new ICollection<SubjectAssingmentDto> SubjectAssingments { get; set; }
+        public SubjectAssingmentDto ValidSubjectAssingment { get; set; }
+        [JsonIgnore]
+        public new IEnumerable<SubjectAssingmentDto> SubjectAssingments { get; set; }
     }
 }
