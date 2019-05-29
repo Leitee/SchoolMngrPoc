@@ -5,7 +5,7 @@ import { ErrorInterceptor, JwtInterceptor } from '@/_commons';
 import { AdminComponent, HomeComponent, GradeComponent, ExamComponent, SubjectComponent } from '@/_pages';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoaderInterceptor } from './_commons/loader.interceptor';
@@ -15,6 +15,7 @@ import { AttendComponent } from './_pages/attend/attend.component';
     imports: [
         BrowserModule,
         ReactiveFormsModule,
+        FormsModule,
         HttpClientModule,
         routing,
         BrowserAnimationsModule,

@@ -1,18 +1,20 @@
-﻿<app-content-wrapper headerTitle="Iniciar Sesión">
+﻿<app-content-wrapper headerTitle="Iniciar Sesión" headerIcon="lock">
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="example-container" autocomplete="off">
         <mat-form-field>
-            <input matInput placeholder="Usuario" formControlName="username">
+            <input matInput placeholder="Usuario" formControlName="username" minlength="6">
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-            <mat-error *ngIf="f.username.invalid">Usuario es requerido</mat-error>
+            <mat-error *ngIf="f.username.invalid">Usuario valido requerido</mat-error>
         </mat-form-field>
+        <br>
         <mat-form-field>
             <input matInput placeholder="Contraseña" formControlName="password"
-                [type]="hidePassword ? 'password' : 'text'">
-            <mat-icon matSuffix (click)="hidePassword = !hidePassword">
+                [type]="hidePassword ? 'password' : 'text'" minlength="6">
+            <mat-icon matSuffix (click)="hidePassword = !hidePassword" style="cursor: pointer">
                 {{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-            <mat-error *ngIf="f.username.invalid">Contraseña es requerida</mat-error>
+            <mat-error *ngIf="f.password.invalid">Contraseña valida requerida</mat-error>
         </mat-form-field>
+        <br>
         <mat-checkbox color="primary" formControlName="rememberme">Recordarme</mat-checkbox>
 
     
@@ -34,9 +36,9 @@
         </div> -->
 
         <div class="form-group">
-            <button mat-raised-button color="primary" [disabled]="loading">Iniciar Sesión</button>
-            <img *ngIf="loading" class="pl-2"
-                src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            <button mat-raised-button color="primary" [disabled]="!loginForm.valid || loading">Iniciar Sesión</button>
+            <!-- <img *ngIf="loading" class="pl-2"
+                src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" /> -->
         </div>
         <div *ngIf="error" class="alert alert-danger">{{error}}</div>
     </form>

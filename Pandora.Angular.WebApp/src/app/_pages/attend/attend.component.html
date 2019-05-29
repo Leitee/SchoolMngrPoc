@@ -1,4 +1,4 @@
-<app-content-wrapper headerTitle="{{subject.name}} - Asistencia" headerIcon="assignment_ind">
+<app-content-wrapper headerTitle="{{subject.name}} - Asistencia - {{date}}" headerIcon="assignment_ind">
   <mat-accordion class="example-headers-align">
 
     <mat-expansion-panel *ngFor="let stud of studentListSource | async; let i=index">
@@ -12,11 +12,15 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
 
-      <mat-button-toggle-group name="attends" aria-label="Font Style">
-        <mat-button-toggle id="bt1" value="1">Presente</mat-button-toggle>
-        <mat-button-toggle id="bt2" value="2">Ausente</mat-button-toggle>
-        <mat-button-toggle id="bt3" value="3">Justificado</mat-button-toggle>
+      <mat-button-toggle-group name="attends" [(ngModel)]="resul">
+        <mat-button-toggle id="bt1" value=1>Presente</mat-button-toggle>
+        <mat-button-toggle id="bt2" value=2>Ausente</mat-button-toggle>
+        <mat-button-toggle id="bt3" value=3>Justificado</mat-button-toggle>
       </mat-button-toggle-group>
+
+      <mat-form-field *ngIf="resul == 3">
+        <textarea type="text" matInput placeholder="Observaciones"></textarea>
+      </mat-form-field>
 
       <!-- <mat-action-row>
         <button mat-raised-button color="primary" hideToggle>Guardar</button>

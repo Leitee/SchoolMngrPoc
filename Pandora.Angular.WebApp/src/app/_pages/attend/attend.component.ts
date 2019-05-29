@@ -15,6 +15,8 @@ export class AttendComponent implements OnInit {
 
   studentListSource: Observable<Array<Student>>;
   subject: Subject;
+  date = new Date().toLocaleDateString();
+  resul: any;
   
   constructor(private schoolSvc: SchoolService, private route: ActivatedRoute) { }
 
