@@ -39,7 +39,7 @@ const appRoutes: Routes = [
     },
     {
         path: 'auth',
-        loadChildren: './_auth/auth.module#AuthModule'//lazy loading
+        loadChildren: () => import('./_auth/auth.module').then(m => m.AuthModule)
     },
 
     // otherwise redirect to home
