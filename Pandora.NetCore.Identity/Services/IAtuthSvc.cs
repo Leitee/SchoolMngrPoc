@@ -14,7 +14,7 @@ namespace Pandora.NetStandard.Business.Services.Contracts
     {
         Task<BLSingleResponse<LoginRespDto>> LoginAsync(LoginDto model);
         Task<BLSingleResponse<TUser>> RegisterAsync(RegisterDto model);
-        Task LogoutAsync();
+        Task<BLResponse> LogoutAsync();
         Task<string> GetEmailConfirmTokenAsync(TUser user);
         Task<BLSingleResponse<bool>> SendEmailAsync(string pEmail, string pUrlRedirect);
         Task<BLSingleResponse<bool>> ConfirmEmailAsync(TUser user, string token);

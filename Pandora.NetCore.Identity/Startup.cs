@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,12 +11,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Pandora.NetCore.Identity.DataAccess;
 using Pandora.NetStandard.Business.Services.Contracts;
-using Pandora.NetStandard.Core.Util;
 using Pandora.NetStandard.Core.Config;
 using Pandora.NetStandard.Core.Identity;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Mapper;
+using Pandora.NetStandard.Core.Util;
 using System;
+using System.Threading.Tasks;
 
 namespace Pandora.NetCore.Identity
 {
@@ -34,15 +38,15 @@ namespace Pandora.NetCore.Identity
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowMyOrigin",
-                builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());//TODO: set origin from config
+                builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());//TODO: set origin from config
             });
 
             //services.AddCors();
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .ConfigureApiBehaviorOptions(opt =>
+                .ConfigureApiBehaviorOptions(options =>
                 {
-                    opt.SuppressModelStateInvalidFilter = true;//allow reach controller when model state invalid request
+                    options.SuppressModelStateInvalidFilter = true;//allow reach controller when model state invalid request
                 });
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -67,15 +71,41 @@ namespace Pandora.NetCore.Identity
                 options.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
                 options.SignIn.RequireConfirmedEmail = true;
             })
-                .AddDefaultTokenProviders()
                 .AddSignInManager<AccountManagerFacade>()
                 .AddUserManager<UserManagerFacade>()
                 .AddRoleManager<RoleManagerFacade>()
-                .AddEntityFrameworkStores<IdentityDbContext>();
-            //.AddDefaultUI(UIFramework.Bootstrap4)
+                .AddEntityFrameworkStores<IdentityDbContext>()
+                .AddDefaultTokenProviders();
+                //.AddDefaultUI(UIFramework.Bootstrap4)
 
             services.AddDbContext<IdentityDbContext>(ctx => ctx.UseSqlServer(AppSettings.ConnectionString));
 
+            services.AddAuthentication(options =>
+            {
+                options.DefaultSignOutScheme = IdentityConstants.ApplicationScheme;
+            })
+                .AddFacebook(options =>
+                {
+                    options.AppId = "702232643566408";
+                    options.AppSecret = "7def9afd9c2abb4cd6189d91060f3329";
+                })
+                .AddGoogle("Google", options =>
+                {
+                    options.ClientId = "407594316442-dhlbkjibljqlib55dkhnf2blnaiqcp06.apps.googleusercontent.com";
+                    options.ClientSecret = "ll05r6edgiP0gyOEeEHYEOTJ";
+                    options.CallbackPath = new PathString("/google-callback");
+                    options.Events = new OAuthEvents
+                    {
+                        OnRemoteFailure = (RemoteFailureContext context) =>
+                        {
+                            context.Response.Redirect("/home/denied");
+                            context.HandleResponse();
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
+
+            //Dependency Injection Settings
             services.AddScoped<ILogger, Logger<ApiBaseController>>();
             services.AddSingleton<IMapperCore, GenericMapperCore>();
             services.AddScoped<IApplicationUow, IdentityUow>();
@@ -94,8 +124,13 @@ namespace Pandora.NetCore.Identity
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseCors("AllowMyOrigin");
+
+            app.UseAuthentication();
+
             app.UseHttpsRedirection();
+
             app.UseMvc();
         }
     }

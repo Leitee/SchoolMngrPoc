@@ -85,9 +85,10 @@ namespace Pandora.NetCore.Identity
             return response;
         }
 
-        public async Task LogoutAsync()
+        public async Task<BLResponse> LogoutAsync()
         {
             await _accountManager.SignOutAsync();
+            return BLResponse.GetVoidResponse();
         }
 
         public async Task<BLSingleResponse<UserDto>> RegisterAsync(RegisterDto model)

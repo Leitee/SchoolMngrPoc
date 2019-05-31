@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Net;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Pandora.NetStandard.Core.Util
 {
@@ -25,7 +25,7 @@ namespace Pandora.NetStandard.Core.Util
             else if (response.Data == null)
                 status = HttpStatusCode.NotFound;
 
-            response.ResponseCode = (int)status;
+            response.ResponseCode = status;
             return new ObjectResult(response)
             {
                 StatusCode = (int)status
@@ -39,10 +39,10 @@ namespace Pandora.NetStandard.Core.Util
             if (response.HasError)
                 status = HttpStatusCode.InternalServerError;
             else if (!response.Data.Any())
-                response.ResponseCode = (int)HttpStatusCode.NoContent;
+                response.ResponseCode = HttpStatusCode.NoContent;
 
-            if(response.ResponseCode != (int)HttpStatusCode.NoContent)
-                response.ResponseCode = (int)status;
+            if (response.ResponseCode != HttpStatusCode.NoContent)
+                response.ResponseCode = status;
 
             return new ObjectResult(response)
             {

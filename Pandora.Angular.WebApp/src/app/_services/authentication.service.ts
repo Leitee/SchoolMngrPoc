@@ -15,7 +15,7 @@ export class AuthenticationService {
     public currentUser: Observable<User>;
 
     constructor(private http: HttpClient) {
-        this.currentUserSubject = new BehaviorSubject<User>(this.GetUserFromStoredToken(localStorage.getItem(this.tokenKey)));
+        this.currentUserSubject = new BehaviorSubject<User>(this.getUserFromStoredToken(localStorage.getItem(this.tokenKey)));
         this.currentUser = this.currentUserSubject.asObservable();
     }
 
@@ -38,7 +38,7 @@ export class AuthenticationService {
                         // store user details and jwt token in local storage to keep user logged in between page refreshes
                         localStorage.setItem(this.tokenKey, resp.data.token);
 
-                        this.currentUserSubject.next(this.GetUserFromStoredToken(resp.data.token));
+                        this.currentUserSubject.next(this.getUserFromStoredToken(resp.data.token));
                     }
 
                     return resp.data;
@@ -52,7 +52,7 @@ export class AuthenticationService {
         this.currentUserSubject.next(null);
     }
 
-    private GetUserFromStoredToken(tokenStr: string): User {
+    private getUserFromStoredToken(tokenStr: string): User {
         let userStr = (tokenStr === null) ? tokenStr : jwt_decode<Token>(tokenStr).userdata.toLowerCase();
         return JSON.parse(userStr);
     }

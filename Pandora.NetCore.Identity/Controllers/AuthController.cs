@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 namespace Pandora.NetCore.Identity.Controllers
 {
     [Route("auth/v1")]
-    [ApiController]
     public class AuthController : ApiBaseController
     {
         private readonly IAuthSvc _authSvc;

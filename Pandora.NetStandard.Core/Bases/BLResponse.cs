@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace Pandora.NetStandard.Core.Util
 {
-    public abstract class BLResponse
+    public class BLResponse
     {
         public List<string> Errors { get; set; }
 
@@ -11,11 +12,16 @@ namespace Pandora.NetStandard.Core.Util
 
         public int ErrorsCount { get { return Errors.Count; } }
 
-        public int ResponseCode { get; set; }
+        public HttpStatusCode ResponseCode { get; set; }
 
         public BLResponse()
         {
             Errors = new List<string>();
+        }
+
+        public static BLResponse GetVoidResponse()
+        {
+            return new BLResponse { ResponseCode = HttpStatusCode.OK };
         }
     }
 
