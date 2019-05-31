@@ -1,9 +1,8 @@
 ﻿import { User } from '@/_models';
 import { AccountService, AuthenticationService } from '@/_services';
 import { Component } from '@angular/core';
-import { first } from 'rxjs/operators';
 
-@Component({ templateUrl: 'home.component.html', styleUrls: ['../pages.component.scss'] })
+@Component({ templateUrl: 'home.component.html', styleUrls: ['../pages.component.scss'], host: {'[@moveIn]': ''} })
 export class HomeComponent {
     currentUser: User;
     userFromApi: User;
