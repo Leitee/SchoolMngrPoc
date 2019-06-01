@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Pandora.NetStandard.Core.Utils
 {
-    public static class EntityHelper
+    public static class EntityExtension
     {
         public static IQueryable<TEntity> IncludeMultiple<TEntity>(this IQueryable<TEntity> query,
             params Expression<Func<TEntity, object>>[] includes) where TEntity : class

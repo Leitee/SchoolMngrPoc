@@ -2,14 +2,18 @@
 import { routing } from '@/app.routing';
 import { SharedModule } from '@/shared.module';
 import { ErrorInterceptor, JwtInterceptor } from '@/_commons';
-import { AdminComponent, HomeComponent, GradeComponent, ExamComponent, SubjectComponent } from '@/_pages';
+import { AdminComponent, HomeComponent, GradeComponent, ExamComponent, SubjectComponent, AttendComponent } from '@/_pages';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoaderInterceptor } from './_commons/loader.interceptor';
-import { AttendComponent } from './_pages/attend/attend.component';
+import { AppConfigService } from '@/_services';
+
+export function initConfig(config: AppConfigService) {
+    return () => config.load();
+}
 
 @NgModule({
     imports: [
@@ -31,6 +35,13 @@ import { AttendComponent } from './_pages/attend/attend.component';
         AttendComponent
     ],
     providers: [
+        AppConfigService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initConfig,
+            deps: [AppConfigService],
+            multi: true
+        },
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }

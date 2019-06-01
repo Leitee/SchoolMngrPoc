@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Net;
 
-namespace Pandora.NetStandard.Core.Util
+namespace Pandora.NetStandard.Core.Utils
 {
     public class BLResponse
     {
@@ -19,9 +19,9 @@ namespace Pandora.NetStandard.Core.Util
             Errors = new List<string>();
         }
 
-        public static BLResponse GetVoidResponse()
+        public static BLResponse GetVoidResponse(HttpStatusCode statusCode = HttpStatusCode.OK)
         {
-            return new BLResponse { ResponseCode = HttpStatusCode.OK };
+            return new BLResponse { ResponseCode = statusCode };
         }
     }
 

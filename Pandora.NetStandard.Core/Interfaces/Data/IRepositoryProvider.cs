@@ -1,4 +1,4 @@
-﻿using Pandora.NetStandard.Core.Util;
+﻿using Pandora.NetStandard.Core.Base;
 using System;
 
 namespace Pandora.NetStandard.Core.Interfaces

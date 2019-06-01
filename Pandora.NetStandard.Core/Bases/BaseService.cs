@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Mapper;
+using Pandora.NetStandard.Core.Utils;
 using System;
 using System.Collections.Generic;
+using System.Net;
 
-namespace Pandora.NetStandard.Core.Util
+namespace Pandora.NetStandard.Core.Base
 {
     public abstract class BaseService
     {
@@ -16,6 +18,11 @@ namespace Pandora.NetStandard.Core.Util
             _logger = logger;
             _logger?.LogInformation($"Accessing to service : {DateTime.UtcNow}");
             _uow = applicationUow;
+        }
+
+        protected void HandleSVCException(Exception pEx)
+        {
+            HandleSVCException(BLResponse.GetVoidResponse(HttpStatusCode.InternalServerError), pEx);
         }
 
         protected void HandleSVCException(BLResponse pResponse, Exception pEx)

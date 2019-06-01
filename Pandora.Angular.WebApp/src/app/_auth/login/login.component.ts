@@ -1,5 +1,5 @@
 ﻿import { Login } from "@/_models";
-import { AuthenticationService } from '@/_services';
+import { AuthenticationService, LoaderService } from '@/_services';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -32,7 +32,13 @@ export class LoginComponent implements OnInit {
             username: ['', Validators.required],
             password: ['', Validators.required],
             rememberme: [false]
+
+        
         });
+
+        if(this.route.snapshot.queryParamMap.has('external')) {
+            console.log('externallllllllll')
+        }
 
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -68,5 +74,9 @@ export class LoginComponent implements OnInit {
                     console.error(error);
                     this.loading = false;
                 });
+    }
+
+    googleLogin(){        
+        this.authenticationService.googleLogin();
     }
 }

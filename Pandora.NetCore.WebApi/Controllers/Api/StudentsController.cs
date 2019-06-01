@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pandora.NetStandard.Business.Services.Contracts;
-using Pandora.NetStandard.Core.Util;
+using Pandora.NetStandard.Core.Base;
+using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Dtos;
+using System.Threading.Tasks;
 
 namespace Pandora.NetCore.WebApi.Controllers.Api
 {
@@ -17,7 +15,7 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
     {
         private readonly IStudentSvc _studentSvc;
 
-        public StudentsController(ILogger<StudentsController> logger, IStudentSvc studentSvc) 
+        public StudentsController(ILogger<StudentsController> logger, IStudentSvc studentSvc)
             : base(logger)
         {
             _studentSvc = studentSvc;

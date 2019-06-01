@@ -34,7 +34,7 @@ namespace Pandora.NetStandard.Core.Mapper
             MappingConfiguration = pMapperConfig;
         }
 
-        public virtual TOutputEntity MapEntity(TInputEntity entity) 
+        public virtual TOutputEntity MapEntity(TInputEntity entity)
         {
             if (entity == null) return default;
             return MappingConfiguration.Map<TOutputEntity>(entity);

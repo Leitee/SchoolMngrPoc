@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Net;
 
-namespace Pandora.NetStandard.Core.Util
+namespace Pandora.NetStandard.Core.Utils
 {
     public static class ResponseExtensions
     {

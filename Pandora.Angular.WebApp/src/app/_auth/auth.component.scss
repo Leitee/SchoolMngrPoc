@@ -3,8 +3,12 @@ button {
   margin-top: 25px;
 }
 
+mat-form-field {
+  width: 100%;
+}
+
 app-content-wrapper {    
-  width: 450px;
+  width: 470px;
 	height: 350px;	
 	position: absolute;
 	top:-65px;
@@ -24,11 +28,22 @@ app-content-wrapper {
 }
 
 .btn-login {
-  border: solid 1px;
-  &.facebook {
-    background-color: royalblue;
-  }
-  &.google {
-    background-color: white;
+  border: solid 1px green;
+  color: white;
+
+  &.social{
+    width: 100%;
+    width: 47%;
+
+    &.facebook {
+      background-color: royalblue;
+      float: left;
+      border: blue;
+    }
+    &.google {
+      background-color: #de4b4b;
+      float: right;
+      border: red;
+    }
   }
 }

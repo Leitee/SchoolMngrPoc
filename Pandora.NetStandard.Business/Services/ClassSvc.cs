@@ -1,21 +1,21 @@
 ﻿using Microsoft.Extensions.Logging;
-using Pandora.NetStandard.Model.Dtos;
 using Pandora.NetStandard.Business.Mappers;
 using Pandora.NetStandard.Business.Services.Contracts;
-using Pandora.NetStandard.Core.Util;
+using Pandora.NetStandard.Core.Base;
 using Pandora.NetStandard.Core.Interfaces;
+using Pandora.NetStandard.Core.Utils;
+using Pandora.NetStandard.Model.Dtos;
 using Pandora.NetStandard.Model.Entities;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Pandora.NetStandard.Core.Utils;
 
 namespace Pandora.NetStandard.Business.Services
 {
     public class ClassSvc : BaseService<Class, ClassDto>, IClassSvc
     {
 
-        public ClassSvc(IApplicationUow applicationUow, ILogger<ClassSvc> logger) : 
+        public ClassSvc(IApplicationUow applicationUow, ILogger<ClassSvc> logger) :
             base(applicationUow, logger, new ClassToDtoMapper())
         {
 
@@ -77,7 +77,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entity = await _uow.GetRepo<Class>().AllAsync(null, o => o.OrderBy(g => g.GradeId),  null);
+                var entity = await _uow.GetRepo<Class>().AllAsync(null, o => o.OrderBy(g => g.GradeId), null);
                 response.Data = _mapper.MapEntity(entity);
             }
             catch (Exception ex)

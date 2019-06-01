@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Pandora.NetStandard.Business.Services.Contracts;
-using Pandora.NetStandard.Core.Util;
+using Pandora.NetCore.Identity.Services.Contracts;
+using Pandora.NetStandard.Core.Base;
 using Pandora.NetStandard.Core.Config;
 using Pandora.NetStandard.Core.Identity;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Mapper;
 using Pandora.NetStandard.Core.Security;
+using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Dtos;
 using SendGrid;
 using SendGrid.Helpers.Mail;
@@ -16,13 +17,14 @@ using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
-namespace Pandora.NetCore.Identity
+namespace Pandora.NetCore.Identity.Services
 {
     public class AuthSvc : BaseService, IAuthSvc
     {
         private readonly AccountManagerFacade _accountManager;
         private readonly IMapperCore _mapper;
-        private readonly IConfiguration _config;
+        private IConfiguration _config;
+        private readonly AppSettings _settings;
 
         public AuthSvc(
             IApplicationUow applicationUow,
@@ -32,7 +34,8 @@ namespace Pandora.NetCore.Identity
             IConfiguration config) : base(applicationUow, logger)
         {
             _mapper = mapper;
-            _config = config;
+            _config = config ?? throw new ArgumentNullException(nameof(config));
+            _settings = AppSettings.GetSettings(config);
             _accountManager = accountManager;
         }
 
@@ -115,13 +118,12 @@ namespace Pandora.NetCore.Identity
         public async Task<BLSingleResponse<bool>> SendEmailAsync(string email, string callbackUrl)
         {
             var response = new BLSingleResponse<bool>();
-            AppSettings settings = AppSettings.GetSettings(_config);
 
-            var client = new SendGridClient(AppSettings.GetSettings(_config).SendGridApiKey);
+            var client = new SendGridClient(_settings.SendGridApiKey);
             var msg = MailHelper.CreateSingleEmail(
-                new EmailAddress(settings.SendGridFrom, settings.SendGridUserSender),
+                new EmailAddress(_settings.SendGridFrom, _settings.SendGridUserSender),
                 new EmailAddress(email),
-                settings.SendGridSubject,
+                _settings.SendGridSubject,
                 "Thank you for register.",
                 $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 

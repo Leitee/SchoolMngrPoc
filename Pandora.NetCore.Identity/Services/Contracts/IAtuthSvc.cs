@@ -1,9 +1,10 @@
-﻿using Pandora.NetStandard.Core.Util;
+﻿using Pandora.NetStandard.Core.Base;
 using Pandora.NetStandard.Core.Identity;
+using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Dtos;
 using System.Threading.Tasks;
 
-namespace Pandora.NetStandard.Business.Services.Contracts
+namespace Pandora.NetCore.Identity.Services.Contracts
 {
     public interface IAuthSvc : IAuthSvc<UserDto>
     {

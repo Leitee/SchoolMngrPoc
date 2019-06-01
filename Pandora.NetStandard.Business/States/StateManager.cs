@@ -1,8 +1,7 @@
 ﻿using Pandora.NetStandard.Business.Services.Contracts;
-using Pandora.NetStandard.Core.Util;
+using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Dtos;
 using Pandora.NetStandard.Model.Enums;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -42,7 +41,7 @@ namespace Pandora.NetStandard.Business.States
 
         protected virtual bool StateManagerResponseHandler(BLResponse bLResponse)
         {
-            if(bLResponse == null)
+            if (bLResponse == null)
                 throw new StateManagerException("Null Result Exception");
             else if (bLResponse.HasError)
                 throw new StateManagerException(string.Concat(bLResponse.Errors.ToArray()));

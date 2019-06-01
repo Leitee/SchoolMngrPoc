@@ -5,7 +5,7 @@ namespace Pandora.NetStandard.Core.Identity
     public class ApplicationRole : IdentityRole<int>
     {
         public ApplicationRole() { }
-        public ApplicationRole(string name, string description) : base(name)
+        public ApplicationRole(string name, string description = null) : base(name)
         {
             Description = description;
             NormalizedName = name.ToUpper();

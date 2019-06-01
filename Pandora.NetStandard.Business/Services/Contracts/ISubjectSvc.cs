@@ -1,5 +1,5 @@
-﻿using Pandora.NetStandard.Core.Util;
-using Pandora.NetStandard.Core.Interfaces;
+﻿using Pandora.NetStandard.Core.Interfaces;
+using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Dtos;
 using System.Collections.Generic;
 using System.Threading.Tasks;

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pandora.NetCore.WebApi.Controllers.Api;
 using Pandora.NetStandard.Business.Services;
 using Pandora.NetStandard.Business.Services.Contracts;
-using Pandora.NetStandard.Core.Util;
+using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Dtos;
 using System.Threading.Tasks;
 using Xunit;

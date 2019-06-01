@@ -2,10 +2,9 @@
 import { AccountService, AuthenticationService } from '@/_services';
 import { Component } from '@angular/core';
 
-@Component({ templateUrl: 'home.component.html', styleUrls: ['../pages.component.scss'], host: {'[@moveIn]': ''} })
+@Component({ templateUrl: 'home.component.html', styleUrls: ['../pages.component.scss'] })
 export class HomeComponent {
     currentUser: User;
-    userFromApi: User;
 
     constructor(
         private userService: AccountService,

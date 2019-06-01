@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Pandora.NetStandard.Core.Utils
 {
-    public static class EnumHelper
+    public static class EnumExtension
     {
         public static int GetId(this Enum en)
         {

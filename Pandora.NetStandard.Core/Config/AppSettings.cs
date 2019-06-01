@@ -7,6 +7,7 @@ namespace Pandora.NetStandard.Core.Config
         public string Environment { get; set; }
         public bool IsProdMode { get { return Environment == "Prod"; } }
         public string ConnectionString { get; set; }
+        public string WebClientUrl { get; set; }
         public string JwtSecretKey { get; set; }
         public string JwtValidIssuer { get; set; }
         public string JwtValidAudience { get; set; }
@@ -15,6 +16,10 @@ namespace Pandora.NetStandard.Core.Config
         public string SendGridUserSender { get; set; }
         public string SendGridSubject { get; set; }
         public string SendGridFrom { get; set; }
+        public string SocialFacebookAppId { get; set; }
+        public string SocialFacebookAppSecret { get; set; }
+        public string SocialGoogleClientId { get; set; }
+        public string SocialGoogleAppSecret { get; set; }
         public string ElasticServerUrl { get; set; }
 
         public static AppSettings GetSettings(IConfiguration config)

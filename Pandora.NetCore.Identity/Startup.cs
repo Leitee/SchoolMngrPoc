@@ -10,12 +10,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Pandora.NetCore.Identity.DataAccess;
-using Pandora.NetStandard.Business.Services.Contracts;
+using Pandora.NetCore.Identity.Services;
+using Pandora.NetCore.Identity.Services.Contracts;
 using Pandora.NetStandard.Core.Config;
 using Pandora.NetStandard.Core.Identity;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Mapper;
-using Pandora.NetStandard.Core.Util;
+using Pandora.NetStandard.Core.Base;
 using System;
 using System.Threading.Tasks;
 
@@ -86,13 +87,14 @@ namespace Pandora.NetCore.Identity
             })
                 .AddFacebook(options =>
                 {
-                    options.AppId = "702232643566408";
-                    options.AppSecret = "7def9afd9c2abb4cd6189d91060f3329";
+                    options.AppId = AppSettings.SocialFacebookAppId;
+                    options.AppSecret = AppSettings.SocialFacebookAppSecret;
+                    //options.CallbackPath = new PathString("/google-callback");
                 })
                 .AddGoogle("Google", options =>
                 {
-                    options.ClientId = "407594316442-dhlbkjibljqlib55dkhnf2blnaiqcp06.apps.googleusercontent.com";
-                    options.ClientSecret = "ll05r6edgiP0gyOEeEHYEOTJ";
+                    options.ClientId = AppSettings.SocialGoogleClientId;
+                    options.ClientSecret = AppSettings.SocialGoogleAppSecret;
                     options.CallbackPath = new PathString("/google-callback");
                     options.Events = new OAuthEvents
                     {
@@ -110,6 +112,7 @@ namespace Pandora.NetCore.Identity
             services.AddSingleton<IMapperCore, GenericMapperCore>();
             services.AddScoped<IApplicationUow, IdentityUow>();
             services.AddScoped<IAuthSvc, AuthSvc>();
+            services.AddScoped<ISocialSvc, SocialSvc>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

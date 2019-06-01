@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pandora.NetStandard.Business.Services.Contracts;
-using Pandora.NetStandard.Core.Util;
+using Pandora.NetStandard.Core.Base;
+using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Dtos;
 using System.Threading.Tasks;
 
@@ -77,6 +78,6 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
             return response.ToHttpResponse();
         }
 
-        
+
     }
 }

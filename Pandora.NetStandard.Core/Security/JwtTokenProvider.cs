@@ -24,7 +24,7 @@ namespace Pandora.NetStandard.Core.Security
         {
             IEnumerable<Claim> claims = new[] {
                 new Claim("userdata", JsonConvert.SerializeObject(pUser).ToLower()),//TODO: get rid ToLower and fix Json parsing
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())//to generate random token
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.JwtSecretKey));

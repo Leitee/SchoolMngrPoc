@@ -1,5 +1,5 @@
-﻿using Pandora.NetStandard.Core.Util;
-using Pandora.NetStandard.Core.Interfaces.Data;
+﻿using Pandora.NetStandard.Core.Interfaces.Data;
+using Pandora.NetStandard.Core.Utils;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
