@@ -22,8 +22,8 @@ namespace Pandora.NetCore.Identity.Services
     public class AuthSvc : BaseService, IAuthSvc
     {
         private readonly AccountManagerFacade _accountManager;
+        private readonly IJwtTokenProvider _tokenProvider;
         private readonly IMapperCore _mapper;
-        private IConfiguration _config;
         private readonly AppSettings _settings;
 
         public AuthSvc(
@@ -31,12 +31,13 @@ namespace Pandora.NetCore.Identity.Services
             ILogger logger,
             IMapperCore mapper,
             AccountManagerFacade accountManager,
+            IJwtTokenProvider tokenProvider,
             IConfiguration config) : base(applicationUow, logger)
         {
             _mapper = mapper;
-            _config = config ?? throw new ArgumentNullException(nameof(config));
-            _settings = AppSettings.GetSettings(config);
+            _settings = AppSettings.GetSettings(config ?? throw new ArgumentNullException(nameof(config)));
             _accountManager = accountManager;
+            _tokenProvider = tokenProvider;
         }
 
         public async Task<string> GetEmailConfirmTokenAsync(UserDto user)
@@ -51,7 +52,7 @@ namespace Pandora.NetCore.Identity.Services
 
             try
             {
-                var signInResul = await _accountManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
+                var signInResul = await _accountManager.SignInAsync(model.Username, model.Password, model.RememberMe);
 
                 if (signInResul == SignInResult.Failed)
                 {
@@ -67,17 +68,19 @@ namespace Pandora.NetCore.Identity.Services
                 }
                 else
                 {
-                    var user = _mapper.MapEntity<ApplicationUser, UserDto>(await _accountManager.UserManager.FindByNameAsync(model.Username));
-                    var role = _mapper.MapEntity<ApplicationRole, RoleDto>(await _accountManager.GetRoleByUserAsync(user));
-
+                    var user = await _accountManager.UserManager.FindByNameAsync(model.Username);
+                    var role = await _accountManager.GetRoleByUserAsync(user);
+                    
                     if (role != null)
                     {
-                        user.Role = role;
-                        var tokenResul = new JwtTokenProvider(_config).GenerateToken(user);
+                        var tokenResul = _tokenProvider.GenerateToken(user, role);
                         response.Data = new LoginRespDto { Token = tokenResul.Token, ExpirationDate = tokenResul.ExpirationDate };
                     }
                     else
+                    {
                         response.Data = new LoginRespDto("This User has no role assigned.");
+                        await _accountManager.SignOutAsync();
+                    }
                 }
             }
             catch (Exception ex)

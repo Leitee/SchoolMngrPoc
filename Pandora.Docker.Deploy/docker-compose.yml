@@ -2,8 +2,8 @@ version: '3.4'
 
 services:
   pandora.netcore.identity:
-    image: ${DOCKER_REGISTRY-}pandoranetcoreidentity
-    container_name: pandoranetcoreidentity
+    image: pandoranetcoreidentity:latest
+    container_name: pandora.netcore.identity
     build:
       context: .
       dockerfile: ../Pandora.NetCore.Identity/Dockerfile
@@ -12,8 +12,8 @@ services:
       - elasticsearch
 
   pandora.netcore.webapi:
-    image: ${DOCKER_REGISTRY-}pandoranetcorewebapi
-    container_name: pandoranetcorewebapi
+    image: pandoranetcorewebapi:latest
+    container_name: pandora.netcore.webapi
     build:
       context: .
       dockerfile: ../Pandora.NetCore.WebApi/Dockerfile
@@ -31,7 +31,6 @@ services:
       - "5433:1433"
     volumes:
       - mssqlserver-data:/var/opt/mssql
-    
 
   elasticsearch:
      image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4

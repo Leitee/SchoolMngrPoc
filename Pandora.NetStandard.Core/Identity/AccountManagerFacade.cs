@@ -57,7 +57,10 @@ namespace Pandora.NetStandard.Core.Identity
 
         public virtual async Task<SignInResult> SignInAsync(string pUsername, string pPassword, bool pRememberMe)
         {
-            return await PasswordSignInAsync(pUsername, pPassword, pRememberMe, false);
+            var signResul = await PasswordSignInAsync(pUsername, pPassword, pRememberMe, false);
+            if(signResul.Succeeded)
+                await SignInAsync(await UserManager.FindByNameAsync(pUsername), pRememberMe);
+            return signResul;
         }
 
         public override Task SignOutAsync()

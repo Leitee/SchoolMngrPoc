@@ -19,6 +19,7 @@ using Pandora.NetStandard.Core.Mapper;
 using Pandora.NetStandard.Core.Base;
 using System;
 using System.Threading.Tasks;
+using Pandora.NetStandard.Core.Security;
 
 namespace Pandora.NetCore.Identity
 {
@@ -113,6 +114,7 @@ namespace Pandora.NetCore.Identity
             services.AddScoped<IApplicationUow, IdentityUow>();
             services.AddScoped<IAuthSvc, AuthSvc>();
             services.AddScoped<ISocialSvc, SocialSvc>();
+            services.AddTransient<IJwtTokenProvider, JwtTokenProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

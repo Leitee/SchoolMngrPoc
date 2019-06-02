@@ -36,8 +36,12 @@ export class LoginComponent implements OnInit {
         
         });
 
-        if(this.route.snapshot.queryParamMap.has('external')) {
-            console.log('externallllllllll')
+        // loged in with external provider return token
+        if(this.route.snapshot.queryParamMap.has('access_token')) {
+            this.authenticationService.externalLogin(this.route.snapshot.queryParamMap.get('access_token'))
+            .subscribe(() => {
+                this.router.navigate([this.returnUrl]);
+            });
         }
 
         // get return url from route parameters or default to '/'
@@ -77,6 +81,6 @@ export class LoginComponent implements OnInit {
     }
 
     googleLogin(){        
-        this.authenticationService.googleLogin();
+        this.authenticationService.googleRedirect();
     }
 }

@@ -22,20 +22,20 @@ namespace Pandora.NetCore.Identity.Services
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly AccountManagerFacade _accountManager;
         private readonly UserManagerFacade _userManager;
-        private readonly IMapperCore _mapper;
+        private readonly IJwtTokenProvider _tokenProvider;
 
         public SocialSvc(IApplicationUow applicationUow,
             ILogger logger,
             IAuthenticationSchemeProvider schemeProvider,
             AccountManagerFacade accountManager,
             UserManagerFacade userManager,
-            IMapperCore mapper
+            IJwtTokenProvider tokenProvider
             ) : base(applicationUow, logger)
         {
             _schemeProvider = schemeProvider;
             _accountManager = accountManager;
             _userManager = userManager;
-            _mapper = mapper;
+            _tokenProvider = tokenProvider;
         }
 
         public async Task<BLListResponse<string>> GetAllSocialProvidersAsync()
@@ -55,8 +55,10 @@ namespace Pandora.NetCore.Identity.Services
             return response;
         }
 
-        public async Task<BLResponse> HandleExternalLoginAsync()
+        public async Task<BLSingleResponse<string>> HandleExternalLoginAsync()
         {
+            var response = new BLSingleResponse<string>();
+
             try
             {
                 //retrieves user information stored in a cookie
@@ -67,6 +69,8 @@ namespace Pandora.NetCore.Identity.Services
 
                 if (!result.Succeeded) //user does not exist yet
                 {
+                    var defaultRole = new ApplicationRole(RolesEnum.STUDENT.GetDescription());
+
                     var email = extLoginInfo.Principal.FindFirstValue(ClaimTypes.Email);
                     var newUser = new ApplicationUser(email.Split('@')[0], email,
                         extLoginInfo.Principal.FindFirstValue(ClaimTypes.GivenName),
@@ -75,10 +79,7 @@ namespace Pandora.NetCore.Identity.Services
                         EmailConfirmed = true
                     };
 
-                    var createResult = await _userManager.CreateAsync(newUser, new List<ApplicationRole>
-                    {
-                        new ApplicationRole(RolesEnum.STUDENT.GetDescription())
-                    });
+                    var createResult = await _userManager.CreateAsync(newUser, new List<ApplicationRole> { defaultRole });
 
                     if (!createResult.Succeeded)
                         throw new Exception(createResult.Errors.Select(e => e.Description)
@@ -89,10 +90,18 @@ namespace Pandora.NetCore.Identity.Services
 
                     var newUserClaims = extLoginInfo.Principal.Claims;
                     newUserClaims.Append(new Claim("userid", newUser.Id.ToString()));
-                    newUserClaims.Append(new Claim(ClaimTypes.Role, RolesEnum.STUDENT.GetDescription()));
+                    newUserClaims.Append(new Claim(ClaimTypes.Role, defaultRole.Name));
 
                     await _userManager.AddClaimsAsync(newUser, newUserClaims);
-                    await _accountManager.SignInAsync(newUser, isPersistent: false);                    
+                    await _accountManager.SignInAsync(newUser, isPersistent: false);
+
+                    response.Data =_tokenProvider.GenerateToken(newUser, defaultRole).Token;
+                }
+                else
+                {
+                    var user = await _accountManager.UserManager.FindByNameAsync(_accountManager.Context.User.Identity.Name);
+                    var role = await _accountManager.GetRoleByUserAsync(user);
+                    response.Data = _tokenProvider.GenerateToken(user, role).Token;
                 }
             }
 
@@ -101,7 +110,7 @@ namespace Pandora.NetCore.Identity.Services
                 HandleSVCException(ex);
             }
 
-            return BLResponse.GetVoidResponse();
+            return response;
         }
 
         public async Task<BLSingleResponse<AuthenticationProperties>> SignInWithFacebookAsync(string redirectUrl)

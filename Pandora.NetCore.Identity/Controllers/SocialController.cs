@@ -54,12 +54,12 @@ namespace Pandora.NetCore.Identity.Controllers
         [HttpGet("ExternalLogin")]
         public async Task<IActionResult> HandleExternalLogin()
         {
-            await _socialSvc.HandleExternalLoginAsync();
+            var svc = await _socialSvc.HandleExternalLoginAsync();
 
             // sign out from IdentityConstants.ExternalScheme and remove external provider info
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            return Redirect($"{_appSettings.WebClientUrl}/auth/login?external={HttpContext.User.Identity.IsAuthenticated}");
+            return Redirect($"{_appSettings.WebClientUrl}/auth/login?access_token={svc.Data}");
         }
     }
 }

@@ -28,6 +28,9 @@ namespace Pandora.NetCore.Identity.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] LoginDto model)
         {
+            if (HttpContext.User.Identity.IsAuthenticated)
+                ModelState.AddModelError("Error", "This user is already loged in.");
+
             if (ModelState.IsValid)
             {
                 var svc = await _authSvc.LoginAsync(model);

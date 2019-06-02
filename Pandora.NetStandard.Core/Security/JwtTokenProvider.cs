@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Pandora.NetStandard.Core.Config;
 using Pandora.NetStandard.Core.Identity;
+using Pandora.NetStandard.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,19 +12,20 @@ using System.Text;
 
 namespace Pandora.NetStandard.Core.Security
 {
-    public class JwtTokenProvider
+    public class JwtTokenProvider : IJwtTokenProvider
     {
-        private readonly AppSettings _settings;
+        protected readonly AppSettings _settings;
 
         public JwtTokenProvider(IConfiguration config)
         {
-            _settings = AppSettings.GetSettings(config) ?? throw new ArgumentNullException(nameof(config));
+            _settings = AppSettings.GetSettings(config ?? throw new ArgumentNullException(nameof(config)));
         }
 
-        public virtual TokenResponse GenerateToken<TUser>(TUser pUser) where TUser : ApplicationUser
+        public virtual TokenResponse GenerateToken<TUser, TRole>(TUser pUser, TRole pRole) where TUser : ApplicationUser where TRole : ApplicationRole
         {
             IEnumerable<Claim> claims = new[] {
                 new Claim("userdata", JsonConvert.SerializeObject(pUser).ToLower()),//TODO: get rid ToLower and fix Json parsing
+                new Claim("userrole", JsonConvert.SerializeObject(pRole).ToLower()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())//to generate random token
             };
 
