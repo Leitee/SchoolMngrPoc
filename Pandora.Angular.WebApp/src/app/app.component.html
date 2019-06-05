@@ -13,7 +13,7 @@
         <span style="flex: 1 1 auto"></span>
         <span *ngIf="currentUser">
             <button *ngIf="isAdmin" mat-button routerLink="/admin">Admin</button>
-            <button mat-button (click)="logout()">
+            <button mat-button (click)="logout()" mat-icon-button mattooltip="Salir">
                 <i class="material-icons">account_box</i>
             </button>
         </span>
