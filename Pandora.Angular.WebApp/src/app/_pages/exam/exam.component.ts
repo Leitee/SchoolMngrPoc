@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Student, Subject } from '@/_models';
+import { Student, Subject, Exam, ExamTypeEnum } from '@/_models';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { SchoolService } from '@/_services';
 import { ActivatedRoute } from '@angular/router';
@@ -23,13 +23,18 @@ export class ExamComponent implements OnInit {
     this.route.queryParams
       .subscribe((subj: Subject) => {
         this.subject = subj;
-        console.log("passing",subj)
         this.studentListSource = this.schoolSvc.getStudentsExamsBySubjectId(subj.id);
       });
   }
 
+
   public get util() {
     return Utils;
+  }
+
+  getExamResult(exams: Array<Exam>, type: number){
+    let exam = exams.find(e => e.examType == type);
+    return exam ? exam.score : null;
   }
 
 }
