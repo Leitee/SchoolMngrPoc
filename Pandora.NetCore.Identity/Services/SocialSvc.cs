@@ -67,23 +67,34 @@ namespace Pandora.NetCore.Identity.Services
                 //check if the user has previously logged in using the external login provider
                 var result = await _accountManager.ExternalLoginSignInAsync(extLoginInfo.LoginProvider, extLoginInfo.ProviderKey, isPersistent: false);
 
-                if (!result.Succeeded) //user does not exist yet
+                if (result.Succeeded) //user does already exist 
+                {
+                    var user = await _accountManager.UserManager.FindByNameAsync(_accountManager.Context.User.Identity.Name);
+                    var role = await _accountManager.GetRoleByUserAsync(user);
+                    response.Data = _tokenProvider.GenerateToken(user, role).Token;                    
+                }
+                else //user does not exist yet
                 {
                     var defaultRole = new ApplicationRole(RolesEnum.STUDENT.GetDescription());
-
                     var email = extLoginInfo.Principal.FindFirstValue(ClaimTypes.Email);
-                    var newUser = new ApplicationUser(email.Split('@')[0], email,
-                        extLoginInfo.Principal.FindFirstValue(ClaimTypes.GivenName),
-                        extLoginInfo.Principal.FindFirstValue(ClaimTypes.Surname))
+
+                    ApplicationUser newUser = _userManager.Users.SingleOrDefault(u => u.Email == email);
+
+                    if (newUser == null)
                     {
-                        EmailConfirmed = true
-                    };
+                        newUser = new ApplicationUser(email.Split('@')[0], email,
+                            extLoginInfo.Principal.FindFirstValue(ClaimTypes.GivenName),
+                            extLoginInfo.Principal.FindFirstValue(ClaimTypes.Surname))
+                        {
+                            EmailConfirmed = true
+                        };
 
-                    var createResult = await _userManager.CreateAsync(newUser, new List<ApplicationRole> { defaultRole });
+                        var createResult = await _userManager.CreateAsync(newUser, new List<ApplicationRole> { defaultRole });
 
-                    if (!createResult.Succeeded)
-                        throw new Exception(createResult.Errors.Select(e => e.Description)
-                            .Aggregate((errors, error) => $"{errors}, {error}"));
+                        if (!createResult.Succeeded)
+                            throw new Exception(createResult.Errors.Select(e => e.Description)
+                                .Aggregate((errors, error) => $"{errors}, {error}")); 
+                    }
 
                     //associate the new user with the external login provider
                     await _userManager.AddLoginAsync(newUser, extLoginInfo);
@@ -95,13 +106,7 @@ namespace Pandora.NetCore.Identity.Services
                     await _userManager.AddClaimsAsync(newUser, newUserClaims);
                     await _accountManager.SignInAsync(newUser, isPersistent: false);
 
-                    response.Data =_tokenProvider.GenerateToken(newUser, defaultRole).Token;
-                }
-                else
-                {
-                    var user = await _accountManager.UserManager.FindByNameAsync(_accountManager.Context.User.Identity.Name);
-                    var role = await _accountManager.GetRoleByUserAsync(user);
-                    response.Data = _tokenProvider.GenerateToken(user, role).Token;
+                    response.Data = _tokenProvider.GenerateToken(newUser, defaultRole).Token;
                 }
             }
 
@@ -115,7 +120,14 @@ namespace Pandora.NetCore.Identity.Services
 
         public async Task<BLSingleResponse<AuthenticationProperties>> SignInWithFacebookAsync(string redirectUrl)
         {
-            throw new NotImplementedException();
+            var response = new BLSingleResponse<AuthenticationProperties>();
+
+            await Task.Run(() =>
+            {
+                response.Data = _accountManager.ConfigureExternalAuthenticationProperties("Facebook", redirectUrl);
+            });
+
+            return response;
         }
 
         public async Task<BLSingleResponse<AuthenticationProperties>> SignInWithGoogleAsync(string redirectUrl)

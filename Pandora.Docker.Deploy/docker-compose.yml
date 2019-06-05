@@ -2,8 +2,8 @@ version: '3.4'
 
 services:
   pandora.netcore.identity:
-    image: pandoranetcoreidentity:latest
-    container_name: pandora.netcore.identity
+    image: pandora.netcore.identity
+    container_name: pandoranetcoreidentity
     build:
       context: .
       dockerfile: ../Pandora.NetCore.Identity/Dockerfile
@@ -12,8 +12,8 @@ services:
       - elasticsearch
 
   pandora.netcore.webapi:
-    image: pandoranetcorewebapi:latest
-    container_name: pandora.netcore.webapi
+    image: pandora.netcore.webapi
+    container_name: pandoranetcorewebapi
     build:
       context: .
       dockerfile: ../Pandora.NetCore.WebApi/Dockerfile
@@ -22,7 +22,7 @@ services:
       - elasticsearch
 
   mssqlserver:
-    image: mcr.microsoft.com/mssql/server:latest
+    image: mcr.microsoft.com/mssql/server:2017-latest
     container_name: mssqlserver
     environment:
       SA_PASSWORD: "Devadmin321"
@@ -33,28 +33,36 @@ services:
       - mssqlserver-data:/var/opt/mssql
 
   elasticsearch:
-     image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
+     image: docker.elastic.co/elasticsearch/elasticsearch:7.1.1
      container_name: elasticsearch
+     environment:
+      - node.name=es01
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
      ports:
       - "9200:9200"
      volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
      networks:
-      - docker-network
+      - esnet
 
   kibana:
-     image: docker.elastic.co/kibana/kibana:6.2.4
+     image: docker.elastic.co/kibana/kibana:7.1.1
      container_name: kibana
      ports:
       - "5601:5601"
      depends_on:
       - elasticsearch
      networks:
-      - docker-network
+      - esnet
 
 networks:
-  docker-network:
-    driver: bridge
+  esnet:
 
 volumes:
   mssqlserver-data:
