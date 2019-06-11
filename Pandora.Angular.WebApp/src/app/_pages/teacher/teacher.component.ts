@@ -22,7 +22,6 @@ export class TeacherComponent implements OnInit {
 
   navigateToExams(subj: Subject)
   {
-    console.log("boton", subj)
     this.route.navigate(['exam', subj]);     
   }
 

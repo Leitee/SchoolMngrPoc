@@ -1,27 +1,35 @@
 <app-content-wrapper headerTitle="Materias Asignadas" headerIcon="subject">
-  <mat-grid-list cols="3" rowHeight="250px">
+  <mat-grid-list cols="3" rowHeight="310px">
     <mat-grid-tile *ngFor="let subj of subjectListAsync | async" [colspan]="1" [rowspan]="1">
-        <mat-card router class="dashboard-card">
-          <mat-card-header>
-            <mat-card-title>
-              {{subj.name}}
-              <!-- <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-                <mat-icon>more_vert</mat-icon>
-              </button> -->
-              <!-- <mat-menu #menu="matMenu" xPosition="before">
-                <button mat-menu-item>Expand</button>
-                <button mat-menu-item>Remove</button>
-              </mat-menu> -->
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content class="dashboard-card-content">
-            <div><i>{{subj.validSubjectAssingment.class.name}} División - Turno {{util.getShiftEnumName(subj.shift)}}</i></div>
-          </mat-card-content>
-          <mat-card-actions>
-            <button routerLink="/attend" [queryParams]="subj" color="primary" mat-button>Asistencia</button>
-            <button routerLink="/exam" [queryParams]="subj" style="float:right" color="primary" mat-button>Examenes</button>
-          </mat-card-actions>
-        </mat-card>
+      <mat-card router class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            {{subj.name}}
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <div>
+            <i>{{subj.validSubjectAssingment.class.name}} División - Turno {{util.getShiftEnumName(subj.shift)}}</i>
+          </div>
+          <div style="float: left">
+            <div style="margin-top: 45px">
+              <mat-checkbox class="example-margin" [labelPosition]="'after'" [disabled]="true">
+                Conexión a la Red
+              </mat-checkbox>
+            </div>
+            <div>
+              <mat-checkbox class="example-margin" [labelPosition]="'after'" [disabled]="true">
+                Proyector y Pantalla
+              </mat-checkbox>
+            </div>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button routerLink="/attend" [queryParams]="subj" color="primary" mat-button>Asistencia</button>
+          <button routerLink="/exam" [queryParams]="subj" style="float:right" color="primary"
+            mat-button>Examenes</button>
+        </mat-card-actions>
+      </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
 </app-content-wrapper>

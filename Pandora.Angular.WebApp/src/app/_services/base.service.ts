@@ -3,9 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
-import { IRestService } from './rest.interface';
 
-export abstract class BaseService implements IRestService {
+export abstract class BaseService {
 
     /**
      * This param starts and ends with no slash `/`
@@ -17,12 +16,12 @@ export abstract class BaseService implements IRestService {
         this.headerReq = new HttpHeaders({ 'Content-Type': 'application/json' });
     }
 
-    get<T>(): Observable<T[]> {
+    protected get<T>(): Observable<T[]> {
         let response = this.http.get<ApiResponse<T[]>>(`${environment.apiUrl}/${this.path}`, { headers: this.headerReq });
         return response.pipe(map(a => a.data));
     }
 
-    getById<T>(id: number): Observable<T> {
+    protected getById<T>(id: number): Observable<T> {
         let response = this.http.get<ApiResponse<T>>(`${environment.apiUrl}/${this.path}/${id}`, { headers: this.headerReq });
         return response.pipe(map(a => a.data));
     }

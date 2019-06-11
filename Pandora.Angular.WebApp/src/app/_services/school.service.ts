@@ -11,6 +11,11 @@ export class SchoolService extends BaseService {
         super(http);
     }
 
+    public getAll<TEntiy>(urlSuffix: string): Observable<Array<TEntiy>> {
+        this.path = urlSuffix;
+        return this.get<TEntiy>();
+    }
+
     public getGrades(): Observable<Grade[]> {
         this.path = "grades";
         return this.get<Grade>();
