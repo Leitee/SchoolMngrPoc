@@ -28,7 +28,7 @@ export class MenuComponent implements OnInit {
     }
 
     onSubjectClick(): void {
-        this.router.navigate([`subject`]);
+        this.router.navigate([`enroll`]);
     }
     
     onGradeSelect(grade: Grade): void {

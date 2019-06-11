@@ -6,12 +6,12 @@ import { Subject } from '@/_models';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-subject',
-  templateUrl: './subject.component.html',
+  selector: 'page-teacher',
+  templateUrl: './teacher.component.html',
   styleUrls: ['../pages.component.scss'],
   providers: [SchoolService]
 })
-export class SubjectComponent implements OnInit {
+export class TeacherComponent implements OnInit {
   subjectListAsync: Observable<Array<Subject>>;
 
   constructor(private schoolSvc: SchoolService, private route: Router) { }

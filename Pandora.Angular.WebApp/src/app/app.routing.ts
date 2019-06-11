@@ -1,8 +1,8 @@
 ﻿import { AuthGuard } from '@/_commons';
 import { RolesEnum } from '@/_models';
-import { AdminComponent, HomeComponent, GradeComponent, ExamComponent, SubjectComponent } from '@/_pages';
+import { AdminComponent, HomeComponent, GradeComponent, ExamComponent, TeacherComponent, AttendComponent, StudentComponent } from '@/_pages';
 import { RouterModule, Routes } from '@angular/router';
-import { AttendComponent } from './_pages/attend/attend.component';
+import { EnrollComponent } from './_pages/enroll/enroll.component';
 
 const appRoutes: Routes = [
     {
@@ -25,17 +25,32 @@ const appRoutes: Routes = [
     {
         path: 'exam',
         component: ExamComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        data: { roles: [RolesEnum.DEBUG, RolesEnum.TEACHER] }
     },
     {
         path: 'attend',
         component: AttendComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        data: { roles: [RolesEnum.DEBUG, RolesEnum.TEACHER] }
     },
     {
-        path: 'subject',
-        component: SubjectComponent,
-        canActivate: [AuthGuard]
+        path: 'teacher',
+        component: TeacherComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [RolesEnum.DEBUG, RolesEnum.TEACHER] }
+    },
+    {
+        path: 'enroll',
+        component: EnrollComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [RolesEnum.DEBUG, RolesEnum.STUDENT] }
+    },
+    {
+        path: 'student',
+        component: StudentComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [RolesEnum.DEBUG, RolesEnum.STUDENT] }
     },
     {
         path: 'auth',

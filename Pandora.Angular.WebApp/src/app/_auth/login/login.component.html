@@ -23,7 +23,7 @@
             <button class="btn-login" mat-raised-button color="primary" [disabled]="!loginForm.valid || loading">Ingresar</button>
         </div>
         <div class="form-group" style="height: 23px">
-            <input type="button" class="mat-raised-button btn-login social facebook" color="blue" value="Facebook">
+            <input type="button" class="mat-raised-button btn-login social facebook" color="blue" value="Facebook" (click)="facebookLogin()">
             <input type="button" class=" mat-raised-button btn-login social google" color="white" value="Google" (click)="googleLogin()">
         </div>
     </form>

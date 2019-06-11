@@ -47,21 +47,25 @@ export class AuthenticationService {
             );
     }
 
-    googleRedirect() {       
+    googleRedirect() {
         this.document.location.href = `${AppConfigService.settings.server.authUrl}/social/google`;
     }
 
-    externalLogin(token: string) : Observable<boolean> {
+    facebookRedirect() {
+        this.document.location.href = `${AppConfigService.settings.server.authUrl}/social/facebook`;
+    }
+
+    externalLogin(token: string): Observable<boolean> {
         localStorage.setItem(this.tokenKey, token);
         this.currentUserSubject.next(this.getUserFromStoredToken(token));
         return of(true);
-    } 
+    }
 
     logout() {
         // remove user from local storage to log user out
+        this.currentUserSubject.next(null);
         localStorage.removeItem(this.tokenKey);
         this.http.post(`${AppConfigService.settings.server.authUrl}/logout`, {}).subscribe(() => {
-            this.currentUserSubject.next(null);
             location.reload(true);
         });
     }
@@ -70,12 +74,12 @@ export class AuthenticationService {
         let userStr: string; let roleStr: string;
         let user: User;
 
-        if(tokenStr !== null){
+        if (tokenStr !== null) {
             userStr = jwt_decode<Token>(tokenStr).userdata.toLowerCase();
             user = JSON.parse(userStr);;
             roleStr = jwt_decode<Token>(tokenStr).userrole.toLowerCase();
             user.role = JSON.parse(roleStr);
-        } 
+        }
         return user;
     }
 }

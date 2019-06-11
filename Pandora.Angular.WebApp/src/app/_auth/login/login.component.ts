@@ -33,15 +33,15 @@ export class LoginComponent implements OnInit {
             password: ['', Validators.required],
             rememberme: [false]
 
-        
+
         });
 
         // loged in with external provider return token
-        if(this.route.snapshot.queryParamMap.has('access_token')) {
+        if (this.route.snapshot.queryParamMap.has('access_token')) {
             this.authenticationService.externalLogin(this.route.snapshot.queryParamMap.get('access_token'))
-            .subscribe(() => {
-                this.router.navigate([this.returnUrl]);
-            });
+                .subscribe(() => {
+                    this.router.navigate([this.returnUrl]);
+                });
         }
 
         // get return url from route parameters or default to '/'
@@ -80,7 +80,11 @@ export class LoginComponent implements OnInit {
                 });
     }
 
-    googleLogin(){        
+    googleLogin() {
         this.authenticationService.googleRedirect();
+    }
+
+    facebookLogin() {
+        this.authenticationService.facebookRedirect();
     }
 }

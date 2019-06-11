@@ -2,7 +2,7 @@
 import { routing } from '@/app.routing';
 import { SharedModule } from '@/shared.module';
 import { ErrorInterceptor, JwtInterceptor } from '@/_commons';
-import { AdminComponent, HomeComponent, GradeComponent, ExamComponent, SubjectComponent, AttendComponent } from '@/_pages';
+import { AdminComponent, HomeComponent, GradeComponent, ExamComponent, AttendComponent, TeacherComponent, StudentComponent } from '@/_pages';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -10,6 +10,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoaderInterceptor } from './_commons/loader.interceptor';
 import { AppConfigService } from '@/_services';
+import { EnrollComponent } from './_pages/enroll/enroll.component';
 
 export function initConfig(config: AppConfigService) {
     return () => config.load();
@@ -29,10 +30,12 @@ export function initConfig(config: AppConfigService) {
         AppComponent,
         HomeComponent,
         AdminComponent,
-        SubjectComponent,
         GradeComponent,
         ExamComponent,
-        AttendComponent
+        AttendComponent,
+        TeacherComponent,
+        StudentComponent,
+        EnrollComponent
     ],
     providers: [
         AppConfigService,
