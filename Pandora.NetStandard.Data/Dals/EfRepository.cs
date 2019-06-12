@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Pandora.NetStandard.Core.Base;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Interfaces.Data;
 using Pandora.NetStandard.Core.Utils;
-using Pandora.NetStandard.Model.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,7 +67,7 @@ namespace Pandora.NetStandard.Data.Dals
             });
         }
 
-        public async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate, 
+        public async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate,
             params Expression<Func<IIncludable<TEntity>, IIncludable>>[] includes)
         {
             return await _dbSet.IncludeMultiple(includes).FirstOrDefaultAsync(predicate);
@@ -152,6 +150,11 @@ namespace Pandora.NetStandard.Data.Dals
             }
 
             return tEntity;
+        }
+ 
+        public async Task<bool> ExistAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _dbSet.AnyAsync(predicate);
         }
     }
 }

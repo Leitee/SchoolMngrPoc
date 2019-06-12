@@ -72,7 +72,7 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
         {
             if (ModelState.IsValid && subjectId.HasValue)
             {
-                var response = await _subjectSvc.EnrollStudentAsync(studentDto, subjectId.Value);
+                var response = await _subjectSvc.EnrollStudentAsync(subjectId.Value, studentDto);
                 return response.ToHttpResponse();
             }
 
@@ -85,6 +85,18 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
             if (ModelState.IsValid && examDtos[0].SubjectId == subjectId)
             {
                 var response = await _subjectSvc.SaveExamResultAsync(examDtos);
+                return response.ToHttpResponse();
+            }
+
+            return BadRequest(ModelState);
+        }
+
+        [HttpPut("TryEnroll/{subjectId}")]
+        public async Task<IActionResult> TryEnroll(int subjectId, [FromBody] int? studentId)
+        {
+            if (ModelState.IsValid && studentId.HasValue)
+            {
+                var response = await _subjectSvc.TryEnrollAsync(subjectId, studentId.Value);
                 return response.ToHttpResponse();
             }
 

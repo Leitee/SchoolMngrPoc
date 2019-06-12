@@ -1,5 +1,7 @@
 ﻿<app-content-wrapper headerTitle="Inicio" headerIcon="home">
-    Wellcome {{currentUser.fullname.toUpperCase()}}, you're loged in as {{currentUser.role.name.toUpperCase()}}
+    <div style="text-align: center">
+        Wellcome {{currentUser.fullname.toUpperCase()}}, you're loged in as {{currentUser.role.name.toUpperCase()}}
+    </div>
 </app-content-wrapper>
 
 <page-teacher *ngIf="currentUser.role.id === 3"></page-teacher>

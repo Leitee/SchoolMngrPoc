@@ -16,6 +16,8 @@ namespace Pandora.NetStandard.Core.Interfaces
         Task<TEntity> FindAsync<TEntity>(Expression<Func<TEntity, bool>> predicate,
             params Expression<Func<IIncludable<TEntity>, IIncludable>>[] includes);
 
+        Task<bool> ExistAsync<TEntity>(Expression<Func<TEntity, bool>> predicate);
+
         Task<TEntity> InsertAsync<TEntity>(TEntity entity);
 
         Task UpdateAsync<TEntity>(TEntity entityToUpdate);
@@ -34,6 +36,8 @@ namespace Pandora.NetStandard.Core.Interfaces
 
         Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate,
             params Expression<Func<IIncludable<TEntity>, IIncludable>>[] includes);
+
+        Task<bool> ExistAsync(Expression<Func<TEntity, bool>> predicate);
 
         Task<TEntity> InsertAsync(TEntity entity);
 

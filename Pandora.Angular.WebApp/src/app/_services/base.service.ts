@@ -1,8 +1,9 @@
 import { ApiResponse } from '@/_commons';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
+import { AppConfigService } from '@/_services'
+
 
 export abstract class BaseService {
 
@@ -17,12 +18,22 @@ export abstract class BaseService {
     }
 
     protected get<T>(): Observable<T[]> {
-        let response = this.http.get<ApiResponse<T[]>>(`${environment.apiUrl}/${this.path}`, { headers: this.headerReq });
+        let response = this.http.get<ApiResponse<T[]>>(`${AppConfigService.settings.server.apiUrl}/${this.path}`, { headers: this.headerReq });
         return response.pipe(map(a => a.data));
     }
 
     protected getById<T>(id: number): Observable<T> {
-        let response = this.http.get<ApiResponse<T>>(`${environment.apiUrl}/${this.path}/${id}`, { headers: this.headerReq });
+        let response = this.http.get<ApiResponse<T>>(`${AppConfigService.settings.server.apiUrl}/${this.path}/${id}`, { headers: this.headerReq });
+        return response.pipe(map(a => a.data));
+    }
+
+    protected post<T>(body: any): Observable<T> {
+        let response = this.http.post<ApiResponse<T>>(`${AppConfigService.settings.server.apiUrl}/${this.path}`, body, { headers: this.headerReq });
+        return response.pipe(map(a => a.data));
+    }
+
+    protected put<T>(objId: number, body: any): Observable<T> {
+        let response = this.http.put<ApiResponse<T>>(`${AppConfigService.settings.server.apiUrl}/${this.path}/${objId}`, body, { headers: this.headerReq });
         return response.pipe(map(a => a.data));
     }
 }

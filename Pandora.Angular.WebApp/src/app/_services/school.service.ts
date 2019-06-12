@@ -41,4 +41,9 @@ export class SchoolService extends BaseService {
         return this.getById<Student[]>(classId);
     }
 
+    public tryEnroll(subjectId: number, studentId: number): Observable<boolean> {
+        this.path = "subjects/TryEnroll";
+        return this.put<boolean>(subjectId, studentId);
+    }
+
 }

@@ -118,7 +118,7 @@ namespace Pandora.NetStandard.Business.Services
             throw new NotImplementedException();
         }
 
-        public async Task<BLSingleResponse<bool>> EnrollStudentAsync(StudentDto studentDto, int subjectId)
+        public async Task<BLSingleResponse<bool>> EnrollStudentAsync(int subjectId, StudentDto studentDto)
         {
             var response = new BLSingleResponse<bool>();
 
@@ -188,6 +188,29 @@ namespace Pandora.NetStandard.Business.Services
             return response;
         }
 
-        
+        public async Task<BLSingleResponse<bool>> TryEnrollAsync(int subjectId, int studentId)
+        {
+            var response = new BLSingleResponse<bool>() { Data = true};
+
+            try
+            {
+                var subjResponse = await _uow.GetRepo<Subject>().FindAsync(s => s.Id == subjectId, x => x.Include(s => s.PreReqSubject));
+                if (subjResponse == null)
+                    throw new Exception($"Subject Id = {subjectId} didn't match any result.");
+
+                if (subjResponse.PreReqSubject != null)
+                {
+                    response.Data = await _uow.GetRepo<Student>()
+                        .ExistAsync(s => s.Id == studentId && s.StudentStates
+                        .Any(ss => ss.SubjectId == subjResponse.PreReqSubject.Id && ss.AcademicState == StudentStateEnum.ACHIEVED));
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
+
+            return response;
+        }
     }
 }

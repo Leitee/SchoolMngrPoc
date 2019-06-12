@@ -31,6 +31,11 @@ mat-card-actions {
 
 }
 
+mat-card {
+  width: 99%;
+  height: 99%;
+}
+
 mat-icon {
   margin-right: 15px;
 }
@@ -65,4 +70,14 @@ mat-button-toggle-group {
 
 .step-form {
     text-align: -webkit-center;
+}
+
+.tab-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  height: 250px;
 }
