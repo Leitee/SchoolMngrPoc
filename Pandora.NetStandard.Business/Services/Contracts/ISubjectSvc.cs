@@ -9,7 +9,7 @@ namespace Pandora.NetStandard.Business.Services.Contracts
     public interface ISubjectSvc : IBasicCrudOperations<SubjectDto>
     {
         Task<BLSingleResponse<bool>> TryEnrollAsync(int subjectId, int studentId);
-        Task<BLSingleResponse<bool>> EnrollStudentAsync(int subjectId, StudentDto studentDto);
+        Task<BLSingleResponse<bool>> EnrollStudentAsync(int subjectId, int userId);
         Task<BLSingleResponse<bool>> SaveExamResultAsync(IList<ExamDto> examDtos);
         Task<BLListResponse<SubjectDto>> GetByTeacherIdAsync(int teacherId);
         

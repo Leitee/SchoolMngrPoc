@@ -5,6 +5,7 @@ import { Subject, User } from '@/_models';
 import { SchoolService, AuthenticationService } from '@/_services';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -21,7 +22,12 @@ export class EnrollComponent implements OnInit {
   available: boolean;
   currentUser: User;
 
-  constructor(private _formBuilder: FormBuilder, private schoolSvc: SchoolService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private authSvc: AuthenticationService) {
+  constructor(private _formBuilder: FormBuilder, 
+    private schoolSvc: SchoolService, 
+    iconRegistry: MatIconRegistry, 
+    sanitizer: DomSanitizer, 
+    private authSvc: AuthenticationService,
+    private router : Router) {
     this.currentUser = authSvc.currentUserValue;
 
     iconRegistry.addSvgIcon(
@@ -47,7 +53,15 @@ export class EnrollComponent implements OnInit {
   }
 
   onConfirmar() {
-    
+    this.schoolSvc.enrollStudent(this.selectedSubject.id, this.currentUser.id).subscribe(resul => {
+      if (resul) {
+        this.router.navigate(['/']);
+        //TODO: show confirmation pop up
+      }
+      else {
+        //show error msg
+      }
+    });
   }
 
   selectionChange(event) {
@@ -55,7 +69,7 @@ export class EnrollComponent implements OnInit {
       this.available = undefined;
     }
     if (event.selectedIndex === 1) {
-      this.schoolSvc.tryEnroll(this.selectedSubject.id, this.currentUser.id).subscribe(resul => {
+      this.schoolSvc.tryEnrollStudent(this.selectedSubject.id, this.currentUser.id).subscribe(resul => {
         this.available = resul;
         if (this.available) {
           this.secondFormGroup.setValue({
@@ -74,6 +88,6 @@ export class EnrollComponent implements OnInit {
   }
 
   // convenience getter for easy access to form fields
-  get selectedSubject() : Subject { return this.firstFormGroup.controls['firstCtrl'].value; }
+  get selectedSubject(): Subject { return this.firstFormGroup.controls['firstCtrl'].value; }
 
 }

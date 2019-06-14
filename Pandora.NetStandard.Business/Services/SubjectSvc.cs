@@ -4,6 +4,7 @@ using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Business.States;
 using Pandora.NetStandard.Core.Base;
 using Pandora.NetStandard.Core.Interfaces;
+using Pandora.NetStandard.Core.Mapper;
 using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Dtos;
 using Pandora.NetStandard.Model.Entities;
@@ -18,11 +19,14 @@ namespace Pandora.NetStandard.Business.Services
     public class SubjectSvc : BaseService<Subject, SubjectDto>, ISubjectSvc
     {
         private readonly IStudentStateSvc _studentStateSvc;
+        private readonly IMapperCore _mapperExplicit;
         public SubjectSvc(IApplicationUow applicationUow, ILogger<SubjectSvc> logger,
-            IStudentStateSvc studentStateSvc)
+            IStudentStateSvc studentStateSvc, 
+            IMapperCore mapper)
             : base(applicationUow, logger, new SubjectToDtoMapper())
         {
             _studentStateSvc = studentStateSvc;
+            _mapperExplicit = mapper;
         }
 
         public async Task<BLSingleResponse<SubjectDto>> CreateAsync(SubjectDto pDto)
@@ -118,7 +122,7 @@ namespace Pandora.NetStandard.Business.Services
             throw new NotImplementedException();
         }
 
-        public async Task<BLSingleResponse<bool>> EnrollStudentAsync(int subjectId, StudentDto studentDto)
+        public async Task<BLSingleResponse<bool>> EnrollStudentAsync(int subjectId, int userId)
         {
             var response = new BLSingleResponse<bool>();
 
@@ -128,8 +132,10 @@ namespace Pandora.NetStandard.Business.Services
                 if (subjResponse.HasError || subjResponse.Data == null)
                     throw new Exception($"Subject Id = {subjectId} didn't match any result.");
 
-                StateManager stateManager = await StateManager.GetStateManagerAsync(_studentStateSvc, studentDto.Id, subjectId);
-                response.Data = await stateManager.EnrollStudentAsync(studentDto, subjResponse.Data);
+                var studentResult = await _uow.GetRepo<Student>().FindAsync(s => s.ApplicationUserId == userId, x => x.Include(s => s.ApplicationUser));
+
+                StateManager stateManager = await StateManager.GetStateManagerAsync(_studentStateSvc, studentResult.Id, subjectId);
+                response.Data = await stateManager.EnrollStudentAsync(_mapperExplicit.MapEntity<Student, StudentDto>(studentResult), subjResponse.Data);
             }
             catch (Exception ex)
             {

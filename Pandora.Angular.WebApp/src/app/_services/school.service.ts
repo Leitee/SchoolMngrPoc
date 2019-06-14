@@ -30,7 +30,7 @@ export class SchoolService extends BaseService {
         this.path = "subjects/GetByTeacher";
         return this.getById<Subject[]>(teacherId);
     }
-    
+
     public getStudentsExamsBySubjectId(classId: number): Observable<Student[]> {
         this.path = "students/GetExamsBySubject";
         return this.getById<Student[]>(classId);
@@ -41,9 +41,12 @@ export class SchoolService extends BaseService {
         return this.getById<Student[]>(classId);
     }
 
-    public tryEnroll(subjectId: number, studentId: number): Observable<boolean> {
+    public tryEnrollStudent(subjectId: number, studentId: number): Observable<boolean> {
         this.path = "subjects/TryEnroll";
         return this.put<boolean>(subjectId, studentId);
     }
-
+    public enrollStudent(subjectId: number, studentId: number): Observable<boolean> {
+        this.path = "subjects/EnrollStudent";
+        return this.put<boolean>(subjectId, studentId);
+    }
 }

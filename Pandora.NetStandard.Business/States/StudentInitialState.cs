@@ -29,12 +29,12 @@ namespace Pandora.NetStandard.Business.States
 
         public override Task<bool> StoreAttendenceAsync(StudentDto studentDto, SubjectDto subjectDto)
         {
-            throw new StateManagerException($"The student {studentDto.FullName} is not enrolled in {subjectDto.Name} yet.");
+            throw new StateManagerException($"The student {studentDto.ApplicationUser.FullName} is not enrolled in {subjectDto.Name} yet.");
         }
 
         public override Task<bool> SaveExamsResultAsync(IList<ExamDto> examDtos)
         {
-            throw new StateManagerException($"The student {examDtos[0].Student.FullName} is not enrolled in {examDtos[0].Subject.Name} yet.");
+            throw new StateManagerException($"The student {examDtos[0].Student.ApplicationUser.FullName} is not enrolled in {examDtos[0].Subject.Name} yet.");
         }
     }
 }

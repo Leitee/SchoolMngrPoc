@@ -16,7 +16,7 @@ namespace Pandora.NetStandard.Business.States
 
         public override Task<bool> EnrollStudentAsync(StudentDto studentDto, SubjectDto subjectDto)
         {
-            throw new StateManagerException($"The student {studentDto.FullName} is already enrolled in {subjectDto.Name}.");
+            throw new StateManagerException($"The student {studentDto.ApplicationUser.FullName} is already enrolled in {subjectDto.Name}.");
         }
 
         public override Task<bool> StoreAttendenceAsync(StudentDto studentDto, SubjectDto subjectDto)

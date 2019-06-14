@@ -1,4 +1,5 @@
-﻿using Pandora.NetStandard.Core.Identity;
+﻿using AutoMapper;
+using Pandora.NetStandard.Core.Identity;
 using Reinforced.Typings.Attributes;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -38,7 +39,7 @@ namespace Pandora.NetStandard.Model.Dtos
 
         [Display(Name = "Join Date")]
         public override DateTime JoinDate { get { return base.JoinDate; } }
-
+        [IgnoreMap]
         public RoleDto Role { get; set; }
 
         #region Security Identity fields Hidden

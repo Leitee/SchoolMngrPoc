@@ -80,7 +80,7 @@ namespace Pandora.NetStandard.Data.Dals
 
             builder.Entity<ApplicationUser>().HasData(new ApplicationUser("dabrown", "dabrown@teacher.com", "Dan", "Brown")            
             {
-                Id = 10,
+                Id = 11,
                 EmailConfirmed = true,
                 LockoutEnabled = false,
                 TwoFactorEnabled = false,
@@ -88,9 +88,42 @@ namespace Pandora.NetStandard.Data.Dals
                 SecurityStamp = string.Empty,
             });
 
+            builder.Entity<ApplicationUser>().HasData(new ApplicationUser("brwayne", "bruce.wayne@student.com", "Bruce", "Wayne")
+            {
+                Id = 101,
+                EmailConfirmed = true,
+                LockoutEnabled = false,
+                TwoFactorEnabled = false,
+                PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Bru321"),
+                SecurityStamp = string.Empty,
+            });
+
+            builder.Entity<ApplicationUser>().HasData(new ApplicationUser("anrand", "ayn.rand@student.com", "Ayn", "Rand")
+            {
+                Id = 102,
+                EmailConfirmed = true,
+                LockoutEnabled = false,
+                TwoFactorEnabled = false,
+                PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Ayn321"),
+                SecurityStamp = string.Empty,
+            });
+
+            builder.Entity<ApplicationUser>().HasData(new ApplicationUser("mifriedman", "milton.friedman@student.com", "Milton", "Fiedman")
+            {
+                Id = 103,
+                EmailConfirmed = true,
+                LockoutEnabled = false,
+                TwoFactorEnabled = false,
+                PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Mil321"),
+                SecurityStamp = string.Empty,
+            });
+
             builder.Entity<IdentityUserRole<int>>().HasData(new IdentityUserRole<int>() { UserId = -1, RoleId = RolesEnum.DEBUG.GetId() });
             builder.Entity<IdentityUserRole<int>>().HasData(new IdentityUserRole<int>() { UserId = 1, RoleId = RolesEnum.ADMINISTRADOR.GetId() });
-            builder.Entity<IdentityUserRole<int>>().HasData(new IdentityUserRole<int>() { UserId = 10, RoleId = RolesEnum.TEACHER.GetId() });
+            builder.Entity<IdentityUserRole<int>>().HasData(new IdentityUserRole<int>() { UserId = 11, RoleId = RolesEnum.TEACHER.GetId() });
+            builder.Entity<IdentityUserRole<int>>().HasData(new IdentityUserRole<int>() { UserId = 101, RoleId = RolesEnum.STUDENT.GetId() });
+            builder.Entity<IdentityUserRole<int>>().HasData(new IdentityUserRole<int>() { UserId = 102, RoleId = RolesEnum.STUDENT.GetId() });
+            builder.Entity<IdentityUserRole<int>>().HasData(new IdentityUserRole<int>() { UserId = 103, RoleId = RolesEnum.STUDENT.GetId() });
 
             #endregion
 
@@ -122,13 +155,13 @@ namespace Pandora.NetStandard.Data.Dals
                 );
 
             builder.Entity<Teacher>().HasData(
-                new Teacher { Id = 1, ApplicationUserId = 10 }
+                new Teacher { Id = 32165498, ApplicationUserId = 11 }
                 );
 
             builder.Entity<Student>().HasData(
-                new Student { Id = 1000, FirstName = "Atila", LastName = "TheHun", Email = "atila.thehun@student.com", PhoneNumber = "321987465" },
-                new Student { Id = 1001, FirstName = "Bruce", LastName = "Wayne", Email = "bruce.wayne@student.com", PhoneNumber = "321850465" },
-                new Student { Id = 1002, FirstName = "Milton", LastName = "Friedman", Email = "milton.friedman@student.com", PhoneNumber = "390987465" }
+                new Student { Id = 11111111, ApplicationUserId = 101 },
+                new Student { Id = 22222222, ApplicationUserId = 102 },
+                new Student { Id = 33333333, ApplicationUserId = 103 }
                 );
         }
     }

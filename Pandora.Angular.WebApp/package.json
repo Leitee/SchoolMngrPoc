@@ -11,7 +11,7 @@
   },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --open",
     "build": "ng build",
     "build:github": "ng build --prod --base-href 'https://leitee.github.io/SchoolMngDemo/' npx angular-cli-ghpages --dir=dist/school-mngr/",
     "test": "ng test",

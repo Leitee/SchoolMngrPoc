@@ -8,11 +8,10 @@ namespace Pandora.NetStandard.Core.Utils
     {
         public static IActionResult ToHttpResponse(this BLResponse response)
         {
-            var status = response.HasError ? HttpStatusCode.InternalServerError : HttpStatusCode.OK;
-
+            response.ResponseCode = response.HasError ? HttpStatusCode.InternalServerError : HttpStatusCode.OK;
             return new ObjectResult(response)
             {
-                StatusCode = (int)status
+                StatusCode = (int)HttpStatusCode.OK
             };
         }
 
@@ -28,7 +27,7 @@ namespace Pandora.NetStandard.Core.Utils
             response.ResponseCode = status;
             return new ObjectResult(response)
             {
-                StatusCode = (int)status
+                StatusCode = (int)HttpStatusCode.OK
             };
         }
 
@@ -46,7 +45,7 @@ namespace Pandora.NetStandard.Core.Utils
 
             return new ObjectResult(response)
             {
-                StatusCode = (int)status
+                StatusCode = (int)HttpStatusCode.OK
             };
         }
     }

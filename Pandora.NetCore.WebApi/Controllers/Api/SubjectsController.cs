@@ -67,20 +67,20 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
             return BadRequest(ModelState);
         }
 
-        [HttpPut("{subjectId}/EnrollStudent")]
-        public async Task<IActionResult> EnrollStudent(StudentDto studentDto, int? subjectId)
+        [HttpPut("EnrollStudent/{subjectId}")]
+        public async Task<IActionResult> EnrollStudent(int subjectId, [FromBody] int? userId)
         {
-            if (ModelState.IsValid && subjectId.HasValue)
+            if (ModelState.IsValid && userId.HasValue)
             {
-                var response = await _subjectSvc.EnrollStudentAsync(subjectId.Value, studentDto);
+                var response = await _subjectSvc.EnrollStudentAsync(subjectId, userId.Value);
                 return response.ToHttpResponse();
             }
 
             return BadRequest(ModelState);
         }
 
-        [HttpPut("{subjectId}/SaveExams")]
-        public async Task<IActionResult> SaveExams(IList<ExamDto> examDtos, int subjectId)
+        [HttpPut("SaveExams/{subjectId}")]
+        public async Task<IActionResult> SaveExams(int subjectId, IList<ExamDto> examDtos)
         {
             if (ModelState.IsValid && examDtos[0].SubjectId == subjectId)
             {
