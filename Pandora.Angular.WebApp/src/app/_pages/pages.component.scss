@@ -73,11 +73,6 @@ mat-button-toggle-group {
 }
 
 .tab-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 16px;
-  padding: 16px;
-  border-radius: 8px;
-  height: 250px;
+  overflow: auto;
+    height: 275px;
 }

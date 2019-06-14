@@ -7,14 +7,13 @@ import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-enroll',
   templateUrl: './enroll.component.html',
   styleUrls: ['../pages.component.scss'],
   providers: [SchoolService]
 })
-export class EnrollComponent implements OnInit {
+export class EnrollComponent implements OnInit { 
 
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
