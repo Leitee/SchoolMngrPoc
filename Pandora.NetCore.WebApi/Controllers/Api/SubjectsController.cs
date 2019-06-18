@@ -6,6 +6,7 @@ using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Base;
 using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Dtos;
+using Pandora.NetStandard.Model.Enums;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -48,7 +49,19 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
         {
             if (ModelState.IsValid && teacherId.HasValue)
             {
-                var response = await _subjectSvc.GetByTeacherIdAsync(teacherId.Value);
+                var response = await _subjectSvc.GetByUserIdAsync<TeacherDto>(teacherId.Value);
+                return response.ToHttpResponse();
+            }
+
+            return BadRequest(ModelState);
+        }
+
+        [HttpGet("GetByStudent/{studentId}")]
+        public async Task<IActionResult> GetByStudent(int? studentId)
+        {
+            if (ModelState.IsValid && studentId.HasValue)
+            {
+                var response = await _subjectSvc.GetByUserIdAsync<StudentDto>(studentId.Value);
                 return response.ToHttpResponse();
             }
 

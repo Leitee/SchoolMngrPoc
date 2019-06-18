@@ -1,13 +1,13 @@
 ﻿import { Login } from "@/_models";
 import { AuthenticationService, LoaderService } from '@/_services';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 
 @Component({ templateUrl: 'login.component.html', styleUrls: ['../auth.component.scss'] })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements AfterViewInit {
     loginForm: FormGroup;
     loading = false;
     submitted = false;
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
         }
     }
 
-    ngOnInit() {
+    ngAfterViewInit() {
         this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
             password: ['', Validators.required],

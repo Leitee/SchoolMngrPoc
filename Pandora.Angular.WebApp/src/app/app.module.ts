@@ -10,7 +10,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoaderInterceptor } from './_commons/loader.interceptor';
 import { AppConfigService } from '@/_services';
-import { EnrollComponent } from './_pages/enroll/enroll.component';
+import { EnrollComponent } from './_pages/enroll/enroll.component';;
 
 export function initConfig(config: AppConfigService) {
     return () => config.load();
@@ -25,7 +25,7 @@ export function initConfig(config: AppConfigService) {
         routing,
         BrowserAnimationsModule,
         SharedModule
-    ],
+       ],
     declarations: [
         AppComponent,
         HomeComponent,

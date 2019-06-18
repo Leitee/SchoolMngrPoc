@@ -25,7 +25,7 @@ namespace Pandora.NetCore.UnitTest.TestControllers
         [Fact(DisplayName = "Enroll an student")]
         public async Task TestEnrollStudent()
         {
-            var response = await _controller.EnrollStudent(new StudentDto(), 1) as ObjectResult;
+            var response = await _controller.EnrollStudent(1, 101) as ObjectResult;
             var value = response.Value as BLSingleResponse<bool>;
 
             Assert.True(value.Data);
@@ -34,7 +34,7 @@ namespace Pandora.NetCore.UnitTest.TestControllers
         [Fact(DisplayName = "Save student exams")]
         public async Task TestSaveExams()
         {
-            var response = await _controller.SaveExams(new List<ExamDto>(), 1) as ObjectResult;
+            var response = await _controller.SaveExams(1, new List<ExamDto>()) as ObjectResult;
             var value = response.Value as BLSingleResponse<bool>;
 
             Assert.True(value.Data);

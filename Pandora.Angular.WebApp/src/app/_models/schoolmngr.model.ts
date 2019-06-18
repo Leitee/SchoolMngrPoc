@@ -63,6 +63,7 @@ export interface Exam
 {
 	id: number;
 	examType: ExamTypeEnum;
+	examTypeDescription: string;
 	score: number;
 	date?: any;
 	obs: string;
@@ -98,12 +99,9 @@ export interface Role
 export interface Student
 {
 	id: number;
-	firstName: string;
-	lastName: string;
-	email: string;
-	phoneNumber: string;
-	fullName: string;
 	address: string;
+	obs: string;
+	applicationUser: User;
 	attends: Attend[];
 	exams: Exam[];
 	studentStates: StudentState[];
@@ -148,6 +146,9 @@ export interface Subject
 export interface Teacher
 {
 	id: number;
+	address: string;
+	obs: string;
+	applicationUser: User;
 	validSubjectAssingment: SubjectAssingment;
 	subjectAssingments: SubjectAssingment[];
 }

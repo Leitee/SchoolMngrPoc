@@ -11,7 +11,6 @@ namespace Pandora.NetStandard.Business.Services.Contracts
         Task<BLSingleResponse<bool>> TryEnrollAsync(int subjectId, int studentId);
         Task<BLSingleResponse<bool>> EnrollStudentAsync(int subjectId, int userId);
         Task<BLSingleResponse<bool>> SaveExamResultAsync(IList<ExamDto> examDtos);
-        Task<BLListResponse<SubjectDto>> GetByTeacherIdAsync(int teacherId);
-        
+        Task<BLListResponse<SubjectDto>> GetByUserIdAsync<TEntity>(int userId) where TEntity : class;
     }
 }

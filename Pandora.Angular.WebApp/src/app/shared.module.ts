@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from './material.module';
 import { MenuComponent, ErrorDialogComponent, ContentWrapperComponent, LoaderComponent } from './_components';
+import { DataTableComponent } from './_components/data-table/data-table.component';
 
 @NgModule({
   entryComponents: [ErrorDialogComponent],
@@ -9,7 +10,8 @@ import { MenuComponent, ErrorDialogComponent, ContentWrapperComponent, LoaderCom
     MenuComponent,
     ContentWrapperComponent,
     ErrorDialogComponent,
-    LoaderComponent
+    LoaderComponent,
+    DataTableComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,8 @@ import { MenuComponent, ErrorDialogComponent, ContentWrapperComponent, LoaderCom
     MaterialModule,
     MenuComponent,
     ContentWrapperComponent,
-    LoaderComponent
+    LoaderComponent,
+    DataTableComponent
   ]
 })
 export class SharedModule { }

@@ -21,12 +21,11 @@ namespace Pandora.NetStandard.Business.Services
         private readonly IStudentStateSvc _studentStateSvc;
         private readonly IMapperCore _mapperExplicit;
         public SubjectSvc(IApplicationUow applicationUow, ILogger<SubjectSvc> logger,
-            IStudentStateSvc studentStateSvc, 
-            IMapperCore mapper)
+            IStudentStateSvc studentStateSvc)
             : base(applicationUow, logger, new SubjectToDtoMapper())
         {
             _studentStateSvc = studentStateSvc;
-            _mapperExplicit = mapper;
+            _mapperExplicit = new GenericMapperCore();
         }
 
         public async Task<BLSingleResponse<SubjectDto>> CreateAsync(SubjectDto pDto)
@@ -174,17 +173,34 @@ namespace Pandora.NetStandard.Business.Services
             return response;
         }
 
-        public async Task<BLListResponse<SubjectDto>> GetByTeacherIdAsync(int teacherId)
+        public async Task<BLListResponse<SubjectDto>> GetByUserIdAsync<TEntity>(int userId) where TEntity : class
         {
             var response = new BLListResponse<SubjectDto>();
 
             try
             {
-                var entitiesResult = await _uow.GetRepo<Subject>().AllAsync(sb => sb.SubjectAssingments.Any(sa => sa.TeacherId.Value == teacherId),
-                    null,
-                    x => x.Include(sb => sb.SubjectAssingments).ThenInclude(sa => sa.Class), x => x.Include(sb => sb.Attends));
+                IEntity entitiesResult;
+                IEnumerable<Subject> subjResult = new List<Subject>();
+                if (typeof(TEntity).BaseType == typeof(Student))
+                {
+                    entitiesResult = await _uow.GetRepo<Student>().FindAsync(sb => sb.ApplicationUserId == userId);
+                    subjResult = await _uow.GetRepo<Subject>().AllAsync(s => s.StudentStates.Any(ss => ss.StudentId == entitiesResult.Id),
+                        null,
+                        x => x.Include(s => s.Attends),
+                        x => x.Include(s => s.Exams));
+                }
+                else if (typeof(TEntity).BaseType == typeof(Teacher))
+                {
+                    entitiesResult = await _uow.GetRepo<Teacher>().FindAsync(sb => sb.ApplicationUserId == userId);
+                    subjResult = await _uow.GetRepo<Subject>().AllAsync(s => s.StudentStates.Any(ss => ss.StudentId == entitiesResult.Id),
+                        null,
+                        x => x.Include(s => s.Attends),
+                        x => x.Include(s => s.Exams));
+                }
+                else
+                    throw new ArgumentException("Only Student and Teacher has subject assosiated.");
 
-                response.Data = _mapper.MapEntity(entitiesResult);
+                response.Data = _mapper.MapEntity(subjResult);
             }
             catch (Exception ex)
             {
