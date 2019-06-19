@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Utils } from '@/_commons';
-import { SchoolService } from '@/_services';
+import { SchoolService, AuthenticationService } from '@/_services';
 import { Observable } from 'rxjs';
-import { Subject } from '@/_models';
+import { Subject, User } from '@/_models';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,11 +13,14 @@ import { Router } from '@angular/router';
 })
 export class TeacherComponent implements OnInit {
   subjectListAsync: Observable<Array<Subject>>;
+  currentUser: User;
 
-  constructor(private schoolSvc: SchoolService, private route: Router) { }
+  constructor(private schoolSvc: SchoolService, private route: Router, private authSvc: AuthenticationService) {
+    this.currentUser = authSvc.currentUserValue;
+   }
 
   ngOnInit() {
-    this.subjectListAsync = this.schoolSvc.getSubjectsByTeacherId(1);
+    this.subjectListAsync = this.schoolSvc.getSubjectsByTeacherId(this.currentUser.id);
   }
 
   navigateToExams(subj: Subject)

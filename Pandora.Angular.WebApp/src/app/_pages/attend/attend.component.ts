@@ -15,7 +15,7 @@ export class AttendComponent implements OnInit {
 
   studentListSource: Observable<Array<Student>>;
   subject: Subject;
-  date = new Date().toLocaleDateString();
+  date = new Date();
   resul: any;
   
   constructor(private schoolSvc: SchoolService, private route: ActivatedRoute) { }
@@ -30,5 +30,9 @@ export class AttendComponent implements OnInit {
 
   public get util() {
     return Utils;
+  }
+
+  onSaveAttends(studs: Student[]) {
+    console.log(studs)
   }
 }

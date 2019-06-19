@@ -1,14 +1,17 @@
-﻿import { Component } from '@angular/core';
+﻿import { Component, AfterContentInit, OnInit } from '@angular/core';
 
 import { AuthenticationService } from './_services';
 import { User, RolesEnum } from './_models';
 
 @Component({ selector: 'app', templateUrl: 'app.component.html' })
-export class AppComponent {
-    currentUser: User;
+export class AppComponent implements OnInit {
+    currentUser: User = null;
 
     constructor(private authenticationService: AuthenticationService) {
-        this.authenticationService.currentUser.subscribe(u => this.currentUser = u);
+        
+    }
+    ngOnInit(): void {
+        this.currentUser = this.authenticationService.currentUserValue;
     }
 
     get isAdmin() {

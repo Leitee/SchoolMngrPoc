@@ -1,5 +1,6 @@
 import { DataSource } from '@angular/cdk/collections';
-import { Observable, of as observableOf } from 'rxjs';
+import { Observable, of as observableOf, merge } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 /**
  * Data source for the DataTable view. This class should
@@ -8,8 +9,10 @@ import { Observable, of as observableOf } from 'rxjs';
  */
 export class DataTableDataSource<TDataTableItem> extends DataSource<TDataTableItem> {
 
+  data: TDataTableItem[];
   constructor(private dataSource: TDataTableItem[]) {
     super();
+    this.data = this.dataSource;
   }
 
   /**
@@ -20,7 +23,13 @@ export class DataTableDataSource<TDataTableItem> extends DataSource<TDataTableIt
   connect(): Observable<TDataTableItem[]> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
-    return observableOf(this.dataSource);
+    const dataMutations = [
+      observableOf(this.data)
+    ]
+
+    return merge(...dataMutations).pipe(map(() => {
+      return [...this.data];
+    }))
     //return merge(...dataMutations).pipe(map(() => { return [...this.data] }));
   }
 

@@ -65,7 +65,7 @@ namespace Pandora.NetStandard.Business.Services
             {
                 var entitiesResult = await _uow.GetRepo<Subject>().AllAsync(null, null, null);
                 response.Data = _mapper.MapEntity(entitiesResult);
-                
+
             }
             catch (Exception ex)
             {
@@ -144,31 +144,31 @@ namespace Pandora.NetStandard.Business.Services
             return response;
         }
 
-        public async Task<BLSingleResponse<bool>> SaveExamResultAsync(IList<ExamDto> examDtos)
+        public async Task<BLSingleResponse<bool>> SaveExamResultAsync(int subjectId, IList<StudentDto> studentDtos)
         {
             var response = new BLSingleResponse<bool>();
 
-            try
-            {
-                foreach (ExamDto exam in examDtos)
-                {
-                    await _uow.GetRepo<Exam>().InsertAsync(exam);
-                }
+            //try
+            //{
+            //    foreach (ExamDto exam in examDtos)
+            //    {
+            //        await _uow.GetRepo<Exam>().InsertAsync(exam);
+            //    }
 
-                if(await _uow.CommitAsync())
-                {
-                    StateManager stateManager = await StateManager.GetStateManagerAsync(_studentStateSvc, examDtos.FirstOrDefault().StudentId, examDtos.FirstOrDefault().SubjectId);
-                    response.Data = await stateManager.SaveExamsResultAsync(examDtos);
-                }
-                else
-                {
-                    response.Data = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                HandleSVCException(response, ex);
-            }
+            //    if (await _uow.CommitAsync())
+            //    {
+            //        StateManager stateManager = await StateManager.GetStateManagerAsync(_studentStateSvc, examDtos.FirstOrDefault().StudentId, examDtos.FirstOrDefault().SubjectId);
+            //        response.Data = await stateManager.SaveExamsResultAsync(examDtos);
+            //    }
+            //    else
+            //    {
+            //        response.Data = false;
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    HandleSVCException(response, ex);
+            //}
 
             return response;
         }
@@ -179,28 +179,40 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                IEntity entitiesResult;
                 IEnumerable<Subject> subjResult = new List<Subject>();
+                IEntity entitiesResult;
+
                 if (typeof(TEntity).BaseType == typeof(Student))
                 {
                     entitiesResult = await _uow.GetRepo<Student>().FindAsync(sb => sb.ApplicationUserId == userId);
-                    subjResult = await _uow.GetRepo<Subject>().AllAsync(s => s.StudentStates.Any(ss => ss.StudentId == entitiesResult.Id),
-                        null,
-                        x => x.Include(s => s.Attends),
-                        x => x.Include(s => s.Exams));
+
+                    if (entitiesResult != null)
+                    {
+                        subjResult = await _uow.GetRepo<Subject>().AllAsync(s => s.StudentStates.Any(ss => ss.StudentId == entitiesResult.Id),
+                                            null,
+                                            x => x.Include(s => s.Attends),
+                                            x => x.Include(s => s.Exams));
+
+                        response.Data = _mapper.MapEntity(subjResult);
+                    }
                 }
                 else if (typeof(TEntity).BaseType == typeof(Teacher))
                 {
                     entitiesResult = await _uow.GetRepo<Teacher>().FindAsync(sb => sb.ApplicationUserId == userId);
-                    subjResult = await _uow.GetRepo<Subject>().AllAsync(s => s.StudentStates.Any(ss => ss.StudentId == entitiesResult.Id),
-                        null,
-                        x => x.Include(s => s.Attends),
-                        x => x.Include(s => s.Exams));
+
+                    if (entitiesResult != null)
+                    {
+                        subjResult = await _uow.GetRepo<Subject>().AllAsync(s => s.SubjectAssingments.Any(sa => sa.TeacherId == entitiesResult.Id),
+                                            null,
+                                            x => x.Include(s => s.SubjectAssingments).ThenInclude(sa => sa.Class));
+
+                        response.Data = _mapper.MapEntity(subjResult);
+                    }
                 }
                 else
                     throw new ArgumentException("Only Student and Teacher has subject assosiated.");
 
-                response.Data = _mapper.MapEntity(subjResult);
+
             }
             catch (Exception ex)
             {
@@ -212,7 +224,7 @@ namespace Pandora.NetStandard.Business.Services
 
         public async Task<BLSingleResponse<bool>> TryEnrollAsync(int subjectId, int studentId)
         {
-            var response = new BLSingleResponse<bool>() { Data = true};
+            var response = new BLSingleResponse<bool>() { Data = true };
 
             try
             {
@@ -225,6 +237,31 @@ namespace Pandora.NetStandard.Business.Services
                     response.Data = await _uow.GetRepo<Student>()
                         .ExistAsync(s => s.Id == studentId && s.StudentStates
                         .Any(ss => ss.SubjectId == subjResponse.PreReqSubject.Id && ss.AcademicState == StudentStateEnum.ACHIEVED));
+                }
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
+
+            return response;
+        }
+
+        public async Task<BLSingleResponse<bool>> SaveAttendsAsync(int subjectId, IList<StudentDto> studentDtos)
+        {
+            var response = new BLSingleResponse<bool>();
+
+            try
+            {
+                foreach (StudentDto stud in studentDtos)
+                {
+                    var attend = new Attend
+                    {
+                        SubjectId = subjectId,
+                        StudentId = stud.Id,
+                    };
+
+                    await _uow.GetRepo<Attend>().InsertAsync(attend);
                 }
             }
             catch (Exception ex)

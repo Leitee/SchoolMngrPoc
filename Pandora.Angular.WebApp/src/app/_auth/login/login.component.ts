@@ -1,13 +1,13 @@
 ﻿import { Login } from "@/_models";
 import { AuthenticationService, LoaderService } from '@/_services';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 
 @Component({ templateUrl: 'login.component.html', styleUrls: ['../auth.component.scss'] })
-export class LoginComponent implements AfterViewInit {
+export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     loading = false;
     submitted = false;
@@ -27,21 +27,19 @@ export class LoginComponent implements AfterViewInit {
         }
     }
 
-    ngAfterViewInit() {
+    ngOnInit() {
         this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
             password: ['', Validators.required],
-            rememberme: [false]
-
-
+            rememberme: [false]    
         });
 
         // loged in with external provider return token
         if (this.route.snapshot.queryParamMap.has('access_token')) {
             this.authenticationService.externalLogin(this.route.snapshot.queryParamMap.get('access_token'))
-                .subscribe(() => {
-                    this.router.navigate([this.returnUrl]);
-                });
+            .subscribe(() => {
+                this.router.navigate([this.returnUrl]);
+            });
         }
 
         // get return url from route parameters or default to '/'

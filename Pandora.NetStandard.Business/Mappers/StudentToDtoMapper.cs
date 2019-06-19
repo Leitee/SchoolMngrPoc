@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using Pandora.NetStandard.Core.Identity;
 using Pandora.NetStandard.Core.Mapper;
 using Pandora.NetStandard.Model.Dtos;
 using Pandora.NetStandard.Model.Entities;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Pandora.NetStandard.Business.Mappers
 {
@@ -9,7 +12,15 @@ namespace Pandora.NetStandard.Business.Mappers
     {
         protected override IMapper CreateMapConfiguration()
         {
-            return DefaultMapConfiguration();
+            return new MapperConfiguration(c =>
+            {
+                c.CreateMap<Student, StudentDto>()
+                .ForMember(m => m.ValidStudentState, o => o.MapFrom(s => s.StudentStates.FirstOrDefault(ss => !ss.DateTo.HasValue)));
+
+                c.CreateMap<List<StudentState>, List<StudentStateDto>>();
+                c.CreateMap<ApplicationUser, UserDto>();
+
+            }).CreateMapper();
         }
     }
 }

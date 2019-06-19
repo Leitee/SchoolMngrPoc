@@ -35,7 +35,7 @@ namespace Pandora.NetStandard.Model.Dtos
         public override string LastName { get; set; }
 
         [Display(Name = "Full Name")]
-        public override string FullName { get; }
+        public new string FullName { get; set; }
 
         [Display(Name = "Join Date")]
         public override DateTime JoinDate { get { return base.JoinDate; } }

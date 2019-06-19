@@ -1,18 +1,19 @@
-<app-content-wrapper headerTitle="{{subject.name}} - Asistencia - {{date}}" headerIcon="assignment_ind">
+<app-content-wrapper headerTitle="{{subject.name}} - Asistencia - {{date | date :'shortDate'}}"
+  headerIcon="assignment_ind">
   <mat-accordion class="example-headers-align">
 
-    <mat-expansion-panel *ngFor="let stud of studentListSource | async; let i=index">
+    <mat-expansion-panel *ngFor="let stud of studentListSource | async as students; let i=index; let isLast=last">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <mat-icon color="primary">account_circle</mat-icon>
-          {{stud.id}} - {{stud.fullName}}
+          {{stud.id}} - {{stud.applicationUser.fullName}}
         </mat-panel-title>
         <mat-panel-description>
           Descripcion del alumno
         </mat-panel-description>
       </mat-expansion-panel-header>
 
-      <mat-button-toggle-group name="attends" [(ngModel)]="resul">
+      <mat-button-toggle-group name="attends" [ngModel]="resul" (ngModelChange)="resul = $event">
         <mat-button-toggle id="bt1" value=1>Presente</mat-button-toggle>
         <mat-button-toggle id="bt2" value=2>Ausente</mat-button-toggle>
         <mat-button-toggle id="bt3" value=3>Justificado</mat-button-toggle>
@@ -22,9 +23,9 @@
         <textarea type="text" matInput placeholder="Observaciones"></textarea>
       </mat-form-field>
 
-      <!-- <mat-action-row>
-        <button mat-raised-button color="primary" hideToggle>Guardar</button>
-      </mat-action-row> -->
+      <mat-action-row *ngIf="isLast">
+        <button mat-raised-button color="primary" (click)="onSaveAttends(students)" hideToggle>Guardar</button>
+      </mat-action-row>
     </mat-expansion-panel>
 
   </mat-accordion>

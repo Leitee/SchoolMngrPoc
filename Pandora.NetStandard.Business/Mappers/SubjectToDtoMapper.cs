@@ -20,6 +20,7 @@ namespace Pandora.NetStandard.Business.Mappers
 
                 c.CreateMap<List<SubjectAssingment>, List<SubjectAssingmentDto>>();
                 c.CreateMap<ApplicationUser, UserDto>();
+                c.CreateMap<Teacher, TeacherDto>();
                 c.CreateMap<Class, ClassDto>();
 
             }).CreateMapper();

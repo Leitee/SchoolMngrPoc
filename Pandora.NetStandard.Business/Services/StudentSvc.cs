@@ -63,6 +63,7 @@ namespace Pandora.NetStandard.Business.Services
                 var entityReult = await _uow.GetRepo<Student>()
                     .AllAsync(s => s.StudentStates.Any(ss => ss.SubjectId == pSubjectId),
                     null,
+                    x => x.Include(s => s.ApplicationUser),
                     x => x.Include(s => s.StudentStates),
                     x => x.Include(s => s.Attends));
 
@@ -129,10 +130,11 @@ namespace Pandora.NetStandard.Business.Services
             try
             {
                 var entityResult = await _uow.GetRepo<Student>()
-                    .AllAsync(s => s.StudentStates.Any(ss => ss.SubjectId == pSubjectId)
-                    , null
-                    , x => x.Include(s => s.StudentStates)
-                    , x => x.Include(s => s.Exams));
+                    .AllAsync(s => s.StudentStates.Any(ss => ss.SubjectId == pSubjectId),
+                    null,
+                    x => x.Include(s => s.ApplicationUser),
+                    x => x.Include(s => s.StudentStates),
+                    x => x.Include(s => s.Exams));
 
                 response.Data = _mapper.MapEntity(entityResult);
             }
