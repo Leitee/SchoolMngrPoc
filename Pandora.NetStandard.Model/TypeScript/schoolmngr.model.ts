@@ -106,6 +106,7 @@ export interface Student
 	exams: Exam[];
 	studentStates: StudentState[];
 	validStudentState: StudentState;
+	todayAttend: Attend;
 }
 export interface StudentState
 {

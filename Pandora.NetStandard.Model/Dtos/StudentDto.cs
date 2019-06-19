@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using Pandora.NetStandard.Core.Identity;
+﻿using AutoMapper;
+using Newtonsoft.Json;
 using Pandora.NetStandard.Model.Entities;
 using Reinforced.Typings.Attributes;
 using System.Collections.Generic;
@@ -24,5 +24,7 @@ namespace Pandora.NetStandard.Model.Dtos
         [JsonIgnore]
         public new IEnumerable<StudentStateDto> StudentStates { get; set; }
         public StudentStateDto ValidStudentState { get; set; }
+        [IgnoreMap]
+        public AttendDto TodayAttend { get; set; }
     }
 }

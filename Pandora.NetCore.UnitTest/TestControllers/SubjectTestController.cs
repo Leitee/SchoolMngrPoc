@@ -34,7 +34,7 @@ namespace Pandora.NetCore.UnitTest.TestControllers
         [Fact(DisplayName = "Save student exams")]
         public async Task TestSaveExams()
         {
-            var response = await _controller.SaveExams(1, new List<ExamDto>()) as ObjectResult;
+            var response = await _controller.SaveExamsBySubject(1, new List<StudentDto>()) as ObjectResult;
             var value = response.Value as BLSingleResponse<bool>;
 
             Assert.True(value.Data);

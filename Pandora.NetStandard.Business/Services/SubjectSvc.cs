@@ -211,8 +211,6 @@ namespace Pandora.NetStandard.Business.Services
                 }
                 else
                     throw new ArgumentException("Only Student and Teacher has subject assosiated.");
-
-
             }
             catch (Exception ex)
             {
@@ -259,10 +257,14 @@ namespace Pandora.NetStandard.Business.Services
                     {
                         SubjectId = subjectId,
                         StudentId = stud.Id,
+                        Attendance = stud.TodayAttend.Attendance,
+                        Obs = stud.TodayAttend.Obs,
+                        Date = DateTime.Now
                     };
 
                     await _uow.GetRepo<Attend>().InsertAsync(attend);
                 }
+                await _uow.CommitAsync();
             }
             catch (Exception ex)
             {
