@@ -20,6 +20,6 @@
     },
     "mapConfig": {
         "provider": "google",
-        "apiKey": "AIzaSyCdtTQpXHWFtuMTi_A8xnD8wG26amIZi9A"
+        "apiKey": ""
     }
 }
