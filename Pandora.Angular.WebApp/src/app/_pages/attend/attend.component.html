@@ -15,9 +15,8 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
 
-        <div [formGroup]="i">
 
-          <mat-button-toggle-group [id]="stud.id" name="attends" [formControl]="arrayForm[i]">
+          <mat-button-toggle-group [id]="stud.id" name="attends">
             <mat-button-toggle id="bt1" value=1>Presente</mat-button-toggle>
             <mat-button-toggle id="bt2" value=2>Ausente</mat-button-toggle>
             <mat-button-toggle id="bt3" value=3>Justificado</mat-button-toggle>
@@ -27,7 +26,6 @@
             <textarea type="text" matInput placeholder="Observaciones"></textarea>
           </mat-form-field>
           
-        </div>
 
         <mat-action-row *ngIf="isLast">
           <button mat-raised-button color="primary" (click)="onSaveAttends(studentListSource)"

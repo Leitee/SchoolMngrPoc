@@ -230,10 +230,21 @@ namespace Pandora.NetStandard.Business.Services
                 if (subjResponse == null)
                     throw new Exception($"Subject Id = {subjectId} didn't match any result.");
 
+                //check if he is already enrolled 
+                var isAlreadyEnrolled = await _uow.GetRepo<Student>().ExistAsync(s => s.ApplicationUserId == studentId && s.StudentStates
+                .Any(ss => ss.SubjectId == subjectId && ss.AcademicState == StudentStateEnum.ENROLLED));
+
+                if (isAlreadyEnrolled)
+                {
+                    response.Data = true;
+                    return response;
+                }
+
+                //check if the subject has a prerequired subject
                 if (subjResponse.PreReqSubject != null)
                 {
                     response.Data = await _uow.GetRepo<Student>()
-                        .ExistAsync(s => s.Id == studentId && s.StudentStates
+                        .ExistAsync(s => s.ApplicationUserId == studentId && s.StudentStates
                         .Any(ss => ss.SubjectId == subjResponse.PreReqSubject.Id && ss.AcademicState == StudentStateEnum.ACHIEVED));
                 }
             }
