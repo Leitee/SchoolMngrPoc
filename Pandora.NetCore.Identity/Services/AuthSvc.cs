@@ -7,7 +7,6 @@ using Pandora.NetStandard.Core.Config;
 using Pandora.NetStandard.Core.Identity;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Mapper;
-using Pandora.NetStandard.Core.Security;
 using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Dtos;
 using SendGrid;
@@ -19,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetCore.Identity.Services
 {
-    public class AuthSvc : BaseService, IAuthSvc
+    public class AuthSvc : BaseService<IApplicationUow>, IAuthSvc
     {
         private readonly AccountManagerFacade _accountManager;
         private readonly IJwtTokenProvider _tokenProvider;
@@ -70,7 +69,7 @@ namespace Pandora.NetCore.Identity.Services
                 {
                     var user = await _accountManager.UserManager.FindByNameAsync(model.Username);
                     var role = await _accountManager.GetRoleByUserAsync(user);
-                    
+
                     if (role != null)
                     {
                         var tokenResul = _tokenProvider.GenerateToken(user, role);

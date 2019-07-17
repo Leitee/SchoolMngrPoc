@@ -120,7 +120,7 @@ namespace Pandora.NetCore.WebApi
             //services.AddScoped<ILogger, Logger<ApiBaseController>>();
             services.AddSingleton<RepositoryFactories<SchoolDbContext>, RepositoryFactories<SchoolDbContext>>();
             services.AddScoped<IRepositoryProvider<SchoolDbContext>, RepositoryProvider<SchoolDbContext>>();
-            services.AddScoped<IApplicationUow, ApplicationUow<SchoolDbContext>>();
+            services.AddScoped<IIdentityAppUow, ApplicationUow<SchoolDbContext>>();
             services.AddSingleton<IMapperCore, GenericMapperCore>();
             services.AddScoped<IRoleRepository, RoleManagerFacade>();
             services.AddScoped<IUserRepository, UserManagerFacade>();

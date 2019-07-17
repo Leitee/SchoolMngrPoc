@@ -15,7 +15,7 @@ namespace Pandora.NetStandard.Business.Services
     public class GradeSvc : BaseService<Grade, GradeDto>, IGradeSvc
     {
 
-        public GradeSvc(IApplicationUow applicationUow, ILogger<GradeSvc> logger) : base(applicationUow, logger, new GradeToDtoMapper())
+        public GradeSvc(IIdentityAppUow applicationUow, ILogger<GradeSvc> logger) : base(applicationUow, logger, new GradeToDtoMapper())
         {
 
         }

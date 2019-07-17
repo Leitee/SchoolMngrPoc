@@ -20,7 +20,7 @@ namespace Pandora.NetStandard.Business.Services
     {
         private readonly IStudentStateSvc _studentStateSvc;
         private readonly IMapperCore _mapperExplicit;
-        public SubjectSvc(IApplicationUow applicationUow, ILogger<SubjectSvc> logger,
+        public SubjectSvc(IIdentityAppUow applicationUow, ILogger<SubjectSvc> logger,
             IStudentStateSvc studentStateSvc)
             : base(applicationUow, logger, new SubjectToDtoMapper())
         {

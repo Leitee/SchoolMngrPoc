@@ -32,11 +32,12 @@ namespace Pandora.NetStandard.Data.Dals
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            //If you want to apply and avoid to include each entity manually
+            //optionsBuilder.UseLazyLoadingProxies();
             optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
-            //optionsBuilder.UseSqlite("Filename = ./schoolDB.db");
             optionsBuilder.EnableDetailedErrors(!_appSettings.IsProdMode);
             optionsBuilder.EnableSensitiveDataLogging(!_appSettings.IsProdMode);
-            //optionsBuilder.UseLazyLoadingProxies();
+            //optionsBuilder.UseSqlite("Filename = ./schoolDB.db");//Enable for sqlite using
             optionsBuilder.UseSqlServer(_appSettings.ConnectionString, options =>
             {
                 options.MigrationsHistoryTable("Migrations", "EFConfig");

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Pandora.NetStandard.Core.Interfaces;
+using Pandora.NetStandard.Core.Interfaces.Model;
 using Pandora.NetStandard.Core.Mapper;
 using Pandora.NetStandard.Core.Utils;
 using System;
@@ -8,12 +9,12 @@ using System.Net;
 
 namespace Pandora.NetStandard.Core.Base
 {
-    public abstract class BaseService
+    public abstract class BaseService<TUow> where TUow : IApplicationUow
     {
-        protected readonly IApplicationUow _uow;
+        protected readonly TUow _uow;
         protected readonly ILogger _logger;
 
-        public BaseService(IApplicationUow applicationUow, ILogger logger)
+        public BaseService(TUow applicationUow, ILogger logger)
         {
             _logger = logger;
             _logger?.LogInformation($"Accessing to service : {DateTime.UtcNow}");
@@ -47,11 +48,11 @@ namespace Pandora.NetStandard.Core.Base
         }
     }
 
-    public abstract class BaseService<TEntity, TDto> : BaseService where TEntity : IEntity where TDto : class
+    public abstract class BaseService<TEntity, TDto> : BaseService<IIdentityAppUow> where TEntity : IEntity where TDto : class
     {
         protected readonly IMapperCore<TEntity, TDto> _mapper;
 
-        public BaseService(IApplicationUow applicationUow, ILogger logger, IMapperCore<TEntity, TDto> mapperCore) : base(applicationUow, logger)
+        public BaseService(IIdentityAppUow applicationUow, ILogger logger, IMapperCore<TEntity, TDto> mapperCore) : base(applicationUow, logger)
         {
             _mapper = mapperCore;
         }

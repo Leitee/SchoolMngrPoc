@@ -13,7 +13,7 @@ namespace Pandora.NetStandard.Business.Services
 {
     public class StudentStateSvc : BaseService<StudentState, StudentStateDto>, IStudentStateSvc
     {
-        public StudentStateSvc(IApplicationUow applicationUow, ILogger<StudentStateSvc> logger) : base(applicationUow, logger, new StudentStateToDtoMapper())
+        public StudentStateSvc(IIdentityAppUow applicationUow, ILogger<StudentStateSvc> logger) : base(applicationUow, logger, new StudentStateToDtoMapper())
         {
         }
 

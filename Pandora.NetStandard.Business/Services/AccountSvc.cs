@@ -21,13 +21,13 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Business.Services
 {
-    public class AccountSvc : BaseService, IAccountSvc
+    public class AccountSvc : BaseService<IIdentityAppUow>, IAccountSvc
     {
         private readonly AccountManagerFacade _accountManager;
         private readonly IMapperCore _mapper;
         private readonly AppSettings _settings;
 
-        public AccountSvc(IApplicationUow applicationUow,
+        public AccountSvc(IIdentityAppUow applicationUow,
             AccountManagerFacade signInManager,
             ILogger<AccountSvc> logger,
             IConfiguration config,

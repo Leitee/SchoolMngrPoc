@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Pandora.NetCore.Identity.Services.Contracts;
 using Pandora.NetStandard.Core.Base;
 using Pandora.NetStandard.Core.Identity;
 using Pandora.NetStandard.Core.Interfaces;
-using Pandora.NetStandard.Core.Mapper;
 using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Enums;
 using System;
@@ -17,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetCore.Identity.Services
 {
-    public class SocialSvc : BaseService, ISocialSvc
+    public class SocialSvc : BaseService<IApplicationUow>, ISocialSvc
     {
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly AccountManagerFacade _accountManager;
@@ -71,7 +69,7 @@ namespace Pandora.NetCore.Identity.Services
                 {
                     var user = await _accountManager.UserManager.FindByNameAsync(_accountManager.Context.User.Identity.Name);
                     var role = await _accountManager.GetRoleByUserAsync(user);
-                    response.Data = _tokenProvider.GenerateToken(user, role).Token;                    
+                    response.Data = _tokenProvider.GenerateToken(user, role).Token;
                 }
                 else //user does not exist yet
                 {
@@ -93,7 +91,7 @@ namespace Pandora.NetCore.Identity.Services
 
                         if (!createResult.Succeeded)
                             throw new Exception(createResult.Errors.Select(e => e.Description)
-                                .Aggregate((errors, error) => $"{errors}, {error}")); 
+                                .Aggregate((errors, error) => $"{errors}, {error}"));
                     }
 
                     //associate the new user with the external login provider
