@@ -1,5 +1,5 @@
 ﻿import { User } from '@/_models';
-import { AuthenticationService } from '@/_services';
+import { AuthenticationService } from '@/_commons';
 import { Component } from '@angular/core';
 
 @Component({ templateUrl: 'home.component.html', styleUrls: ['../pages.component.scss'] })

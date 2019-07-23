@@ -1,14 +1,15 @@
 import { Grade, User } from '@/_models';
-import { SchoolService, AuthenticationService } from '@/_services';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/internal/Observable';
+import { AuthenticationService } from '@/_commons';
+import { MenuService } from './menu.service';
 
 @Component({
     selector: 'app-menu',
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.scss'],
-    providers: [SchoolService]
+    providers: [MenuService]
 })
 export class MenuComponent implements OnInit {
 
@@ -18,20 +19,20 @@ export class MenuComponent implements OnInit {
     constructor(
         private router: Router,
         private authenticationService: AuthenticationService,
-        private schoolSvc: SchoolService
+        private schoolSvc: MenuService
     ) {
         this.authenticationService.currentUser.subscribe(u => this.currentUser = u);
     }
 
     ngOnInit(): void {
-        this.gradeListAsync = this.schoolSvc.getGrades();
+        this.gradeListAsync = this.schoolSvc.getAllGrades();
     }
 
     onSubjectClick(): void {
         this.router.navigate([`enroll`]);
     }
-    
+
     onGradeSelect(grade: Grade): void {
-        this.router.navigate([`grade`], {queryParams: grade});
+        this.router.navigate([`grade`], { queryParams: grade });
     }
 }

@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from './material.module';
-import { MenuComponent, ErrorDialogComponent, ContentWrapperComponent, LoaderComponent } from './_components';
+import { MenuComponent, MessageDialogComponent, ContentWrapperComponent, LoaderComponent } from './_components';
 import { DataTableComponent } from './_components/data-table/data-table.component';
 
 @NgModule({
-  entryComponents: [ErrorDialogComponent],
+  entryComponents: [MessageDialogComponent],
   declarations: [
     MenuComponent,
     ContentWrapperComponent,
-    ErrorDialogComponent,
+    MessageDialogComponent,
     LoaderComponent,
     DataTableComponent
   ],

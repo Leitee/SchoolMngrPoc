@@ -1,12 +1,12 @@
-﻿import { ApiResponse } from '@/_commons';
-import { Login, LoginResp, Token, User } from '@/_models';
+﻿import { Login, LoginResp, Token, User } from '@/_models';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
 import * as jwt_decode from 'jwt-decode';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DOCUMENT } from '@angular/common';
-import { AppConfigService } from '@/_services'
+import { AppConfigService } from '../config';
+import { ApiResponse } from '../api';
 
 
 @Injectable({ providedIn: 'root' })

@@ -15,22 +15,25 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
 
-        <div [formGroup]="i">
+        <div formGroupName="{{i}}">
 
-          <mat-button-toggle-group [id]="stud.id" name="attends" [formControl]="arrayForm[i]">
+          <mat-button-toggle-group [id]="stud.id" name="attends" formControlName="choice">
             <mat-button-toggle id="bt1" value=1>Presente</mat-button-toggle>
             <mat-button-toggle id="bt2" value=2>Ausente</mat-button-toggle>
             <mat-button-toggle id="bt3" value=3>Justificado</mat-button-toggle>
           </mat-button-toggle-group>
 
-          <mat-form-field *ngIf="resul == 3">
-            <textarea type="text" matInput placeholder="Observaciones"></textarea>
-          </mat-form-field>
-          
+          <div style="float:right; width: 67%">
+
+            <mat-form-field *ngIf="getArrayForm.controls[i].value.choice == 3" style="width: 100%">
+              <textarea type="text" matInput placeholder="Observaciones" formControlName="obs"></textarea>
+            </mat-form-field>
+          </div>
+
         </div>
 
         <mat-action-row *ngIf="isLast">
-          <button mat-raised-button color="primary" (click)="onSaveAttends(studentListSource)"
+          <button mat-raised-button color="primary" [disabled]="groupFrom.invalid" (click)="onSaveAttends()"
             hideToggle>Guardar</button>
         </mat-action-row>
       </mat-expansion-panel>

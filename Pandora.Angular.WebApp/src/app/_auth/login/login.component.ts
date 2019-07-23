@@ -1,9 +1,9 @@
 ﻿import { Login } from "@/_models";
-import { AuthenticationService, LoaderService } from '@/_services';
-import { Component, OnInit, AfterContentInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { AuthenticationService } from '@/_commons';
 
 
 @Component({ templateUrl: 'login.component.html', styleUrls: ['../auth.component.scss'] })

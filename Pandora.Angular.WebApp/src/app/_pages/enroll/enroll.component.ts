@@ -2,16 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Subject, User } from '@/_models';
-import { SchoolService, AuthenticationService } from '@/_services';
+import { SubjectService, StudentService } from '@/_services';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '@/_commons';
 
 @Component({
   selector: 'app-enroll',
   templateUrl: './enroll.component.html',
   styleUrls: ['../pages.component.scss'],
-  providers: [SchoolService]
+  providers: [SubjectService, StudentService]
 })
 export class EnrollComponent implements OnInit { 
 
@@ -22,7 +23,8 @@ export class EnrollComponent implements OnInit {
   currentUser: User;
 
   constructor(private _formBuilder: FormBuilder, 
-    private schoolSvc: SchoolService, 
+    private studSvc: StudentService, 
+    private subjSvc: SubjectService, 
     iconRegistry: MatIconRegistry, 
     sanitizer: DomSanitizer, 
     private authSvc: AuthenticationService,
@@ -45,14 +47,14 @@ export class EnrollComponent implements OnInit {
       secondCtrl: ['', Validators.required]
     });
 
-    this.subjectsListAsync = this.schoolSvc.getAll<Subject>("subjects");
+    this.subjectsListAsync = this.subjSvc.getAllSubbjects();
     this.firstFormGroup.valueChanges.subscribe(() => {
       //TODO: create an as-you-type filter
     });
   }
 
   onConfirmar() {
-    this.schoolSvc.enrollStudent(this.selectedSubject.id, this.currentUser.id).subscribe(resul => {
+    this.studSvc.enrollStudent(this.selectedSubject.id, this.currentUser.id).subscribe(resul => {
       if (resul) {
         this.router.navigate(['/']);
         //TODO: show confirmation pop up
@@ -68,7 +70,7 @@ export class EnrollComponent implements OnInit {
       this.available = undefined;
     }
     if (event.selectedIndex === 1) {
-      this.schoolSvc.tryEnrollStudent(this.selectedSubject.id, this.currentUser.id).subscribe(resul => {
+      this.studSvc.tryEnrollStudent(this.selectedSubject.id, this.currentUser.id).subscribe(resul => {
         this.available = resul;
         if (this.available) {
           this.secondFormGroup.setValue({

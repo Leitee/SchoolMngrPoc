@@ -1,16 +1,16 @@
 import { Class, Grade } from '@/_models';
-import { SchoolService } from '@/_services';
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { Component, OnInit } from "@angular/core";
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Utils } from "@/_commons";
+import { ClassService } from '@/_services';
 
 @Component({
     templateUrl: './grade.component.html',
     styleUrls: ['../pages.component.scss'],
-    providers: [SchoolService]
+    providers: [ClassService]
 })
 export class GradeComponent implements OnInit {
     classListSource: Observable<Array<Class>>;
@@ -37,8 +37,10 @@ export class GradeComponent implements OnInit {
             ];
         })
     );
-
-    constructor(private breakpointObserver: BreakpointObserver, private schoolSvc: SchoolService, private route: ActivatedRoute) { }
+    constructor(
+        private breakpointObserver: BreakpointObserver,
+        private schoolSvc: ClassService,
+        private route: ActivatedRoute) { }
 
     ngOnInit(): void {
         this.route.queryParams
@@ -47,7 +49,7 @@ export class GradeComponent implements OnInit {
                 this.classListSource = this.schoolSvc.getClassesByGradeId(gr.id);
             });
     }
-    
+
     public get util() {
         return Utils;
     }

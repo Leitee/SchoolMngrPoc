@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { SchoolService, AuthenticationService } from '@/_services';
-import { Subject, User } from '@/_models';
+import { SubjectService } from '@/_services';
+import { User } from '@/_models';
 import { DataTableDataSource, DataTableComponent } from '@/_components';
 import { map } from 'rxjs/operators';
-import { ExamComponent } from '../exam/exam.component';
+import { AuthenticationService } from '@/_commons';
 
 export interface ExamTableItem {
   materia: string;
@@ -18,7 +18,7 @@ export interface ExamTableItem {
   selector: 'page-student',
   templateUrl: './student.component.html',
   styleUrls: ['../pages.component.scss'],
-  providers: [SchoolService]
+  providers: [SubjectService]
 })
 export class StudentComponent implements OnInit {
 
@@ -27,7 +27,7 @@ export class StudentComponent implements OnInit {
   currentUser: User;
   table: DataTableComponent;
 
-  constructor(private schoolSvc: SchoolService, private authSvc: AuthenticationService) {
+  constructor(private schoolSvc: SubjectService, private authSvc: AuthenticationService) {
     this.currentUser = authSvc.currentUserValue;
     this.table = new DataTableComponent();
   }

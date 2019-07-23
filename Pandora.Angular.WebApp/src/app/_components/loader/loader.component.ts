@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Subject } from 'rxjs';
-import { LoaderService } from '@/_services/loader.service';
+import { LoaderService } from '@/_components/loader/loader.service';
 
 @Component({
   selector: 'app-loader',

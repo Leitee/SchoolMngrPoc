@@ -1,7 +1,6 @@
 ﻿import { Component, AfterContentInit, OnInit } from '@angular/core';
-
-import { AuthenticationService } from './_services';
 import { User, RolesEnum } from './_models';
+import { AuthenticationService } from './_commons';
 
 @Component({ selector: 'app', templateUrl: 'app.component.html' })
 export class AppComponent implements OnInit {

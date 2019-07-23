@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Utils } from '@/_commons';
-import { SchoolService, AuthenticationService } from '@/_services';
+import { Utils, AuthenticationService } from '@/_commons';
+import { SubjectService } from '@/_services';
 import { Observable } from 'rxjs';
 import { Subject, User } from '@/_models';
 import { Router } from '@angular/router';
@@ -9,13 +9,13 @@ import { Router } from '@angular/router';
   selector: 'page-teacher',
   templateUrl: './teacher.component.html',
   styleUrls: ['../pages.component.scss'],
-  providers: [SchoolService]
+  providers: [SubjectService]
 })
 export class TeacherComponent implements OnInit {
   subjectListAsync: Observable<Array<Subject>>;
   currentUser: User;
 
-  constructor(private schoolSvc: SchoolService, private route: Router, private authSvc: AuthenticationService) {
+  constructor(private schoolSvc: SubjectService, private route: Router, private authSvc: AuthenticationService) {
     this.currentUser = authSvc.currentUserValue;
    }
 

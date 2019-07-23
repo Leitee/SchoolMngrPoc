@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SchoolService } from '@/_services';
+import { StudentService } from '@/_services';
 import { Subject, Student } from '@/_models';
 import { Utils } from '@/_commons';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-attend',
   templateUrl: './attend.component.html',
   styleUrls: ['../pages.component.scss'],
-  providers: [SchoolService]
+  providers: [StudentService]
 })
 export class AttendComponent implements OnInit {
 
@@ -24,7 +24,11 @@ export class AttendComponent implements OnInit {
     title: string;
   }[];
 
-  constructor(private schoolSvc: SchoolService, private route: ActivatedRoute, private formBuilder: FormBuilder) {
+  constructor(
+    private schoolSvc: StudentService,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder
+  ) {
     this.groupFrom = this.formBuilder.group({
       arrayForm: this.formBuilder.array([])
     });
@@ -37,31 +41,34 @@ export class AttendComponent implements OnInit {
       .subscribe((subj: Subject) => {
         this.subject = subj;
         this.schoolSvc.getStudentsAttendsBySubjectId(subj.id).subscribe(resul => {
-          this.createArrayFormControl(resul.length);
+          this.createArrayFormControl(resul);
           this.studentListSource = resul;
         })
       });
   }
 
-  createArrayFormControl(count: number){
-    for (let index = 0; index < count; index++) {
-      this.arrayForm.push(this.formBuilder.group({
-        valud: [false, Validators.required],
-        obs: ['', Validators.required]
-      }));     
-    }
-    console.log(this.arrayForm)
+  createArrayFormControl(studs: Student[]) {
+
+    studs.forEach(stud => {
+      this.getArrayForm.push(this.formBuilder.group({
+        studId: new FormControl(stud.id),
+        choice: ['', Validators.required],
+        obs: ['']
+      }));
+    });
   }
 
   public get util() {
     return Utils;
   }
 
-  public get arrayForm() {
+  public get getArrayForm() {
     return this.groupFrom.get('arrayForm') as FormArray;
   }
 
-  onSaveAttends(studs: Student[]) {
-    console.log(studs, this.arrayForm)
+  onSaveAttends() {
+    this.getArrayForm.controls.forEach(ctrl => {
+      
+    });
   }
 }

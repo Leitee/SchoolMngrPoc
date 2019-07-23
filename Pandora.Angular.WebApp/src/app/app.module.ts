@@ -1,16 +1,16 @@
 ﻿import { AppComponent } from '@/app.component';
 import { routing } from '@/app.routing';
 import { SharedModule } from '@/shared.module';
-import { ErrorInterceptor, JwtInterceptor } from '@/_commons';
+import { JwtInterceptor, AppConfigService } from '@/_commons';
 import { AdminComponent, HomeComponent, GradeComponent, ExamComponent, AttendComponent, TeacherComponent, StudentComponent } from '@/_pages';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoaderInterceptor } from './_commons/loader.interceptor';
-import { AppConfigService } from '@/_services';
-import { EnrollComponent } from './_pages/enroll/enroll.component';;
+import { EnrollComponent } from './_pages/enroll/enroll.component';
+import { LoaderInterceptor, MessageDialogInterceptor } from './_components';
+;
 
 export function initConfig(config: AppConfigService) {
     return () => config.load();
@@ -46,7 +46,7 @@ export function initConfig(config: AppConfigService) {
             multi: true
         },
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: MessageDialogInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
     ],
     bootstrap: [AppComponent]
