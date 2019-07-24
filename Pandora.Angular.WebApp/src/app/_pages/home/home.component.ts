@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 
 @Component({ templateUrl: 'home.component.html', styleUrls: ['../pages.component.scss'] })
 export class HomeComponent {
-    currentUser: User;
+    currentUser: any;//TODO: has to be User
 
     constructor(
         private authenticationService: AuthenticationService
