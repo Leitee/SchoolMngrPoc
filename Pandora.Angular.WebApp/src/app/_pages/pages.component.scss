@@ -77,3 +77,57 @@ mat-button-toggle-group {
   overflow: auto;
     height: 275px;
 }
+
+
+//////////////////////////////////////////////
+.expand-panel-desciption {
+  display: block;
+ }
+
+.expand-panel-content{
+  float:right; 
+  width: 67%;
+}
+.expand-panel-form {
+  width: 100%;
+  display: inline-block;
+  clear: both;
+}
+///////////////////////////////////////// 600px a 1100px
+@media all and (min-width:600px) and (max-width:1100px) {
+  .expand-panel-desciption {
+   display: none;
+  }
+
+  .expand-panel-content{
+    float:none; 
+    width: 67%;
+  }
+  .expand-panel-form {
+    width: 100%;
+  }
+}
+////////////////////////////////////// 599px
+@media all and (max-width: 599px) {
+  .expand-panel-desciption {
+    display: none;
+   }
+   .mat-expansion-panel-header-title {
+    flex-grow: 0;
+    font-size: 12px;
+    width: auto;
+   }
+   .mat-expansion-panel-header{
+    margin: 15px;
+     padding: 0px;
+
+   }
+ 
+   .expand-panel-content{
+     float:none; 
+     width: auto;
+   }
+   .expand-panel-form {
+     width: 100%;
+   }
+}

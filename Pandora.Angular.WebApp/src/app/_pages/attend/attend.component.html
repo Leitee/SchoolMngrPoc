@@ -8,9 +8,9 @@
         <mat-expansion-panel-header>
           <mat-panel-title>
             <mat-icon color="primary">account_circle</mat-icon>
-            {{stud.id}} - {{stud.applicationUser.fullName}}
+            {{stud.id}}  {{stud.applicationUser.fullName}}
           </mat-panel-title>
-          <mat-panel-description>
+          <mat-panel-description class="expand-panel-desciption">
             Descripcion del alumno
           </mat-panel-description>
         </mat-expansion-panel-header>
@@ -23,9 +23,9 @@
             <mat-button-toggle id="bt3" value=3>Justificado</mat-button-toggle>
           </mat-button-toggle-group>
 
-          <div style="float:right; width: 67%">
+          <div class="expand-panel-content">
 
-            <mat-form-field *ngIf="getArrayForm.controls[i].value.choice == 3" style="width: 100%">
+            <mat-form-field class="expand-panel-form" *ngIf="getArrayForm.controls[i].value.choice == 3" >
               <textarea type="text" matInput placeholder="Observaciones" formControlName="obs"></textarea>
             </mat-form-field>
           </div>
