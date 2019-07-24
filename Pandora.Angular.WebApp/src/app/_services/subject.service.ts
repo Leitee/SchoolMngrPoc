@@ -22,7 +22,7 @@ export class SubjectService extends ApiBaseService<Subject> {
         return this.getListById(teacherId);
     }
 
-    public getExamsByCurrentStudent(userId: number): Observable<Subject[]> {
+    public getSubjectsByCurrentStudent(userId: number): Observable<Subject[]> {
         this.path = "subjects/GetByStudent";
         return this.getListById(userId);
     }

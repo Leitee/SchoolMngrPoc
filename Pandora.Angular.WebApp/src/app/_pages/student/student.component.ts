@@ -33,7 +33,7 @@ export class StudentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.schoolSvc.getExamsByCurrentStudent(this.currentUser.id)
+    this.schoolSvc.getSubjectsByCurrentStudent(this.currentUser.id)
       .pipe(map(a => {
         let tableResult: ExamTableItem[] = [];
         a.forEach(el => {

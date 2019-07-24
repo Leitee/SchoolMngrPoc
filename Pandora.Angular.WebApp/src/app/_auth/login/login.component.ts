@@ -31,19 +31,21 @@ export class LoginComponent implements OnInit {
         this.loginForm = this.formBuilder.group({
             username: ['', Validators.required],
             password: ['', Validators.required],
-            rememberme: [false]    
+            rememberme: [false]
         });
+
+        // get return url from route parameters or default to '/'
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
         // loged in with external provider return token
         if (this.route.snapshot.queryParamMap.has('access_token')) {
             this.authenticationService.externalLogin(this.route.snapshot.queryParamMap.get('access_token'))
-            .subscribe(() => {
-                this.router.navigate([this.returnUrl]);
-            });
+                .subscribe(resp => {
+                    if (resp) {
+                        this.router.navigate([this.returnUrl]);
+                    }
+                });
         }
-
-        // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
     // convenience getter for easy access to form fields
