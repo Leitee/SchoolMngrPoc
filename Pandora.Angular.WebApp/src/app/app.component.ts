@@ -1,15 +1,15 @@
-﻿import { Component, AfterContentInit, OnInit } from '@angular/core';
-import { User, RolesEnum } from './_models';
+﻿import { Component, AfterContentChecked } from '@angular/core';
+import { User, RolesEnum } from '@/_models';
 import { AuthenticationService } from './_commons';
 
 @Component({ selector: 'app', templateUrl: 'app.component.html' })
-export class AppComponent implements OnInit {
-    currentUser: User = null;
+export class AppComponent implements AfterContentChecked {
+    currentUser: User;
 
     constructor(private authenticationService: AuthenticationService) {
         
     }
-    ngOnInit(): void {
+    ngAfterContentChecked(): void {
         this.currentUser = this.authenticationService.currentUserValue;
     }
 

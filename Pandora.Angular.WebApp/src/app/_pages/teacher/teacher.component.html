@@ -13,12 +13,18 @@
           </div>
           <div style="float: left">
             <div style="margin-top: 45px">
-              <mat-checkbox class="example-margin" [labelPosition]="'after'" [disabled]="true">
+              <mat-checkbox style="cursor: default" 
+              [labelPosition]="'before'" [disableRipple]="true"
+              (click)="$event.preventDefault()" color="primary"
+                [checked]="subj.validSubjectAssingment.classRoom.hasNetworkConexion">
                 Conexión a la Red
               </mat-checkbox>
             </div>
             <div>
-              <mat-checkbox class="example-margin" [labelPosition]="'after'" [disabled]="true">
+              <mat-checkbox style="cursor: default" 
+                [labelPosition]="'before'" [disableRipple]="true"
+                (click)="$event.preventDefault()" color="primary"
+                [checked]="subj.validSubjectAssingment.classRoom.hasScreenProjector">
                 Proyector y Pantalla
               </mat-checkbox>
             </div>

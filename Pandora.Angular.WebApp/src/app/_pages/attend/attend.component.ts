@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { StudentService } from '@/_services';
-import { Subject, Student } from '@/_models';
+import { ActivatedRoute, Router } from '@angular/router';
+import { StudentService, SubjectService } from '@/_services';
+import { Subject, Student, Attend, AttendanceEnum } from '@/_models';
 import { Utils } from '@/_commons';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
+
+interface ArrayItem {
+  studId: number;
+  choice: number;
+  obs: string;
+};
 
 @Component({
   selector: 'app-attend',
   templateUrl: './attend.component.html',
   styleUrls: ['../pages.component.scss'],
-  providers: [StudentService]
+  providers: [StudentService, SubjectService]
 })
 export class AttendComponent implements OnInit {
 
@@ -19,14 +25,13 @@ export class AttendComponent implements OnInit {
 
   groupFrom: FormGroup;
 
-  arrayItems: {
-    id: number;
-    title: string;
-  }[];
+
 
   constructor(
-    private schoolSvc: StudentService,
+    private studSvc: StudentService,
+    private subjSvc: SubjectService,
     private route: ActivatedRoute,
+    private router: Router,
     private formBuilder: FormBuilder
   ) {
     this.groupFrom = this.formBuilder.group({
@@ -35,12 +40,10 @@ export class AttendComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.arrayItems = [];
-
     this.route.queryParams
       .subscribe((subj: Subject) => {
         this.subject = subj;
-        this.schoolSvc.getStudentsAttendsBySubjectId(subj.id).subscribe(resul => {
+        this.studSvc.getStudentsAttendsBySubjectId(subj.id).subscribe(resul => {
           this.createArrayFormControl(resul);
           this.studentListSource = resul;
         })
@@ -67,8 +70,27 @@ export class AttendComponent implements OnInit {
   }
 
   onSaveAttends() {
+    let studList: Student[] = [];
     this.getArrayForm.controls.forEach(ctrl => {
-      
+      let attend = {
+        attendance: ctrl.value.choice,
+        obs: ctrl.value.obs
+      } as Attend;
+
+      let student = {
+        id: ctrl.value.studId,
+        todayAttend: attend,
+      } as Student;
+
+      studList.push(student);
     });
+
+    this.subjSvc.saveAttendsBySubject(this.subject.id, studList)
+      .subscribe(resp => {
+        if (resp) {
+          this.router.navigate(['/']);
+        }
+      }
+    )
   }
 }
