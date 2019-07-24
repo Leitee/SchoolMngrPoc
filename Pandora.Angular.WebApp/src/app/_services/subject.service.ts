@@ -1,8 +1,9 @@
-import { Subject } from "@/_models";
+import { Subject, Student } from "@/_models";
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
-import { ApiBaseService } from '@/_commons';
+import { ApiBaseService, AppConfigService, ApiResponse } from '@/_commons';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class SubjectService extends ApiBaseService<Subject> {
@@ -12,7 +13,7 @@ export class SubjectService extends ApiBaseService<Subject> {
     }
 
     public getAllSubbjects(): Observable<Array<Subject>> {
-        this.path = "subject";
+        this.path = "subjects";
         return this.getAll();
     }
 
@@ -24,5 +25,11 @@ export class SubjectService extends ApiBaseService<Subject> {
     public getExamsByCurrentStudent(userId: number): Observable<Subject[]> {
         this.path = "subjects/GetByStudent";
         return this.getListById(userId);
+    }
+
+    public saveAttendsBySubject(subjId: number, studList: Student[]): Observable<boolean> {
+        this.path = "subjects/SaveAttends";
+        let response = this.http.put<ApiResponse<boolean>>(this.getFullPath(subjId), studList, { headers: this.headerReq });
+        return response.pipe(map(a => a.data));
     }
 }

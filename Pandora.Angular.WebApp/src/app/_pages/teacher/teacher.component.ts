@@ -15,17 +15,20 @@ export class TeacherComponent implements OnInit {
   subjectListAsync: Observable<Array<Subject>>;
   currentUser: User;
 
-  constructor(private schoolSvc: SubjectService, private route: Router, private authSvc: AuthenticationService) {
+  constructor(
+    private schoolSvc: SubjectService,
+    private route: Router,
+    private authSvc: AuthenticationService
+  ) {
     this.currentUser = authSvc.currentUserValue;
-   }
+  }
 
   ngOnInit() {
     this.subjectListAsync = this.schoolSvc.getSubjectsByTeacherId(this.currentUser.id);
   }
 
-  navigateToExams(subj: Subject)
-  {
-    this.route.navigate(['exam', subj]);     
+  navigateToExams(subj: Subject) {
+    this.route.navigate(['exam', subj]);
   }
 
   public get util() {

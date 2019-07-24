@@ -7,6 +7,7 @@ import { AppConfig } from '@/_commons';
 export class AppConfigService {
 
     public static settings: AppConfig;
+    public settings: AppConfig;
 
     constructor(private http: HttpClient) { }
 

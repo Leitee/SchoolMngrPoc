@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
 import { ApiBaseService } from '../_commons/api/api-base.service';
+import { ApiResponse } from '@/_commons';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class StudentService extends ApiBaseService<Student> {
@@ -28,10 +30,12 @@ export class StudentService extends ApiBaseService<Student> {
 
     public tryEnrollStudent(subjectId: number, studentId: number): Observable<boolean> {
         this.path = "subjects/TryEnroll";
-        return null; // this.put(subjectId, {studentId: studentId});
+        let response = this.http.put<ApiResponse<boolean>>(this.getFullPath(subjectId), studentId, { headers: this.headerReq });
+        return response.pipe(map(a => a.data));
     }
     public enrollStudent(subjectId: number, studentId: number): Observable<boolean> {
         this.path = "subjects/EnrollStudent";
-        return null; // this.put(subjectId, studentId);
+        let response = this.http.put<ApiResponse<boolean>>(this.getFullPath(subjectId), studentId, { headers: this.headerReq });
+        return response.pipe(map(a => a.data));
     }
 }

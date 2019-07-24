@@ -204,7 +204,8 @@ namespace Pandora.NetStandard.Business.Services
                     {
                         subjResult = await _uow.GetRepo<Subject>().AllAsync(s => s.SubjectAssingments.Any(sa => sa.TeacherId == entitiesResult.Id),
                                             null,
-                                            x => x.Include(s => s.SubjectAssingments).ThenInclude(sa => sa.Class));
+                                            x => x.Include(s => s.SubjectAssingments).ThenInclude(sa => sa.Class),
+                                            x => x.Include(s => s.SubjectAssingments).ThenInclude(sa => sa.ClassRoom));
 
                         response.Data = _mapper.MapEntity(subjResult);
                     }
@@ -236,16 +237,21 @@ namespace Pandora.NetStandard.Business.Services
 
                 if (isAlreadyEnrolled)
                 {
-                    response.Data = true;
+                    response.Errors.Add("You're already enrolled to this subject.");
+                    response.Data = false;
                     return response;
                 }
 
                 //check if the subject has a prerequired subject
                 if (subjResponse.PreReqSubject != null)
                 {
-                    response.Data = await _uow.GetRepo<Student>()
+                    var hasNotPreReq = await _uow.GetRepo<Student>()
                         .ExistAsync(s => s.ApplicationUserId == studentId && s.StudentStates
                         .Any(ss => ss.SubjectId == subjResponse.PreReqSubject.Id && ss.AcademicState == StudentStateEnum.ACHIEVED));
+
+                    if (!hasNotPreReq)
+                        response.Errors.Add("You cannot enroll to this subject due to previous requirement.");
+                    response.Data = hasNotPreReq;
                 }
             }
             catch (Exception ex)
@@ -275,7 +281,7 @@ namespace Pandora.NetStandard.Business.Services
 
                     await _uow.GetRepo<Attend>().InsertAsync(attend);
                 }
-                await _uow.CommitAsync();
+                response.Data = await _uow.CommitAsync();
             }
             catch (Exception ex)
             {

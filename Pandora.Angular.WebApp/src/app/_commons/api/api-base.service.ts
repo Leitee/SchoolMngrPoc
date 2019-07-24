@@ -11,9 +11,9 @@ export abstract class ApiBaseService<T> {
      * This param starts and ends with no slash `/`
      */
     protected path: string;
-    private headerReq: HttpHeaders;
+    protected headerReq: HttpHeaders;
 
-    constructor(private http: HttpClient) {
+    constructor(protected http: HttpClient) {
         this.headerReq = new HttpHeaders({ 'Content-Type': 'application/json' });
     }
 
@@ -23,7 +23,7 @@ export abstract class ApiBaseService<T> {
     }
 
     protected getListById(id: number): Observable<Array<T>> {
-        let response = this.http.get<ApiResponse<Array<T>>>(`${AppConfigService.settings.server.apiUrl}/${this.path}/${id}`, { headers: this.headerReq });
+        let response = this.http.get<ApiResponse<Array<T>>>(this.getFullPath(id), { headers: this.headerReq });
         return response.pipe(map(a => a.data));
     }
 
@@ -45,5 +45,10 @@ export abstract class ApiBaseService<T> {
     protected delete(objId: number): Observable<boolean> {
         let response = this.http.delete<ApiResponse<boolean>>(`${AppConfigService.settings.server.apiUrl}/${this.path}/${objId}`, { headers: this.headerReq });
         return response.pipe(map(a => a.data));
+    }
+
+    protected getFullPath(id: any = null): string {
+        let partial = `${AppConfigService.settings.server.apiUrl}/${this.path}`;
+        return id === null ? partial : `${partial}/${id}`;
     }
 }
