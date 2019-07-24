@@ -106,6 +106,9 @@ mat-button-toggle-group {
   .expand-panel-form {
     width: 100%;
   }
+  #wellcome-msg {
+    display: none;
+  }
 }
 ////////////////////////////////////// 599px
 @media all and (max-width: 599px) {
@@ -120,7 +123,10 @@ mat-button-toggle-group {
    .mat-expansion-panel-header{
     margin: 15px;
      padding: 0px;
-
+   }
+   .mat-button-toggle-group {
+     display: grid;
+     margin-right: 0px;
    }
  
    .expand-panel-content{
@@ -130,4 +136,7 @@ mat-button-toggle-group {
    .expand-panel-form {
      width: 100%;
    }
+    #wellcome-msg {
+      display: none;
+    }
 }
