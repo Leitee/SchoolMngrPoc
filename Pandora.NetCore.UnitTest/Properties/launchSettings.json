@@ -2,9 +2,6 @@
   "profiles": {
     "Pandora.NetCore.UnitTest": {
       "commandName": "Project"
-    },
-    "Docker": {
-      "commandName": "Docker"
     }
   }
 }

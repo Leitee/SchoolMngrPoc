@@ -127,14 +127,22 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var subjResponse = await GetByIdAsync(subjectId);
-                if (subjResponse.HasError || subjResponse.Data == null)
+                //TODO: applay transaction capability
+                //using (var trx = await _uow.StartTransactionAsync())
+                //{
+                //    trx.Commit();
+                //}
+
+                var subjEntity = await _uow.GetRepo<Subject>().GetByIdAsync(subjectId);
+                if (subjEntity == null)
                     throw new Exception($"Subject Id = {subjectId} didn't match any result.");
 
-                var studentResult = await _uow.GetRepo<Student>().FindAsync(s => s.ApplicationUserId == userId, x => x.Include(s => s.ApplicationUser));
+                var studentResult = await _uow.GetRepo<Student>().GetByExpressionAsync(s => s.ApplicationUserId == userId);
 
                 StateManager stateManager = await StateManager.GetStateManagerAsync(_studentStateSvc, studentResult.Id, subjectId);
-                response.Data = await stateManager.EnrollStudentAsync(_mapperExplicit.MapEntity<Student, StudentDto>(studentResult), subjResponse.Data);
+                response.Data = await stateManager.EnrollStudentAsync(
+                    _mapperExplicit.MapEntity<Student, StudentDto>(studentResult), _mapperExplicit.MapEntity<Subject, SubjectDto>(subjEntity));
+
             }
             catch (Exception ex)
             {
@@ -144,31 +152,40 @@ namespace Pandora.NetStandard.Business.Services
             return response;
         }
 
-        public async Task<BLSingleResponse<bool>> SaveExamResultAsync(int subjectId, IList<StudentDto> studentDtos)
+        public async Task<BLSingleResponse<bool>> SaveExamResultAsync(int subjectId, StudentDto studentDto)
         {
             var response = new BLSingleResponse<bool>();
 
-            //try
-            //{
-            //    foreach (ExamDto exam in examDtos)
-            //    {
-            //        await _uow.GetRepo<Exam>().InsertAsync(exam);
-            //    }
+            try
+            {
+                foreach (Exam exam in studentDto.Exams)
+                {
+                    exam.Date = DateTime.Now;
 
-            //    if (await _uow.CommitAsync())
-            //    {
-            //        StateManager stateManager = await StateManager.GetStateManagerAsync(_studentStateSvc, examDtos.FirstOrDefault().StudentId, examDtos.FirstOrDefault().SubjectId);
-            //        response.Data = await stateManager.SaveExamsResultAsync(examDtos);
-            //    }
-            //    else
-            //    {
-            //        response.Data = false;
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    HandleSVCException(response, ex);
-            //}
+                    var entityExam = await _uow.GetRepo<Exam>()
+                        .GetByExpressionAsync(e => e.SubjectId == subjectId && e.StudentId == studentDto.Id && e.ExamType == exam.ExamType);
+
+                    if (entityExam != null)
+                    {
+                        if (entityExam.Score != exam.Score)
+                        {
+                            entityExam.Score = exam.Score;
+                            entityExam.Date = exam.Date;
+                            await _uow.GetRepo<Exam>().UpdateAsync(entityExam);
+                        }
+                        continue;
+                    }
+
+                    exam.SubjectId = subjectId;
+                    exam.StudentId = studentDto.Id;
+                    await _uow.GetRepo<Exam>().InsertAsync(exam);
+                }
+                response.Data = await _uow.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                HandleSVCException(response, ex);
+            }
 
             return response;
         }
@@ -184,7 +201,7 @@ namespace Pandora.NetStandard.Business.Services
 
                 if (typeof(TEntity).BaseType == typeof(Student))
                 {
-                    entitiesResult = await _uow.GetRepo<Student>().FindAsync(sb => sb.ApplicationUserId == userId);
+                    entitiesResult = await _uow.GetRepo<Student>().GetByExpressionAsync(sb => sb.ApplicationUserId == userId);
 
                     if (entitiesResult != null)
                     {
@@ -198,7 +215,7 @@ namespace Pandora.NetStandard.Business.Services
                 }
                 else if (typeof(TEntity).BaseType == typeof(Teacher))
                 {
-                    entitiesResult = await _uow.GetRepo<Teacher>().FindAsync(sb => sb.ApplicationUserId == userId);
+                    entitiesResult = await _uow.GetRepo<Teacher>().GetByExpressionAsync(sb => sb.ApplicationUserId == userId);
 
                     if (entitiesResult != null)
                     {

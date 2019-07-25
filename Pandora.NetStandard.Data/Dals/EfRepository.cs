@@ -26,7 +26,7 @@ namespace Pandora.NetStandard.Data.Dals
         {
             return await Task.Run(() =>
             {
-                IQueryable<TEntity> entities = _dbSet.IncludeMultiple(includes);
+                IQueryable<TEntity> entities = _dbSet.IncludeMultiple(includes).AsNoTracking();
 
                 if (predicate != null)
                 {
@@ -42,7 +42,7 @@ namespace Pandora.NetStandard.Data.Dals
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy,
             params Expression<Func<IIncludable<TEntity>, IIncludable>>[] includes)
         {
-            IQueryable<TEntity> entities = _dbSet.IncludeMultiple(includes);
+            IQueryable<TEntity> entities = _dbSet.IncludeMultiple(includes).AsNoTracking();
 
             if (predicate != null)
             {
@@ -70,7 +70,8 @@ namespace Pandora.NetStandard.Data.Dals
         public async Task<TEntity> FindAsync(Expression<Func<TEntity, bool>> predicate,
             params Expression<Func<IIncludable<TEntity>, IIncludable>>[] includes)
         {
-            return await _dbSet.IncludeMultiple(includes).FirstOrDefaultAsync(predicate);
+            return await _dbSet.IncludeMultiple(includes).AsNoTracking()
+                .FirstOrDefaultAsync(predicate);
         }
 
         public async Task<TEntity> GetByIdAsync(object id)
@@ -80,9 +81,7 @@ namespace Pandora.NetStandard.Data.Dals
 
         public async Task<TEntity> GetByExpressionAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return await _dbSet
-                .AsNoTracking()
-                .FirstOrDefaultAsync(predicate);
+            return await _dbSet.FirstOrDefaultAsync(predicate);
         }
 
         public async Task<TEntity> InsertAsync(TEntity entity)
@@ -96,23 +95,33 @@ namespace Pandora.NetStandard.Data.Dals
 
         public async Task DeleteAsync(object id)
         {
-            await DeleteAsync(_dbSet.Find(id));
+            TEntity entity = await GetByIdAsync(id);
+            await DeleteAsync(entity);
         }
 
         public async Task DeleteAsync(TEntity entityToDelete)
         {
-            await Task.Run(() =>
+            //Remove logically
+            if (entityToDelete is TrackedEntity)
             {
-                _dbSet.Attach(entityToDelete);
-                _dbSet.Remove(entityToDelete);
-            });
+                ((TrackedEntity)entityToDelete).Deleted = true;
+                await UpdateAsync(entityToDelete);
+            }
+            else
+            {
+                await Task.Run(() =>
+                {
+                    _dbSet.Attach(entityToDelete);
+                    _dbSet.Remove(entityToDelete);
+                });
+            }
         }
 
         public async Task UpdateAsync(TEntity entityToUpdate)
         {
             await Task.Run(() =>
             {
-                _dbContext.Entry<TEntity>(entityToUpdate).State = EntityState.Modified;
+                _dbContext.Entry(entityToUpdate).State = EntityState.Modified;
             });
         }
 
@@ -124,7 +133,7 @@ namespace Pandora.NetStandard.Data.Dals
             });
         }
 
-        public async Task<int> GetCountAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<int> GetCountByExpressionAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await Task.Run(() =>
             {
@@ -134,10 +143,7 @@ namespace Pandora.NetStandard.Data.Dals
 
         public async Task<int> ExecuteQueryAsync(string query, params object[] paramaters)
         {
-            return await Task.Run(() =>
-            {
-                return 1;
-            });
+            return await _dbContext.Database.ExecuteSqlCommandAsync(query, paramaters);
         }
 
         public async Task<List<TEntity>> ExecSp(string spName, params object[] parameters)
@@ -151,7 +157,7 @@ namespace Pandora.NetStandard.Data.Dals
 
             return tEntity;
         }
- 
+
         public async Task<bool> ExistAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _dbSet.AnyAsync(predicate);

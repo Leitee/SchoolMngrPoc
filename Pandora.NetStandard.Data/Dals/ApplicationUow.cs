@@ -1,4 +1,5 @@
-﻿using Pandora.NetStandard.Core.Base;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using Pandora.NetStandard.Core.Base;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Interfaces.Identity;
 using System;
@@ -36,6 +37,24 @@ namespace Pandora.NetStandard.Data.Dals
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
+        /// <summary>
+        /// For transaction handling
+        /// </summary>
+        /// <returns></returns>
+        public IDbContextTransaction StartTransaction()
+        {
+            return _dbContext.Database.BeginTransaction();
+        }
+
+        /// <summary>
+        /// For transaction handling asyncly
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IDbContextTransaction> StartTransactionAsync()
+        {
+            return await _dbContext.Database.BeginTransactionAsync();
+        }
+
         #region IDisposable
         //TODO: see Dispose pattern
         private bool disposed = false;
@@ -56,7 +75,7 @@ namespace Pandora.NetStandard.Data.Dals
         }
         #endregion
 
-        public abstract IRepository<T> GetRepo<T>() where T : class;
+        public abstract IEfRepository<T> GetRepo<T>() where T : class;
 
         //protected abstract T GetIdentityRepo<T>();
 
@@ -77,7 +96,7 @@ namespace Pandora.NetStandard.Data.Dals
         public override IUserRepository Users => GetIdentityRepo<IUserRepository>();
         public override IRoleRepository Roles => GetIdentityRepo<IRoleRepository>();
 
-        public override IRepository<T> GetRepo<T>()
+        public override IEfRepository<T> GetRepo<T>()
         {
             return _repositoryProvider.GetRepositoryForEntityType<T>();
         }

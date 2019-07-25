@@ -123,7 +123,7 @@ export interface SubjectAssingment
 {
 	id: number;
 	date: any;
-	disable: boolean;
+	deleted: boolean;
 	subjectId: number;
 	subject: Subject;
 	classId: number;

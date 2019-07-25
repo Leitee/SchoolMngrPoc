@@ -6,7 +6,6 @@ using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Base;
 using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Dtos;
-using Pandora.NetStandard.Model.Enums;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -105,11 +104,11 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
         }
 
         [HttpPut("SaveExams/{subjectId}")]
-        public async Task<IActionResult> SaveExamsBySubject(int subjectId, IList<StudentDto> studentDtos)
+        public async Task<IActionResult> SaveExamsBySubject(int subjectId, StudentDto studentDto)
         {
-            if (ModelState.IsValid && studentDtos.Count > 0)
+            if (ModelState.IsValid && studentDto != null)
             {
-                var response = await _subjectSvc.SaveExamResultAsync(subjectId, studentDtos);
+                var response = await _subjectSvc.SaveExamResultAsync(subjectId, studentDto);
                 return response.ToHttpResponse();
             }
 

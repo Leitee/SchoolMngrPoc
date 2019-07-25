@@ -79,7 +79,7 @@ namespace Pandora.NetStandard.Data.Dals
                 SecurityStamp = string.Empty,
             });
 
-            builder.Entity<ApplicationUser>().HasData(new ApplicationUser("dabrown", "dabrown@teacher.com", "Dan", "Brown")            
+            builder.Entity<ApplicationUser>().HasData(new ApplicationUser("dabrown", "dabrown@teacher.com", "Dan", "Brown")
             {
                 Id = 11,
                 EmailConfirmed = true,

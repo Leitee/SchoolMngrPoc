@@ -11,7 +11,7 @@ namespace Pandora.NetStandard.Core.Interfaces
 
         Task<int> GetCountAsync();
 
-        Task<int> GetCountAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<int> GetCountByExpressionAsync(Expression<Func<TEntity, bool>> predicate);
 
         Task<int> ExecuteQueryAsync(string query, params object[] paramaters);
 

@@ -60,9 +60,9 @@ namespace Pandora.NetStandard.Data.Dals
         /// <remarks>
         /// If can't find repository in cache, use a factory to create one.
         /// </remarks>
-        public IRepository<T> GetRepositoryForEntityType<T>() where T : class
+        public IEfRepository<T> GetRepositoryForEntityType<T>() where T : class
         {
-            return GetRepository<IRepository<T>>(
+            return GetRepository<IEfRepository<T>>(
                 _repositoryFactories.GetRepositoryFactoryForEntityType<T>());
         }
 

@@ -22,10 +22,22 @@ namespace Pandora.NetCore.UnitTest.TestControllers
             _controller = new SubjectsController(null, subjectSvc);
         }
 
+        [Fact(DisplayName = "Retriving all existing subjects")]
+        public async Task TestGetAllGrades()
+        {
+            var response = await _controller.Get() as ObjectResult;
+            var value = response.Value as BLListResponse<SubjectDto>;
+
+            Assert.False(value.HasError);
+        }
+
         [Fact(DisplayName = "Enroll an student")]
         public async Task TestEnrollStudent()
         {
-            var response = await _controller.EnrollStudent(1, 101) as ObjectResult;
+            var subjectId = 1;
+            var userId = 101;
+
+            var response = await _controller.EnrollStudent(subjectId, userId) as ObjectResult;
             var value = response.Value as BLSingleResponse<bool>;
 
             Assert.True(value.Data);
@@ -34,7 +46,18 @@ namespace Pandora.NetCore.UnitTest.TestControllers
         [Fact(DisplayName = "Save student exams")]
         public async Task TestSaveExams()
         {
-            var response = await _controller.SaveExamsBySubject(1, new List<StudentDto>()) as ObjectResult;
+            var subjectId = 1;
+            var student = new StudentDto()
+            {
+                Id = 11111111,
+                Exams = new List<ExamDto>
+            {
+                new ExamDto { Score=10, ExamType = NetStandard.Model.Enums.ExamTypeEnum.FIRST },
+                new ExamDto { Score=5, ExamType = NetStandard.Model.Enums.ExamTypeEnum.SECOND }
+            }
+            };
+
+            var response = await _controller.SaveExamsBySubject(subjectId, student) as ObjectResult;
             var value = response.Value as BLSingleResponse<bool>;
 
             Assert.True(value.Data);

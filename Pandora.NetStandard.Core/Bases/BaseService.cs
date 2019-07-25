@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using Pandora.NetStandard.Core.Interfaces;
-using Pandora.NetStandard.Core.Interfaces.Model;
 using Pandora.NetStandard.Core.Mapper;
 using Pandora.NetStandard.Core.Utils;
 using System;

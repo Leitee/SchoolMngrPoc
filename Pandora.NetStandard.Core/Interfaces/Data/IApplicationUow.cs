@@ -1,11 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Core.Interfaces
 {
     public interface IApplicationUow
     {
-        IRepository<TEntity> GetRepo<TEntity>() where TEntity : class;
+        IEfRepository<TEntity> GetRepo<TEntity>() where TEntity : class;
         bool Commit();
         Task<bool> CommitAsync();
+        IDbContextTransaction StartTransaction();
+        Task<IDbContextTransaction> StartTransactionAsync();
     }
 }

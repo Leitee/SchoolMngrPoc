@@ -6,12 +6,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pandora.NetStandard.Model.Entities
 {
     [Table("SubjectAssingments", Schema = "School")]
-    public class SubjectAssingment : IEntity
+    public class SubjectAssingment : TrackedEntity
     {
         public virtual int Id { get; set; }
+        public virtual bool Deleted { get; set; }
         [Required]
         public virtual DateTime Date { get; set; }
-        public virtual bool Disable { get; set; }
         public virtual int SubjectId { get; set; }
         public virtual Subject Subject { get; set; }
         public virtual int ClassId { get; set; }
