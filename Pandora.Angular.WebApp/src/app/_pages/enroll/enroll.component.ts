@@ -54,7 +54,7 @@ export class EnrollComponent implements OnInit {
   }
 
   onConfirmar() {
-    this.studSvc.enrollStudent(this.selectedSubject.id, this.currentUser.id).subscribe(resul => {
+    this.subjSvc.enrollStudent(this.selectedSubject.id, this.currentUser.id).subscribe(resul => {
       if (resul) {
         this.router.navigate(['/']);
         //TODO: show confirmation pop up
@@ -70,7 +70,7 @@ export class EnrollComponent implements OnInit {
       this.available = undefined;
     }
     if (event.selectedIndex === 1) {
-      this.studSvc.tryEnrollStudent(this.selectedSubject.id, this.currentUser.id).subscribe(resul => {
+      this.subjSvc.tryEnrollStudent(this.selectedSubject.id, this.currentUser.id).subscribe(resul => {
         this.available = resul;
         if (this.available) {
           this.secondFormGroup.setValue({

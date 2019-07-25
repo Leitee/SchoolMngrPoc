@@ -13,6 +13,7 @@ import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@ang
 })
 export class AttendComponent implements OnInit {
 
+  date = Date();
   studentListSource: Array<Student>;
   subject: Subject;
   groupFrom: FormGroup;
