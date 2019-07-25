@@ -21,7 +21,26 @@ mat-card-content {
 mat-form-field {
   margin-right: 12px;
 }
-
+.page-teacher {
+  display:flex; 
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+  padding-left: 0px;
+  margin-left: 0px;
+}
+.page-teacher div {
+  position: relative;
+  margin-right:  20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  display: block;
+  box-sizing: border-box;
+}
+.page-teacher li {
+  float: left;
+  box-sizing: border-box;
+}
 mat-card-actions {
   border-top: solid 1px green;
   button{
