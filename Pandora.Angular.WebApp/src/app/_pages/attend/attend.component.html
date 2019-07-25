@@ -1,7 +1,7 @@
 <app-content-wrapper headerTitle="{{subject.name}} - Asistencia - {{date | date :'shortDate'}}"
   headerIcon="assignment_ind">
   <mat-accordion class="example-headers-align">
-    <form [formGroup]="groupFrom">
+    <form [formGroup]="groupFrom" (submit)=onSaveAttends()>
       <mat-expansion-panel formArrayName="arrayForm"
         *ngFor="let stud of studentListSource; let i=index; let isLast=last">
 
@@ -11,7 +11,7 @@
             {{stud.id}}  {{stud.applicationUser.fullName}}
           </mat-panel-title>
           <mat-panel-description class="expand-panel-desciption">
-            Descripcion del alumno
+            <i>-- Descripcion del alumno --</i>
           </mat-panel-description>
         </mat-expansion-panel-header>
 
@@ -33,7 +33,7 @@
         </div>
 
         <mat-action-row *ngIf="isLast">
-          <button mat-raised-button color="primary" [disabled]="groupFrom.invalid" (click)="onSaveAttends()"
+          <button mat-raised-button color="primary" [disabled]="groupFrom.invalid" type="submit"
             hideToggle>Guardar</button>
         </mat-action-row>
       </mat-expansion-panel>

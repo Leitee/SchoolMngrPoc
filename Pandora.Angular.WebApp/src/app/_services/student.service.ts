@@ -1,4 +1,4 @@
-import { Student } from "@/_models";
+import { Student, Exam } from "@/_models";
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
@@ -26,16 +26,5 @@ export class StudentService extends ApiBaseService<Student> {
     public getStudentsAttendsBySubjectId(classId: number): Observable<Student[]> {
         this.path = "students/GetAttendsBySubject";
         return this.getListById(classId);
-    }
-
-    public tryEnrollStudent(subjectId: number, studentId: number): Observable<boolean> {
-        this.path = "subjects/TryEnroll";
-        let response = this.http.put<ApiResponse<boolean>>(this.getFullPath(subjectId), studentId, { headers: this.headerReq });
-        return response.pipe(map(a => a.data));
-    }
-    public enrollStudent(subjectId: number, studentId: number): Observable<boolean> {
-        this.path = "subjects/EnrollStudent";
-        let response = this.http.put<ApiResponse<boolean>>(this.getFullPath(subjectId), studentId, { headers: this.headerReq });
-        return response.pipe(map(a => a.data));
     }
 }

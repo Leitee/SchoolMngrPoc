@@ -1,15 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StudentService, SubjectService } from '@/_services';
-import { Subject, Student, Attend, AttendanceEnum } from '@/_models';
+import { Subject, Student, Attend } from '@/_models';
 import { Utils } from '@/_commons';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
-
-interface ArrayItem {
-  studId: number;
-  choice: number;
-  obs: string;
-};
 
 @Component({
   selector: 'app-attend',
@@ -21,11 +15,7 @@ export class AttendComponent implements OnInit {
 
   studentListSource: Array<Student>;
   subject: Subject;
-  date = new Date();
-
   groupFrom: FormGroup;
-
-
 
   constructor(
     private studSvc: StudentService,

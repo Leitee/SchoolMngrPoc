@@ -14,7 +14,7 @@
                 <i>{{subj.validSubjectAssingment.class.name}} División - Turno {{util.getShiftEnumName(subj.shift)}}</i>
               </div>
               <div style="float: left">
-                <div style="margin-top: 45px">
+                <div style="margin-top: 30px">
                   <mat-checkbox style="cursor: default" [labelPosition]="'before'" [disableRipple]="true"
                     (click)="$event.preventDefault()" color="primary"
                     [checked]="subj?.validSubjectAssingment.classRoom?.hasNetworkConexion">
@@ -27,6 +27,9 @@
                     [checked]="subj?.validSubjectAssingment.classRoom?.hasScreenProjector">
                     Proyector y Pantalla
                   </mat-checkbox>
+                </div>
+                <div>
+                  Cpacidad Máxima: {{subj.validSubjectAssingment.classRoom?.capacity}}
                 </div>
               </div>
             </mat-card-content>

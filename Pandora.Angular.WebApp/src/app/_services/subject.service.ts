@@ -2,7 +2,7 @@ import { Subject, Student } from "@/_models";
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
-import { ApiBaseService, AppConfigService, ApiResponse } from '@/_commons';
+import { ApiBaseService, ApiResponse } from '@/_commons';
 import { map } from 'rxjs/operators';
 
 @Injectable()
@@ -30,6 +30,24 @@ export class SubjectService extends ApiBaseService<Subject> {
     public saveAttendsBySubject(subjId: number, studList: Student[]): Observable<boolean> {
         this.path = "subjects/SaveAttends";
         let response = this.http.put<ApiResponse<boolean>>(this.getFullPath(subjId), studList, { headers: this.headerReq });
+        return response.pipe(map(a => a.data));
+    }
+
+    public tryEnrollStudent(subjectId: number, studentId: number): Observable<boolean> {
+        this.path = "subjects/TryEnroll";
+        let response = this.http.put<ApiResponse<boolean>>(this.getFullPath(subjectId), studentId, { headers: this.headerReq });
+        return response.pipe(map(a => a.data));
+    }
+
+    public enrollStudent(subjectId: number, studentId: number): Observable<boolean> {
+        this.path = "subjects/EnrollStudent";
+        let response = this.http.put<ApiResponse<boolean>>(this.getFullPath(subjectId), studentId, { headers: this.headerReq });
+        return response.pipe(map(a => a.data));
+    }
+
+    public saveStudentExams(subjectId: number, student: Student): Observable<boolean> {
+        this.path = "subjects/SaveExams";
+        let response = this.http.put<ApiResponse<boolean>>(this.getFullPath(subjectId), student, { headers: this.headerReq });
         return response.pipe(map(a => a.data));
     }
 }

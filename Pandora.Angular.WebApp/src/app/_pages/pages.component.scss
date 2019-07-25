@@ -5,7 +5,8 @@ mat-card-header {
 
 mat-card-content {
     text-align: -webkit-center;
-    height: 180px;
+    height: 225px;
+    margin-bottom: 0px;
 }
 
 .example-headers-align .mat-expansion-panel-header-title,
@@ -21,6 +22,7 @@ mat-card-content {
 mat-form-field {
   margin-right: 12px;
 }
+
 .page-teacher {
   display:flex; 
   flex-wrap: wrap;
@@ -28,6 +30,7 @@ mat-form-field {
   list-style: none;
   padding-left: 0px;
   margin-left: 0px;
+  margin-bottom: 0px;
 }
 .page-teacher div {
   position: relative;
@@ -47,7 +50,6 @@ mat-card-actions {
     width: 50%;
     margin: 0px;
   }
-
 }
 
 mat-card {
