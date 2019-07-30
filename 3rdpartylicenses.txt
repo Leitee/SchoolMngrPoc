@@ -85,15 +85,41 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
+@angular/material/autocomplete
+
 @angular/material/button
+
+@angular/material/button-toggle
 
 @angular/material/card
 
+@angular/material/checkbox
+
+@angular/material/core
+
+@angular/material/dialog
+
+@angular/material/expansion
+
+@angular/material/form-field
+
 @angular/material/grid-list
+
+@angular/material/icon
 
 @angular/material/menu
 
+@angular/material/progress-spinner
+
+@angular/material/stepper
+
+@angular/material/table
+
+@angular/material/tabs
+
 @angular/material/toolbar
+
+@angular/material/tooltip
 
 @angular/platform-browser
 MIT

@@ -1,0 +1,25 @@
+{
+    "env": {
+        "name": "prod"
+    },
+    "appInsights": {
+        "instrumentationKey": "<dev-guid-here>"
+    },
+    "logging": {
+        "console": true,
+        "appInsights": false
+    },
+    "aad": {
+        "requireAuth": true,
+        "tenant": "<dev-guid-here>",
+        "clientId": "<dev-guid-here>"
+    },
+    "server": {
+        "apiUrl": "http://localhost:54321/api/v1",  
+        "authUrl": "https://localhost:44300/auth/v1"
+    },
+    "mapConfig": {
+        "provider": "google",
+        "apiKey": ""
+    }
+}
