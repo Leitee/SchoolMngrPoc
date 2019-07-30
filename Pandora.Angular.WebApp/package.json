@@ -15,7 +15,7 @@
     "start:stag": "ng serve --configuration=staging --port=4300 --open",
     "build": "npm run clean:dist && ng build",
     "build:prod": "npm run build -- --prod",
-    "build:github": "ng build --prod --base-href 'https://leitee.github.io/SchoolMngDemo/' npx angular-cli-ghpages --dir=dist/school-mngr/",
+    "build:github": "ng build --prod --base-href 'https://leitee.github.io/SchoolMngDemo/' && npx angular-cli-ghpages --dir=dist/school-mngr/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",

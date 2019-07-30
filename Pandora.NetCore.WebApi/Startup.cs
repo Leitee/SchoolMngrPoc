@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using Pandora.NetStandard.Business.Services;
 using Pandora.NetStandard.Business.Services.Contracts;
+using Pandora.NetStandard.Core.Base;
 using Pandora.NetStandard.Core.Config;
 using Pandora.NetStandard.Core.Identity;
 using Pandora.NetStandard.Core.Interfaces;
@@ -46,6 +47,9 @@ namespace Pandora.NetCore.WebApi
         /// 
         /// </summary>
         public IConfiguration Configuration { get; }
+        /// <summary>
+        /// App Configuration form appsetting.json
+        /// </summary>
         public AppSettings AppSettings { get; }
 
         /// <summary>
@@ -54,6 +58,7 @@ namespace Pandora.NetCore.WebApi
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddScoped<Logger<ApiBaseController>>();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -104,16 +109,7 @@ namespace Pandora.NetCore.WebApi
                     };
                 });
 
-            //configure logger provider 
-            var elasticUrl = AppSettings.ElasticServerUrl;
-            Log.Logger = new LoggerConfiguration()
-                .Enrich.FromLogContext()
-                .Enrich.WithExceptionDetails()
-                .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(elasticUrl))
-                {
-                    AutoRegisterTemplate = true,
-                })
-                .CreateLogger();
+            services.AddLogger(AppSettings);
 
             // configure DI for application services
             // Set up dependency injection for controller's logger
@@ -145,7 +141,8 @@ namespace Pandora.NetCore.WebApi
             });// TODO add Authorization JWT
 
 
-            services.AddApiVersioning(o => {
+            services.AddApiVersioning(o =>
+            {
                 o.ReportApiVersions = true;
                 o.AssumeDefaultVersionWhenUnspecified = true;
                 o.DefaultApiVersion = new ApiVersion(1, 0);
@@ -203,6 +200,35 @@ namespace Pandora.NetCore.WebApi
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+    }
+
+    static class CustomConfigurationExtension
+    {
+        public static IServiceCollection AddLogger(this IServiceCollection services, AppSettings settings)
+        {
+            //configure logger provider 
+            var elasticUrl = settings.ElasticServerUrl;
+
+            var loggerConfig = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .Enrich.WithExceptionDetails();
+
+            if (settings.IsProdMode)
+            {
+                loggerConfig.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(elasticUrl))
+                {
+                    AutoRegisterTemplate = true,
+                });
+            }
+            else
+            {
+                loggerConfig.WriteTo.Console();
+            }
+
+            Log.Logger = loggerConfig.CreateLogger();
+
+            return services;
         }
     }
 }
