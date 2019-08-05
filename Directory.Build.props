@@ -1,0 +1,29 @@
+<Project>
+  <PropertyGroup Label="SDK Versions">
+    <NetStandardTargetVersion>netstandard2.0</NetStandardTargetVersion>
+    <NetCoreTargetVersion>netcoreapp2.2</NetCoreTargetVersion>
+    <LangTargetVersion>latest</LangTargetVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Package Versions">
+    <MicrosoftAspNetCoreAppPackageVersion>2.2.6</MicrosoftAspNetCoreAppPackageVersion>      
+    <MicrosoftAspNetCoreAllPackageVersion>2.0.7</MicrosoftAspNetCoreAllPackageVersion>
+    <MicrosoftEntityFrameworkCoreSqlServerPackageVersion>2.2.6</MicrosoftEntityFrameworkCoreSqlServerPackageVersion>
+    <NewtonsoftJsonPackageVersion>10.0.1</NewtonsoftJsonPackageVersion>
+    <FluentValidationAspNetCorePackageVersion>7.4.0</FluentValidationAspNetCorePackageVersion>
+    <SwashbuckleAspNetCorePackageVersion>2.4.0</SwashbuckleAspNetCorePackageVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Test Package Versions">
+    <MicrosoftNETTestSdkPackageVersion>15.5.0</MicrosoftNETTestSdkPackageVersion>
+    <FluentAssertionsVersion>5.0.0</FluentAssertionsVersion>
+    <ASPNetCoreTestHostVersion>2.0.1</ASPNetCoreTestHostVersion>
+    <XUnitPackageVersion>2.3.1</XUnitPackageVersion>
+    <XUnitRunnerVisualstudio>2.3.1</XUnitRunnerVisualstudio>
+  </PropertyGroup>
+
+  <PropertyGroup Label="CLI Tools Versions">
+    <DotnetXUnitPackageVersion>2.3.1</DotnetXUnitPackageVersion>
+  </PropertyGroup>
+
+</Project>

@@ -1,25 +1,19 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Pandora.NetCore.Identity.DataAccess;
-using Pandora.NetCore.Identity.Services;
-using Pandora.NetCore.Identity.Services.Contracts;
+using Pandora.NetCore.Identity.Validators;
 using Pandora.NetStandard.Core.Config;
+using Pandora.NetStandard.Core.Filters;
 using Pandora.NetStandard.Core.Identity;
-using Pandora.NetStandard.Core.Interfaces;
-using Pandora.NetStandard.Core.Mapper;
-using Pandora.NetStandard.Core.Base;
 using System;
 using System.Threading.Tasks;
-using Pandora.NetStandard.Core.Security;
 
 namespace Pandora.NetCore.Identity
 {
@@ -44,11 +38,14 @@ namespace Pandora.NetCore.Identity
             });
 
             //services.AddCors();
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+            services
+                .AddMvcCore(config => config.Filters.Add(typeof(ValidModelStateFilter)))
+                .AddJsonFormatters()
+                .AddApiExplorer()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginValidator>())
                 .ConfigureApiBehaviorOptions(options =>
                 {
-                    options.SuppressModelStateInvalidFilter = true;//allow reach controller when model state invalid request
+                    options.SuppressModelStateInvalidFilter = true;//to prevent request reaches controllers when model state invalid
                 });
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -78,7 +75,6 @@ namespace Pandora.NetCore.Identity
                 .AddRoleManager<RoleManagerFacade>()
                 .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
-                //.AddDefaultUI(UIFramework.Bootstrap4)
 
             services.AddDbContext<IdentityDbContext>(ctx => ctx.UseSqlServer(AppSettings.ConnectionString));
 
@@ -109,12 +105,7 @@ namespace Pandora.NetCore.Identity
                 });
 
             //Dependency Injection Settings
-            services.AddScoped<ILogger, Logger<ApiBaseController>>();
-            services.AddSingleton<IMapperCore, GenericMapperCore>();
-            services.AddScoped<IApplicationUow, IdentityUow>();
-            services.AddScoped<IAuthSvc, AuthSvc>();
-            services.AddScoped<ISocialSvc, SocialSvc>();
-            services.AddTransient<IJwtTokenProvider, JwtTokenProvider>();
+            services.AddDIServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
