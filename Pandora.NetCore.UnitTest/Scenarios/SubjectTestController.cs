@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Pandora.NetCore.WebApi.Controllers.Api;
-using Pandora.NetStandard.Business.Services;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Dtos;
@@ -8,18 +8,15 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Pandora.NetCore.UnitTest.TestControllers
+namespace Pandora.NetCore.UnitTest.Scenarios
 {
-    public class SubjectTestController : IClassFixture<TestDbContextMocker>
+    public class SubjectTestController : IClassFixture<HostFixture>
     {
         private readonly SubjectsController _controller;
 
-        public SubjectTestController(TestDbContextMocker mocker)
+        public SubjectTestController(ILogger logger, ISubjectSvc subjectSvc)
         {
-            IStudentStateSvc stateSvc = new StudentStateSvc(mocker.UoW, null);
-            ISubjectSvc subjectSvc = new SubjectSvc(mocker.UoW, null, stateSvc);
-
-            _controller = new SubjectsController(null, subjectSvc);
+            _controller = new SubjectsController(logger, subjectSvc);
         }
 
         [Fact(DisplayName = "Retriving all existing subjects")]

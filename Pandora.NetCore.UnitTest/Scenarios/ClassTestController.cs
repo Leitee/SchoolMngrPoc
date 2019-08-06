@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Pandora.NetCore.UnitTest.TestControllers
+namespace Pandora.NetCore.UnitTest.Scenarios
 {
-    public class ClassTestController : IClassFixture<TestDbContextMocker>
+    public class ClassTestController : IClassFixture<HostFixture>
     {
-        
+
     }
 }

@@ -16,10 +16,9 @@ namespace Pandora.NetStandard.Data.Dals
     {
         protected readonly AppSettings _appSettings;//TODO: to see...
 
-        public SchoolDbContext(IConfiguration config, DbContextOptions options, bool isTestInstance = false) : base(options)
+        public SchoolDbContext(IConfiguration config, DbContextOptions options) : base(options)
         {
-            if (!isTestInstance)
-                _appSettings = AppSettings.GetSettings(config ?? throw new ArgumentNullException(nameof(config)));
+            _appSettings = AppSettings.GetSettings(config ?? throw new ArgumentNullException(nameof(config)));
         }
 
         public DbSet<Grade> Grades { get; set; }

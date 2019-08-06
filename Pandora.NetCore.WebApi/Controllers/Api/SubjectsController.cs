@@ -17,7 +17,7 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
         private readonly ISubjectSvc _subjectSvc;
 
 
-        public SubjectsController(ILogger<SubjectsController> logger,
+        public SubjectsController(ILogger logger,
             ISubjectSvc subjectSvc)
             : base(logger)
         {

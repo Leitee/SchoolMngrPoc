@@ -3,7 +3,6 @@ using Pandora.NetCore.Identity;
 using Pandora.NetCore.Identity.DataAccess;
 using Pandora.NetCore.Identity.Services;
 using Pandora.NetCore.Identity.Services.Contracts;
-using Pandora.NetStandard.Core.Filters;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Mapper;
 using Pandora.NetStandard.Core.Security;

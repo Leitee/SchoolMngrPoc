@@ -1,23 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Pandora.NetCore.WebApi.Controllers.Api;
-using Pandora.NetStandard.Business.Services;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Dtos;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Pandora.NetCore.UnitTest.TestControllers
+namespace Pandora.NetCore.UnitTest.Scenarios
 {
-    public class GradeTestController : IClassFixture<TestDbContextMocker>
+    public class GradeTestController : IClassFixture<HostFixture>
     {
         private readonly GradesController _controller;
 
-        public GradeTestController(TestDbContextMocker mocker)
+        public GradeTestController(ILogger logger, IGradeSvc gradeSvc)
         {
-            IGradeSvc gradeSvc = new GradeSvc(mocker.UoW, null);
-
-            _controller = new GradesController(null, gradeSvc);
+            _controller = new GradesController(logger, gradeSvc);
         }
 
         [Fact(DisplayName = "Retriving all existing grades")]

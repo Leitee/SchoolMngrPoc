@@ -15,7 +15,7 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
     {
         private readonly IStudentSvc _studentSvc;
 
-        public StudentsController(ILogger<StudentsController> logger, IStudentSvc studentSvc)
+        public StudentsController(ILogger logger, IStudentSvc studentSvc)
             : base(logger)
         {
             _studentSvc = studentSvc;

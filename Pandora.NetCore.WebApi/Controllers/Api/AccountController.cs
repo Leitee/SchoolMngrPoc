@@ -15,7 +15,7 @@ namespace Pandora.NetCore.WebApi.Controllers.Api
     {
         private readonly IAccountSvc _accountSvc;
 
-        public AccountController(ILogger<AccountController> logger,
+        public AccountController(ILogger logger,
             IAccountSvc accountSvc) : base(logger)
         {
             _accountSvc = accountSvc;
