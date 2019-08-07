@@ -8,7 +8,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Pandora.NetCore.WebApi.Controllers
+namespace Pandora.NetCore.ApiHost.Controllers
 {
     [Authorize]
     public class AccountController : Controller
@@ -27,9 +27,9 @@ namespace Pandora.NetCore.WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Login()
         {
-            if (this.User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
-                return this.RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
             }
 
             if (!string.IsNullOrEmpty(ErrorMessage))
@@ -62,8 +62,8 @@ namespace Pandora.NetCore.WebApi.Controllers
                 ErrorMessage = response.HasError ? string.Concat(response.Errors) : response.Data.MessageResponse;
             }
 
-            this.ModelState.AddModelError(string.Empty, ErrorMessage);
-            return this.View(model);
+            ModelState.AddModelError(string.Empty, ErrorMessage);
+            return View(model);
         }
 
         [AllowAnonymous]

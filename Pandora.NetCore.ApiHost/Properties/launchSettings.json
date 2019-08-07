@@ -14,7 +14,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Pandora.NetCore.WebApi": {
+    "Pandora.NetCore.ApiHost": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

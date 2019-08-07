@@ -1,16 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
+    <TargetFramework>$(NetStandardTargetVersion)</TargetFramework>
+    <LangVersion>$(LangTargetVersion)</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Services\AuthSvc.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="8.1.1" />
+    <PackageReference Include="AutoMapper" Version="$(AutomapperPackageVersion)" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="$(FluentValidationAspNetCorePackageVersion)" />
   </ItemGroup>
 
   <ItemGroup>

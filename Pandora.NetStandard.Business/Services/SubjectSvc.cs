@@ -34,7 +34,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entityResult = await _uow.GetRepo<Subject>().InsertAsync(pDto);
+                var entityResult = await _uow.GetRepository<Subject>().InsertAsync(pDto);
                 if (await _uow.CommitAsync())
                 {
                     response.Data = _mapper.MapEntity(entityResult);
@@ -63,7 +63,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entitiesResult = await _uow.GetRepo<Subject>().AllAsync(null, null, null);
+                var entitiesResult = await _uow.GetRepository<Subject>().AllAsync(null, null, null);
                 response.Data = _mapper.MapEntity(entitiesResult);
 
             }
@@ -81,7 +81,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                await _uow.GetRepo<Subject>().UpdateAsync(pSubject);
+                await _uow.GetRepository<Subject>().UpdateAsync(pSubject);
                 if (await _uow.CommitAsync())
                 {
                     response.Data = true;
@@ -105,7 +105,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entityResult = await _uow.GetRepo<Subject>().GetByIdAsync(pId);
+                var entityResult = await _uow.GetRepository<Subject>().GetByIdAsync(pId);
                 response.Data = _mapper.MapEntity(entityResult);
             }
             catch (Exception ex)
@@ -133,11 +133,11 @@ namespace Pandora.NetStandard.Business.Services
                 //    trx.Commit();
                 //}
 
-                var subjEntity = await _uow.GetRepo<Subject>().GetByIdAsync(subjectId);
+                var subjEntity = await _uow.GetRepository<Subject>().GetByIdAsync(subjectId);
                 if (subjEntity == null)
                     throw new Exception($"Subject Id = {subjectId} didn't match any result.");
 
-                var studentResult = await _uow.GetRepo<Student>().GetByExpressionAsync(s => s.ApplicationUserId == userId);
+                var studentResult = await _uow.GetRepository<Student>().GetByExpressionAsync(s => s.ApplicationUserId == userId);
 
                 StateManager stateManager = await StateManager.GetStateManagerAsync(_studentStateSvc, studentResult.Id, subjectId);
                 response.Data = await stateManager.EnrollStudentAsync(
@@ -162,7 +162,7 @@ namespace Pandora.NetStandard.Business.Services
                 {
                     exam.Date = DateTime.Now;
 
-                    var entityExam = await _uow.GetRepo<Exam>()
+                    var entityExam = await _uow.GetRepository<Exam>()
                         .GetByExpressionAsync(e => e.SubjectId == subjectId && e.StudentId == studentDto.Id && e.ExamType == exam.ExamType);
 
                     if (entityExam != null)
@@ -171,14 +171,14 @@ namespace Pandora.NetStandard.Business.Services
                         {
                             entityExam.Score = exam.Score;
                             entityExam.Date = exam.Date;
-                            await _uow.GetRepo<Exam>().UpdateAsync(entityExam);
+                            await _uow.GetRepository<Exam>().UpdateAsync(entityExam);
                         }
                         continue;
                     }
 
                     exam.SubjectId = subjectId;
                     exam.StudentId = studentDto.Id;
-                    await _uow.GetRepo<Exam>().InsertAsync(exam);
+                    await _uow.GetRepository<Exam>().InsertAsync(exam);
                 }
                 response.Data = await _uow.CommitAsync();
             }
@@ -201,11 +201,11 @@ namespace Pandora.NetStandard.Business.Services
 
                 if (typeof(TEntity).BaseType == typeof(Student))
                 {
-                    entitiesResult = await _uow.GetRepo<Student>().GetByExpressionAsync(sb => sb.ApplicationUserId == userId);
+                    entitiesResult = await _uow.GetRepository<Student>().GetByExpressionAsync(sb => sb.ApplicationUserId == userId);
 
                     if (entitiesResult != null)
                     {
-                        subjResult = await _uow.GetRepo<Subject>().AllAsync(s => s.StudentStates.Any(ss => ss.StudentId == entitiesResult.Id),
+                        subjResult = await _uow.GetRepository<Subject>().AllAsync(s => s.StudentStates.Any(ss => ss.StudentId == entitiesResult.Id),
                                             null,
                                             x => x.Include(s => s.Attends),
                                             x => x.Include(s => s.Exams));
@@ -215,11 +215,11 @@ namespace Pandora.NetStandard.Business.Services
                 }
                 else if (typeof(TEntity).BaseType == typeof(Teacher))
                 {
-                    entitiesResult = await _uow.GetRepo<Teacher>().GetByExpressionAsync(sb => sb.ApplicationUserId == userId);
+                    entitiesResult = await _uow.GetRepository<Teacher>().GetByExpressionAsync(sb => sb.ApplicationUserId == userId);
 
                     if (entitiesResult != null)
                     {
-                        subjResult = await _uow.GetRepo<Subject>().AllAsync(s => s.SubjectAssingments.Any(sa => sa.TeacherId == entitiesResult.Id),
+                        subjResult = await _uow.GetRepository<Subject>().AllAsync(s => s.SubjectAssingments.Any(sa => sa.TeacherId == entitiesResult.Id),
                                             null,
                                             x => x.Include(s => s.SubjectAssingments).ThenInclude(sa => sa.Class),
                                             x => x.Include(s => s.SubjectAssingments).ThenInclude(sa => sa.ClassRoom));
@@ -244,12 +244,12 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var subjResponse = await _uow.GetRepo<Subject>().FindAsync(s => s.Id == subjectId, x => x.Include(s => s.PreReqSubject));
+                var subjResponse = await _uow.GetRepository<Subject>().FindAsync(s => s.Id == subjectId, x => x.Include(s => s.PreReqSubject));
                 if (subjResponse == null)
                     throw new Exception($"Subject Id = {subjectId} didn't match any result.");
 
                 //check if he is already enrolled 
-                var isAlreadyEnrolled = await _uow.GetRepo<Student>().ExistAsync(s => s.ApplicationUserId == studentId && s.StudentStates
+                var isAlreadyEnrolled = await _uow.GetRepository<Student>().ExistAsync(s => s.ApplicationUserId == studentId && s.StudentStates
                 .Any(ss => ss.SubjectId == subjectId && ss.AcademicState == StudentStateEnum.ENROLLED));
 
                 if (isAlreadyEnrolled)
@@ -262,7 +262,7 @@ namespace Pandora.NetStandard.Business.Services
                 //check if the subject has a prerequired subject
                 if (subjResponse.PreReqSubject != null)
                 {
-                    var hasNotPreReq = await _uow.GetRepo<Student>()
+                    var hasNotPreReq = await _uow.GetRepository<Student>()
                         .ExistAsync(s => s.ApplicationUserId == studentId && s.StudentStates
                         .Any(ss => ss.SubjectId == subjResponse.PreReqSubject.Id && ss.AcademicState == StudentStateEnum.ACHIEVED));
 
@@ -296,7 +296,7 @@ namespace Pandora.NetStandard.Business.Services
                         Date = DateTime.Now
                     };
 
-                    await _uow.GetRepo<Attend>().InsertAsync(attend);
+                    await _uow.GetRepository<Attend>().InsertAsync(attend);
                 }
                 response.Data = await _uow.CommitAsync();
             }

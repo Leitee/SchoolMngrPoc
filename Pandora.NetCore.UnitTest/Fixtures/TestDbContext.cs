@@ -13,7 +13,7 @@ namespace Pandora.NetCore.UnitTest
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseInMemoryDatabase(nameof(TestDbContext));
+            optionsBuilder.UseInMemoryDatabase(nameof(TestDbContext));
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

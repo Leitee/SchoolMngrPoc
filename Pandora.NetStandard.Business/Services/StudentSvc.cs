@@ -26,7 +26,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entityResult = await _uow.GetRepo<Student>().InsertAsync(pDto);
+                var entityResult = await _uow.GetRepository<Student>().InsertAsync(pDto);
                 if (await _uow.CommitAsync())
                 {
                     response.Data = _mapper.MapEntity(entityResult);
@@ -60,7 +60,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entityReult = await _uow.GetRepo<Student>()
+                var entityReult = await _uow.GetRepository<Student>()
                     .AllAsync(s => s.StudentStates.Any(ss => ss.SubjectId == pSubjectId),
                     null,
                     x => x.Include(s => s.ApplicationUser),
@@ -83,7 +83,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                await _uow.GetRepo<Student>().UpdateAsync(pStudent);
+                await _uow.GetRepository<Student>().UpdateAsync(pStudent);
                 if (await _uow.CommitAsync())
                 {
                     response.Data = true;
@@ -107,7 +107,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entityResult = await _uow.GetRepo<Student>().GetByIdAsync(pId);
+                var entityResult = await _uow.GetRepository<Student>().GetByIdAsync(pId);
                 response.Data = _mapper.MapEntity(entityResult);
             }
             catch (Exception ex)
@@ -129,7 +129,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entityResult = await _uow.GetRepo<Student>()
+                var entityResult = await _uow.GetRepository<Student>()
                     .AllAsync(s => s.StudentStates.Any(ss => ss.SubjectId == pSubjectId),
                     null,
                     x => x.Include(s => s.ApplicationUser),

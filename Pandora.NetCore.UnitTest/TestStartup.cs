@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Pandora.NetStandard.Api;
 
 namespace Pandora.NetCore.UnitTest
 {
@@ -7,15 +8,16 @@ namespace Pandora.NetCore.UnitTest
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            //Configuration.ConfigureServices(services);
+            services.AddDbContext<TestDbContext>();
+            Configuration.ConfigureApiServices(services);
         }
 
         public void Configure(IApplicationBuilder app)
         {
-            //Configuration.Configure(app, host =>
-            //{
-            //    return host;
-            //});
+            Configuration.ConfigureApi(app, host =>
+            {
+                return host;
+            });
         }
     }
 }

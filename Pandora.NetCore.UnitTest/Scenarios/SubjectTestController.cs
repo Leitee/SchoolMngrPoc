@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pandora.NetCore.WebApi.Controllers.Api;
+using Pandora.NetStandard.Api.Controllers;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Dtos;

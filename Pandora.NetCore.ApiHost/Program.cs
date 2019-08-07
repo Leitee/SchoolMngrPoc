@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Pandora.NetCore.WebApi
+namespace Pandora.NetCore.ApiHost
 {
     /// <summary>
     /// 
@@ -14,9 +14,7 @@ namespace Pandora.NetCore.WebApi
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
-            var host = CreateWebHostBuilder(args).Build();
-            //RunSeeding(host);
-            host.Run();
+            CreateWebHostBuilder(args).Build().Run();
         }
 
         //private static void RunSeeding(IWebHost host)
@@ -35,8 +33,11 @@ namespace Pandora.NetCore.WebApi
         /// <param name="args"></param>
         /// <returns></returns>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+             WebHost.CreateDefaultBuilder(args)
+                 .ConfigureServices(services =>
+                 {
+                     //services.AddTransient<IStartupFilter, HostStartupFilter>();
+                }).UseStartup<Startup>();
 
     }
 }

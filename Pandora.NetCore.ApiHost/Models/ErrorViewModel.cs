@@ -1,6 +1,6 @@
 using System;
 
-namespace Pandora.NetCore.WebApi.Models
+namespace Pandora.NetCore.ApiHost.Models
 {
     public class ErrorViewModel
     {

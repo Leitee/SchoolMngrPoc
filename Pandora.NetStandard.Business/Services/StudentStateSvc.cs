@@ -23,7 +23,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entityResult = await _uow.GetRepo<StudentState>().InsertAsync(pDto);
+                var entityResult = await _uow.GetRepository<StudentState>().InsertAsync(pDto);
                 if (await _uow.CommitAsync())
                 {
                     response.Data = _mapper.MapEntity(entityResult);
@@ -62,7 +62,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entityResult = await _uow.GetRepo<StudentState>().FindAsync(
+                var entityResult = await _uow.GetRepository<StudentState>().FindAsync(
                     s => !s.DateTo.HasValue && s.StudentId == studentId && s.SubjectId == subjectId, null);
                 response.Data = _mapper.MapEntity(entityResult);
             }
@@ -80,7 +80,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                await _uow.GetRepo<StudentState>().UpdateAsync(pDto);
+                await _uow.GetRepository<StudentState>().UpdateAsync(pDto);
                 if (await _uow.CommitAsync())
                 {
                     response.Data = true;

@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pandora.NetStandard.Core", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pandora.NetStandard.Data", "Pandora.NetStandard.Data\Pandora.NetStandard.Data.csproj", "{3AF6270E-F2F1-43A9-B3E8-E79E13C8E1BE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pandora.NetCore.WebApi", "Pandora.NetCore.WebApi\Pandora.NetCore.WebApi.csproj", "{D72BB440-1F5F-48B1-9C21-8AE86F77FED0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pandora.NetCore.ApiHost", "Pandora.NetCore.ApiHost\Pandora.NetCore.ApiHost.csproj", "{D72BB440-1F5F-48B1-9C21-8AE86F77FED0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pandora.NetCore.UnitTest", "Pandora.NetCore.UnitTest\Pandora.NetCore.UnitTest.csproj", "{E0D95756-EA99-4D16-8AAC-35DB4654BD45}"
 EndProject

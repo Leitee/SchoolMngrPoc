@@ -17,7 +17,7 @@ namespace Pandora.NetCore.Identity.DataAccess
             throw new NotImplementedException();
         }
 
-        public IEfRepository<TEntity> GetRepo<TEntity>() where TEntity : class
+        public IEfRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             throw new NotImplementedException();
         }

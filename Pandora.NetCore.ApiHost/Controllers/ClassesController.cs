@@ -5,7 +5,7 @@ using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Model.Dtos;
 using System.Threading.Tasks;
 
-namespace Pandora.NetCore.WebApi.Controllers
+namespace Pandora.NetCore.ApiHost.Controllers
 {
     [Authorize]
     public class ClassesController : Controller

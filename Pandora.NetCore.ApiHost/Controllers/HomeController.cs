@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Pandora.NetCore.WebApi.Models;
+using Pandora.NetCore.ApiHost.Models;
 using System.Diagnostics;
 
-namespace Pandora.NetCore.WebApi.Controllers
+namespace Pandora.NetCore.ApiHost.Controllers
 {
     public class HomeController : Controller
     {

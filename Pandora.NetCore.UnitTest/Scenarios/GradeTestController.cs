@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pandora.NetCore.WebApi.Controllers.Api;
+using Pandora.NetStandard.Api.Controllers;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Dtos;
@@ -13,9 +13,11 @@ namespace Pandora.NetCore.UnitTest.Scenarios
     {
         private readonly GradesController _controller;
 
-        public GradeTestController(ILogger logger, IGradeSvc gradeSvc)
+        public GradeTestController(HostFixture hostFixture)
         {
-            _controller = new GradesController(logger, gradeSvc);
+            var logger = hostFixture.Server.Host.Services.GetService(typeof(ILogger));
+            var gradeSvc = hostFixture.Server.Host.Services.GetService(typeof(IGradeSvc));
+            //_controller = new GradesController(logger, gradeSvc);
         }
 
         [Fact(DisplayName = "Retriving all existing grades")]

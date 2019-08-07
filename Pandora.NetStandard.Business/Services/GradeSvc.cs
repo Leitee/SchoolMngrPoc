@@ -26,7 +26,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entity = await _uow.GetRepo<Grade>().InsertAsync(pDto);
+                var entity = await _uow.GetRepository<Grade>().InsertAsync(pDto);
                 if (!await _uow.CommitAsync())
                 {
                     HandleSVCException(response, "This action couldn't be performed.");
@@ -49,7 +49,7 @@ namespace Pandora.NetStandard.Business.Services
             try
             {
                 //var entity = await _uow.GetRepo<Grade>().GetByIdAsync(pDto.Id);
-                await _uow.GetRepo<Grade>().DeleteAsync(pDto);
+                await _uow.GetRepository<Grade>().DeleteAsync(pDto);
                 if (await _uow.CommitAsync())
                 {
                     response.Data = true;
@@ -73,7 +73,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entity = await _uow.GetRepo<Grade>().AllAsync(null, o => o.OrderBy(g => g.Id), null);
+                var entity = await _uow.GetRepository<Grade>().AllAsync(null, o => o.OrderBy(g => g.Id), null);
                 response.Data = _mapper.MapEntity(entity);
             }
             catch (Exception ex)
@@ -90,7 +90,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var entity = await _uow.GetRepo<Grade>().GetByIdAsync(pId);
+                var entity = await _uow.GetRepository<Grade>().GetByIdAsync(pId);
                 response.Data = _mapper.MapEntity(entity);
             }
             catch (Exception ex)

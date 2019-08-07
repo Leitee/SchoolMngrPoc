@@ -1,4 +1,4 @@
-﻿namespace Pandora.NetCore.WebApi
+﻿namespace Pandora.NetCore.ApiHost
 {
     public abstract class SchoolMngrLOG
     {

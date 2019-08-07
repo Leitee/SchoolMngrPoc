@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Pandora.NetStandard.Business.Services;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Interfaces;
@@ -20,8 +21,9 @@ namespace Pandora.NetCore.UnitTest
             {
                 services.AddSingleton<RepositoryFactories<TestDbContext>>();
                 services.AddSingleton<IMapperCore, GenericMapperCore>();
+                services.AddScoped<ILogger, Logger<TestServer>>();
                 services.AddScoped<IRepositoryProvider<TestDbContext>, RepositoryProvider<TestDbContext>>();
-                services.AddScoped<IIdentityAppUow, ApplicationUow<TestDbContext>>();
+                services.AddScoped<IApplicationUow, ApplicationUow<TestDbContext>>();
                 services.AddScoped<IGradeSvc, GradeSvc>();
                 services.AddScoped<IClassSvc, ClassSvc>();
                 services.AddScoped<IStudentSvc, StudentSvc>();
