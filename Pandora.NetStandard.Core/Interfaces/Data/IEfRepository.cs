@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Core.Interfaces
 {
-    public interface IEfRepository<TEntity> : IRepository<TEntity>, IPaginableRepository<TEntity> where TEntity : class
+    public interface IEfRepository<TEntity> : IRepository<TEntity>, IPaginableRepository<TEntity> where TEntity : class, IEntity
     {
         Task<TEntity> GetByExpressionAsync(Expression<Func<TEntity, bool>> predicate);
 

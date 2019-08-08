@@ -5,7 +5,7 @@ using Pandora.NetStandard.Model.Entities;
 
 namespace Pandora.NetStandard.Business.Mappers
 {
-    public class ClassToDtoMapper : GenericMapperCore<Class, ClassDto>
+    public class ClassToDtoMapper : GenericMapper<Class, ClassDto>
     {
         protected override IMapper CreateMapConfiguration()
         {

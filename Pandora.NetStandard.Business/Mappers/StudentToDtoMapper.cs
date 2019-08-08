@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Pandora.NetStandard.Business.Mappers
 {
-    public class StudentToDtoMapper : GenericMapperCore<Student, StudentDto>
+    public class StudentToDtoMapper : GenericMapper<Student, StudentDto>
     {
         protected override IMapper CreateMapConfiguration()
         {
@@ -17,10 +17,13 @@ namespace Pandora.NetStandard.Business.Mappers
                 c.CreateMap<Student, StudentDto>()
                 .ForMember(m => m.ValidStudentState, o => o.MapFrom(s => s.StudentStates.FirstOrDefault(ss => !ss.DateTo.HasValue)));
 
-                c.CreateMap<List<StudentState>, List<StudentStateDto>>();
+                c.CreateMap<StudentState, StudentStateDto>();
                 c.CreateMap<ApplicationUser, UserDto>();
+                c.CreateMap<Attend, AttendDto>();
+                c.CreateMap<Exam, ExamDto>();
 
-            }).CreateMapper();
+            })
+            .CreateMapper();
         }
     }
 }

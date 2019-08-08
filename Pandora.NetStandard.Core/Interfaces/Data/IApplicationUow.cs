@@ -5,7 +5,7 @@ namespace Pandora.NetStandard.Core.Interfaces
 {
     public interface IApplicationUow
     {
-        IEfRepository<TEntity> GetRepository<TEntity>() where TEntity : class;
+        IEfRepository<TEntity> GetRepository<TEntity>() where TEntity : class, IEntity;
         bool Commit();
         Task<bool> CommitAsync();
         IDbContextTransaction StartTransaction();

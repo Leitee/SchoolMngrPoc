@@ -75,7 +75,7 @@ namespace Pandora.NetStandard.Data.Dals
         }
         #endregion
 
-        public abstract IEfRepository<T> GetRepository<T>() where T : class;
+        public abstract IEfRepository<T> GetRepository<T>() where T : class, IEntity;
 
         //protected abstract T GetIdentityRepo<T>();
 

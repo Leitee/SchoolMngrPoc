@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Pandora.NetStandard.Core.Mapper
 {
-    public abstract class GenericMapperCore<TInputEntity, TOutputEntity> : IMapperCore<TInputEntity, TOutputEntity>
+    public abstract class GenericMapper<TInputEntity, TOutputEntity> : IMapperCore<TInputEntity, TOutputEntity>
     {
         protected IMapper MappingConfiguration { get; set; }
 
-        public GenericMapperCore()
+        public GenericMapper()
         {
             MappingConfiguration = CreateMapConfiguration();
         }

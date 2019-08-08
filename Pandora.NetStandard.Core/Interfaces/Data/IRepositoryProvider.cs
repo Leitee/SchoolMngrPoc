@@ -26,7 +26,7 @@ namespace Pandora.NetStandard.Core.Interfaces
         /// <typeparam name="T">
         /// Root entity type of the <see cref="IRepository{T}"/>.
         /// </typeparam>
-        IEfRepository<T> GetRepositoryForEntityType<T>() where T : class;
+        IEfRepository<T> GetRepositoryForEntityType<T>() where T : class, IEntity;
 
         /// <summary>
         /// Get a repository of type T.

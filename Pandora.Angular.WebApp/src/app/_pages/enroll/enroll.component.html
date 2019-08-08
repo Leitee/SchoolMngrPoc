@@ -1,10 +1,10 @@
-<app-content-wrapper headerTitle="Inscribirse" headerIcon="library_add">
-    <mat-horizontal-stepper [linear]="true" #stepper (selectionChange)="selectionChange($event)">
+<app-content-wrapper headerTitle="Enroll" headerIcon="library_add">
+    <mat-vertical-stepper [linear]="true" #stepper (selectionChange)="selectionChange($event)">
         <mat-step [stepControl]="firstFormGroup">
             <form class="step-form" [formGroup]="firstFormGroup">
-                <ng-template matStepLabel>Elija una materia</ng-template>
+                <ng-template matStepLabel>Choose</ng-template>
                 <mat-form-field>
-                    <input type="text" placeholder="Materia" aria-label="Materia" matInput formControlName="firstCtrl"
+                    <input type="text" placeholder="Subject" aria-label="Subject" matInput formControlName="firstCtrl"
                         [matAutocomplete]="auto" required>
                     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                         <mat-option *ngFor="let subj of subjectsListAsync | async" [value]="subj">
@@ -14,13 +14,13 @@
                 </mat-form-field>
                 <div>
                     <button mat-raised-button color="primary" matStepperNext [disabled]="!firstFormGroup.valid"
-                        class="stepper-button next">Comprobar</button>
+                        class="stepper-button next">Check</button>
                 </div>
             </form>
         </mat-step>
         <mat-step [stepControl]="secondFormGroup">
             <form class="step-form" [formGroup]="secondFormGroup">
-                <ng-template matStepLabel>Comprobar</ng-template>
+                <ng-template matStepLabel>Check</ng-template>
                 <div style="width: 50px">
                     <mat-icon *ngIf="available === true" [inline]="true" style="color: green" svgIcon="check_circle"
                         aria-hidden="false" aria-label="Available"></mat-icon>
@@ -28,25 +28,25 @@
                         aria-hidden="false" aria-label="Not Available"></mat-icon>
                 </div>
                 <h4 *ngIf="available !== undefined">
-                    {{available === true ? 'Te puedes inscribir a esta materia!' : 'No te puede inscribir a esta materia!'}}
+                    {{available === true ? 'This subject is able to enroll!' : 'You cannot enroll to this subject!'}}
                 </h4>
                 <div>
-                    <button mat-raised-button matStepperPrevious class="stepper-button prev">Volver</button>
+                    <button mat-raised-button matStepperPrevious class="stepper-button prev">Back</button>
                     <button mat-raised-button color="primary" matStepperNext [disabled]="!secondFormGroup.valid"
-                        class="stepper-button next">Siguiente</button>
+                        class="stepper-button next">Next</button>
                 </div>
             </form>
         </mat-step>
         <mat-step>
-            <ng-template matStepLabel>Resumen</ng-template>
+            <ng-template matStepLabel>Review</ng-template>
             <div class="step-form">
-                Estas a punto de inscribirte en {{selectedSubject.name?.toUpperCase()}}. Confirmar?
+                You will enroll to {{selectedSubject.name?.toUpperCase()}}. Confirm?
             </div>
             <div>
-                <button mat-raised-button class="stepper-button prev">Volver</button>
+                <button mat-raised-button matStepperPrevious class="stepper-button prev">Back</button>
                 <button mat-raised-button color="primary" class="stepper-button next"
-                    (click)="onConfirmar()">Confirmar</button>
+                    (click)="onConfirmar()">Confirm</button>
             </div>
         </mat-step>
-    </mat-horizontal-stepper>
+    </mat-vertical-stepper>
 </app-content-wrapper>

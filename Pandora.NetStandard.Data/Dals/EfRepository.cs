@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Pandora.NetStandard.Core.Base;
 using Pandora.NetStandard.Core.Interfaces;
 using Pandora.NetStandard.Core.Interfaces.Data;
 using Pandora.NetStandard.Core.Utils;
@@ -10,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Data.Dals
 {
-    public class EfRepository<TEntity> : IEfRepository<TEntity> where TEntity : class
+    public class EfRepository<TEntity> : IEfRepository<TEntity> where TEntity : class, IEntity
     {
-        protected readonly SchoolDbContext _dbContext;
+        protected readonly ApplicationDbContext _dbContext;
         protected readonly DbSet<TEntity> _dbSet;
 
-        public EfRepository(SchoolDbContext context)
+        public EfRepository(ApplicationDbContext context)
         {
             _dbContext = context;
             _dbSet = _dbContext.Set<TEntity>();

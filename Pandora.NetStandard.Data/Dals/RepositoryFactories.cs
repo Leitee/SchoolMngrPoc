@@ -1,4 +1,5 @@
 ﻿using Pandora.NetStandard.Core.Base;
+using Pandora.NetStandard.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 
@@ -100,7 +101,7 @@ namespace Pandora.NetStandard.Data.Dals
         /// You can substitute an alternative factory for the default one by adding
         /// a repository factory for type "T" to <see cref="_repositoryFactories"/>.
         /// </remarks>
-        public Func<TContext, object> GetRepositoryFactoryForEntityType<T>() where T : class
+        public Func<TContext, object> GetRepositoryFactoryForEntityType<T>() where T : class, IEntity
         {
             return GetRepositoryFactory<T>() ?? DefaultEntityRepositoryFactory<T>();
         }
@@ -109,9 +110,9 @@ namespace Pandora.NetStandard.Data.Dals
         /// Default factory for a <see cref="IRepository{T}"/> where T is an entity.
         /// </summary>
         /// <typeparam name="T">Type of the repository's root entity</typeparam>
-        protected virtual Func<TContext, object> DefaultEntityRepositoryFactory<T>() where T : class
+        protected virtual Func<TContext, object> DefaultEntityRepositoryFactory<T>() where T : class, IEntity
         {
-            return dbContext => new EfRepository<T>(dbContext as SchoolDbContext);
+            return dbContext => new EfRepository<T>(dbContext);
         }
     }
 }
