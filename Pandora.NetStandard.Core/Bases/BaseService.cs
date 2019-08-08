@@ -8,16 +8,14 @@ using System.Net;
 
 namespace Pandora.NetStandard.Core.Base
 {
-    public abstract class BaseService<TUow> where TUow : IApplicationUow
+    public abstract class BaseService
     {
-        protected readonly TUow _uow;
         protected readonly ILogger _logger;
 
-        public BaseService(TUow applicationUow, ILogger logger)
+        public BaseService(ILogger logger)
         {
             _logger = logger;
             _logger?.LogInformation($"Accessing to service : {DateTime.UtcNow}");
-            _uow = applicationUow;
         }
 
         protected void HandleSVCException(Exception pEx)
@@ -44,6 +42,15 @@ namespace Pandora.NetStandard.Core.Base
             _logger?.LogError(defaultMsg, pErrors);
             pResponse.Errors.Add(defaultMsg);
             pResponse.Errors.AddRange(pErrors);
+        }
+    }
+    public abstract class BaseService<TUow> : BaseService where TUow : IApplicationUow
+    {
+        protected readonly TUow _uow;
+
+        public BaseService(TUow applicationUow, ILogger logger) : base(logger)
+        {
+            _uow = applicationUow;
         }
     }
 

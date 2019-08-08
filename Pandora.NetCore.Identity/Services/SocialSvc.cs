@@ -15,20 +15,20 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetCore.Identity.Services
 {
-    public class SocialSvc : BaseService<IApplicationUow>, ISocialSvc
+    public class SocialSvc : BaseService, ISocialSvc
     {
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly AccountManagerFacade _accountManager;
         private readonly UserManagerFacade _userManager;
         private readonly IJwtTokenProvider _tokenProvider;
 
-        public SocialSvc(IApplicationUow applicationUow,
+        public SocialSvc(
             ILogger logger,
             IAuthenticationSchemeProvider schemeProvider,
             AccountManagerFacade accountManager,
             UserManagerFacade userManager,
             IJwtTokenProvider tokenProvider
-            ) : base(applicationUow, logger)
+            ) : base(logger)
         {
             _schemeProvider = schemeProvider;
             _accountManager = accountManager;

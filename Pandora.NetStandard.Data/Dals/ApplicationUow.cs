@@ -7,18 +7,20 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Data.Dals
 {
-    public abstract class ApplicationUow : IIdentityAppUow, IDisposable
+    public class ApplicationUow<TContext> : IIdentityAppUow, IDisposable where TContext : ApplicationDbContext
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly TContext _dbContext;
+        private readonly IRepositoryProvider<TContext> _repositoryProvider;
 
-        public ApplicationUow(ApplicationDbContext dbContext)
+        public ApplicationUow(TContext context, IRepositoryProvider<TContext> repositoryProvider)
         {
-            _dbContext = dbContext;
+            _dbContext = context;
+            _repositoryProvider = repositoryProvider;
         }
 
         //Repositories
-        public abstract IUserRepository Users { get; }
-        public abstract IRoleRepository Roles { get; }
+        public IUserRepository Users => GetIdentityRepo<IUserRepository>();
+        public IRoleRepository Roles => GetIdentityRepo<IRoleRepository>();
 
         /// <summary>
         /// Save pending changes to the database and return true if there was at least 1 row affected
@@ -75,33 +77,12 @@ namespace Pandora.NetStandard.Data.Dals
         }
         #endregion
 
-        public abstract IEfRepository<T> GetRepository<T>() where T : class, IEntity;
-
-        //protected abstract T GetIdentityRepo<T>();
-
-        public abstract T GetIdentityRepo<T>() where T : class;
-    }
-
-    public class ApplicationUow<TContext> : ApplicationUow where TContext : ApplicationDbContext
-    {
-        private readonly IRepositoryProvider<TContext> _repositoryProvider;
-
-        public ApplicationUow(TContext context, IRepositoryProvider<TContext> repositoryProvider)
-            : base(context)
+        public IEfRepository<TEntity> GetRepository<TEntity>() where TEntity : class, IEntity
         {
-            _repositoryProvider = repositoryProvider;
+            return _repositoryProvider.GetRepositoryForEntityType<TEntity>();
         }
 
-        // Repositories
-        public override IUserRepository Users => GetIdentityRepo<IUserRepository>();
-        public override IRoleRepository Roles => GetIdentityRepo<IRoleRepository>();
-
-        public override IEfRepository<T> GetRepository<T>()
-        {
-            return _repositoryProvider.GetRepositoryForEntityType<T>();
-        }
-
-        public override T GetIdentityRepo<T>()
+        public T GetIdentityRepo<T>() where T : class
         {
             return _repositoryProvider.GetRepository<T>();
         }

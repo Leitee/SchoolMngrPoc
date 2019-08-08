@@ -23,10 +23,10 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services
             .AddScoped<Logging.ILogger, Logger<SchoolMngrLOG>>()
-            .AddSingleton<RepositoryFactories<SchoolDbContext>, RepositoryFactories<SchoolDbContext>>()
+            .AddSingleton<IMapperCore, GenericMapper>()
+            .AddSingleton<RepositoryFactories<SchoolDbContext>>()
             .AddScoped<IRepositoryProvider<SchoolDbContext>, RepositoryProvider<SchoolDbContext>>()
             .AddScoped<IIdentityAppUow, ApplicationUow<SchoolDbContext>>()
-            .AddSingleton<IMapperCore, GenericMapperCore>()
             .AddScoped<IRoleRepository, RoleManagerFacade>()
             .AddScoped<IUserRepository, UserManagerFacade>()
             .AddScoped<IAccountSvc, AccountSvc>()

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Core.Interfaces
 {
-    public interface IApplicationUow
+    public interface IApplicationUow //where TRepository : IRepository<IEntity>
     {
         IEfRepository<TEntity> GetRepository<TEntity>() where TEntity : class, IEntity;
         bool Commit();

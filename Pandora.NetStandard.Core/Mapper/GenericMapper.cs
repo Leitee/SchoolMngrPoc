@@ -47,7 +47,7 @@ namespace Pandora.NetStandard.Core.Mapper
         }
     }
 
-    public class GenericMapperCore : IMapperCore
+    public class GenericMapper : IMapperCore
     {
         protected virtual IMapper CreateCustomMap<TInputEntity, TOutputEntity>()
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetStandard.Core.Interfaces
 {
-    public interface IPaginableRepository<TEntity> where TEntity : class
+    public interface IPaginableRepository<TEntity> where TEntity : class, IEntity
     {
         Task<BLPagedResponse<TEntity>> AllPagedAsync(int skip, int take, int pageSize, int currentPage,
             Expression<Func<TEntity, bool>> predicate,

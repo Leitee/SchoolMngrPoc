@@ -25,7 +25,7 @@ namespace Pandora.NetStandard.Business.Services
             : base(applicationUow, logger, new SubjectToDtoMapper())
         {
             _studentStateSvc = studentStateSvc;
-            _mapperExplicit = new GenericMapperCore();
+            _mapperExplicit = new GenericMapper();
         }
 
         public async Task<BLSingleResponse<SubjectDto>> CreateAsync(SubjectDto pDto)

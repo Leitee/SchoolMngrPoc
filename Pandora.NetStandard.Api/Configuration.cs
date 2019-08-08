@@ -15,6 +15,8 @@ namespace Pandora.NetStandard.Api
             return services
                 .AddMvcCore(config => config.Filters.Add(typeof(ValidModelStateFilter)))//Global filter goes here
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateStudentValidator>())
+                .AddApiExplorer()
+                .AddJsonFormatters()
                 .AddJsonOptions(jop =>
                 {
                     jop.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();

@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace Pandora.NetCore.Identity.Services
 {
-    public class AuthSvc : BaseService<IApplicationUow>, IAuthSvc
+    public class AuthSvc : BaseService, IAuthSvc
     {
         private readonly AccountManagerFacade _accountManager;
         private readonly IJwtTokenProvider _tokenProvider;
@@ -26,12 +26,11 @@ namespace Pandora.NetCore.Identity.Services
         private readonly AppSettings _settings;
 
         public AuthSvc(
-            IApplicationUow applicationUow,
             ILogger logger,
             IMapperCore mapper,
             AccountManagerFacade accountManager,
             IJwtTokenProvider tokenProvider,
-            IConfiguration config) : base(applicationUow, logger)
+            IConfiguration config) : base(logger)
         {
             _mapper = mapper;
             _settings = AppSettings.GetSettings(config ?? throw new ArgumentNullException(nameof(config)));

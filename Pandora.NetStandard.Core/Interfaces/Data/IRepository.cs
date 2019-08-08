@@ -9,7 +9,7 @@ namespace Pandora.NetStandard.Core.Interfaces
     public interface IRepository
     {
         Task<IQueryable<TEntity>> AllAsync<TEntity>(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>,
-            IOrderedQueryable<TEntity>> orderBy, params Expression<Func<IIncludable<TEntity>, IIncludable>>[] includes); 
+            IOrderedQueryable<TEntity>> orderBy, params Expression<Func<IIncludable<TEntity>, IIncludable>>[] includes);
 
         Task<TEntity> GetByIdAsync<TEntity>(object id);
 
@@ -27,7 +27,7 @@ namespace Pandora.NetStandard.Core.Interfaces
         Task DeleteAsync<TEntity>(TEntity entityToDelete);
     }
 
-    public interface IRepository<TEntity> where TEntity : class
+    public interface IRepository<TEntity> where TEntity : class, IEntity
     {
         Task<IQueryable<TEntity>> AllAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>,
             IOrderedQueryable<TEntity>> orderBy, params Expression<Func<IIncludable<TEntity>, IIncludable>>[] includes);

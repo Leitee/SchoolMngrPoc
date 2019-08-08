@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using Pandora.NetCore.Identity;
-using Pandora.NetCore.Identity.DataAccess;
 using Pandora.NetCore.Identity.Services;
 using Pandora.NetCore.Identity.Services.Contracts;
 using Pandora.NetStandard.Core.Interfaces;
@@ -16,8 +15,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services
             .AddScoped<ILogger, Logger<IdentityLOG>>()
-            .AddSingleton<IMapperCore, GenericMapperCore>()
-            .AddScoped<IApplicationUow, IdentityUow>()
+            .AddSingleton<IMapperCore, GenericMapper>()
             .AddScoped<IAuthSvc, AuthSvc>()
             .AddScoped<ISocialSvc, SocialSvc>()
             .AddTransient<IJwtTokenProvider, JwtTokenProvider>();
