@@ -1,34 +1,50 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Pandora.NetCore.UnitTest.Fixtures;
 using Pandora.NetStandard.Api.Controllers;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Core.Utils;
 using Pandora.NetStandard.Model.Dtos;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using FluentAssertions;
 using Xunit;
 
 namespace Pandora.NetCore.UnitTest.Scenarios
 {
-    public class SubjectTestController : IClassFixture<HostFixture>
+    public class SubjectTestController : TestScenarioBase<SubjectsController>
     {
-        private readonly SubjectsController _controller;
-
-        public SubjectTestController(HostFixture hostFixture)
+        public SubjectTestController(HostFixture hostFixture) : base(hostFixture)
         {
-            var logger = hostFixture.Server.Host.Services.GetService(typeof(ILogger)) as ILogger;
-            var sbjSvc = hostFixture.Server.Host.Services.GetService(typeof(ISubjectSvc)) as ISubjectSvc;
-            var ctx = hostFixture.Server.Host.Services.GetService(typeof(TestDbContext)) as TestDbContext;
-            ctx.Database.EnsureCreated();
-
-            _controller = new SubjectsController(logger, sbjSvc);
         }
 
-        [Fact(DisplayName = "Retriving all existing subjects")]
-        public async Task TestGetAllGrades()
+        protected override SubjectsController GetControllerInstance()
         {
-            var response = await _controller.Get() as ObjectResult;
+            var logger = GetContainerInstance<ILogger>();
+            var sbjSvc = GetContainerInstance<ISubjectSvc>();
+
+            return new SubjectsController(logger, sbjSvc);
+        }
+
+        [Fact(DisplayName = "Retriving all existing subjects using http request")]
+        public async Task TestGetAllGradesFromControllerInstance()
+        {
+            var httpResp = await GetServer().CreateRequest("api/v1/subjects").GetAsync();
+            httpResp.EnsureSuccessStatusCode();
+
+            var subjResp = JsonConvert.DeserializeObject<BLListResponse<SubjectDto>>
+                                (await httpResp.Content.ReadAsStringAsync());
+
+            subjResp.HasError.Should().BeFalse();
+            subjResp.Data.Count().Should().BeGreaterThan(0);
+        }
+
+        [Fact(DisplayName = "Retriving all existing subjects using controller instance")]
+        public async Task TestGetAllGradesFromHttpReq()
+        {
+            var response = await Controller.Get() as ObjectResult;
             var value = response.Value.As<BLListResponse<SubjectDto>>();
 
             value.Should().NotBeNull();
@@ -40,7 +56,7 @@ namespace Pandora.NetCore.UnitTest.Scenarios
             var subjectId = 1;
             var userId = 101;
 
-            var response = await _controller.EnrollStudent(subjectId, userId) as ObjectResult;
+            var response = await Controller.EnrollStudent(subjectId, userId) as ObjectResult;
             var value = response.Value as BLSingleResponse<bool>;
 
             Assert.True(value.Data);
@@ -60,7 +76,7 @@ namespace Pandora.NetCore.UnitTest.Scenarios
             }
             };
 
-            var response = await _controller.SaveExamsBySubject(subjectId, student) as ObjectResult;
+            var response = await Controller.SaveExamsBySubject(subjectId, student) as ObjectResult;
             var value = response.Value as BLSingleResponse<bool>;
 
             Assert.True(value.Data);

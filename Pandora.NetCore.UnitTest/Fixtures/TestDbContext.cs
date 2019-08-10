@@ -16,7 +16,7 @@ namespace Pandora.NetCore.UnitTest
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
+            base.OnModelCreating(builder);//user superclass default initialization
             //Add custome data entity for test purpose
         }
     }

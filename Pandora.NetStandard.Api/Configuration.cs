@@ -13,6 +13,12 @@ namespace Pandora.NetStandard.Api
         public static IServiceCollection ConfigureApiServices(IServiceCollection services)
         {
             return services
+                .AddApiVersioning(o =>
+                {
+                    o.ReportApiVersions = true;
+                    o.AssumeDefaultVersionWhenUnspecified = true;
+                    o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+                })
                 .AddMvcCore(config => config.Filters.Add(typeof(ValidModelStateFilter)))//Global filter goes here
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateStudentValidator>())
                 .AddApiExplorer()

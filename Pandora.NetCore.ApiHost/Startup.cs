@@ -91,13 +91,7 @@ namespace Pandora.NetCore.ApiHost
             Configuration.ConfigureApiServices(services)
                 .AddDIServices()// configure DI for application services
                 .AddOpenApi()// Register the Swagger generator, defining 1 or more Swagger documents
-                .AddLogger(AppSettings)
-                .AddApiVersioning(o =>
-                {
-                    o.ReportApiVersions = true;
-                    o.AssumeDefaultVersionWhenUnspecified = true;
-                    o.DefaultApiVersion = new ApiVersion(1, 0);
-                });
+                .AddLogger(AppSettings);
         }
 
         /// <summary>

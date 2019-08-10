@@ -11,6 +11,7 @@
     <MicrosoftEntityFrameworkCorePackageVersion>2.2.6</MicrosoftEntityFrameworkCorePackageVersion>
     <MicrosoftEntityFrameworkCoreSqlServerPackageVersion>2.2.6</MicrosoftEntityFrameworkCoreSqlServerPackageVersion>
     <MicrosoftAspNetCoreIdentityPackageVersion>2.2.0</MicrosoftAspNetCoreIdentityPackageVersion>
+    <MicrosoftAspNetCoreMvcVersioningPackageVersion>3.1.2</MicrosoftAspNetCoreMvcVersioningPackageVersion>
     <NewtonsoftJsonPackageVersion>10.0.1</NewtonsoftJsonPackageVersion>
     <FluentValidationAspNetCorePackageVersion>7.4.0</FluentValidationAspNetCorePackageVersion>
     <SwashbuckleAspNetCorePackageVersion>2.4.0</SwashbuckleAspNetCorePackageVersion>

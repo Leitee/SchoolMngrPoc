@@ -4,7 +4,7 @@ using Pandora.NetStandard.Api;
 
 namespace Pandora.NetCore.UnitTest
 {
-    public class TestStartup
+    internal class TestStartup
     {
         public void ConfigureServices(IServiceCollection services)
         {
