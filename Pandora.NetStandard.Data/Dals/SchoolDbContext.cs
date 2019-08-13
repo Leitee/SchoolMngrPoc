@@ -20,6 +20,7 @@ namespace Pandora.NetStandard.Data.Dals
         {
             if (!isTestInstance)
                 _appSettings = AppSettings.GetSettings(config ?? throw new ArgumentNullException(nameof(config)));
+            //_appSettings.ConnectionString = $"Server={config["SQLSERVER_NAME"]};Database=SchoolMngr;User=sa;Password=Devadmin321;";
         }
 
         public DbSet<Grade> Grades { get; set; }

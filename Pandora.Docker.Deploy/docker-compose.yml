@@ -1,22 +1,49 @@
 version: '3.4'
 
 services:
-  pandora.netcore.identity:
-    image: pandora.netcore.identity
-    container_name: pandoranetcoreidentity
+
+  webclient:
+    image: leitee/pandora.schoolmngr.webclient:prod
+    container_name: schoolmngrwebclient
+    ports:
+      - 8080:80
+    restart: always
+    depends_on: 
+      - webapi
+
+  webapi:
+    image: leitee/pandora.schoolmngr.webapi:dev
+    container_name: schoolmngrwebapi
     build:
       context: .
-      dockerfile: ../Pandora.NetCore.Identity/Dockerfile
+      dockerfile: ../Pandora.NetCore.ApiHost/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - SQLSERVER_NAME=mssqlserver
+    ports:
+      - 8090:80
+    restart: always
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
     depends_on:
       - mssqlserver
       - elasticsearch
 
-  pandora.netcore.webapi:
-    image: pandora.netcore.webapi
-    container_name: pandoranetcorewebapi
+  identity:
+    image: leitee/pandora.schoolmngr.identity:dev
+    container_name: schoolmngridentity
     build:
       context: .
-      dockerfile: ../Pandora.NetCore.WebApi/Dockerfile
+      dockerfile: ../Pandora.NetCore.Identity/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - SQLSERVER_NAME=mssqlserver
+    ports:
+      - 8095:80
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
     depends_on:
       - mssqlserver
       - elasticsearch
@@ -36,30 +63,32 @@ services:
      image: docker.elastic.co/elasticsearch/elasticsearch:7.1.1
      container_name: elasticsearch
      environment:
-      - node.name=es01
+      - node.name=nosql01
+      - cluster.initial_master_nodes=nosql01
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"    
+     ulimits:
+       memlock:
+         soft: -1
+         hard: -1
      ports:
       - "9200:9200"
+      - "9300:9300"
      volumes:
-      - elasticsearch-data:/usr/share/elasticsearch/data
+       - elasticsearch-data:/usr/share/elasticsearch/data
      networks:
-      - esnet
+       - esnet
 
   kibana:
      image: docker.elastic.co/kibana/kibana:7.1.1
      container_name: kibana
      ports:
-      - "5601:5601"
+       - "5601:5601"
      depends_on:
-      - elasticsearch
+       - elasticsearch
      networks:
-      - esnet
+       - esnet
 
 networks:
   esnet:

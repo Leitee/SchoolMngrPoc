@@ -31,11 +31,7 @@ namespace Pandora.NetCore.Identity
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowMyOrigin",
-                builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials());//TODO: set origin from config
-            });
+            services.AddCors();
 
             //services.AddCors();
             services
@@ -121,7 +117,11 @@ namespace Pandora.NetCore.Identity
                 app.UseHsts();
             }
 
-            app.UseCors("AllowMyOrigin");
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             app.UseAuthentication();
 
