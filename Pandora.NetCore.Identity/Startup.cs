@@ -36,8 +36,8 @@ namespace Pandora.NetCore.Identity
             //services.AddCors();
             services
                 .AddMvcCore(config => config.Filters.Add(typeof(ValidModelStateFilter)))
-                .AddJsonFormatters()
                 .AddApiExplorer()
+                //.AddJsonOptions(null)//TODO: set Json Formater
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginValidator>())
                 .ConfigureApiBehaviorOptions(options =>
                 {

@@ -22,12 +22,10 @@ namespace Pandora.NetStandard.Api
                 .AddMvcCore(config => config.Filters.Add(typeof(ValidModelStateFilter)))//Global filter goes here
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateStudentValidator>())
                 .AddApiExplorer()
-                .AddJsonFormatters()
                 .AddJsonOptions(jop =>
                 {
-                    jop.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                    jop.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
-                    jop.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
+                    jop.JsonSerializerOptions.PropertyNameCaseInsensitive = false;
+                    jop.JsonSerializerOptions.IgnoreNullValues = true;
                 })
                 .Services;
         }

@@ -150,7 +150,7 @@ namespace Pandora.NetStandard.Data.Dals
         public async Task<List<TEntity>> ExecSp(string spName, params object[] parameters)
         {
             var tEntity = new List<TEntity>();
-            var spResult = await Task.Run(() => _dbSet.FromSql(spName, parameters));
+            var spResult = await Task.Run(() => _dbSet.FromSqlRaw(spName, parameters));
             foreach (var item in spResult)
             {
                 tEntity.Add(item);

@@ -1,21 +1,24 @@
 <Project>
   <PropertyGroup Label="SDK Versions">
-    <NetStandardTargetVersion>netstandard2.0</NetStandardTargetVersion>
-    <NetCoreTargetVersion>netcoreapp2.2</NetCoreTargetVersion>
+    <NetStandardTargetVersion>netstandard2.1</NetStandardTargetVersion>
+    <NetCoreTargetVersion>netcoreapp3.1</NetCoreTargetVersion>
     <LangTargetVersion>latest</LangTargetVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="Package Versions">
-    <MicrosoftAspNetCoreAppPackageVersion>2.2.6</MicrosoftAspNetCoreAppPackageVersion>      
-    <MicrosoftAspNetCoreAllPackageVersion>2.2.6</MicrosoftAspNetCoreAllPackageVersion>
-    <MicrosoftEntityFrameworkCorePackageVersion>2.2.6</MicrosoftEntityFrameworkCorePackageVersion>
-    <MicrosoftEntityFrameworkCoreSqlServerPackageVersion>2.2.6</MicrosoftEntityFrameworkCoreSqlServerPackageVersion>
+    <MicrosoftEntityFrameworkCorePackageVersion>3.1.3</MicrosoftEntityFrameworkCorePackageVersion>
+    <MicrosoftEntityFrameworkCoreSqlServerPackageVersion>3.1.3</MicrosoftEntityFrameworkCoreSqlServerPackageVersion>
+    <MicrosoftEntityFrameworkCoreDesignPackageVersion>3.1.3</MicrosoftEntityFrameworkCoreDesignPackageVersion>
+    <MicrosoftAspNetCoreIdentityEntityFrameworkCorePackageVersion>3.1.3</MicrosoftAspNetCoreIdentityEntityFrameworkCorePackageVersion>
+    <MicrosoftExtensionsIdentityStoresPackageVersion>3.1.3</MicrosoftExtensionsIdentityStoresPackageVersion>
+    <MicrosoftAspNetCoreIdentityUIPackageVersion>3.1.3</MicrosoftAspNetCoreIdentityUIPackageVersion>
+    <MicrosoftAspNetCoreDiagnosticsEntityFrameworkCorePackageVersion>3.1.3</MicrosoftAspNetCoreDiagnosticsEntityFrameworkCorePackageVersion>
     <MicrosoftAspNetCoreIdentityPackageVersion>2.2.0</MicrosoftAspNetCoreIdentityPackageVersion>
-    <MicrosoftAspNetCoreMvcVersioningPackageVersion>3.1.2</MicrosoftAspNetCoreMvcVersioningPackageVersion>
+    <MicrosoftAspNetCoreMvcVersioningPackageVersion>4.1.1</MicrosoftAspNetCoreMvcVersioningPackageVersion>
     <NewtonsoftJsonPackageVersion>10.0.1</NewtonsoftJsonPackageVersion>
-    <FluentValidationAspNetCorePackageVersion>7.4.0</FluentValidationAspNetCorePackageVersion>
+    <FluentValidationAspNetCorePackageVersion>8.6.2</FluentValidationAspNetCorePackageVersion>
     <SwashbuckleAspNetCorePackageVersion>2.4.0</SwashbuckleAspNetCorePackageVersion>
-    <AutomapperPackageVersion>8.1.1</AutomapperPackageVersion>
+    <AutomapperPackageVersion>9.0.0</AutomapperPackageVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="Test Package Versions">

@@ -1,4 +1,4 @@
-# SchoolMngr Architecture Template
+# SchoolMngr Multi-Tier Architecture - PoC
 
 A reference template for develop business applications with ASP.NET Core WebApi, Xamarin and Angular into Docker container...
 
