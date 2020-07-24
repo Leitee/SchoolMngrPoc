@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using Pandora.NetCore.Identity;
 using Pandora.NetCore.Identity.Services;
 using Pandora.NetCore.Identity.Services.Contracts;
@@ -29,10 +31,10 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 setup.DescribeAllParametersInCamelCase();
                 setup.DescribeStringEnumsInCamelCase();
-                setup.SwaggerDoc("v1", new Info
+                setup.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "SchoolMngr Identity",
-                    Version = "v1"
+                    Version = ApiVersion.Default.ToString()
                 });
             });
 

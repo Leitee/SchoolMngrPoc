@@ -26,7 +26,7 @@ namespace Pandora.NetStandard.Api.Controllers
             if (ModelState.IsValid && id.HasValue)
             {
                 var response = await _classSvc.GetClassesByGradeId(id.Value);
-                return response.ToHttpResponse();                
+                return response.ToHttpResponse();
             }
 
             return BadRequest(ModelState);
@@ -56,11 +56,10 @@ namespace Pandora.NetStandard.Api.Controllers
         {
             if (pId != pClass.Id)
             {
-                return BadRequest();
+                return await Task.FromResult(BadRequest());
             }
 
-
-            return NoContent();
+            return await Task.FromResult(NoContent());
         }
 
         [HttpPost()]
@@ -87,6 +86,5 @@ namespace Pandora.NetStandard.Api.Controllers
             var response = await _classSvc.DeleteAsync(resul.Data);
             return response.ToHttpResponse();
         }
-
     }
 }

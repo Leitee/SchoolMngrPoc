@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using Pandora.NetCore.ApiHost;
 using Pandora.NetStandard.Business.Services;
 using Pandora.NetStandard.Business.Services.Contracts;
@@ -45,7 +46,7 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 setup.DescribeAllParametersInCamelCase();
                 setup.DescribeStringEnumsInCamelCase();
-                setup.SwaggerDoc("v1", new Info
+                setup.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "SchoolMngr API",
                     Version = ApiVersion.Default.ToString()
