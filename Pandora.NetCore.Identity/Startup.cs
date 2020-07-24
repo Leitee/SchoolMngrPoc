@@ -32,6 +32,8 @@ namespace Pandora.NetCore.Identity
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
+            services.AddRazorPages();
+            services.AddControllersWithViews();
 
             //services.AddCors();
             services
@@ -127,7 +129,15 @@ namespace Pandora.NetCore.Identity
 
             app.UseHttpsRedirection();
 
-            app.UseMvc();
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapRazorPages();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }
