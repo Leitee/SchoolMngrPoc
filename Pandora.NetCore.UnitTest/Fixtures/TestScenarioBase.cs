@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.TestHost;
-using Pandora.NetStandard.Core.Base;
+using Pandora.NetStdLibrary.Base.Base;
 using Xunit;
 
 namespace Pandora.NetCore.UnitTest.Fixtures

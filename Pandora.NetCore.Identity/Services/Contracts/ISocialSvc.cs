@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
-using Pandora.NetStandard.Core.Base;
-using Pandora.NetStandard.Core.Utils;
+using Pandora.NetStdLibrary.Base.Base;
+using Pandora.NetStdLibrary.Base.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;

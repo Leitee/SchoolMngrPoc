@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Pandora.NetStandard.Core.Identity;
+using Pandora.NetStdLibrary.Base.Identity;
 using Reinforced.Typings.Attributes;
 using System;
 using System.ComponentModel.DataAnnotations;

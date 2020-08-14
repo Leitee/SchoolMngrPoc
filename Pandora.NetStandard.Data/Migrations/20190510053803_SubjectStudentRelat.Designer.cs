@@ -113,7 +113,7 @@ namespace Pandora.NetStandard.Data.Migrations
                     b.ToTable("UserTokens","Auth");
                 });
 
-            modelBuilder.Entity("Pandora.NetStandard.Core.Identity.ApplicationRole", b =>
+            modelBuilder.Entity("Pandora.NetStdLibrary.Base.Identity.ApplicationRole", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -182,7 +182,7 @@ namespace Pandora.NetStandard.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Pandora.NetStandard.Core.Identity.ApplicationUser", b =>
+            modelBuilder.Entity("Pandora.NetStdLibrary.Base.Identity.ApplicationUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -540,7 +540,7 @@ namespace Pandora.NetStandard.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
-                    b.HasOne("Pandora.NetStandard.Core.Identity.ApplicationRole")
+                    b.HasOne("Pandora.NetStdLibrary.Base.Identity.ApplicationRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -548,7 +548,7 @@ namespace Pandora.NetStandard.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("Pandora.NetStandard.Core.Identity.ApplicationUser")
+                    b.HasOne("Pandora.NetStdLibrary.Base.Identity.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -556,7 +556,7 @@ namespace Pandora.NetStandard.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("Pandora.NetStandard.Core.Identity.ApplicationUser")
+                    b.HasOne("Pandora.NetStdLibrary.Base.Identity.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -564,12 +564,12 @@ namespace Pandora.NetStandard.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
                 {
-                    b.HasOne("Pandora.NetStandard.Core.Identity.ApplicationRole")
+                    b.HasOne("Pandora.NetStdLibrary.Base.Identity.ApplicationRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Pandora.NetStandard.Core.Identity.ApplicationUser")
+                    b.HasOne("Pandora.NetStdLibrary.Base.Identity.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -577,7 +577,7 @@ namespace Pandora.NetStandard.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("Pandora.NetStandard.Core.Identity.ApplicationUser")
+                    b.HasOne("Pandora.NetStdLibrary.Base.Identity.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

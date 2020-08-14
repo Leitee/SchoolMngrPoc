@@ -16,8 +16,8 @@
 /Pandora.NetStandard.Data/obj
 /Pandora.NetStandard.Business/bin
 /Pandora.NetStandard.Business/obj
-/Pandora.NetStandard.Core/obj
-/Pandora.NetStandard.Core/bin
+/Pandora.NetStdLibrary.Base/obj
+/Pandora.NetStdLibrary.Base/bin
 /Pandora.NetStandard.Api/bin
 /Pandora.NetStandard.Api/obj
 /Pandora.NetStandard.Report/obj

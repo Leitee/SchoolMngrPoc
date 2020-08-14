@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Pandora.NetStandard.Core.Utils;
+using Pandora.NetStdLibrary.Base.Utils;
 using Pandora.NetStandard.Model.Entities;
 using Pandora.NetStandard.Model.Enums;
 using Reinforced.Typings.Attributes;

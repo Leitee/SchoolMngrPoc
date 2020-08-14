@@ -2,9 +2,9 @@
 using Pandora.NetCore.Identity;
 using Pandora.NetCore.Identity.Services;
 using Pandora.NetCore.Identity.Services.Contracts;
-using Pandora.NetStandard.Core.Interfaces;
-using Pandora.NetStandard.Core.Mapper;
-using Pandora.NetStandard.Core.Security;
+using Pandora.NetStdLibrary.Base.Interfaces;
+using Pandora.NetStdLibrary.Base.Mapper;
+using Pandora.NetStdLibrary.Base.Security;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Microsoft.Extensions.DependencyInjection

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
-using Pandora.NetStandard.Core.Base;
-using Pandora.NetStandard.Core.Interfaces;
-using Pandora.NetStandard.Core.Interfaces.Identity;
+using Pandora.NetStdLibrary.Base.Base;
+using Pandora.NetStdLibrary.Base.Interfaces;
+using Pandora.NetStdLibrary.Base.Interfaces.Identity;
 using System;
 using System.Threading.Tasks;
 

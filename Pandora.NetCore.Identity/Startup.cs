@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Pandora.NetCore.Identity.Validators;
-using Pandora.NetStandard.Core.Config;
-using Pandora.NetStandard.Core.Filters;
-using Pandora.NetStandard.Core.Identity;
+using Pandora.NetStdLibrary.Base.Config;
+using Pandora.NetStdLibrary.Base.Filters;
+using Pandora.NetStdLibrary.Base.Identity;
 using System;
 using System.Threading.Tasks;
 

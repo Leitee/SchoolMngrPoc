@@ -1,6 +1,6 @@
 @using Microsoft.AspNetCore.Identity
-@inject SignInManager<Pandora.NetStandard.Core.Identity.ApplicationUser> SignInManager
-@inject UserManager<Pandora.NetStandard.Core.Identity.ApplicationUser> UserManager
+@inject SignInManager<Pandora.NetStdLibrary.Base.Identity.ApplicationUser> SignInManager
+@inject UserManager<Pandora.NetStdLibrary.Base.Identity.ApplicationUser> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))

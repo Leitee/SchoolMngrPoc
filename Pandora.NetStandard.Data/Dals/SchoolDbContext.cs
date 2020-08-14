@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Pandora.NetStandard.Core.Base;
-using Pandora.NetStandard.Core.Config;
-using Pandora.NetStandard.Core.Identity;
-using Pandora.NetStandard.Core.Utils;
+using Pandora.NetStdLibrary.Base.Base;
+using Pandora.NetStdLibrary.Base.Config;
+using Pandora.NetStdLibrary.Base.Identity;
+using Pandora.NetStdLibrary.Base.Utils;
 using Pandora.NetStandard.Model.Entities;
 using Pandora.NetStandard.Model.Enums;
 using System;

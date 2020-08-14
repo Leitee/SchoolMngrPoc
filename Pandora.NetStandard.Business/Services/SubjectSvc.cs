@@ -2,10 +2,10 @@
 using Pandora.NetStandard.Business.Mappers;
 using Pandora.NetStandard.Business.Services.Contracts;
 using Pandora.NetStandard.Business.States;
-using Pandora.NetStandard.Core.Base;
-using Pandora.NetStandard.Core.Interfaces;
-using Pandora.NetStandard.Core.Mapper;
-using Pandora.NetStandard.Core.Utils;
+using Pandora.NetStdLibrary.Base.Base;
+using Pandora.NetStdLibrary.Base.Interfaces;
+using Pandora.NetStdLibrary.Base.Mapper;
+using Pandora.NetStdLibrary.Base.Utils;
 using Pandora.NetStandard.Model.Dtos;
 using Pandora.NetStandard.Model.Entities;
 using Pandora.NetStandard.Model.Enums;

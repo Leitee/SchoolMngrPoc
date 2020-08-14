@@ -5,10 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Pandora.NetStandard.Business.Services;
 using Pandora.NetStandard.Business.Services.Contracts;
-using Pandora.NetStandard.Core.Identity;
-using Pandora.NetStandard.Core.Interfaces;
-using Pandora.NetStandard.Core.Interfaces.Identity;
-using Pandora.NetStandard.Core.Mapper;
+using Pandora.NetStdLibrary.Base.Identity;
+using Pandora.NetStdLibrary.Base.Interfaces;
+using Pandora.NetStdLibrary.Base.Interfaces.Identity;
+using Pandora.NetStdLibrary.Base.Mapper;
 using Pandora.NetStandard.Data.Dals;
 
 namespace Pandora.NetCore.UnitTest

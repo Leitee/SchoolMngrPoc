@@ -3,12 +3,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Pandora.NetStandard.Business.Services.Contracts;
-using Pandora.NetStandard.Core.Base;
-using Pandora.NetStandard.Core.Config;
-using Pandora.NetStandard.Core.Identity;
-using Pandora.NetStandard.Core.Interfaces;
-using Pandora.NetStandard.Core.Mapper;
-using Pandora.NetStandard.Core.Utils;
+using Pandora.NetStdLibrary.Base.Base;
+using Pandora.NetStdLibrary.Base.Config;
+using Pandora.NetStdLibrary.Base.Identity;
+using Pandora.NetStdLibrary.Base.Interfaces;
+using Pandora.NetStdLibrary.Base.Mapper;
+using Pandora.NetStdLibrary.Base.Utils;
 using Pandora.NetStandard.Model.Dtos;
 using System;
 using System.Collections.Generic;
@@ -51,7 +51,7 @@ namespace Pandora.NetStandard.Business.Services
 
             try
             {
-                var signInResul = await _accountManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
+                var signInResul = await _accountManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe);
 
                 if (signInResul == SignInResult.Failed)
                 {

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
 using Pandora.NetStandard.Business.Validators;
-using Pandora.NetStandard.Core.Filters;
+using Pandora.NetStdLibrary.Base.Filters;
 using System;
 
 namespace Pandora.NetStandard.Api

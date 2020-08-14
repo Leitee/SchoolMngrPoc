@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using Pandora.NetCore.UnitTest.Fixtures;
 using Pandora.NetStandard.Api.Controllers;
 using Pandora.NetStandard.Business.Services.Contracts;
-using Pandora.NetStandard.Core.Utils;
+using Pandora.NetStdLibrary.Base.Utils;
 using Pandora.NetStandard.Model.Dtos;
 using System.Collections.Generic;
 using System.Linq;

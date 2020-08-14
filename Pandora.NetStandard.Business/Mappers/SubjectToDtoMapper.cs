@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Pandora.NetStandard.Core.Identity;
-using Pandora.NetStandard.Core.Mapper;
+using Pandora.NetStdLibrary.Base.Identity;
+using Pandora.NetStdLibrary.Base.Mapper;
 using Pandora.NetStandard.Model.Dtos;
 using Pandora.NetStandard.Model.Entities;
 using System.Linq;

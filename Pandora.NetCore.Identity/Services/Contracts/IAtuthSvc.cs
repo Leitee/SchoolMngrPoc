@@ -1,6 +1,6 @@
-﻿using Pandora.NetStandard.Core.Base;
-using Pandora.NetStandard.Core.Identity;
-using Pandora.NetStandard.Core.Utils;
+﻿using Pandora.NetStdLibrary.Base.Base;
+using Pandora.NetStdLibrary.Base.Identity;
+using Pandora.NetStdLibrary.Base.Utils;
 using Pandora.NetStandard.Model.Dtos;
 using System.Threading.Tasks;
 

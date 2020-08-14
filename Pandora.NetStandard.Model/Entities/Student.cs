@@ -1,5 +1,5 @@
-﻿using Pandora.NetStandard.Core.Identity;
-using Pandora.NetStandard.Core.Interfaces;
+﻿using Pandora.NetStdLibrary.Base.Identity;
+using Pandora.NetStdLibrary.Base.Interfaces;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

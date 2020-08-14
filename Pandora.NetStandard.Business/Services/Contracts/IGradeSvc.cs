@@ -1,5 +1,5 @@
 ﻿using Pandora.NetStandard.Model.Dtos;
-using Pandora.NetStandard.Core.Interfaces;
+using Pandora.NetStdLibrary.Base.Interfaces;
 
 namespace Pandora.NetStandard.Business.Services.Contracts
 {

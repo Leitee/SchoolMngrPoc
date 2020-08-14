@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Pandora.NetStandard.Core.Interfaces;
+using Pandora.NetStdLibrary.Base.Interfaces;
 using Pandora.NetStandard.Model.Enums;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

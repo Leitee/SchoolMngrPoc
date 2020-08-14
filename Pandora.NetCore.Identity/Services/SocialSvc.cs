@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Pandora.NetCore.Identity.Services.Contracts;
-using Pandora.NetStandard.Core.Base;
-using Pandora.NetStandard.Core.Identity;
-using Pandora.NetStandard.Core.Interfaces;
-using Pandora.NetStandard.Core.Utils;
+using Pandora.NetStdLibrary.Base.Base;
+using Pandora.NetStdLibrary.Base.Identity;
+using Pandora.NetStdLibrary.Base.Interfaces;
+using Pandora.NetStdLibrary.Base.Utils;
 using Pandora.NetStandard.Model.Enums;
 using System;
 using System.Collections.Generic;
@@ -102,7 +102,7 @@ namespace Pandora.NetCore.Identity.Services
                     newUserClaims.Append(new Claim(ClaimTypes.Role, defaultRole.Name));
 
                     await _userManager.AddClaimsAsync(newUser, newUserClaims);
-                    await _accountManager.SignInAsync(newUser, isPersistent: false);
+                    await _accountManager.SignInAsync(newUser.UserName, newUser.PasswordHash, false);
 
                     response.Data = _tokenProvider.GenerateToken(newUser, defaultRole).Token;
                 }

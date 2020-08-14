@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pandora.NetStandard.Data\Pandora.NetStandard.Data.csproj" />
-    <ProjectReference Include="..\Pandora.NetStandard.Core\Pandora.NetStandard.Core.csproj" />
     <ProjectReference Include="..\Pandora.NetStandard.Model\Pandora.NetStandard.Model.csproj" />
   </ItemGroup>
 

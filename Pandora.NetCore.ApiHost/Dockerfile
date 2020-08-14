@@ -7,7 +7,7 @@ WORKDIR /src
 COPY ["Pandora.NetCore.ApiHost/Pandora.NetCore.ApiHost.csproj", "Pandora.NetCore.ApiHost/"]
 COPY ["Pandora.NetStandard.Api/Pandora.NetStandard.Api.csproj", "Pandora.NetStandard.Api/"]
 COPY ["Pandora.NetStandard.Business/Pandora.NetStandard.Business.csproj", "Pandora.NetStandard.Business/"]
-COPY ["Pandora.NetStandard.Core/Pandora.NetStandard.Core.csproj", "Pandora.NetStandard.Core/"]
+COPY ["Pandora.NetStdLibrary.Base/Pandora.NetStdLibrary.Base.csproj", "Pandora.NetStdLibrary.Base/"]
 COPY ["Pandora.NetStandard.Model/Pandora.NetStandard.Model.csproj", "Pandora.NetStandard.Model/"]
 COPY ["Pandora.NetStandard.Data/Pandora.NetStandard.Data.csproj", "Pandora.NetStandard.Data/"]
 RUN dotnet restore "Pandora.NetCore.ApiHost/Pandora.NetCore.ApiHost.csproj"

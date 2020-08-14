@@ -5,7 +5,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
 WORKDIR /src
 COPY ["Pandora.NetCore.Identity/Pandora.NetCore.Identity.csproj", "Pandora.NetCore.Identity/"]
-COPY ["Pandora.NetStandard.Core/Pandora.NetStandard.Core.csproj", "Pandora.NetStandard.Core/"]
+COPY ["Pandora.NetStdLibrary.Base/Pandora.NetStdLibrary.Base.csproj", "Pandora.NetStdLibrary.Base/"]
 COPY ["Pandora.NetStandard.Model/Pandora.NetStandard.Model.csproj", "Pandora.NetStandard.Model/"]
 RUN dotnet restore "Pandora.NetCore.Identity/Pandora.NetCore.Identity.csproj"
 COPY . .
