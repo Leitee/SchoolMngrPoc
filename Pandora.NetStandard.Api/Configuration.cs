@@ -6,7 +6,7 @@ using Pandora.NetStandard.Business.Validators;
 using Pandora.NetStdLibrary.Base.Filters;
 using System;
 
-namespace Pandora.NetStandard.Api
+namespace Pandora.NetStandard.Application
 {
     public class Configuration
     {

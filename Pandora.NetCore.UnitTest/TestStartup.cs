@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Pandora.NetStandard.Api;
+using Pandora.NetStandard.Application;
 
 namespace Pandora.NetCore.UnitTest
 {

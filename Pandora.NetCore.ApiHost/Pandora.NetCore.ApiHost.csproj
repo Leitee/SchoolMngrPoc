@@ -34,8 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Pandora.NetStandard.Api\Pandora.NetStandard.Api.csproj" />
-    <ProjectReference Include="..\Pandora.NetStandard.Business\Pandora.NetStandard.Business.csproj" />
+    <ProjectReference Include="..\Pandora.NetStandard.Api\Pandora.NetStandard.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>

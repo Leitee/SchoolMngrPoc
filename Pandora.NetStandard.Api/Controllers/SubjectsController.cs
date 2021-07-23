@@ -9,7 +9,7 @@ using Pandora.NetStandard.Model.Dtos;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Pandora.NetStandard.Api.Controllers
+namespace Pandora.NetStandard.Application.Controllers
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class SubjectsController : ApiBaseController

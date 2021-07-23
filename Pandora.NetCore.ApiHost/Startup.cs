@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Pandora.NetStandard.Api;
+using Pandora.NetStandard.Application;
 using Pandora.NetStdLibrary.Base.Config;
 using Pandora.NetStdLibrary.Base.Identity;
 using Pandora.NetStandard.Data.Dals;
@@ -85,7 +85,7 @@ namespace Pandora.NetCore.ApiHost
             services.AddIdentity<ApplicationUser, ApplicationRole>()
             .AddUserManager<UserManagerFacade>()
             .AddRoleManager<RoleManagerFacade>()
-            .AddSignInManager<AccountManagerFacade>()
+            //.AddSignInManager<AccountManagerFacade>()
             .AddEntityFrameworkStores<SchoolDbContext>();
 
             Configuration.ConfigureApiServices(services)
