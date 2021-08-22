@@ -66,9 +66,9 @@ namespace Pandora.NetCore.Identity
                 options.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
                 options.SignIn.RequireConfirmedEmail = true;
             })
-                .AddSignInManager<AccountManagerFacade>()
-                .AddUserManager<UserManagerFacade>()
-                .AddRoleManager<RoleManagerFacade>()
+                //.AddSignInManager<AccountManagerFacade>()
+                //.AddUserManager<UserManagerFacade>()
+                //.AddRoleManager<RoleManagerFacade>()
                 .AddEntityFrameworkStores<IdentityDbContext>()
                 .AddDefaultTokenProviders();
 

@@ -1,0 +1,52 @@
+<app-content-wrapper headerTitle="Enroll" headerIcon="library_add">
+    <mat-vertical-stepper [linear]="true" #stepper (selectionChange)="selectionChange($event)">
+        <mat-step [stepControl]="firstFormGroup">
+            <form class="step-form" [formGroup]="firstFormGroup">
+                <ng-template matStepLabel>Choose</ng-template>
+                <mat-form-field>
+                    <input type="text" placeholder="Subject" aria-label="Subject" matInput formControlName="firstCtrl"
+                        [matAutocomplete]="auto" required>
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                        <mat-option *ngFor="let subj of subjectsListAsync | async" [value]="subj">
+                            {{subj.name}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <div>
+                    <button mat-raised-button color="primary" matStepperNext [disabled]="!firstFormGroup.valid"
+                        class="stepper-button next">Check</button>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup">
+            <form class="step-form" [formGroup]="secondFormGroup">
+                <ng-template matStepLabel>Check</ng-template>
+                <div style="width: 50px">
+                    <mat-icon *ngIf="available === true" [inline]="true" style="color: green" svgIcon="check_circle"
+                        aria-hidden="false" aria-label="Available"></mat-icon>
+                    <mat-icon *ngIf="available === false" [inline]="true" style="color: red" svgIcon="highlight_off"
+                        aria-hidden="false" aria-label="Not Available"></mat-icon>
+                </div>
+                <h4 *ngIf="available !== undefined">
+                    {{available === true ? 'This subject is able to enroll!' : 'You cannot enroll to this subject!'}}
+                </h4>
+                <div>
+                    <button mat-raised-button matStepperPrevious class="stepper-button prev">Back</button>
+                    <button mat-raised-button color="primary" matStepperNext [disabled]="!secondFormGroup.valid"
+                        class="stepper-button next">Next</button>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Review</ng-template>
+            <div class="step-form">
+                You will enroll to {{selectedSubject.name?.toUpperCase()}}. Confirm?
+            </div>
+            <div>
+                <button mat-raised-button matStepperPrevious class="stepper-button prev">Back</button>
+                <button mat-raised-button color="primary" class="stepper-button next"
+                    (click)="onConfirmar()">Confirm</button>
+            </div>
+        </mat-step>
+    </mat-vertical-stepper>
+</app-content-wrapper>

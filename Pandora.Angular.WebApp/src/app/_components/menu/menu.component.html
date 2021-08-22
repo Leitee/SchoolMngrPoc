@@ -1,0 +1,9 @@
+<div>
+    <button *ngIf="currentUser.role.id === -1 || currentUser.role.id === 1" mat-button [matMenuTriggerFor]="menu">Cursos<i class="material-icons">arrow_drop_down</i></button>
+    <mat-menu #menu="matMenu">
+        <ng-template matMenuContent>
+            <button (click)="onGradeSelect(grade)" mat-menu-item *ngFor="let grade of gradeListAsync | async">{{grade.name}} Año</button>
+        </ng-template>
+    </mat-menu>
+    <button *ngIf="currentUser.role.id === -1 || currentUser.role.id === 4" mat-button (click)="onSubjectClick()">Inscribirse</button>
+</div>

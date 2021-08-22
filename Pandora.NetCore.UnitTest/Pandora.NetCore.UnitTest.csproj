@@ -3,12 +3,7 @@
   <PropertyGroup>
     <TargetFramework>$(NetCoreTargetVersion)</TargetFramework>
     <IsPackable>false</IsPackable>
-    <LangVersion>$(LangTargetVersion)</LangVersion>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="TestDbContextMocker.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />

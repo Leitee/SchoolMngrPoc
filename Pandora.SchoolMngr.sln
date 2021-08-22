@@ -38,6 +38,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_frontend", "_frontend", "{01347E79-947A-4E24-BA2D-D9DD2509957D}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Pandora.Angular.WebApp", "Pandora.Angular.WebApp\", "{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_61672"
+		Debug.AspNetCompiler.PhysicalPath = "Pandora.Angular.WebApp\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_61672\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_61672"
+		Release.AspNetCompiler.PhysicalPath = "Pandora.Angular.WebApp\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_61672\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "61672"
+		SlnRelativePath = "Pandora.Angular.WebApp\"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -246,6 +269,30 @@ Global
 		{2F716EDA-ACE5-47AF-B05C-3F433A0282E2}.Release|x64.Build.0 = Release|Any CPU
 		{2F716EDA-ACE5-47AF-B05C-3F433A0282E2}.Release|x86.ActiveCfg = Release|Any CPU
 		{2F716EDA-ACE5-47AF-B05C-3F433A0282E2}.Release|x86.Build.0 = Release|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Debug|ARM.Build.0 = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Debug|x64.Build.0 = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Debug|x86.Build.0 = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Release|ARM.ActiveCfg = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Release|ARM.Build.0 = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Release|iPhone.ActiveCfg = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Release|iPhone.Build.0 = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Release|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Release|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Release|x64.ActiveCfg = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Release|x64.Build.0 = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Release|x86.ActiveCfg = Debug|Any CPU
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8}.Release|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -259,6 +306,7 @@ Global
 		{254C29A5-7263-4607-8D25-7677F4174EB8} = {EECA589D-DCEE-4033-96B1-AFDFB1FABE1B}
 		{5DF294FE-5437-4A6C-A927-A8A5456B3373} = {EECA589D-DCEE-4033-96B1-AFDFB1FABE1B}
 		{2F716EDA-ACE5-47AF-B05C-3F433A0282E2} = {254C29A5-7263-4607-8D25-7677F4174EB8}
+		{8E1F7BF2-DF1D-4E82-8CC8-246C574E95A8} = {01347E79-947A-4E24-BA2D-D9DD2509957D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {962AACFB-972A-487A-A172-17AC6F68F9C2}

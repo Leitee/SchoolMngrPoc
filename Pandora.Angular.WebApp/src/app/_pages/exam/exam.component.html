@@ -1,0 +1,47 @@
+<app-content-wrapper headerTitle="{{subject.name}} - Examenes" headerIcon="assignment_turned_in">
+  <mat-accordion class="example-headers-align">
+
+    <form [formGroup]="groupFrom">
+        <mat-expansion-panel formArrayName="arrayForm" *ngFor="let stud of studentListSourceAsync | async; let i=index">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-icon color="primary">account_circle</mat-icon>
+              {{stud.id}} {{stud.applicationUser?.fullName}}
+            </mat-panel-title>
+            <mat-panel-description class="expand-panel-desciption">
+              <i>-- Descripcion del alumno --</i>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          
+          <div formGroupName="{{i}}">
+            <mat-form-field appearance="outline">
+              <input type="number" min="0" max="10" matInput placeholder="Primer Parcial" formControlName="first">
+              <!-- <mat-hint matSuffix>/10</mat-hint> -->
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline">
+              <input type="number" min="0" max="10" matInput placeholder="Segundo Parcial" formControlName="second">
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline">
+              <input type="number" min="0" max="10" matInput placeholder="Tercer Parcial" formControlName="third">
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline">
+              <input type="number" min="0" max="10" matInput placeholder="Primer Recuperatorio" formControlName="retry">
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline">
+              <input type="number" min="0" max="10" matInput placeholder="Examen Final" formControlName="final">
+            </mat-form-field>
+          </div>
+          
+          <mat-action-row>
+            <button mat-raised-button color="primary" (click)="onSubmit(getArrayForm.controls[i].value)" 
+            [disabled]="!getArrayForm.dirty || !groupFrom.valid" hideToggle>Guardar</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+    </form>
+
+  </mat-accordion>
+</app-content-wrapper>

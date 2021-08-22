@@ -1,0 +1,163 @@
+mat-card-header {
+    border-bottom: solid 1px green;
+    justify-content: center;
+}
+
+mat-card-content {
+    text-align: -webkit-center;
+    height: 225px;
+    margin-bottom: 0px;
+}
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+mat-form-field {
+  margin-right: 12px;
+}
+
+.page-teacher {
+  display:flex; 
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+  padding-left: 0px;
+  margin-left: 0px;
+  margin-bottom: 0px;
+}
+.page-teacher div {
+  position: relative;
+  margin-right:  20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  display: block;
+  box-sizing: border-box;
+}
+.page-teacher li {
+  float: left;
+  box-sizing: border-box;
+}
+mat-card-actions {
+  border-top: solid 1px green;
+  button{
+    width: 50%;
+    margin: 0px;
+  }
+}
+
+mat-card {
+  width: 99%;
+  height: 99%;
+}
+
+mat-icon {
+  margin-right: 15px;
+}
+
+mat-button-toggle-group {
+  font-weight: 500;
+  margin-right: 30px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+#bt1.mat-button-toggle-checked {
+  background-color: green;  
+}
+#bt2.mat-button-toggle-checked {
+  background-color: red;
+}
+#bt3.mat-button-toggle-checked {
+  background-color: yellow;
+}
+.example-margin {
+  margin: 0 10px;
+}
+
+.stepper-button {
+  &.prev{
+    float: left;
+  }
+  &.next{
+    float: right;
+  }
+}
+
+.step-form {
+    text-align: -webkit-center;
+}
+
+.tab-content {
+  overflow: auto;
+    height: 275px;
+}
+
+
+//////////////////////////////////////////////
+.expand-panel-desciption {
+  display: block;
+ }
+
+.expand-panel-content{
+  float:right; 
+  width: 67%;
+}
+.expand-panel-form {
+  width: 100%;
+  display: inline-block;
+  clear: both;
+}
+///////////////////////////////////////// 600px a 1100px
+@media all and (min-width:600px) and (max-width:1100px) {
+  .expand-panel-desciption {
+   display: none;
+  }
+
+  .expand-panel-content{
+    float:none; 
+    width: 67%;
+  }
+  .expand-panel-form {
+    width: 100%;
+  }
+  #wellcome-msg {
+    display: none;
+  }
+}
+////////////////////////////////////// 599px
+@media all and (max-width: 599px) {
+  .expand-panel-desciption {
+    display: none;
+   }
+   .mat-expansion-panel-header-title {
+    flex-grow: 0;
+    font-size: 12px;
+    width: auto;
+   }
+   .mat-expansion-panel-header{
+    margin: 15px;
+     padding: 0px;
+   }
+   .mat-button-toggle-group {
+     display: grid;
+     margin-right: 0px;
+   }
+ 
+   .expand-panel-content{
+     float:none; 
+     width: auto;
+   }
+   .expand-panel-form {
+     width: 100%;
+   }
+    #wellcome-msg {
+      display: none;
+    }
+}

@@ -1,0 +1,8 @@
+﻿<app-content-wrapper id="wellcome-msg" headerTitle="Inicio" headerIcon="home">
+    <div style="text-align: center">
+        Wellcome {{currentUser.fullname.toUpperCase()}}, you're logged in as {{currentUser.role.name.toUpperCase()}}
+    </div>
+</app-content-wrapper>
+
+<page-teacher *ngIf="currentUser.role.id === 3"></page-teacher>
+<page-student *ngIf="currentUser.role.id === 4"></page-student>
